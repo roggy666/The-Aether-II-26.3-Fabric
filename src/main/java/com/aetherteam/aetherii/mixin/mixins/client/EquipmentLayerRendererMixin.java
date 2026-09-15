@@ -31,7 +31,7 @@ import java.util.function.Function;
 
 @Mixin(EquipmentLayerRenderer.class)
 public class EquipmentLayerRendererMixin {
-    @com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation(method = "renderLayers", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/DyedItemColor;getOrDefault(Lnet/minecraft/world/item/ItemStack;I)I"))
+    @com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation(method = "renderLayers(Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lnet/minecraft/world/item/ItemStack;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/resources/Identifier;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/DyedItemColor;getOrDefault(Lnet/minecraft/world/item/ItemStack;I)I"))
     private int defaultDye(ItemStack stack, int fallback, com.llamalad7.mixinextras.injector.wrapoperation.Operation<Integer> original) {
         int color = com.aetherteam.aetherii.client.AetherIIClientExtensions.getDefaultDyeColor(stack);
         return color == 0 ? original.call(stack, fallback) : color;

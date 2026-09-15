@@ -47,7 +47,7 @@ public class CurrencyItem extends Item {
         player.awardStat(Stats.ITEM_USED.get(this));
         stack.consume(1, player);
         if (level.isClientSide()) {
-            GuiAccessor gui = (GuiAccessor) Minecraft.getInstance().gui;
+            GuiAccessor gui = (GuiAccessor) Minecraft.getInstance().gui.hud;
             player.sendOverlayMessage(Component.translatable("aether_ii.tooltip.item.currency.amount", attachment.getAmount()).withColor(15066623));
             if (gui.aether$getOverlayMessageString() != null && gui.aether$getOverlayMessageTime() > 0) {
                 gui.aether$setOverlayMessageTime(30);
