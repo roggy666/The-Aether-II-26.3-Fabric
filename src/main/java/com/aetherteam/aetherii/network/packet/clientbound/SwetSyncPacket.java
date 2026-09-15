@@ -38,7 +38,9 @@ public record SwetSyncPacket(int entityID, CompoundTag compoundTag) implements C
             if (level.getEntity(payload.entityID()) instanceof Player targetPlayer) {
                 try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(targetPlayer.problemPath(), AetherII.LOGGER)) {
 
-                    targetPlayer.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).deserialize(TagValueInput.create(problemreporter$scopedcollector, targetPlayer.level().registryAccess(), payload.compoundTag()));
+                    com.aetherteam.aetherii.attachment.player.SwetLatchAttachment attachment = targetPlayer.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH);
+                    attachment.setPlayer(targetPlayer);
+                    attachment.deserialize(TagValueInput.create(problemreporter$scopedcollector, targetPlayer.level().registryAccess(), payload.compoundTag()));
                 }
             }
         }

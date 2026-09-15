@@ -147,7 +147,7 @@ public class AetherIIEventListeners {
     public static void onPlayerPostTick(Player player) {
         player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).postTickUpdate(player);
         player.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).postTickUpdate(player);
-        player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).postTickUpdate();
+        player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).postTickUpdate(player);
         player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).postTickUpdate(player);
         player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).postTickUpdate(player);
         PlayerHooks.forceSpecialLoadingCrouch(player);

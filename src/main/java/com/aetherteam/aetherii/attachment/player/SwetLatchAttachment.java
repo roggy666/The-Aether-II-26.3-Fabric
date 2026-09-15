@@ -90,7 +90,15 @@ public class SwetLatchAttachment implements ValueIOSerializable {
         this.player = player;
     }
 
+    public void postTickUpdate(Player player) {
+        this.player = player;
+        this.postTickUpdate();
+    }
+
     public void postTickUpdate() {
+        if (this.player == null) {
+            return;
+        }
         if (this.syncToClient) {
             if (!this.player.level().isClientSide()) {
                 try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(this.player.problemPath(), AetherII.LOGGER)) {
@@ -112,6 +120,9 @@ public class SwetLatchAttachment implements ValueIOSerializable {
     }
 
     public void handleSwetTick() {
+        if (this.player == null) {
+            return;
+        }
         AttributeInstance movementSpeedAttribute = this.player.getAttribute(Attributes.MOVEMENT_SPEED);
         double value = -0.15 * this.swets.size();
         if (movementSpeedAttribute != null) {
@@ -143,7 +154,7 @@ public class SwetLatchAttachment implements ValueIOSerializable {
     }
 
     public void detachSwets() {
-        if (!this.player.level().isClientSide()) {
+        if (this.player != null && !this.player.level().isClientSide()) {
             for (final Swet swet : this.getLatchedSwets()) {
                 swet.setFoodSaturation(0);
                 this.spawnSwet(swet);
@@ -160,7 +171,7 @@ public class SwetLatchAttachment implements ValueIOSerializable {
     }
 
     public void spawnSwet(final Swet swet) {
-        if (this.player.level() instanceof ServerLevel serverLevel) {
+        if (this.player != null && this.player.level() instanceof ServerLevel serverLevel) {
             // When the server loads the Swet from NBT with read() it is created in dimension 0, because this.player has not loaded yet.
             if (swet.level() != serverLevel) {
                 swet.teleport(new TeleportTransition(serverLevel, this.player.position(), this.player.getDeltaMovement(), this.player.getYRot(), this.player.getXRot(), TeleportTransition.DO_NOTHING));
