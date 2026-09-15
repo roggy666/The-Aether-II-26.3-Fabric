@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public class PerlinNoiseFunction implements DensityFunction {
+public class PerlinNoiseFunction implements DensityFunction.SimpleFunction {
 
     public static final KeyDispatchDataCodec<PerlinNoiseFunction> CODEC = KeyDispatchDataCodec.of(RecordCodecBuilder.mapCodec(
             p_208798_ -> p_208798_.group(
@@ -66,7 +66,7 @@ public class PerlinNoiseFunction implements DensityFunction {
 
     @Override
     public DensityFunction mapChildren(Visitor visitor) {
-        return visitor.apply(new PerlinNoiseFunction(this.params, this.xzScale, this.yScale, this.seed));
+        return this;
     }
 
 
