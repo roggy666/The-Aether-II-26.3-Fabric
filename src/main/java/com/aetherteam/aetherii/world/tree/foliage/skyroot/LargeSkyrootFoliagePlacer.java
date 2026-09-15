@@ -88,6 +88,6 @@ public class LargeSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.LARGE_SKYROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.LARGE_SKYROOT_FOLIAGE_PLACER;
     }
 }

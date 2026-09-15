@@ -11,7 +11,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * Mounts an Aerbunny to the player using stored NBT data if the player previously logged out with a mounted Aerbunny. This is called by {@link AerbunnyMountAttachment#remountAerbunny(Player)} (Player)}.<br><br>
@@ -32,12 +33,13 @@ public record RemountAerbunnyPacket(int vehicleID, int aerbunnyID) implements Cu
         return TYPE;
     }
 
-    public static void execute(RemountAerbunnyPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(RemountAerbunnyPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level level = Minecraft.getInstance().player.level();
-            if (level.getEntity(payload.vehicleID()) instanceof Player player && level.getEntity(payload.aerbunnyID()) instanceof Aerbunny aerbunny) {
-                aerbunny.startRiding(player, true, false);
-                player.getData(AetherIIDataAttachments.AERBUNNY_MOUNT).setMountedAerbunny(aerbunny);
+            if (level.getEntity(payload.vehicleID()) instanceof Player vehiclePlayer && level.getEntity(payload.aerbunnyID()) instanceof Aerbunny aerbunny) {
+                aerbunny.startRiding(vehiclePlayer, true, false);
+                vehiclePlayer.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).setMountedAerbunny(aerbunny);
             }
         }
     }

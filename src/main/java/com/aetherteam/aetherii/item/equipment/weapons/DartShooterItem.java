@@ -17,12 +17,12 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.component.ChargedProjectiles;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.EventHooks;
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public class DartShooterItem extends ProjectileWeaponItem {
+public class DartShooterItem extends ProjectileWeaponItem implements CustomEnchantmentItem {
     public static final int FIRE_RATE = 4;
 
     public DartShooterItem(Properties properties) {
@@ -64,9 +64,6 @@ public class DartShooterItem extends ProjectileWeaponItem {
     private void performShooting(Level level, LivingEntity shooter, InteractionHand hand, ItemStack weapon, float velocity, float inaccuracy, @Nullable LivingEntity target) {
         if (level instanceof ServerLevel serverlevel) {
             if (shooter instanceof Player player) {
-                if (EventHooks.onArrowLoose(weapon, shooter.level(), player, 1, true) < 0) {
-                    return;
-                }
             }
             if (shooter.tickCount % FIRE_RATE == 0) {
                 ChargedProjectiles projectiles = weapon.get(DataComponents.CHARGED_PROJECTILES);

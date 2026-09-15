@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import java.util.Map;
 import java.util.Optional;
@@ -34,14 +34,14 @@ public class BiomeHooks {
     }
 
     public static int getColor(Biome biome, double x, double z) {
-        return biome.getModifiedSpecialEffects().grassColorModifier().modifyColor(
+        return biome.getSpecialEffects().grassColorModifier().modifyColor(
                 x, z, COLORS.getOrDefault(biome, AetherIIColorResolvers.AETHER_GRASS_COLOR));
     }
 
     public static void sendColors(Player player) {
         if (!player.level().isClientSide() && player instanceof ServerPlayer sp) {
             Registry<Biome> registry = player.registryAccess().lookupOrThrow(Registries.BIOME);
-            PacketDistributor.sendToPlayer(sp, new GrassTintSyncPacket(registry.getDataMap(AetherIIDataMaps.AETHER_GRASS_COLORS)));
+            ServerPlayNetworking.send(sp, new GrassTintSyncPacket(AetherIIDataMaps.AETHER_GRASS_COLORS.getAll(registry)));
         }
     }
 }

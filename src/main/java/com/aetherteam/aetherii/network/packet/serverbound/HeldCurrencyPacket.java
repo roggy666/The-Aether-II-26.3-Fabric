@@ -8,7 +8,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record HeldCurrencyPacket(ItemStack itemStack) implements CustomPacketPayload {
     public static final Type<HeldCurrencyPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "held_currency"));
@@ -20,8 +19,8 @@ public record HeldCurrencyPacket(ItemStack itemStack) implements CustomPacketPay
         return TYPE;
     }
 
-    public static void execute(HeldCurrencyPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(HeldCurrencyPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
             serverPlayer.containerMenu.setCarried(payload.itemStack());
         }

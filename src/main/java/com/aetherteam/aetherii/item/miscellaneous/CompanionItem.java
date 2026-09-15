@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.item.miscellaneous;
 
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceKey;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
@@ -37,20 +39,16 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import com.aetherteam.aetherii.network.AetherIIPackets;
 
 import java.util.UUID;
 import java.util.function.Consumer;
 
 public class CompanionItem extends Item {
-    private final Holder<EntityType<?>> companionType;
-    private final Holder<SoundEvent> sound;
+    private final EntityType<?> companionType;
+    private final SoundEvent sound;
 
-    public CompanionItem(Holder<EntityType<?>> companionType, Holder<SoundEvent> sound, Item.Properties properties) {
+    public CompanionItem(EntityType<?> companionType, SoundEvent sound, Item.Properties properties) {
         super(properties.stacksTo(1));
         this.companionType = companionType;
         this.sound = sound;
@@ -60,7 +58,7 @@ public class CompanionItem extends Item {
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand usedHand) {
         if (interactionTarget.getType() == this.getCompanionType()
                 && interactionTarget instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && owner.getUUID().equals(player.getUUID())
-                && ((!interactionTarget.getData(AetherIIDataAttachments.COMPANION) && stack.get(AetherIIDataComponents.COMPANION_UUID) == null) || UUIDsMatch(stack, interactionTarget))) {
+                && ((!interactionTarget.getAttachedOrCreate(AetherIIDataAttachments.COMPANION) && stack.get(AetherIIDataComponents.COMPANION_UUID) == null) || UUIDsMatch(stack, interactionTarget))) {
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), this.sound, SoundSource.NEUTRAL, 1.0F, 1.0F);
             CompoundTag tag = removeCompanion(interactionTarget, player);
             stack.set(AetherIIDataComponents.COMPANION_UUID, interactionTarget.getUUID());
@@ -118,11 +116,11 @@ public class CompanionItem extends Item {
 
         if (player != null && companionUUID != null) {
             if (companionNBT != null) {
-                Vec3 spawnPos = pos.relative(face).getBottomCenter();
+                Vec3 spawnPos = Vec3.atBottomCenterOf(pos.relative(face));
                 if (face.getAxis().isVertical()) {
                     BlockState blockState = level.getBlockState(pos);
                     VoxelShape shape = blockState.getCollisionShape(level, pos);
-                    spawnPos = pos.getBottomCenter().relative(face, shape.isEmpty() ? 0 : shape.bounds().getYsize());
+                    spawnPos = Vec3.atBottomCenterOf(pos).relative(face, shape.isEmpty() ? 0 : shape.bounds().getYsize());
                 }
                 if (!level.getBlockState(BlockPos.containing(spawnPos)).isSolid()) {
                     player.level().playSound(null, player.getX(), player.getY(), player.getZ(), this.sound, SoundSource.NEUTRAL, 1.0F, 1.0F);
@@ -139,7 +137,7 @@ public class CompanionItem extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, context, display, builder, tooltipFlag);
-        Player player = context.player();
+        Player player = null; // TooltipContext doesn't provide player in 26.2
         MutableComponent status = Component.translatable("aether_ii.tooltip.item.companion.status.empty");
         if (itemStack.has(AetherIIDataComponents.COMPANION_NBT)) {
             if (player != null && player.getCooldowns().isOnCooldown(itemStack)) {
@@ -159,20 +157,18 @@ public class CompanionItem extends Item {
         return itemStack.has(AetherIIDataComponents.COMPANION_UUID) && !itemStack.has(AetherIIDataComponents.COMPANION_NBT) || super.isFoil(itemStack);
     }
 
-    public static void companionPostTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && entity.getData(AetherIIDataAttachments.COMPANION)) {
+    public static void companionPostTick(Entity entity) {
+        if (entity instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && entity.getAttachedOrCreate(AetherIIDataAttachments.COMPANION)) {
             if (owner.level().isClientSide()) {
                 if (getMatchingStack(owner, entity).isEmpty()) {
-                    ClientPacketDistributor.sendToServer(new StoreCompanionItemEntityPacket(entity.getId()));
+                    AetherIIPackets.sendToServer(new StoreCompanionItemEntityPacket(entity.getId()));
                 }
             }
         }
     }
 
-    public static void entityChangeDimension(EntityTravelToDimensionEvent event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof LivingEntity companion && companion instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && entity.getData(AetherIIDataAttachments.COMPANION)) {
+    public static boolean entityChangeDimension(Entity entity, ResourceKey<Level> dimension) {
+        if (entity instanceof LivingEntity companion && companion instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && entity.getAttachedOrCreate(AetherIIDataAttachments.COMPANION)) {
             if (isCompanionSeparateFromPlayer(owner, companion)) {
                 InventoryMenu menu = owner.inventoryMenu;
                 ItemStack stack = ItemStack.EMPTY;
@@ -190,17 +186,17 @@ public class CompanionItem extends Item {
                         if (UUIDsMatch(carriedStack, entity)) {
                             CompoundTag tag = removeCompanion(companion, owner);
                             stack.set(AetherIIDataComponents.COMPANION_NBT, tag);
-                            ClientPacketDistributor.sendToServer(new DiscardCompanionPacket(entity.getId()));
+                            AetherIIPackets.sendToServer(new DiscardCompanionPacket(entity.getId()));
                         }
                     }
                 }
-                event.setCanceled(true);
+                return false;
             }
         } else if (entity instanceof Player owner) {
             InventoryMenu menu = owner.inventoryMenu;
             for (ItemStack inventoryStack : menu.getItems()) {
                 UUID thisUUID = inventoryStack.get(AetherIIDataComponents.COMPANION_UUID);
-                if (thisUUID != null && owner.level().getEntity(thisUUID) instanceof LivingEntity companion && companion.getData(AetherIIDataAttachments.COMPANION)) {
+                if (thisUUID != null && owner.level().getEntity(thisUUID) instanceof LivingEntity companion && companion.getAttachedOrCreate(AetherIIDataAttachments.COMPANION)) {
                     if (isCompanionSeparateFromPlayer(owner, companion)) {
                         CompoundTag tag = removeCompanion(companion, owner);
                         inventoryStack.set(AetherIIDataComponents.COMPANION_NBT, tag);
@@ -208,11 +204,11 @@ public class CompanionItem extends Item {
                 }
             }
         }
+        return true;
     }
 
-    public static void companionDeath(LivingDeathEvent event) {
-        LivingEntity living = event.getEntity();
-        if (living instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && living.getData(AetherIIDataAttachments.COMPANION)) {
+    public static boolean companionDeath(LivingEntity living, DamageSource source) {
+        if (living instanceof OwnableEntity owned && owned.getOwner() instanceof Player owner && living.getAttachedOrCreate(AetherIIDataAttachments.COMPANION)) {
             InventoryMenu menu = owner.inventoryMenu;
             ItemStack stack = ItemStack.EMPTY;
             for (ItemStack inventoryStack : menu.getItems()) {
@@ -233,20 +229,20 @@ public class CompanionItem extends Item {
                     if (UUIDsMatch(carriedStack, living)) {
                         CompoundTag tag = removeCompanion(living, owner);
                         stack.set(AetherIIDataComponents.COMPANION_NBT, tag);
-                        ClientPacketDistributor.sendToServer(new DiscardCompanionDeathPacket(living.getId(), stack));
+                        AetherIIPackets.sendToServer(new DiscardCompanionDeathPacket(living.getId(), stack));
                     }
                 }
             }
-            event.setCanceled(true);
+            return false;
         }
+        return true;
     }
 
-    public static void playerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        Player player = event.getEntity();
+    public static void playerLoggedOut(Player player) {
         InventoryMenu menu = player.inventoryMenu;
         for (ItemStack inventoryStack : menu.getItems()) {
             UUID thisUUID = inventoryStack.get(AetherIIDataComponents.COMPANION_UUID);
-            if (thisUUID != null && player.level().getEntity(thisUUID) instanceof LivingEntity companion && companion.getData(AetherIIDataAttachments.COMPANION)) {
+            if (thisUUID != null && player.level().getEntity(thisUUID) instanceof LivingEntity companion && companion.getAttachedOrCreate(AetherIIDataAttachments.COMPANION)) {
                 CompoundTag tag = removeCompanion(companion, player);
                 inventoryStack.set(AetherIIDataComponents.COMPANION_NBT, tag);
             }
@@ -257,7 +253,7 @@ public class CompanionItem extends Item {
         if (owner.level().getEntity(companionUUID) == null) {
             try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(owner.problemPath(), AetherII.LOGGER)) {
                 ValueInput value = TagValueInput.create(reporter, owner.registryAccess(), companionNBT);
-                EntityType.create(value, owner.level(), EntitySpawnReason.MOB_SUMMONED).ifPresent((entity) -> {
+                EntityType.create(value, owner.level(), new net.minecraft.world.entity.EntitySpawnRequest(EntitySpawnReason.MOB_SUMMONED, false)).ifPresent((entity) -> {
                     if (entity instanceof LivingEntity living && living.getHealth() <= 0) {
                         living.setHealth(living.getMaxHealth());
                         living.removeAllEffects();
@@ -268,7 +264,7 @@ public class CompanionItem extends Item {
                     entity.snapTo(pos.x(), pos.y(), pos.z(), 0.0F, 0.0F); //todo this rotation isnt always consistent
                     owner.level().addFreshEntity(entity);
                     entity.setYRot(owner.getViewYRot(1.0F));
-                    entity.setData(AetherIIDataAttachments.COMPANION, true);
+                    entity.setAttached(AetherIIDataAttachments.COMPANION, true);
                 });
             }
         }
@@ -277,7 +273,7 @@ public class CompanionItem extends Item {
     public static CompoundTag removeCompanion(LivingEntity companion, Player owner) {
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(companion.problemPath(), AetherII.LOGGER)) {
             TagValueOutput value = TagValueOutput.createWithContext(reporter, companion.registryAccess());
-            String id = companion.getEncodeId();
+            String id = ((com.aetherteam.aetherii.mixin.mixins.common.accessor.EntityAccessor) companion).aether_ii$getEncodeId();
             if (id != null) {
                 value.putString("id", id);
             }
@@ -318,6 +314,6 @@ public class CompanionItem extends Item {
     }
 
     public EntityType<?> getCompanionType() {
-        return this.companionType.value();
+        return this.companionType;
     }
 }

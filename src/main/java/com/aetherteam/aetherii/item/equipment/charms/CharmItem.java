@@ -1,6 +1,10 @@
 package com.aetherteam.aetherii.item.equipment.charms;
 
+import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.core.component.DataComponents;
+import com.aetherteam.aetherii.event.ItemAttributeModifierEvent;
 import com.aetherteam.aetherii.integration.AccessoryUtil;
+import com.aetherteam.aetherii.item.AttributeTooltipUtil;
 import com.aetherteam.aetherii.item.components.Charms;
 import com.aetherteam.aetherii.item.equipment.EquipmentUtil;
 import com.google.common.collect.Multimap;
@@ -17,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.TooltipDisplay;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +47,7 @@ public class CharmItem extends Item {
         for (ItemAttributeModifiers.Entry entry : this.getCharmAttributes()) {
             modifiers.put(entry.attribute(), entry.modifier());
         }
-        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipContext.of(null, context, tooltipDisplay, tooltipFlag), modifiers, "charms");
+        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipUtil.Context.of(null, context, tooltipDisplay, tooltipFlag), modifiers, "charms");
         super.appendHoverText(stack, context, tooltipDisplay, tooltipComponents, tooltipFlag);
     }
 
@@ -68,7 +70,8 @@ public class CharmItem extends Item {
                 Charms.CharmHolder charmHolder = charmHolders.get(i);
                 if (charmHolder.getStack().getItem() instanceof CharmItem charmItem) {
                     for (ItemAttributeModifiers.Entry entry : charmItem.getCharmAttributes()) {
-                        EquipmentSlot slot = event.getItemStack().getEquipmentSlot();
+                        Equippable equippable = event.getItemStack().get(DataComponents.EQUIPPABLE);
+                        EquipmentSlot slot = equippable != null ? equippable.slot() : null;
                         event.addModifier(entry.attribute(), new AttributeModifier(EquipmentUtil.getSlotModifierId(entry.modifier().id(), event.getItemStack(), i, slot != null ? slot.name() : "default"), entry.modifier().amount(), entry.modifier().operation()), entry.slot());
                     }
                 }

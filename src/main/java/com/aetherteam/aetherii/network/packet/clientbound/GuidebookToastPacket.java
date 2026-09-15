@@ -8,7 +8,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record GuidebookToastPacket(GuidebookToast.Type toastType, GuidebookToast.Icons toastIcon) implements CustomPacketPayload {
     public static final Type<GuidebookToastPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "guidebook_toast"));
@@ -25,7 +27,8 @@ public record GuidebookToastPacket(GuidebookToast.Type toastType, GuidebookToast
         return TYPE;
     }
 
-    public static void execute(GuidebookToastPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(GuidebookToastPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             GuidebookUtil.addGuidebookToast(payload.toastType(), payload.toastIcon());
         }

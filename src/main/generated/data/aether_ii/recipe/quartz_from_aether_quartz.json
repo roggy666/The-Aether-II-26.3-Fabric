@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "fabric:type": "fabric:components",
+      "base": "minecraft:quartz",
+      "components": {
+        "minecraft:item_name": {
+          "translate": "item.aether_ii.aether_quartz"
+        }
+      }
+    }
+  ],
+  "result": {
+    "id": "minecraft:quartz"
+  }
+}

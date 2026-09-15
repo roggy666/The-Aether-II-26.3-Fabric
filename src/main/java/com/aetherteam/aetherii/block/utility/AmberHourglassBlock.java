@@ -60,7 +60,7 @@ public class AmberHourglassBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.AMBER_HOURGLASS.get());
+        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.AMBER_HOURGLASS);
     }
 
     @Nullable

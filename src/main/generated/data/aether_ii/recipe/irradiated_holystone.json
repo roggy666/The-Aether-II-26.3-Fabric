@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "aether_ii:irradiated_dust",
+    "/": "aether_ii:holystone"
+  },
+  "pattern": [
+    "///",
+    "/#/",
+    "///"
+  ],
+  "result": {
+    "count": 8,
+    "id": "aether_ii:irradiated_holystone"
+  }
+}

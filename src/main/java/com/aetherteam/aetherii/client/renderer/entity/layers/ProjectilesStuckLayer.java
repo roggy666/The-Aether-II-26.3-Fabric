@@ -38,7 +38,7 @@ public class ProjectilesStuckLayer<M extends PlayerModel> extends RenderLayer<Av
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, AvatarRenderState avatarRenderState, float v, float v1) {
 
-        List<EntityType<?>> list = avatarRenderState.getRenderData(AetherIIRenderers.STUCK_PROJECTILES_KEY);
+        List<EntityType<?>> list = avatarRenderState.getData(AetherIIRenderers.STUCK_PROJECTILES_KEY);
         if (list != null && !list.isEmpty()) {
             RandomSource random = RandomSource.create(avatarRenderState.id);
             for (EntityType<?> type : list) {

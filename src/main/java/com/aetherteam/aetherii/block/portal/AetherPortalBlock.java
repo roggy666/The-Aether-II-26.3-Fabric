@@ -176,7 +176,7 @@ public class AetherPortalBlock extends Block implements Portal {
                 z = pos.getZ() + 0.5 + 0.25 * j;
                 zSpeed = random.nextFloat() * 2.0F * j;
             }
-            level.addParticle(AetherIIParticleTypes.AETHER_PORTAL.get(), x, y, z, xSpeed, ySpeed, zSpeed);
+            level.addParticle(AetherIIParticleTypes.AETHER_PORTAL, x, y, z, xSpeed, ySpeed, zSpeed);
         }
     }
 
@@ -226,7 +226,7 @@ public class AetherPortalBlock extends Block implements Portal {
      */
     @SuppressWarnings("deprecation")
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         return ItemStack.EMPTY;
     }
 }

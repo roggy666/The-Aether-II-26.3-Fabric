@@ -4,7 +4,7 @@ import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.data.resources.maps.BucketReplacement;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDataMaps;
 import com.aetherteam.aetherii.item.AetherIIItems;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -67,7 +67,7 @@ public class SkyrootBucketItem extends BucketItem {
                         bucketStack = swapBucketType(bucketStack);
                         if (!bucketStack.isEmpty()) {
                             player.awardStat(Stats.ITEM_USED.get(this));
-                            bucketPickup.getPickupSound(blockState).ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
+                            bucketPickup.getPickupSound().ifPresent((soundEvent) -> player.playSound(soundEvent, 1.0F, 1.0F));
                             level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
                             ItemStack resultStack = ItemUtils.createFilledResult(heldStack, player, bucketStack);
                             if (!level.isClientSide()) {
@@ -80,7 +80,7 @@ public class SkyrootBucketItem extends BucketItem {
                 } else {
                     BlockState blockState = level.getBlockState(blockPos);
                     BlockPos newPos = this.canBlockContainFluid(player, level, blockPos, blockState) ? blockPos : relativePos;
-                    if (this.emptyContents(player, level, newPos, blockhitResult, heldStack)) {
+                    if (this.emptyContents(player, level, newPos, blockhitResult)) {
                         this.checkExtraContent(player, level, heldStack, newPos);
                         if (player instanceof ServerPlayer serverPlayer) {
                             CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, newPos, heldStack);
@@ -105,7 +105,7 @@ public class SkyrootBucketItem extends BucketItem {
      * @return The replacement bucket as an {@link ItemStack}.
      */
     public static ItemStack swapBucketType(ItemStack filledStack) {
-        BucketReplacement replacement = BuiltInRegistries.ITEM.wrapAsHolder(filledStack.getItem()).getData(AetherIIDataMaps.BUCKET_REPLACEMENT);
+        BucketReplacement replacement = AetherIIDataMaps.BUCKET_REPLACEMENT.get(BuiltInRegistries.ITEM.wrapAsHolder(filledStack.getItem()));
         if (replacement != null) {
             Item item = BuiltInRegistries.ITEM.getValue(replacement.bucket());
             if (item != null) {
@@ -120,7 +120,7 @@ public class SkyrootBucketItem extends BucketItem {
      * Returns a Skyroot Bucket instead of a vanilla bucket.
      */
     public static ItemStack getEmptySuccessItem(ItemStack bucketStack, Player player) {
-        return !player.getAbilities().instabuild ? new ItemStack(AetherIIItems.SKYROOT_BUCKET.get()) : bucketStack;
+        return !player.getAbilities().instabuild ? new ItemStack(AetherIIItems.SKYROOT_BUCKET) : bucketStack;
     }
 
     /**

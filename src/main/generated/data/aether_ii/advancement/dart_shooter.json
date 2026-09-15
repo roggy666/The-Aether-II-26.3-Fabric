@@ -1,0 +1,33 @@
+{
+  "parent": "aether_ii:golden_amber",
+  "criteria": {
+    "dart_shooter": {
+      "conditions": {
+        "direct_source": {
+          "minecraft:entity_type": "aether_ii:amber_dart"
+        },
+        "mob_effects": "#aether_ii:dart_effects",
+        "triggered": true
+      },
+      "trigger": "aether_ii:effect_buildup"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "advancement.aether_ii.dart_shooter.desc"
+    },
+    "icon": {
+      "id": "aether_ii:dart_shooter"
+    },
+    "title": {
+      "translate": "advancement.aether_ii.dart_shooter"
+    }
+  },
+  "requirements": [
+    [
+      "dart_shooter"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

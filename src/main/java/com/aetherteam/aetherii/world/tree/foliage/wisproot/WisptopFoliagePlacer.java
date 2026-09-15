@@ -58,6 +58,6 @@ public class WisptopFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.WISPTOP_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.WISPTOP_FOLIAGE_PLACER;
     }
 }

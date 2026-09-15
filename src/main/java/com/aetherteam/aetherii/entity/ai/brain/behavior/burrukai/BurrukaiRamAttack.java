@@ -73,8 +73,8 @@ public class BurrukaiRamAttack extends Behavior<Burrukai> {
                     if (owner.doHurtTarget(serverLevel, ramTarget)) {
                         this.finishRam(serverLevel, owner);
                         serverLevel.broadcastEntityEvent(owner, (byte) Burrukai.RAM_START_EVENT);
-                        serverLevel.playSound(null, owner, AetherIISoundEvents.ENTITY_BURRUKAI_RAM_IMPACT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
-                        ramTarget.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(ramTarget, owner, EffectBuildupPresets.STUN, 350);
+                        serverLevel.playSound(null, owner, AetherIISoundEvents.ENTITY_BURRUKAI_RAM_IMPACT, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                        ramTarget.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(ramTarget, owner, EffectBuildupPresets.STUN, 350);
                     }
                 } else if (this.ramTick >= 50) {
                     this.finishRam(serverLevel, owner);

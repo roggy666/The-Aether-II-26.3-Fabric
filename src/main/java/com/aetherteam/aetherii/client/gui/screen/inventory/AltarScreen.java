@@ -30,10 +30,10 @@ public class AltarScreen extends AbstractRecipeBookScreen<AltarMenu> implements 
     private static final Identifier CHARGE_SLOT_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "container/altar/charge_slot");
     private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
             new RecipeBookComponent.TabInfo(Items.COMPASS, AetherIIRecipeBookCategories.ALTAR_SEARCH),
-            new RecipeBookComponent.TabInfo(AetherIIItems.ENCHANTED_BLUEBERRY.get(), AetherIIRecipeBookCategories.ALTAR_FOOD.get()),
-            new RecipeBookComponent.TabInfo(AetherIIBlocks.QUICKSOIL_GLASS.asItem(), AetherIIRecipeBookCategories.ALTAR_BLOCKS.get()),
-            new RecipeBookComponent.TabInfo(AetherIIItems.SKYROOT_PICKAXE.get(), AetherIIRecipeBookCategories.ALTAR_REPAIRING.get()),
-            new RecipeBookComponent.TabInfo(AetherIIItems.GRAVITITE_PLATE.get(), AetherIIRecipeBookCategories.ALTAR_MISC.get()));
+            new RecipeBookComponent.TabInfo(AetherIIItems.ENCHANTED_BLUEBERRY, AetherIIRecipeBookCategories.ALTAR_FOOD),
+            new RecipeBookComponent.TabInfo(AetherIIBlocks.QUICKSOIL_GLASS.asItem(), AetherIIRecipeBookCategories.ALTAR_BLOCKS),
+            new RecipeBookComponent.TabInfo(AetherIIItems.SKYROOT_PICKAXE, AetherIIRecipeBookCategories.ALTAR_REPAIRING),
+            new RecipeBookComponent.TabInfo(AetherIIItems.GRAVITITE_PLATE, AetherIIRecipeBookCategories.ALTAR_MISC));
     
     public AltarScreen(AltarMenu menu, Inventory inventory, Component title) {
         super(menu, new AltarRecipeBookComponent(menu, TABS), inventory, title);

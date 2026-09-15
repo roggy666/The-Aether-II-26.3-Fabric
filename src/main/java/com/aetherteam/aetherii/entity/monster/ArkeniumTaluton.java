@@ -77,24 +77,24 @@ public class ArkeniumTaluton extends Taluton {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_HURT.get();
+        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_DEATH.get();
+        return AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_STEP, 0.15F, 1.0F);
     }
 
     protected static class TalutonMeleeAttackGoal extends PreAnimationMeleeAttackGoal {
@@ -110,7 +110,7 @@ public class ArkeniumTaluton extends Taluton {
         public void attackAnimation() {
             this.taluton.attackAnimationTick = 10;
             getServerLevel(this.mob.level()).broadcastEntityEvent(this.mob, (byte) ATTACK_EVENT);
-            this.taluton.playSound(AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_ATTACK.get(), 1.0F, 1.0F);
+            this.taluton.playSound(AetherIISoundEvents.ENTITY_ARKENIUM_TALUTON_ATTACK, 1.0F, 1.0F);
 
         }
     }

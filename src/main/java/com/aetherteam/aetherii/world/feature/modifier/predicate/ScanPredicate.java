@@ -43,6 +43,6 @@ public record ScanPredicate(Direction directionOfSearch, BlockPredicate targetCo
 
     @Override
     public BlockPredicateType<?> type() {
-        return AetherIIBlockPredicateTypes.SCAN.get();
+        return AetherIIBlockPredicateTypes.SCAN;
     }
 }

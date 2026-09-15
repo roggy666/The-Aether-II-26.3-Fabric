@@ -55,7 +55,7 @@ public final class EntityUtil {
             TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, entity.registryAccess());
             entity.save(output);
             ValueInput input = TagValueInput.create(problemreporter$scopedcollector, entity.registryAccess(), output.buildResult());
-            newEnt = (Optional<T>) EntityType.create(input, entity.level(), EntitySpawnReason.EVENT);
+            newEnt = (Optional<T>) EntityType.create(input, entity.level(), new net.minecraft.world.entity.EntitySpawnRequest(EntitySpawnReason.EVENT, false));
         }
         return newEnt.orElse(null);
     }

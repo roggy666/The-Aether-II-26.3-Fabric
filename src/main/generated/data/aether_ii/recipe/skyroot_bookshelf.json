@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": "aether_ii:skyroot_planks",
+    "B": "minecraft:book"
+  },
+  "pattern": [
+    "###",
+    "BBB",
+    "###"
+  ],
+  "result": {
+    "id": "aether_ii:skyroot_bookshelf"
+  }
+}

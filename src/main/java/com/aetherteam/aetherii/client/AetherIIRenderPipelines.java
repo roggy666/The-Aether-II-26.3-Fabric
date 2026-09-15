@@ -1,23 +1,23 @@
 package com.aetherteam.aetherii.client;
 
+import net.minecraft.client.renderer.BindGroupLayouts;
+import com.mojang.blaze3d.PrimitiveTopology;
 import com.aetherteam.aetherii.AetherII;
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.ColorTargetState;
 import com.mojang.blaze3d.pipeline.DepthStencilState;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 
 public class AetherIIRenderPipelines {
     public static final RenderPipeline.Snippet ENTITY_DITHER_SNIPPET = RenderPipeline.builder(RenderPipelines.MATRICES_FOG_LIGHT_DIR_SNIPPET)
             .withVertexShader(Identifier.withDefaultNamespace("core/entity"))
             .withFragmentShader(Identifier.fromNamespaceAndPath(AetherII.MODID, "core/entity_dither"))
-            .withSampler("Sampler0")
-            .withSampler("Sampler2")
-            .withVertexFormat(DefaultVertexFormat.ENTITY, VertexFormat.Mode.QUADS)
+            .withBindGroupLayout(BindGroupLayouts.SAMPLER0_SAMPLER2)
+            .withVertexBinding(0, DefaultVertexFormat.ENTITY)
+            .withPrimitiveTopology(PrimitiveTopology.QUADS)
             .withDepthStencilState(DepthStencilState.DEFAULT)
             .buildSnippet();
 
@@ -25,7 +25,7 @@ public class AetherIIRenderPipelines {
             .withLocation(Identifier.fromNamespaceAndPath(AetherII.MODID, "pipeline/entity_dither_no_cull"))
             .withShaderDefine("ALPHA_CUTOUT", 0.1F)
             .withShaderDefine("PER_FACE_LIGHTING")
-            .withSampler("Sampler1")
+            .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
             .withCull(false)
             .build();
 
@@ -34,12 +34,13 @@ public class AetherIIRenderPipelines {
             .withVertexShader("core/position_color")
             .withFragmentShader(Identifier.fromNamespaceAndPath(AetherII.MODID, "core/cloud_cover"))
             .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
-            .withVertexFormat(DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.TRIANGLE_FAN)
+            .withVertexBinding(0, DefaultVertexFormat.POSITION_COLOR)
+            .withPrimitiveTopology(PrimitiveTopology.TRIANGLE_FAN)
             .build();
 
-    public static void registerShaders(RegisterRenderPipelinesEvent event) {
-        event.registerPipeline(ENTITY_DITHER_NO_CULL);
-        event.registerPipeline(CLOUD_COVER_SHADER);
+    public static void registerShaders() {
+        RenderPipelines.register(ENTITY_DITHER_NO_CULL);
+        RenderPipelines.register(CLOUD_COVER_SHADER);
     }
 
     public static RenderPipeline getEntityDitherNoCull() {

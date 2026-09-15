@@ -93,7 +93,7 @@ public class DetonationSentry extends PathfinderMob {
                 float flickerInterval = Mth.sin(Mth.square(this.timer) / 50.0F);
                 if (flickerInterval < 0) {
                     if (this.playSound) {
-                        this.playSound(AetherIISoundEvents.ENTITY_DETONATION_SENTRY_BEEP.value(), 1.0F, 1.0F);
+                        this.playSound(AetherIISoundEvents.ENTITY_DETONATION_SENTRY_BEEP, 1.0F, 1.0F);
                         this.playSound = false;
                     }
                 } else {
@@ -177,17 +177,17 @@ public class DetonationSentry extends PathfinderMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_HURT.get();
+        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_DEATH.get();
+        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_DEATH;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_DETONATION_SENTRY_AMBIENT;
     }
 
 

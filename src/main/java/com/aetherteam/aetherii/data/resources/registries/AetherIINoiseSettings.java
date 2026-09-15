@@ -19,6 +19,6 @@ public class AetherIINoiseSettings {
 
     public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> context) {
         HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
-        context.register(HOLY_ISLES, HolyIslesNoiseBuilders.holyIslesNoiseSettings(densityFunctions));
+        context.register(HOLY_ISLES, HolyIslesNoiseBuilders.holyIslesNoiseSettings(densityFunctions, context.lookup(Registries.BIOME)));
     }
 }

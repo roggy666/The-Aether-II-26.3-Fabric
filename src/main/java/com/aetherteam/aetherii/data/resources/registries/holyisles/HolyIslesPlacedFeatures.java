@@ -369,7 +369,7 @@ public class HolyIslesPlacedFeatures {
                 RarityFilter.onAverageOnceEvery(6),
                 InSquarePlacement.spread(),
                 HeightRangePlacement.triangle(VerticalAnchor.absolute(128), VerticalAnchor.absolute(200)),
-                PlacementUtils.filteredByBlockSurvival(AetherIIBlocks.SKYROOT_SAPLING.get()),
+                PlacementUtils.filteredByBlockSurvival(AetherIIBlocks.SKYROOT_SAPLING),
                 PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
                 BiomeFilter.biome()
         );
@@ -604,7 +604,7 @@ public class HolyIslesPlacedFeatures {
                 configuredFeatures.getOrThrow(HolyIslesConfiguredFeatures.MAGNETIC_SHROOM_PATCH),
                 CountPlacement.of(4),
                 RandomOffsetPlacement.ofTriangle(4, 1),
-                BlockPredicateFilter.forPredicate(BlockPredicate.allOf(BlockPredicate.matchesBlocks(Vec3i.ZERO.below(), AetherIIBlocks.MYCELIAL_AETHER_DIRT.get()), BlockPredicate.replaceable(), BlockPredicate.noFluid()))
+                BlockPredicateFilter.forPredicate(BlockPredicate.allOf(BlockPredicate.matchesBlocks(Vec3i.ZERO.below(), AetherIIBlocks.MYCELIAL_AETHER_DIRT), BlockPredicate.replaceable(), BlockPredicate.noFluid()))
         );
         register(context, BRYALINN_FLOWER_PATCH,
                 configuredFeatures.getOrThrow(HolyIslesConfiguredFeatures.BRYALINN_FLOWER_PATCH),
@@ -680,7 +680,7 @@ public class HolyIslesPlacedFeatures {
                 SurfaceWaterDepthFilter.forMaxDepth(2),
                 PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
                 BiomeFilter.biome(),
-                BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(AetherIIBlocks.WISPROOT_SAPLING.get().defaultBlockState(), BlockPos.ZERO)));
+                BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(AetherIIBlocks.WISPROOT_SAPLING.defaultBlockState(), BlockPos.ZERO)));
 
         // Magnetic
         register(context, MAGNETIC_SCAR_TREES, configuredFeatures.getOrThrow(HolyIslesConfiguredFeatures.TREES_BIOME_MAGNETIC_SCAR),
@@ -695,7 +695,7 @@ public class HolyIslesPlacedFeatures {
                 SurfaceWaterDepthFilter.forMaxDepth(3),
                 PlacementUtils.HEIGHTMAP_OCEAN_FLOOR,
                 BiomeFilter.biome(),
-                BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(AetherIIBlocks.GREATROOT_SAPLING.get().defaultBlockState(), BlockPos.ZERO)));
+                BlockPredicateFilter.forPredicate(BlockPredicate.wouldSurvive(AetherIIBlocks.GREATROOT_SAPLING.defaultBlockState(), BlockPos.ZERO)));
         register(context, GLISTENING_SWAMP_MAGNETIC_SHROOMS, configuredFeatures.getOrThrow(HolyIslesConfiguredFeatures.MAGNETIC_SHROOMS_BIOME_GLISTENING_SWAMP),
                 HolyIslesPlacementBuilders.treePlacement(RarityFilter.onAverageOnceEvery(2)));
         register(context, VIOLET_HIGHWOODS_TREES, configuredFeatures.getOrThrow(HolyIslesConfiguredFeatures.TREES_BIOME_VIOLET_HIGHWOODS),

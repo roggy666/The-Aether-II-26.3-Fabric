@@ -104,6 +104,6 @@ public class NestSkyrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.NEST_SKYROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.NEST_SKYROOT_FOLIAGE_PLACER;
     }
 }

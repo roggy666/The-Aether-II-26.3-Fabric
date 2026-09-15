@@ -20,9 +20,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
-import org.jetbrains.annotations.Nullable;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class BottomedVineBlock extends VineBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_25;
@@ -53,18 +59,18 @@ public class BottomedVineBlock extends VineBlock {
         return null;
     }
 
-    @Nullable
     @Override
-    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
-        if (ItemAbilities.SHEARS_TRIM == itemAbility) {
-            if (!this.isMaxAge(state)) {
-                if (!simulate) {
-                    context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0F, 1.0F);
-                }
-                return this.getMaxAgeState(state);
+    protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if ((itemStack.is(ConventionalItemTags.SHEAR_TOOLS) || itemStack.getItem() instanceof ShearsItem) && !this.isMaxAge(state)) {
+            level.playSound(player, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.setBlock(pos, this.getMaxAgeState(state), 2);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+            if (player != null) {
+                itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
             }
+            return InteractionResult.SUCCESS;
         }
-        return super.getToolModifiedState(state, context, itemAbility, simulate);
+        return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
     }
 
 
@@ -127,7 +133,7 @@ public class BottomedVineBlock extends VineBlock {
         int age = state.getValue(AGE);
         if (age < 25) {
             if (level.getGameRules().get(GameRules.SPREAD_VINES)) {
-                if (level.getRandom().nextInt(4) == 0 && level.isAreaLoaded(pos, 4)) { // Forge: check area to prevent loading unloaded chunks
+                if (level.getRandom().nextInt(4) == 0 && level.hasChunksAt(pos.offset(-4, -4, -4), pos.offset(4, 4, 4))) { // Forge: check area to prevent loading unloaded chunks
                     Direction randomDirection = Direction.getRandom(random);
                     BlockPos abovePos = pos.above();
                     if (randomDirection.getAxis().isHorizontal() && !state.getValue(getPropertyForFace(randomDirection))) {

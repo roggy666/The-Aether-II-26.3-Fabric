@@ -89,7 +89,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
             this.playSearchingSound();
         } else if (id == DIGGING_START_EVENT) {
             this.digStartAnimationState.start(this.tickCount);
-            ClientSoundHooks.playDiggingSoundInstance(this, AetherIISoundEvents.ENTITY_TAEGORE_DIGGING.get());
+            ClientSoundHooks.playDiggingSoundInstance(this, AetherIISoundEvents.ENTITY_TAEGORE_DIGGING);
         } else if (id == DIGGING_TICK_EVENT) {
             if (this.digStartAnimationState.getTimeInMillis(this.tickCount) >= 3000) {
                 this.digStartAnimationState.stop();
@@ -99,7 +99,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
         } else if (id == DIGGING_STOP_EVENT) {
             this.digAnimationState.stop();
             this.digEndAnimationState.start(this.tickCount);
-            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_TAEGORE_DIGGING_STOP.get(), this.getSoundSource(), 1.0F, 1.0F, false);
+            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_TAEGORE_DIGGING_STOP, this.getSoundSource(), 1.0F, 1.0F, false);
         } else {
             super.handleEntityEvent(id);
         }
@@ -124,15 +124,15 @@ public class Taegore extends AetherAnimal implements DiggingMob {
     }
 
     public boolean isSearching() {
-        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get()).isPresent();
+        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET).isPresent();
     }
 
     public boolean isDigging() {
-        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get()).orElse(false);
+        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING).orElse(false);
     }
 
     public Stream<GlobalPos> getExploredPositions() {
-        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS.get()).stream().flatMap(Collection::stream);
+        return this.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS).stream().flatMap(Collection::stream);
     }
 
     public BlockPos getHeadBlock() {
@@ -151,7 +151,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
 
     private void playSearchingSound() {
         if (this.level().isClientSide() && this.tickCount % 20 == 0) {
-            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_TAEGORE_SEARCHING.get(), this.getSoundSource(), 1.0F, 1.0F, false);
+            this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_TAEGORE_SEARCHING, this.getSoundSource(), 1.0F, 1.0F, false);
         }
     }
 
@@ -169,7 +169,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
                     this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), vecPos.x, vec3.y, vecPos.z, 0.0F, 0.0F, 0.0F);
                 }
                 if (this.tickCount % 10 == 0) {
-                    this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), state.getSoundType(this.level(), pos.below(), this).getHitSound(), this.getSoundSource(), 0.5F, 0.5F, false);
+                    this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), state.getSoundType().getHitSound(), this.getSoundSource(), 0.5F, 0.5F, false);
                 }
             }
         }
@@ -192,7 +192,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
     @Override
     protected SoundEvent getAmbientSound() {
         if (!this.isSearching() && !this.isDigging()) {
-            return AetherIISoundEvents.ENTITY_TAEGORE_AMBIENT.get();
+            return AetherIISoundEvents.ENTITY_TAEGORE_AMBIENT;
         }
         return null;
     }
@@ -200,18 +200,18 @@ public class Taegore extends AetherAnimal implements DiggingMob {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_TAEGORE_HURT.get();
+        return AetherIISoundEvents.ENTITY_TAEGORE_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_TAEGORE_DEATH.get();
+        return AetherIISoundEvents.ENTITY_TAEGORE_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_TAEGORE_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_TAEGORE_STEP, 0.15F, 1.0F);
     }
 
     @Nullable

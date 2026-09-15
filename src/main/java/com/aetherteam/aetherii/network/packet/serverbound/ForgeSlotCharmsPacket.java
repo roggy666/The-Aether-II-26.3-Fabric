@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record ForgeSlotCharmsPacket() implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<ForgeSlotCharmsPacket> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "forge_slot_charms"));
@@ -19,8 +19,8 @@ public record ForgeSlotCharmsPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(ForgeSlotCharmsPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(ForgeSlotCharmsPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity.containerMenu instanceof ArkeniumForgeMenu menu) {
             if (menu.stillValid(playerEntity)) {
                 menu.slotCharms(playerEntity);

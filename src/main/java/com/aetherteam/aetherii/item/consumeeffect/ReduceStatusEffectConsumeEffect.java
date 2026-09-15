@@ -30,14 +30,14 @@ public record ReduceStatusEffectConsumeEffect(Map<Holder<MobEffect>, Integer> ef
 
     @Override
     public Type<ReduceStatusEffectConsumeEffect> getType() {
-        return AetherIIConsumeEffectTypes.REDUCE_EFFECT_BUILDUP.get();
+        return AetherIIConsumeEffectTypes.REDUCE_EFFECT_BUILDUP;
     }
 
     @Override
     public boolean apply(Level level, ItemStack itemStack, LivingEntity livingEntity) {
         boolean flag = false;
         for (Map.Entry<Holder<MobEffect>, Integer> entry : this.effects().entrySet()) {
-            livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).reduceBuildup(entry.getKey(), entry.getValue());
+            livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).reduceBuildup(entry.getKey(), entry.getValue());
             flag = true;
         }
         return flag;

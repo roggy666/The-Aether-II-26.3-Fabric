@@ -12,7 +12,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record MovementDataPacket(boolean isJumping, boolean isMovingHorizontally, boolean isMovingOverall) implements CustomPacketPayload {
     public static final Type<MovementDataPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "movement_data"));
@@ -28,10 +27,10 @@ public record MovementDataPacket(boolean isJumping, boolean isMovingHorizontally
         return TYPE;
     }
 
-    public static void execute(MovementDataPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(MovementDataPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            AetherIIPlayerAttachment attachment = serverPlayer.getData(AetherIIDataAttachments.PLAYER);
+            AetherIIPlayerAttachment attachment = serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
             attachment.setJumping(payload.isJumping());
             attachment.setMovingHorizontally(payload.isMovingHorizontally());
             attachment.setMovingOverall(payload.isMovingOverall());

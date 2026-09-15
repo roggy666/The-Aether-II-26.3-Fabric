@@ -9,7 +9,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record AlkahestDamageBlockPacket(BlockPos pos, int destroySpeed, boolean drop) implements CustomPacketPayload {
     public static final Type<AlkahestDamageBlockPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "alkahest_damage_block"));
@@ -28,9 +30,10 @@ public record AlkahestDamageBlockPacket(BlockPos pos, int destroySpeed, boolean 
         return TYPE;
     }
 
-    public static void execute(AlkahestDamageBlockPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(AlkahestDamageBlockPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            AlkahestFluid.progressivelyDestroyBlock(context.player().level(), payload.pos(), payload.destroySpeed(), payload.drop());
+            AlkahestFluid.progressivelyDestroyBlock(player.level(), payload.pos(), payload.destroySpeed(), payload.drop());
         }
     }
 }

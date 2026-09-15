@@ -49,7 +49,7 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRe
         } else {
             renderState.wobbleProgress = 0.0F;
         }
-        renderState.vaseTexture = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/vases/" + Objects.requireNonNull(blockEntity.getBlockState().getBlock().builtInRegistryHolder().getKey()).identifier().getPath() + ".png");
+        renderState.vaseTexture = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/vases/" + Objects.requireNonNull(blockEntity.getBlockState().getBlock().builtInRegistryHolder().unwrapKey().orElseThrow()).identifier().getPath() + ".png");
     }
 
     public void submit(VaseRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState camera) {
@@ -72,11 +72,13 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRe
                 poseStack.rotateAround(Axis.YP.rotation(f4 * f5), 0.0F, 0.0F, 0.0F);
             }
         }
-        nodeCollector.submitModelPart(this.vaseModel, poseStack, RenderTypes.entityCutout(renderState.vaseTexture), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null, false, false, -1, null, 0);
+        nodeCollector.submitModelPart(this.vaseModel, poseStack, RenderTypes.entityCutout(renderState.vaseTexture), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null, -1, renderState.breakProgress, 0);
         poseStack.popPose();
     }
 
     @Override
+    public boolean shouldRenderOffScreen() { return true; }
+
     public AABB getRenderBoundingBox(VaseBlockEntity blockEntity) {
         BlockPos pos = blockEntity.getBlockPos();
         return new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0, pos.getY() + 1.3, pos.getZ() + 1.0);

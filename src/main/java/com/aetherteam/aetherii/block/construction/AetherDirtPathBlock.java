@@ -19,7 +19,7 @@ public class AetherDirtPathBlock extends DirtPathBlock {
      */
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Block.pushEntitiesUp(this.defaultBlockState(), AetherIIBlocks.AETHER_DIRT.get().defaultBlockState(), context.getLevel(), context.getClickedPos()) : this.defaultBlockState();
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Block.pushEntitiesUp(this.defaultBlockState(), AetherIIBlocks.AETHER_DIRT.defaultBlockState(), context.getLevel(), context.getClickedPos()) : this.defaultBlockState();
     }
 
     /**

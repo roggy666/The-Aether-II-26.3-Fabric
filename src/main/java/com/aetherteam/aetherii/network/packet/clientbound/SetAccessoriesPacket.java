@@ -11,7 +11,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
@@ -50,10 +52,11 @@ public record SetAccessoriesPacket(int entityId, List<Pair<Integer, ItemStack>> 
         return TYPE;
     }
 
-    public static void execute(SetAccessoriesPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(SetAccessoriesPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             if (Minecraft.getInstance().level.getEntity(payload.entityId()) instanceof LivingEntity livingEntity) {
-                payload.list().forEach((pair) -> livingEntity.getData(AetherIIDataAttachments.ACCESSORIES.get()).setItemWithEquip(livingEntity, pair.getFirst(), pair.getSecond()));
+                payload.list().forEach((pair) -> livingEntity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES).setItemWithEquip(livingEntity, pair.getFirst(), pair.getSecond()));
             }
         }
     }

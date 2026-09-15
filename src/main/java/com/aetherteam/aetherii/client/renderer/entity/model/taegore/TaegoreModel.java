@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model.taegore;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.TaegoreRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -10,15 +11,14 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class TaegoreModel extends EntityModel<TaegoreRenderState> {
-	public static final AnimationHolder DIG_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig"));
-	public static final AnimationHolder DIG_START_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig_start"));
-	public static final AnimationHolder DIG_END_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig_end"));
-	private final KeyframeAnimation digAnimation;
-	private final KeyframeAnimation digStartAnimation;
-	private final KeyframeAnimation digEndAnimation;
+	public static final Identifier DIG_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig");
+	public static final Identifier DIG_START_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig_start");
+	public static final Identifier DIG_END_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "taegore/dig_end");
+	private final AetherIIAnimations.ReloadableAnimation digAnimation;
+	private final AetherIIAnimations.ReloadableAnimation digStartAnimation;
+	private final AetherIIAnimations.ReloadableAnimation digEndAnimation;
 	private final ModelPart body_main;
 	private final ModelPart head_main;
 	private final ModelPart head_lower;
@@ -48,9 +48,9 @@ public class TaegoreModel extends EntityModel<TaegoreRenderState> {
 
 	public TaegoreModel(ModelPart root) {
         super(root);
-		this.digAnimation = DIG_ANIMATION.get().bake(root);
-		this.digStartAnimation = DIG_START_ANIMATION.get().bake(root);
-		this.digEndAnimation = DIG_END_ANIMATION.get().bake(root);
+		this.digAnimation = AetherIIAnimations.bake(DIG_ANIMATION, root);
+		this.digStartAnimation = AetherIIAnimations.bake(DIG_START_ANIMATION, root);
+		this.digEndAnimation = AetherIIAnimations.bake(DIG_END_ANIMATION, root);
         this.body_main = root.getChild("body_main");
 		this.head_main = body_main.getChild("head_main");
 		this.head_lower = head_main.getChild("head_lower");

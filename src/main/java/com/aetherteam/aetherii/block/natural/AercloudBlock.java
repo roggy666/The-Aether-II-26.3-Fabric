@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
+import com.aetherteam.aetherii.block.EntityFrictionBlock;
 import com.aetherteam.aetherii.entity.vehicle.CloudSkiff;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class AercloudBlock extends HalfTransparentBlock implements LiquidBlockContainer {
+public class AercloudBlock extends HalfTransparentBlock implements LiquidBlockContainer, EntityFrictionBlock {
     protected static final VoxelShape COLLISION_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 0.01, 16.0);
     protected static final VoxelShape FALLING_COLLISION_SHAPE = Shapes.box(0.0, 0.0, 0.0, 1.0, 0.9, 1.0);
     protected static final VoxelShape ITEM_COLLISION_SHAPE = Shapes.box(0.0, 0.0, 0.0, 1.0, 0.65, 1.0);
@@ -129,7 +130,7 @@ public class AercloudBlock extends HalfTransparentBlock implements LiquidBlockCo
     @Override
     public float getFriction(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
         if (!(entity instanceof ItemEntity)) {
-            return entity instanceof CloudSkiff ? 0.92F : super.getFriction(state, level, pos, entity);
+            return entity instanceof CloudSkiff ? 0.92F : super.getFriction();
         } else {
             return 0.85F;
         }

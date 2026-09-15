@@ -44,7 +44,7 @@ public class ArtisansBenchMenu extends AbstractContainerMenu {
     }
 
     public ArtisansBenchMenu(int containerId, Inventory playerInventory, final ContainerLevelAccess access) {
-        super(AetherIIMenuTypes.ARTISANS_BENCH.get(), containerId);
+        super(AetherIIMenuTypes.ARTISANS_BENCH, containerId);
         this.selectedRecipeIndex = DataSlot.standalone();
         this.recipesForInput = SelectableRecipe.SingleInputSet.empty();
         this.access = access;
@@ -68,7 +68,7 @@ public class ArtisansBenchMenu extends AbstractContainerMenu {
                 access.execute((level, pos) -> {
                     long l = level.getGameTime();
                     if (ArtisansBenchMenu.this.lastSoundTime != l) {
-                        level.playSound(null, pos, AetherIISoundEvents.UI_ARTISANS_BENCH_TAKE_RESULT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.playSound(null, pos, AetherIISoundEvents.UI_ARTISANS_BENCH_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
                         ArtisansBenchMenu.this.lastSoundTime = l;
                     }
                 });
@@ -102,7 +102,7 @@ public class ArtisansBenchMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(this.access, player, AetherIIBlocks.ARTISANS_BENCH.get());
+        return stillValid(this.access, player, AetherIIBlocks.ARTISANS_BENCH);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class ArtisansBenchMenu extends AbstractContainerMenu {
 
     @Override
     public MenuType<?> getType() {
-        return AetherIIMenuTypes.ARTISANS_BENCH.get();
+        return AetherIIMenuTypes.ARTISANS_BENCH;
     }
 
     public void registerUpdateListener(Runnable listener) {

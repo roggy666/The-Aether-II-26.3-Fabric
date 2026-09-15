@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_1",
+  "textures": {
+    "all": "aether_ii:block/greatroot_sign",
+    "particle": "aether_ii:block/greatroot_planks"
+  }
+}

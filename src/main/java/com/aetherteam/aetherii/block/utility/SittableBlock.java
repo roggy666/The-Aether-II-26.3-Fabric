@@ -21,7 +21,7 @@ public abstract class SittableBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!this.seatBlocked(level, pos) && !this.seatExists(state, level, pos)) {
-            SittableEntity sittable = new SittableEntity(level, pos.getBottomCenter().add(this.offsetSeatFromBottom(state, pos)), this.getFacing(state, pos).toYRot(), state);
+            SittableEntity sittable = new SittableEntity(level, Vec3.atBottomCenterOf(pos).add(this.offsetSeatFromBottom(state, pos)), this.getFacing(state, pos).toYRot(), state);
             if (!level.isClientSide()) {
                 level.addFreshEntity(sittable);
             }

@@ -20,7 +20,7 @@ import com.aetherteam.nitrogen.data.providers.NitrogenRecipeProvider;
 import com.aetherteam.nitrogen.recipe.BlockPropertyPair;
 import com.aetherteam.nitrogen.recipe.BlockStateIngredient;
 import com.aetherteam.nitrogen.recipe.builder.BlockStateRecipeBuilder;
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
@@ -42,8 +42,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.core.component.DataComponentType;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -60,7 +61,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     }
 
     @Override
-    protected void dyedItem(Item target, String group) {
+    public void dyedItem(Item target, String group) {
         CustomCraftingRecipeBuilder.customCrafting(
                         RecipeCategory.MISC,
                         (commonInfo, bookInfo) -> new DyeRecipe(commonInfo, bookInfo, Ingredient.of(target), this.tag(ItemTags.DYES), new ItemStackTemplate(target))
@@ -71,7 +72,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     }
 
     @Override
-    protected void oneToOneConversionRecipe(ItemLike result, ItemLike ingredient, @Nullable String group) {
+    public void oneToOneConversionRecipe(ItemLike result, ItemLike ingredient, @Nullable String group) {
         this.shapeless(RecipeCategory.MISC, result, 1)
                 .requires(ingredient)
                 .group(group)
@@ -88,12 +89,88 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .save(this.output);
     }
 
-    protected ShapedRecipeBuilder fence(Supplier<? extends Block> fence, Supplier<? extends Block> material) {
-        return this.fence(this.getter, fence, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)));
+    protected ShapedRecipeBuilder fence(Block fence, Block material) {
+        return this.fence(this.getter, () -> fence, () -> material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)));
     }
 
-    protected ShapedRecipeBuilder fenceGate(Supplier<? extends Block> fenceGate, Supplier<? extends Block> material) {
-        return this.fenceGate(this.getter, fenceGate, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)));
+    protected ShapedRecipeBuilder fenceGate(Block fenceGate, Block material) {
+        return this.fenceGate(this.getter, () -> fenceGate, () -> material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)));
+    }
+
+    protected RecipeBuilder stairs(Block stairs, Block material) {
+        return this.stairs(() -> stairs, () -> material);
+    }
+
+    // Nitrogen's armor/accessory helpers still take Suppliers; these wrap the directly-registered items.
+    protected ShapedRecipeBuilder makeHelmet(HolderGetter<Item> getter, Item helmet, Item material) {
+        return this.makeHelmet(getter, () -> helmet, () -> material);
+    }
+
+    protected ShapedRecipeBuilder makeChestplate(HolderGetter<Item> getter, Item chestplate, Item material) {
+        return this.makeChestplate(getter, () -> chestplate, () -> material);
+    }
+
+    protected ShapedRecipeBuilder makeLeggings(HolderGetter<Item> getter, Item leggings, Item material) {
+        return this.makeLeggings(getter, () -> leggings, () -> material);
+    }
+
+    protected ShapedRecipeBuilder makeBoots(HolderGetter<Item> getter, Item boots, Item material) {
+        return this.makeBoots(getter, () -> boots, () -> material);
+    }
+
+    protected ShapedRecipeBuilder makeGloves(HolderGetter<Item> getter, Item gloves, Item material) {
+        return this.makeGloves(getter, () -> gloves, () -> material);
+    }
+
+    protected ShapedRecipeBuilder makeHelmetWithTag(HolderGetter<Item> getter, Item helmet, TagKey<Item> material, String has) {
+        return this.makeHelmetWithTag(getter, () -> helmet, material, has);
+    }
+
+    protected ShapedRecipeBuilder makeChestplateWithTag(HolderGetter<Item> getter, Item chestplate, TagKey<Item> material, String has) {
+        return this.makeChestplateWithTag(getter, () -> chestplate, material, has);
+    }
+
+    protected ShapedRecipeBuilder makeLeggingsWithTag(HolderGetter<Item> getter, Item leggings, TagKey<Item> material, String has) {
+        return this.makeLeggingsWithTag(getter, () -> leggings, material, has);
+    }
+
+    protected ShapedRecipeBuilder makeBootsWithTag(HolderGetter<Item> getter, Item boots, TagKey<Item> material, String has) {
+        return this.makeBootsWithTag(getter, () -> boots, material, has);
+    }
+
+    protected ShapedRecipeBuilder makeGlovesWithTag(HolderGetter<Item> getter, Item gloves, TagKey<Item> material, String has) {
+        return this.makeGlovesWithTag(getter, () -> gloves, material, has);
+    }
+
+    protected ShapedRecipeBuilder makeRing(HolderGetter<Item> getter, Item ring, Item material) {
+        return this.makeRing(getter, () -> ring, material);
+    }
+
+    protected ShapedRecipeBuilder makePendant(HolderGetter<Item> getter, Item pendant, Item material, Ingredient string) {
+        return this.makePendant(getter, () -> pendant, material, string);
+    }
+
+    protected ShapedRecipeBuilder makeRingWithTag(HolderGetter<Item> getter, Item ring, TagKey<Item> material, String has) {
+        return this.makeRingWithTag(getter, () -> ring, material, has);
+    }
+
+    protected ShapedRecipeBuilder makePendantWithTag(HolderGetter<Item> getter, Item pendant, TagKey<Item> material, Ingredient string, String has) {
+        return this.makePendantWithTag(getter, () -> pendant, material, string, has);
+    }
+
+    /**
+     * NeoForge's non-strict {@code DataComponentIngredient}: the item must carry the given component values.
+     */
+    protected static Ingredient componentIngredient(ItemStackTemplate template) {
+        return DefaultCustomIngredients.components(Ingredient.of(template.item().value()), template.components());
+    }
+
+    protected static Ingredient componentIngredient(DataComponentPatch patch, ItemLike item) {
+        return DefaultCustomIngredients.components(Ingredient.of(item), patch);
+    }
+
+    protected static <T> Ingredient componentIngredient(DataComponentType<T> type, T value, ItemLike item) {
+        return DefaultCustomIngredients.components(Ingredient.of(item), DataComponentPatch.builder().set(type, value).build());
     }
 
     protected void cloudwool(HolderGetter<Item> getter, RecipeCategory itemCategory, ItemLike item, RecipeCategory blockCategory, ItemLike block, String itemRecipeName, String itemGroup) {
@@ -152,7 +229,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
         ShapedRecipeBuilder.shaped(getter, RecipeCategory.DECORATIONS, result, 3)
                 .group("wooden_sign")
                 .define('P', block)
-                .define('/', Tags.Items.RODS_WOODEN)
+                .define('/', ConventionalItemTags.WOODEN_RODS)
                 .pattern("PPP")
                 .pattern("PPP")
                 .pattern(" / ")
@@ -191,32 +268,32 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .save(this.output, this.name("dyed_" + getItemName(result)));
     }
 
-    protected ShapedRecipeBuilder makePickaxeWithTag(Supplier<? extends Item> pickaxe, TagKey<Item> material, String has) {
-        return this.makePickaxeWithTag(this.getter, pickaxe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
+    protected ShapedRecipeBuilder makePickaxeWithTag(Item pickaxe, TagKey<Item> material, String has) {
+        return this.makePickaxeWithTag(this.getter, () -> pickaxe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeAxeWithTag(Supplier<? extends Item> axe, TagKey<Item> material, String has) {
-        return this.makeAxeWithTag(this.getter, axe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
+    protected ShapedRecipeBuilder makeAxeWithTag(Item axe, TagKey<Item> material, String has) {
+        return this.makeAxeWithTag(this.getter, () -> axe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeShovelWithTag(Supplier<? extends Item> shovel, TagKey<Item> material, String has) {
-        return this.makeShovelWithTag(this.getter, shovel, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
+    protected ShapedRecipeBuilder makeShovelWithTag(Item shovel, TagKey<Item> material, String has) {
+        return this.makeShovelWithTag(this.getter, () -> shovel, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeHoeWithTag(Supplier<? extends Item> hoe, TagKey<Item> material, String has) {
-        return this.makeHoeWithTag(this.getter, hoe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
+    protected ShapedRecipeBuilder makeHoeWithTag(Item hoe, TagKey<Item> material, String has) {
+        return this.makeHoeWithTag(this.getter, () -> hoe, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeSwordWithTag(Supplier<? extends Item> sword, TagKey<Item> material, String has) {
-        return this.makeSwordWithTag(this.getter, sword, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
+    protected ShapedRecipeBuilder makeSwordWithTag(Item sword, TagKey<Item> material, String has) {
+        return this.makeSwordWithTag(this.getter, () -> sword, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeHammerWithTag(Supplier<? extends Item> hammer, TagKey<Item> material, String has) {
+    protected ShapedRecipeBuilder makeHammerWithTag(Item hammer, TagKey<Item> material, String has) {
         return this.makeHammerWithTag(hammer, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeHammerWithTag(Supplier<? extends Item> hammer, TagKey<Item> material, Ingredient sticks, String has) {
-        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, hammer.get())
+    protected ShapedRecipeBuilder makeHammerWithTag(Item hammer, TagKey<Item> material, Ingredient sticks, String has) {
+        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, hammer)
                 .define('#', material)
                 .define('/', sticks)
                 .pattern(" # ")
@@ -225,12 +302,12 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
-    protected ShapedRecipeBuilder makePikeWithTag(Supplier<? extends Item> spear, TagKey<Item> material, String has) {
+    protected ShapedRecipeBuilder makePikeWithTag(Item spear, TagKey<Item> material, String has) {
         return this.makePikeWithTag(spear, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makePikeWithTag(Supplier<? extends Item> spear, TagKey<Item> material, Ingredient sticks, String has) {
-        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, spear.get())
+    protected ShapedRecipeBuilder makePikeWithTag(Item spear, TagKey<Item> material, Ingredient sticks, String has) {
+        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, spear)
                 .define('#', material)
                 .define('/', sticks)
                 .pattern("#")
@@ -239,12 +316,12 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
-    protected ShapedRecipeBuilder makeCrossbowWithTag(Supplier<? extends Item> spear, TagKey<Item> material, String has) {
+    protected ShapedRecipeBuilder makeCrossbowWithTag(Item spear, TagKey<Item> material, String has) {
         return this.makeCrossbowWithTag(spear, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeCrossbowWithTag(Supplier<? extends Item> spear, TagKey<Item> material, Ingredient sticks, String has) {
-        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, spear.get())
+    protected ShapedRecipeBuilder makeCrossbowWithTag(Item spear, TagKey<Item> material, Ingredient sticks, String has) {
+        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, spear)
                 .define('#', material)
                 .define('/', sticks)
                 .define('C', AetherIIItems.CLOUDTWINE)
@@ -254,12 +331,12 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
-    protected ShapedRecipeBuilder makeShieldWithItem(Supplier<? extends Item> shield, Item material, String has) {
+    protected ShapedRecipeBuilder makeShieldWithItem(Item shield, Item material, String has) {
         return this.makeShieldWithTag(shield, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeShieldWithTag(Supplier<? extends Item> shield, Item material, Ingredient sticks, String has) {
-        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, shield.get())
+    protected ShapedRecipeBuilder makeShieldWithTag(Item shield, Item material, Ingredient sticks, String has) {
+        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, shield)
                 .define('W', material)
                 .define('o', sticks)
                 .pattern("WoW")
@@ -268,12 +345,12 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
-    protected ShapedRecipeBuilder makeShieldWithTag(Supplier<? extends Item> shield, TagKey<Item> material, String has) {
+    protected ShapedRecipeBuilder makeShieldWithTag(Item shield, TagKey<Item> material, String has) {
         return this.makeShieldWithTag(shield, material, Ingredient.of(this.getter.getOrThrow(AetherIITags.Items.RODS_SKYROOT)), has);
     }
 
-    protected ShapedRecipeBuilder makeShieldWithTag(Supplier<? extends Item> shield, TagKey<Item> material, Ingredient sticks, String has) {
-        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, shield.get())
+    protected ShapedRecipeBuilder makeShieldWithTag(Item shield, TagKey<Item> material, Ingredient sticks, String has) {
+        return ShapedRecipeBuilder.shaped(this.getter, RecipeCategory.COMBAT, shield)
                 .define('W', material)
                 .define('o', sticks)
                 .pattern("WoW")
@@ -282,30 +359,30 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .unlockedBy(has, has(material));
     }
 
-    protected void makeDartsWithEffect(Holder<Item> darts, Supplier<? extends Item> ingredient, EffectBuildupPresets.Preset preset) {
+    protected void makeDartsWithEffect(Item darts, Item ingredient, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS.get(), new BuildupContents(preset)).build()))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build()))
                 .group("amber_darts")
-                .requires(Ingredient.of(darts.value()))
-                .requires(Ingredient.of(ingredient.get()))
-                .unlockedBy("has_ingredient", has(ingredient.get()))
+                .requires(Ingredient.of(darts))
+                .requires(Ingredient.of(ingredient))
+                .unlockedBy("has_ingredient", has(ingredient))
                 .save(this.output, this.name("amber_darts_" + effect));
     }
 
-    protected void loadDartShooter(Holder<Item> dartShooter, Holder<Item> darts, EffectBuildupPresets.Preset preset) {
+    protected void loadDartShooter(Item dartShooter, Item darts, EffectBuildupPresets.Preset preset) {
         String effect = BuiltInRegistries.MOB_EFFECT.getKey(preset.type().value()).toString().replace(':', '_');
-        ItemStackTemplate effectDarts = new ItemStackTemplate(darts, 1, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS.get(), new BuildupContents(preset)).build());
+        ItemStackTemplate effectDarts = new ItemStackTemplate(darts, DataComponentPatch.builder().set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset)).build());
 
         DataComponentPatch dartShooterData = DataComponentPatch.builder()
                 .set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.of(Objects.requireNonNull(effectDarts)))
-                .set(AetherIIDataComponents.DARTS_LOADED.get(), AmberDartsItem.FULL_AMOUNT)
-                .set(AetherIIDataComponents.BUILDUP_CONTENTS.get(), new BuildupContents(preset))
+                .set(AetherIIDataComponents.DARTS_LOADED, AmberDartsItem.FULL_AMOUNT)
+                .set(AetherIIDataComponents.BUILDUP_CONTENTS, new BuildupContents(preset))
                 .build();
-        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(dartShooter, 1, dartShooterData))
+        ShapelessRecipeBuilder.shapeless(this.getter, RecipeCategory.MISC, new ItemStackTemplate(dartShooter, dartShooterData))
                 .group("load_dart_shooter")
-                .requires(Ingredient.of(dartShooter.value()))
-                .requires(DataComponentIngredient.of(false, effectDarts))
-                .unlockedBy("has_darts", has(darts.value()))
+                .requires(Ingredient.of(dartShooter))
+                .requires(componentIngredient(effectDarts))
+                .unlockedBy("has_darts", has(darts))
                 .save(this.output, this.name("dart_shooter_" + effect));
     }
 
@@ -320,10 +397,10 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
                 .save(this.output);
     }
 
-    protected final void foodCooking(Supplier<? extends ItemLike> material, Supplier<? extends ItemLike> result, float xp, RecipeOutput consumer) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material.get()), RecipeCategory.FOOD, CookingBookCategory.FOOD, result.get(), xp, 200).unlockedBy("has_item", has(material.get())).save(consumer, this.name("smelting_" + getHasName(result.get())));
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(material.get()), RecipeCategory.FOOD, result.get(), xp, 100).unlockedBy("has_item", has(material.get())).save(consumer, this.name("smoking_" + getHasName(result.get())));
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(material.get()), RecipeCategory.FOOD, result.get(), xp, 600).unlockedBy("has_item", has(material.get())).save(consumer, this.name("campfire_cooking_" + getHasName(result.get())));
+    protected final void foodCooking(ItemLike material, ItemLike result, float xp, RecipeOutput consumer) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(material), RecipeCategory.FOOD, CookingBookCategory.FOOD, result, xp, 200).unlockedBy("has_item", has(material)).save(consumer, this.name("smelting_" + getHasName(result)));
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(material), RecipeCategory.FOOD, result, xp, 100).unlockedBy("has_item", has(material)).save(consumer, this.name("smoking_" + getHasName(result)));
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(material), RecipeCategory.FOOD, result, xp, 600).unlockedBy("has_item", has(material)).save(consumer, this.name("campfire_cooking_" + getHasName(result)));
     }
 
     protected HourglassItemEntry hourglass(ItemLike item, int count, int weight) {
@@ -379,7 +456,7 @@ public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     }
 
     protected AltarEnchantingRecipeBuilder altarEnchanting(RecipeCategory category, AltarBookCategory bookCategory, ItemStackTemplate result, ItemStackTemplate ingredient, int fuelCount, float experience) {
-        return AltarEnchantingRecipeBuilder.enchanting(DataComponentIngredient.of(false, ingredient), category, bookCategory, result, experience, fuelCount, 200).unlockedBy("has_item", has(ingredient.item().value()));
+        return AltarEnchantingRecipeBuilder.enchanting(componentIngredient(ingredient), category, bookCategory, result, experience, fuelCount, 200).unlockedBy("has_item", has(ingredient.item().value()));
     }
 
     protected AltarEnchantingRecipeBuilder altarRepairing(RecipeCategory category, ItemLike item, int fuelCount) {

@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.mixin.mixins.common;
 
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.aetherteam.aetherii.event.AetherIIEvents;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.living.EffectsSystemAttachment;
@@ -31,7 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -73,8 +75,8 @@ public class EntityMixin {
                     } else if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player) {
                         entityFell(projectile);
                     } else if (entity instanceof ItemEntity itemEntity) {
-                        if (itemEntity.hasData(AetherIIDataAttachments.DROPPED_ITEM)) {
-                            if (itemEntity.getOwner() instanceof Player || itemEntity.getData(AetherIIDataAttachments.DROPPED_ITEM).getOwner(level) instanceof Player) { // Checks if an entity is an item that was dropped by a player.
+                        if (itemEntity.hasAttached(AetherIIDataAttachments.DROPPED_ITEM)) {
+                            if (itemEntity.getOwner() instanceof Player || itemEntity.getAttachedOrCreate(AetherIIDataAttachments.DROPPED_ITEM).getOwner(level) instanceof Player) { // Checks if an entity is an item that was dropped by a player.
                                 entityFell(entity);
                             }
                         }
@@ -111,7 +113,7 @@ public class EntityMixin {
                         if (nextPassenger != null) {
                             nextPassenger.startRiding(target, true, false);
                             if (target instanceof ServerPlayer serverPlayer) { // Fixes a desync between the server and client.
-                                PacketDistributor.sendToPlayer(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
+                                ServerPlayNetworking.send(serverPlayer, new SetVehiclePacket(nextPassenger.getId(), target.getId()));
                             }
                         }
                     }
@@ -135,7 +137,7 @@ public class EntityMixin {
     private void move(Args args) {
         Entity entity = (Entity) (Object) this;
         if (entity instanceof LivingEntity livingEntity) {
-            EffectsSystemAttachment attachment = livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM);
+            EffectsSystemAttachment attachment = livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM);
             Vec3 multiplier = attachment.getMotionMultiplier();
             if (multiplier.length() != new Vec3(1, 1, 1).length()) {
                 Vec3 movement = args.get(0);
@@ -147,12 +149,49 @@ public class EntityMixin {
     @WrapMethod(method = "checkFallDamage(DZLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V")
     private void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos, Operation<Void> original) {
         Entity entity = (Entity) (Object) this;
-        if ((entity.getFirstPassenger() != null && entity.getFirstPassenger().getType() == AetherIIEntityTypes.AERBUNNY.get())
+        if ((entity.getFirstPassenger() != null && entity.getFirstPassenger().getType() == AetherIIEntityTypes.AERBUNNY)
                 || (entity instanceof LivingEntity livingEntity && livingEntity.getUseItem().is(AetherIITags.Items.TOOLS_GLIDERS))
-                || (entity instanceof Player player && !player.onGround() && !(player.isInWater()/* || player.isInFluidType()*/) && ((LivingEntityAccessor) player).aether$isJumping() && ((LivingEntityAccessor) player).aether$getNoJumpDelay() == 0 && EquipmentUtil.hasArmorAbility(player, AetherIITags.Items.GRAVITITE_ARMOR) && !player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isGravititeJumpUsed())) {
+                || (entity instanceof Player player && !player.onGround() && !(player.isInWater()/* || player.isInFluidType()*/) && ((LivingEntityAccessor) player).aether$isJumping() && ((LivingEntityAccessor) player).aether$getNoJumpDelay() == 0 && EquipmentUtil.hasArmorAbility(player, AetherIITags.Items.GRAVITITE_ARMOR) && !player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isGravititeJumpUsed())) {
             entity.resetFallDistance();
         } else {
             original.call(y, onGround, state, pos);
+        }
+    }
+
+    // ---- AetherIIEvents (NeoForge event equivalents) ----
+
+    @Inject(method = "tick()V", at = @At("HEAD"))
+    private void aether_ii$tickPre(CallbackInfo ci) {
+        AetherIIEvents.ENTITY_TICK_PRE.invoker().onEntityTick((Entity) (Object) this);
+    }
+
+    @Inject(method = "tick()V", at = @At("TAIL"))
+    private void aether_ii$tickPost(CallbackInfo ci) {
+        AetherIIEvents.ENTITY_TICK_POST.invoker().onEntityTick((Entity) (Object) this);
+    }
+
+    @Inject(method = "startRiding(Lnet/minecraft/world/entity/Entity;ZZ)Z", at = @At("HEAD"), cancellable = true)
+    private void aether_ii$mount(Entity vehicle, boolean force, boolean sendEventAndTriggers, CallbackInfoReturnable<Boolean> cir) {
+        if (!AetherIIEvents.ENTITY_MOUNT.invoker().allowMount((Entity) (Object) this, vehicle, false)) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "removeVehicle", at = @At("HEAD"), cancellable = true)
+    private void aether_ii$dismount(CallbackInfo ci) {
+        Entity self = (Entity) (Object) this;
+        if (self.getVehicle() != null && !AetherIIEvents.ENTITY_MOUNT.invoker().allowMount(self, self.getVehicle(), true)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "teleport(Lnet/minecraft/world/level/portal/TeleportTransition;)Lnet/minecraft/world/entity/Entity;", at = @At("HEAD"), cancellable = true)
+    private void aether_ii$travelToDimension(TeleportTransition transition, CallbackInfoReturnable<Entity> cir) {
+        Entity self = (Entity) (Object) this;
+        if (self.level() instanceof ServerLevel && transition.newLevel().dimension() != self.level().dimension()) {
+            if (!AetherIIEvents.ENTITY_TRAVEL_TO_DIMENSION.invoker().allowTravel(self, transition.newLevel().dimension())) {
+                cir.setReturnValue(null);
+            }
         }
     }
 }

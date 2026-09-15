@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.client;
 
+import net.fabricmc.fabric.api.client.rendering.v1.ColorResolverRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.IrradiatedLeavesBlock;
@@ -9,7 +11,6 @@ import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 import java.awt.*;
 import java.util.List;
@@ -20,37 +21,37 @@ public class AetherIIColorResolvers {
 
     public static final ColorResolver GRASS_COLORS = BiomeHooks::getColor;
 
-    public static void registerColorResolvers(RegisterColorHandlersEvent.ColorResolvers event) {
-        event.register(GRASS_COLORS);
+    public static void registerColorResolvers() {
+        ColorResolverRegistry.register(GRASS_COLORS);
     }
 
-    public static void registerBlockColor(RegisterColorHandlersEvent.BlockTintSources event) {
-        event.register(List.of(irradiatedLeaves()),
-                AetherIIBlocks.IRRADIATED_SKYROOT_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_SKYPLANE_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_SKYBIRCH_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_SKYPINE_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_WISPROOT_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_WISPTOP_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_GREATROOT_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_GREATOAK_LEAVES.get(),
-                AetherIIBlocks.IRRADIATED_GREATBOA_LEAVES.get());
+    public static void registerBlockColor() {
+        BlockColorRegistry.register(List.of(irradiatedLeaves()),
+                AetherIIBlocks.IRRADIATED_SKYROOT_LEAVES,
+                AetherIIBlocks.IRRADIATED_SKYPLANE_LEAVES,
+                AetherIIBlocks.IRRADIATED_SKYBIRCH_LEAVES,
+                AetherIIBlocks.IRRADIATED_SKYPINE_LEAVES,
+                AetherIIBlocks.IRRADIATED_WISPROOT_LEAVES,
+                AetherIIBlocks.IRRADIATED_WISPTOP_LEAVES,
+                AetherIIBlocks.IRRADIATED_GREATROOT_LEAVES,
+                AetherIIBlocks.IRRADIATED_GREATOAK_LEAVES,
+                AetherIIBlocks.IRRADIATED_GREATBOA_LEAVES);
 
-        event.register(List.of(
+        BlockColorRegistry.register(List.of(
                 grassBlockColor(0, AETHER_GRASS_COLOR, 5.0F, 6.0F),
                 grassBlockColor(1, AETHER_GRASS_COLOR, 5.0F, 6.0F),
                 grassBlockColor(2, AETHER_GRASS_COLOR, 5.0F, 6.0F)
-        ), AetherIIBlocks.AETHER_GRASS_BLOCK.get());
+        ), AetherIIBlocks.AETHER_GRASS_BLOCK);
 
-        event.register(List.of(
+        BlockColorRegistry.register(List.of(
                 grassColor(0, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F),
                 grassColor(1, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F),
                 grassColor(2, AETHER_TALL_GRASS_COLOR, 5.0F, 6.0F)
-        ), AetherIIBlocks.SHORT_AETHER_GRASS.get(), AetherIIBlocks.MEDIUM_AETHER_GRASS.get(), AetherIIBlocks.TALL_AETHER_GRASS.get());
+        ), AetherIIBlocks.SHORT_AETHER_GRASS, AetherIIBlocks.MEDIUM_AETHER_GRASS, AetherIIBlocks.TALL_AETHER_GRASS);
 
-        event.register(List.of(
+        BlockColorRegistry.register(List.of(
                 fernColor(AETHER_TALL_GRASS_COLOR)
-        ), AetherIIBlocks.AETHER_FERN.get(), AetherIIBlocks.POTTED_AETHER_FERN.get());
+        ), AetherIIBlocks.AETHER_FERN, AetherIIBlocks.POTTED_AETHER_FERN);
     }
 
     public static BlockTintSource irradiatedLeaves() {

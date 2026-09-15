@@ -17,7 +17,7 @@ public class TaegoreSearching extends Behavior<Taegore> {
     public TaegoreSearching() {
         super(Map.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_PRESENT,
                 MemoryModuleType.IS_PANICKING, MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get(), MemoryStatus.VALUE_PRESENT
+                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET, MemoryStatus.VALUE_PRESENT
         ), 600);
     }
 
@@ -30,7 +30,7 @@ public class TaegoreSearching extends Behavior<Taegore> {
             return false;
         } else {
             Optional<BlockPos> hasWalkTarget = owner.getBrain().getMemory(MemoryModuleType.WALK_TARGET).map(WalkTarget::getTarget).map(PositionTracker::currentBlockPosition);
-            Optional<BlockPos> hasSearchTarget = owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get());
+            Optional<BlockPos> hasSearchTarget = owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET);
             return hasWalkTarget.isPresent() && hasSearchTarget.isPresent() && hasSearchTarget.get().equals(hasWalkTarget.get());
         }
     }
@@ -43,9 +43,9 @@ public class TaegoreSearching extends Behavior<Taegore> {
 
     protected void stop(ServerLevel serverLevel, Taegore owner, long gameTime) {
         if (owner.canDig() && owner.canSearch()) {
-            owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get(), true);
+            owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING, true);
         }
         owner.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
-        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get());
+        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET);
     }
 }

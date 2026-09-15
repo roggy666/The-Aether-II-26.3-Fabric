@@ -52,15 +52,15 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
     private final Moa moa;
 
     public GuidebookEquipmentMenu(int containerId, Inventory playerInventory) {
-        this(AetherIIMenuTypes.GUIDEBOOK.get(), containerId, playerInventory, -1);
+        this(AetherIIMenuTypes.GUIDEBOOK, containerId, playerInventory, -1);
     }
 
     public GuidebookEquipmentMenu(int containerId, Inventory playerInventory, Entity entity) {
-        this(AetherIIMenuTypes.GUIDEBOOK.get(), containerId, playerInventory, entity.getId());
+        this(AetherIIMenuTypes.GUIDEBOOK, containerId, playerInventory, entity.getId());
     }
 
     public GuidebookEquipmentMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf extraData) {
-        this(AetherIIMenuTypes.GUIDEBOOK.get(), containerId, playerInventory, ByteBufCodecs.INT.decode(extraData));
+        this(AetherIIMenuTypes.GUIDEBOOK, containerId, playerInventory, ByteBufCodecs.INT.decode(extraData));
     }
 
     public GuidebookEquipmentMenu(MenuType<GuidebookEquipmentMenu> menuType, int containerId, Inventory playerInventory, int entityId) {
@@ -176,7 +176,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
                 }
             }
         } else {
-            AccessoryContainer accessories = this.owner.getData(AetherIIDataAttachments.ACCESSORIES);
+            AccessoryContainer accessories = this.owner.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 0, 64, 38, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.RELIC, 1, 64, 56, RELIC_SLOT_LOCATION));
             this.addSlot(new AccessorySlot(accessories, this.owner, AccessoryContainer.SlotType.HANDWEAR, 2, 64, 74, HANDWEAR_SLOT_LOCATION));
@@ -277,7 +277,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(itemstack1, 35, 71, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (itemstack.is(AetherIIItems.MOA_SADDLE.get()) && !this.slots.get(0).hasItem()) {
+                } else if (itemstack.is(AetherIIItems.MOA_SADDLE) && !this.slots.get(0).hasItem()) {
                     if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

@@ -218,6 +218,7 @@ public class AetherIITags {
         public static final TagKey<Item> TOOLS_HAMMERS = tag("tools/hammers");
         public static final TagKey<Item> TOOLS_PIKES = tag("tools/pikes");
         public static final TagKey<Item> TOOLS_GLIDERS = tag("tools/gliders");
+        public static final TagKey<Item> NO_COMBINE_REPAIR = tag("no_combine_repair");
 
         public static final TagKey<Item> SKYROOT_TOOL = tag("tool/skyroot");
         public static final TagKey<Item> HOLYSTONE_TOOL = tag("tool/holystone");

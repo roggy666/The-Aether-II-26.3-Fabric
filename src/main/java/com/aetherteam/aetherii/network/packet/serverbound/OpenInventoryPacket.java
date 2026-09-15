@@ -9,8 +9,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 public record OpenInventoryPacket(ItemStack carryStack) implements CustomPacketPayload {
     public static final Type<OpenInventoryPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "open_inventory"));
@@ -25,8 +24,8 @@ public record OpenInventoryPacket(ItemStack carryStack) implements CustomPacketP
         return TYPE;
     }
 
-    public static void execute(OpenInventoryPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(OpenInventoryPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? payload.carryStack() : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
@@ -34,7 +33,7 @@ public record OpenInventoryPacket(ItemStack carryStack) implements CustomPacketP
             if (!itemStack.isEmpty()) {
                 if (!serverPlayer.isCreative()) {
                     serverPlayer.containerMenu.setCarried(itemStack);
-                    PacketDistributor.sendToPlayer(serverPlayer, new ClientGrabItemPacket(itemStack));
+                    ServerPlayNetworking.send(serverPlayer, new ClientGrabItemPacket(itemStack));
                 }
             }
         }

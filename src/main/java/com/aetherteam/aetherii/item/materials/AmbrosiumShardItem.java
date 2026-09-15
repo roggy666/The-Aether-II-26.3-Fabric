@@ -27,10 +27,10 @@ public class AmbrosiumShardItem extends Item implements ItemUseConversion<Ambros
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos().above();
-        InteractionResult result = this.convertBlock(AetherIIRecipePropertySets.AMBROSIUM_ENCHANTING_STATES, AetherIIRecipeTypes.AMBROSIUM_ENCHANTING.get(), context);
+        InteractionResult result = this.convertBlock(AetherIIRecipePropertySets.AMBROSIUM_ENCHANTING_STATES, AetherIIRecipeTypes.AMBROSIUM_ENCHANTING, context);
         if (level.isClientSide() && result == InteractionResult.SUCCESS) {
-            ParticleUtils.spawnParticlesOnBlockFace(level, pos, AetherIIParticleTypes.AMBROSIUM.get(), ConstantInt.of(25), Direction.UP, () -> Vec3.ZERO, -0.475);
-            context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), AetherIISoundEvents.ITEM_AMBROSIUM_SHARD.get(), SoundSource.BLOCKS, 1.0F, 3.0F + (context.getLevel().getRandom().nextFloat() - context.getLevel().getRandom().nextFloat()) * 0.8F);
+            ParticleUtils.spawnParticlesOnBlockFace(level, pos, AetherIIParticleTypes.AMBROSIUM, ConstantInt.of(25), Direction.UP, () -> Vec3.ZERO, -0.475);
+            context.getLevel().playSound(context.getPlayer(), context.getClickedPos(), AetherIISoundEvents.ITEM_AMBROSIUM_SHARD, SoundSource.BLOCKS, 1.0F, 3.0F + (context.getLevel().getRandom().nextFloat() - context.getLevel().getRandom().nextFloat()) * 0.8F);
         } else if (result == InteractionResult.PASS) {
             return super.useOn(context);
         }

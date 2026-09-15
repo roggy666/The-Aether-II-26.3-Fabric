@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "load_dart_shooter",
+  "ingredients": [
+    "aether_ii:dart_shooter",
+    {
+      "fabric:type": "fabric:components",
+      "base": "aether_ii:amber_darts",
+      "components": {
+        "aether_ii:buildup_contents": {
+          "amount": 55,
+          "preset": {
+            "type": "aether_ii:toxin",
+            "ambient": false,
+            "amplifier": 0,
+            "buildup_reduction_rate": 2,
+            "duration": 600,
+            "show_icon": false,
+            "visible": true
+          }
+        }
+      }
+    }
+  ],
+  "result": {
+    "components": {
+      "aether_ii:buildup_contents": {
+        "amount": 55,
+        "preset": {
+          "type": "aether_ii:toxin",
+          "ambient": false,
+          "amplifier": 0,
+          "buildup_reduction_rate": 2,
+          "duration": 600,
+          "show_icon": false,
+          "visible": true
+        }
+      },
+      "aether_ii:darts_loaded": 32,
+      "minecraft:charged_projectiles": [
+        {
+          "components": {
+            "aether_ii:buildup_contents": {
+              "amount": 55,
+              "preset": {
+                "type": "aether_ii:toxin",
+                "ambient": false,
+                "amplifier": 0,
+                "buildup_reduction_rate": 2,
+                "duration": 600,
+                "show_icon": false,
+                "visible": true
+              }
+            }
+          },
+          "id": "aether_ii:amber_darts"
+        }
+      ]
+    },
+    "id": "aether_ii:dart_shooter"
+  }
+}

@@ -12,12 +12,18 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class AccessorySlot extends Slot {
     private final Player owner;
     private final AccessoryContainer.SlotType slotType;
+    private final Identifier emptyIcon;
 
     public AccessorySlot(Container container, Player owner, AccessoryContainer.SlotType slotType, int index, int xPosition, int yPosition, Identifier emptyIcon) {
         super(container, index, xPosition, yPosition);
         this.owner = owner;
         this.slotType = slotType;
-        this.setBackground(emptyIcon);
+        this.emptyIcon = emptyIcon;
+    }
+
+    @Override
+    public Identifier getNoItemIcon() {
+        return this.emptyIcon;
     }
 
     @Override

@@ -8,7 +8,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClearAccessoriesPacket() implements CustomPacketPayload {
     public static final Type<ClearAccessoriesPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "clear_accessories"));
@@ -26,10 +25,10 @@ public record ClearAccessoriesPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(ClearAccessoriesPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(ClearAccessoriesPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.getData(AetherIIDataAttachments.ACCESSORIES).clearContent();
+            serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES).clearContent();
         }
     }
 }

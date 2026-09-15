@@ -27,7 +27,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
 import java.util.List;
@@ -102,7 +104,13 @@ public class AccessoryContainer extends SimpleContainer {
                         newList.add(Pair.of(i, copyStack));
                         this.lastItems.set(i, copyStack);
                     });
-                    PacketDistributor.sendToAllPlayers(new SetAccessoriesPacket(entity.getId(), newList));
+                    SetAccessoriesPacket packet = new SetAccessoriesPacket(entity.getId(), newList);
+                    if (entity instanceof ServerPlayer sp) {
+                        ServerPlayNetworking.send(sp, packet);
+                    }
+                    for (ServerPlayer player : PlayerLookup.tracking(entity)) {
+                        ServerPlayNetworking.send(player, packet);
+                    }
                 }
             }
         }

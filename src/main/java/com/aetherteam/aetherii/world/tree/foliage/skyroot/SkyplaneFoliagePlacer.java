@@ -104,6 +104,6 @@ public class SkyplaneFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.SKYPLANE_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.SKYPLANE_FOLIAGE_PLACER;
     }
 }

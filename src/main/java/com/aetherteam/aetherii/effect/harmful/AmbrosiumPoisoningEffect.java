@@ -4,17 +4,13 @@ import com.aetherteam.aetherii.effect.AetherIIMobEffects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 
 public class AmbrosiumPoisoningEffect extends MobEffect {
     public AmbrosiumPoisoningEffect() {
         super(MobEffectCategory.HARMFUL, 0xE7D87A);
     }
 
-    public static void preventHealing(LivingHealEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (entity.hasEffect(AetherIIMobEffects.AMBROSIUM_POISONING)) {
-            event.setCanceled(true);
-        }
+    public static boolean preventHealing(LivingEntity entity, float amount) {
+        return !entity.hasEffect(AetherIIMobEffects.AMBROSIUM_POISONING);
     }
 }

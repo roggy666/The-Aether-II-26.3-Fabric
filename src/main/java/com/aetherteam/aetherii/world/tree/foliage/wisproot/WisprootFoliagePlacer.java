@@ -61,6 +61,6 @@ public class WisprootFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.WISPROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.WISPROOT_FOLIAGE_PLACER;
     }
 }

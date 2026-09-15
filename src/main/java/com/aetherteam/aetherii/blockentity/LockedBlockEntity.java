@@ -14,7 +14,7 @@ public class LockedBlockEntity extends CopyBlockEntity {
     }
 
     public LockedBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.LOCKED_BLOCK.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.LOCKED_BLOCK, pos, blockState);
     }
 
     @Override

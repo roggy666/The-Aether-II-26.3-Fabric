@@ -89,7 +89,7 @@ public class AlkahestPurifierRenderer implements BlockEntityRenderer<AlkahestPur
     public void extractRenderState(AlkahestPurifierBlockEntity blockEntity, AlkahestPurifierRenderState state, float p_446851_, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, p_446944_);
         boolean flag = blockEntity.getLevel() != null;
-        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.ALKAHEST_PURIFIER.get().defaultBlockState().setValue(AlkahestPurifierBlock.FACING, Direction.SOUTH);
+        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.ALKAHEST_PURIFIER.defaultBlockState().setValue(AlkahestPurifierBlock.FACING, Direction.SOUTH);
         state.angle = blockstate.getValue(AlkahestPurifierBlock.FACING).toYRot();
         state.level = blockstate.getValue(AlkahestPurifierBlock.LEVEL);
         state.open = blockEntity.getOpenNess(p_446851_);

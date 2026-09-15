@@ -40,10 +40,10 @@ public class WaterVialItem extends Item {
         Player player = context.getPlayer();
         ItemStack itemStack = context.getItemInHand();
         BlockState state = level.getBlockState(pos);
-        if (context.getClickedFace() != Direction.DOWN && (state.is(BlockTags.CONVERTABLE_TO_MUD) || state.is(AetherIIBlocks.FERROSITE_SAND.get()))) {
+        if (context.getClickedFace() != Direction.DOWN && (state.is(BlockTags.CONVERTABLE_TO_MUD) || state.is(AetherIIBlocks.FERROSITE_SAND))) {
             level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
             assert player != null;
-            player.setItemInHand(context.getHand(), ItemUtils.createFilledResult(itemStack, player, new ItemStack(AetherIIItems.SCATTERGLASS_VIAL.get())));
+            player.setItemInHand(context.getHand(), ItemUtils.createFilledResult(itemStack, player, new ItemStack(AetherIIItems.SCATTERGLASS_VIAL)));
             player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
             if (!level.isClientSide()) {
                 ServerLevel serverLevel = (ServerLevel) level;
@@ -58,10 +58,10 @@ public class WaterVialItem extends Item {
                 }
             }
 
-            level.playSound(null, pos, AetherIISoundEvents.ITEM_SCATTERGLASS_VIAL_EMPTY.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, AetherIISoundEvents.ITEM_SCATTERGLASS_VIAL_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
-            if (state.is(AetherIIBlocks.FERROSITE_SAND.get())) {
-                level.setBlockAndUpdate(pos, AetherIIBlocks.FERROSITE_MUD.get().defaultBlockState());
+            if (state.is(AetherIIBlocks.FERROSITE_SAND)) {
+                level.setBlockAndUpdate(pos, AetherIIBlocks.FERROSITE_MUD.defaultBlockState());
             }
             else level.setBlockAndUpdate(pos, Blocks.MUD.defaultBlockState());
 

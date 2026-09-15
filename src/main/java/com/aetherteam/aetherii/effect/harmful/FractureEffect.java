@@ -12,7 +12,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public class FractureEffect extends MobEffect {
     public FractureEffect() {
@@ -39,10 +38,9 @@ public class FractureEffect extends MobEffect {
         return true;
     }
 
-    public static void onEntityPostTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
+    public static void onEntityPostTick(Entity entity) {
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(AetherIIMobEffects.FRACTURE)) {
-            EffectsSystemAttachment attachment = livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM);
+            EffectsSystemAttachment attachment = livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM);
             attachment.setMotionMultiplier(attachment.getMotionMultiplier().multiply(new Vec3(0.7, 1.0, 0.7)));
         }
     }

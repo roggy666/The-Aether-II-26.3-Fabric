@@ -87,6 +87,6 @@ public class SingularAmberootFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.SINGULAR_AMBEROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.SINGULAR_AMBEROOT_FOLIAGE_PLACER;
     }
 }

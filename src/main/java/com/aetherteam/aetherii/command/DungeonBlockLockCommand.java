@@ -29,7 +29,7 @@ public class DungeonBlockLockCommand {
         for (BlockPos pos : BlockPos.betweenClosed(box.minX(), box.minY(), box.minZ(), box.maxX(), box.maxY(), box.maxZ())) {
             BlockState blockState = serverLevel.getBlockState(pos);
             if (!blockState.isAir()) {
-                BlockState newState = AetherIIBlocks.LOCKED_BLOCK.get().defaultBlockState().setValue(CopyBlock.EMPTY, false);
+                BlockState newState = AetherIIBlocks.LOCKED_BLOCK.defaultBlockState().setValue(CopyBlock.EMPTY, false);
                 serverLevel.setBlockAndUpdate(pos, newState);
                 if (serverLevel.getBlockEntity(pos) instanceof LockedBlockEntity lockedBlockEntity) {
                     lockedBlockEntity.setCopyState(blockState);

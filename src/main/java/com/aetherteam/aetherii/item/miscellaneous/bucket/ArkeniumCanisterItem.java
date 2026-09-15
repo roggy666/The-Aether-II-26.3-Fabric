@@ -1,8 +1,9 @@
 package com.aetherteam.aetherii.item.miscellaneous.bucket;
 
+import net.minecraft.world.level.block.LiquidBlockContainer;
 import com.aetherteam.aetherii.block.natural.CanisterPickup;
 import com.aetherteam.aetherii.item.AetherIIItems;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,8 +65,8 @@ public class ArkeniumCanisterItem extends BucketItem {
                     return InteractionResult.FAIL;
                 } else {
                     blockstate1 = level.getBlockState(blockpos);
-                    BlockPos blockpos2 = this.canBlockContainFluid(player, level, blockpos, blockstate1) ? blockpos : blockpos1;
-                    if (this.emptyContents(player, level, blockpos2, blockhitresult, itemstack)) {
+                    BlockPos blockpos2 = blockstate1.getBlock() instanceof LiquidBlockContainer container && container.canPlaceLiquid(player, level, blockpos, blockstate1, this.content) ? blockpos : blockpos1;
+                    if (this.emptyContents(player, level, blockpos2, blockhitresult)) {
                         this.checkExtraContent(player, level, itemstack, blockpos2);
                         if (player instanceof ServerPlayer) {
                             CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer)player, blockpos2, itemstack);
@@ -85,6 +86,6 @@ public class ArkeniumCanisterItem extends BucketItem {
     }
 
     public static ItemStack getEmptySuccessItem(ItemStack canisterStack, Player player) {
-        return !player.hasInfiniteMaterials() ? new ItemStack(AetherIIItems.ARKENIUM_CANISTER.get()) : canisterStack;
+        return !player.hasInfiniteMaterials() ? new ItemStack(AetherIIItems.ARKENIUM_CANISTER) : canisterStack;
     }
 }

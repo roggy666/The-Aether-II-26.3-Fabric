@@ -33,7 +33,7 @@ public class VaseBlockEntity extends BlockEntity implements RandomizableContaine
     protected long lootTableSeed;
 
     public VaseBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.VASE.get(), pos, state);
+        super(AetherIIBlockEntityTypes.VASE, pos, state);
         this.item = ItemStack.EMPTY;
     }
 

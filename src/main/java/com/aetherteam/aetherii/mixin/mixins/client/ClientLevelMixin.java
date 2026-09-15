@@ -18,7 +18,7 @@ public class ClientLevelMixin {
         ClientLevel clientLevel = (ClientLevel) (Object) this;
         if (clientLevel.getBiome(pos).is(AetherIITags.Biomes.THE_AETHER)) {
             if (dripParticle == ParticleTypes.DRIPPING_WATER) {
-                original.call(pos, state, AetherIIParticleTypes.DRIPPING_WATER.get(), isTopSolid);
+                original.call(pos, state, AetherIIParticleTypes.DRIPPING_WATER, isTopSolid);
                 return;
             }
         }

@@ -144,7 +144,7 @@ public class Prismallard extends AetherAnimal {
         this.flap = this.flap + this.flapping * 2.0F;
         if (this.level() instanceof ServerLevel level && this.isAlive() && !this.isBaby() && --this.eggTime <= 0) {
             if (this.dropFromGiftLootTable(level, AetherIILoot.PRISMALLARD_LAY, this::spawnAtLocation)) {
-                this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_EGG.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 this.gameEvent(GameEvent.ENTITY_PLACE);
             }
 
@@ -172,35 +172,35 @@ public class Prismallard extends AetherAnimal {
 
     @Override
     protected void onFlap() {
-        this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_FLAP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_FLAP, 0.15F, 1.0F);
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState blockState) {
-        this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_PRISMALLARD_STEP, 0.15F, 1.0F);
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_PRISMALLARD_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_PRISMALLARD_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_PRISMALLARD_HURT.get();
+        return AetherIISoundEvents.ENTITY_PRISMALLARD_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_PRISMALLARD_DEATH.get();
+        return AetherIISoundEvents.ENTITY_PRISMALLARD_DEATH;
     }
 
     public @Nullable Prismallard getBreedOffspring(ServerLevel level, AgeableMob partner) {
-        Prismallard baby = AetherIIEntityTypes.PRISMALLARD.get().create(level, EntitySpawnReason.BREEDING);
+        Prismallard baby = AetherIIEntityTypes.PRISMALLARD.create(level, EntitySpawnReason.BREEDING);
         return baby;
     }
 

@@ -15,7 +15,7 @@ public class LongJumpMixin {
     @WrapOperation(method = "canJumpFromCurrentPosition(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/monster/breeze/Breeze;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Ljava/lang/Object;)Z"))
     private static boolean canJumpFromCurrentPosition(BlockState instance, Object block, Operation<Boolean> original) {
         if (block == Blocks.HONEY_BLOCK) {
-            return original.call(instance, block) || instance.is(AetherIIBlocks.GEL_BLOCK.get());
+            return original.call(instance, block) || instance.is(AetherIIBlocks.GEL_BLOCK);
         } else {
             return original.call(instance, block);
         }

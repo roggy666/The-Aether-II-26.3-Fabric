@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:gridded_quicksoil_glass",
+  "result": {
+    "id": "aether_ii:quicksoil_glass"
+  }
+}

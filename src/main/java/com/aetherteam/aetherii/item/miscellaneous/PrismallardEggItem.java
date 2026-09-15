@@ -33,7 +33,7 @@ public class PrismallardEggItem extends Item implements ProjectileItem, Throwabl
 
     @Override
     public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
-        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_PRISMALLARD_EGG_THROW.get(), new ThrownPrismallardEgg(level, livingEntity, stack));
+        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_PRISMALLARD_EGG_THROW, new ThrownPrismallardEgg(level, livingEntity, stack));
         return true;
     }
 

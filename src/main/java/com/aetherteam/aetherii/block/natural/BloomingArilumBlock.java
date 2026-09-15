@@ -11,6 +11,6 @@ public class BloomingArilumBlock extends KelpBlock {
 
     @Override
     protected Block getBodyBlock() {
-        return AetherIIBlocks.BLOOMING_ARILUM_PLANT.get();
+        return AetherIIBlocks.BLOOMING_ARILUM_PLANT;
     }
 }

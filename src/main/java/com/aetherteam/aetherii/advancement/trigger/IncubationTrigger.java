@@ -2,10 +2,10 @@ package com.aetherteam.aetherii.advancement.trigger;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 
@@ -28,11 +28,11 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
                 .apply(instance, IncubationTrigger.Instance::new));
 
         public static Criterion<Instance> incubate() {
-            return AetherIIAdvancementTriggers.INCUBATION.get().createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.empty()));
+            return AetherIIAdvancementTriggers.INCUBATION.createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.empty()));
         }
 
         public static Criterion<Instance> incubateEntity(EntityPredicate entity) {
-            return AetherIIAdvancementTriggers.INCUBATION.get().createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.of(entity)));
+            return AetherIIAdvancementTriggers.INCUBATION.createCriterion(new IncubationTrigger.Instance(Optional.empty(), Optional.of(entity)));
         }
 
         public boolean test(ServerPlayer serverPlayer, Entity entity) {

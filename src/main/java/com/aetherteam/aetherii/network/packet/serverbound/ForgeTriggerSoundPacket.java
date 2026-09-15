@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record ForgeTriggerSoundPacket() implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<ForgeTriggerSoundPacket> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "forge_trigger_sound"));
@@ -29,8 +29,8 @@ public record ForgeTriggerSoundPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(ForgeTriggerSoundPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(ForgeTriggerSoundPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity.containerMenu instanceof ArkeniumForgeMenu menu) {
             if (menu.stillValid(playerEntity)) {
                 menu.playSound();

@@ -31,7 +31,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.jetbrains.annotations.ApiStatus;
 import org.joml.Vector3f;
 
@@ -50,7 +50,7 @@ public class MixinHooks {
                         float sweepKnockback = (float) player.getAttributeValue(AetherIIAttributes.SWEEP_KNOCKBACK);
                         float sweepDamage = (float) player.getAttributeValue(AetherIIAttributes.SWEEP_DAMAGE);
                         if (sweepKnockback > 0) {
-                            other.knockback(sweepKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback);
+                            other.knockback(sweepKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * sweepKnockback, player.damageSources().playerAttack(player), sweepDamage);
                         }
                         if (sweepDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoe(player.level(), player), sweepDamage);
@@ -67,7 +67,7 @@ public class MixinHooks {
         double d0 = -Mth.sin(player.getYRot() * (float) (Math.PI / 180.0));
         double d1 = Mth.cos(player.getYRot() * (float) (Math.PI / 180.0));
         if (player.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(AetherIIParticleTypes.SWEEP_ATTACK.get(), player.getX() + d0, player.getY(0.5), player.getZ() + d1, 0, d0, 0.0, d1, 0.0);
+            serverLevel.sendParticles(AetherIIParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5), player.getZ() + d1, 0, d0, 0.0, d1, 0.0);
         }
     }
 
@@ -93,14 +93,14 @@ public class MixinHooks {
                         float shockKnockback = (float) player.getAttributeValue(AetherIIAttributes.SHOCK_KNOCKBACK);
                         float shockDamage = (float) player.getAttributeValue(AetherIIAttributes.SHOCK_DAMAGE);
                         if (shockKnockback > 0) {
-                            other.knockback(shockKnockback, x * shockKnockback, z * shockKnockback);
+                            other.knockback(shockKnockback, x * shockKnockback, z * shockKnockback, player.damageSources().playerAttack(player), shockDamage);
                         }
                         if (shockDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoe(player.level(), player), shockDamage);
                         }
                     }
                 }
-                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.PLAYER_ATTACK_SHOCK.get(), player.getSoundSource(), 1.0F, 1.0F);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.PLAYER_ATTACK_SHOCK, player.getSoundSource(), 1.0F, 1.0F);
                 shockAttack(player, target);
             }
         }
@@ -108,7 +108,7 @@ public class MixinHooks {
 
     private static void shockAttack(Player player, Entity target) {
         if (player instanceof ServerPlayer serverPlayer) {
-            PacketDistributor.sendToPlayer(serverPlayer, new AttackShockParticlePacket(target.position().toVector3f(), player.getViewYRot(1.0F)));
+            ServerPlayNetworking.send(serverPlayer, new AttackShockParticlePacket(target.position().toVector3f(), player.getViewYRot(1.0F)));
         }
     }
 
@@ -122,14 +122,14 @@ public class MixinHooks {
                         float stabKnockback = (float) player.getAttributeValue(AetherIIAttributes.STAB_KNOCKBACK);
                         float stabDamage = (float) player.getAttributeValue(AetherIIAttributes.STAB_DAMAGE);
                         if (stabKnockback > 0) {
-                            other.knockback(stabKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback);
+                            other.knockback(stabKnockback, Mth.sin(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, -Mth.cos(player.getYRot() * (float) (Math.PI / 180.0)) * 2.5 * stabKnockback, player.damageSources().playerAttack(player), stabDamage);
                         }
                         if (stabDamage > 0) {
                             other.hurt(AetherIIDamageTypes.playerAoeNoKnockback(player.level(), player), stabDamage);
                         }
                     }
                 }
-                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.PLAYER_ATTACK_STAB.get(), player.getSoundSource(), 1.0F, 1.0F);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.PLAYER_ATTACK_STAB, player.getSoundSource(), 1.0F, 1.0F);
             }
             stabAttack(player, target);
         }
@@ -154,7 +154,7 @@ public class MixinHooks {
         if (player instanceof ServerPlayer serverPlayer) {
             Vector3f playerPos = new Vector3f((float) player.position().x(), (float) player.getEyeY(), (float) player.position().z());
             Vector3f targetPos = target.position().toVector3f();
-            PacketDistributor.sendToPlayer(serverPlayer, new AttackStabParticlePacket(playerPos, targetPos));
+            ServerPlayNetworking.send(serverPlayer, new AttackStabParticlePacket(playerPos, targetPos));
         }
     }
 
@@ -167,7 +167,7 @@ public class MixinHooks {
     }
 
     public static ItemStack getBrokenLootStack(ItemStack itemStack) {
-        ItemStack brokenItem = new ItemStack(AetherIIItems.BROKEN_ITEM.get());
+        ItemStack brokenItem = new ItemStack(AetherIIItems.BROKEN_ITEM);
         brokenItem.set(AetherIIDataComponents.BROKEN_STACK, new BrokenStack(itemStack.copy()));
         Identifier modelLocation = itemStack.get(DataComponents.ITEM_MODEL);
         if (modelLocation != null) {
@@ -186,7 +186,7 @@ public class MixinHooks {
     public static ParticleOptions replaceSplashParticles(Entity entity, BlockPos pos, ParticleOptions particleOptions) {
         if (entity.level() instanceof ClientLevel clientLevel && clientLevel.getBiome(pos).is(AetherIITags.Biomes.THE_AETHER)) {
             if (particleOptions == ParticleTypes.SPLASH) {
-                return AetherIIParticleTypes.SPLASH.get();
+                return AetherIIParticleTypes.SPLASH;
             }
         }
         return particleOptions;

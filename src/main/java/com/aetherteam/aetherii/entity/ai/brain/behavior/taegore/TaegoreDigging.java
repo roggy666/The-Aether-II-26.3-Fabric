@@ -24,8 +24,8 @@ public class TaegoreDigging extends Behavior<Taegore> {
         super(Map.of(
                 MemoryModuleType.IS_PANICKING, MemoryStatus.VALUE_ABSENT,
                 MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get(), MemoryStatus.VALUE_PRESENT,
-                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN.get(), MemoryStatus.VALUE_ABSENT
+                AetherIIMemoryModuleTypes.TAEGORE_DIGGING, MemoryStatus.VALUE_PRESENT,
+                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN, MemoryStatus.VALUE_ABSENT
         ), duration, duration);
         this.duration = duration;
     }
@@ -35,7 +35,7 @@ public class TaegoreDigging extends Behavior<Taegore> {
     }
 
     protected boolean canStillUse(ServerLevel serverLevel, Taegore owner, long gameTime) {
-        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get()).isPresent() && owner.canDig() && !owner.isInLove();
+        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING).isPresent() && owner.canDig() && !owner.isInLove();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class TaegoreDigging extends Behavior<Taegore> {
     protected void stop(ServerLevel serverLevel, Taegore owner, long gameTime) {
         boolean finished = this.timedOut(gameTime);
         if (finished) {
-            owner.getBrain().setMemoryWithExpiry(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN.get(), Unit.INSTANCE, 9600L);
+            owner.getBrain().setMemoryWithExpiry(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN, Unit.INSTANCE, 9600L);
         } else {
             TaegoreAi.resetSearch(serverLevel, owner);
         }
@@ -70,7 +70,7 @@ public class TaegoreDigging extends Behavior<Taegore> {
                 itemEntity.setDefaultPickUpDelay();
                 tableLevel.addFreshEntity(itemEntity);
             });
-            owner.playSound(AetherIISoundEvents.ENTITY_TAEGORE_DROP_SEED.get(), 1.0F, 1.0F);
+            owner.playSound(AetherIISoundEvents.ENTITY_TAEGORE_DROP_SEED, 1.0F, 1.0F);
         }
     }
 }

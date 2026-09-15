@@ -5,7 +5,7 @@ import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.entity.passive.Kirrid;
 import com.aetherteam.aetherii.entity.passive.Sheepuff;
 import com.aetherteam.aetherii.loot.AetherIILoot;
-import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
@@ -44,8 +44,8 @@ public class AetherIIShearingLoot implements LootTableSubProvider {
         Sheepuff.SheepuffColor.CLOUDWOOL_BY_SHEEPUFF_COLOR.forEach(
                 (color, wool) -> builder.accept(AetherIILoot.SHEARING_SHEEPUFF_WOOL_BY_DYE.get(color),
                         LootTable.lootTable()
-                                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 3.0F)).add(LootItem.lootTableItem(wool)).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(SheepuffPredicate.isPuffed(false)))))
-                                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 4.0F)).add(LootItem.lootTableItem(wool)).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(SheepuffPredicate.isPuffed(true)))))
+                                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(1.0F, 3.0F)).add(LootItem.lootTableItem(wool)).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().put(SheepuffPredicate.CODEC, SheepuffPredicate.isPuffed(false)))))
+                                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(2.0F, 4.0F)).add(LootItem.lootTableItem(wool)).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().put(SheepuffPredicate.CODEC, SheepuffPredicate.isPuffed(true)))))
                 ));
         builder.accept(AetherIILoot.SHEARING_SHEEPUFF, LootTable.lootTable().withPool(AetherIIEntityLoot.createSheepuffDispatchPool(AetherIILoot.SHEARING_SHEEPUFF_WOOL_BY_DYE)));
     }

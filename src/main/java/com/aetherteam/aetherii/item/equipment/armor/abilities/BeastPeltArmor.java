@@ -12,11 +12,9 @@ import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 public interface BeastPeltArmor {
-    static void updateEntityTargeting(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
+    static void updateEntityTargeting(Entity entity) {
         if (entity instanceof Mob mob) {
             if (mob.level() instanceof ServerLevel serverLevel) {
                 if (mob.getLastDamageSource() != null && mob.getLastDamageSource().getDirectEntity() instanceof LivingEntity attacker) {

@@ -27,7 +27,9 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class TieredCrossbowItem extends CrossbowItem {
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+
+public class TieredCrossbowItem extends CrossbowItem implements CustomEnchantmentItem {
     public static final Predicate<ItemStack> BOLT_ONLY = stack -> stack.is(AetherIIItems.SCATTERGLASS_BOLT);
 
     public TieredCrossbowItem(ToolMaterial tier, Properties properties) {
@@ -40,8 +42,8 @@ public class TieredCrossbowItem extends CrossbowItem {
         ChargedProjectiles chargedProjectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
         if (chargedProjectiles == null || chargedProjectiles.isEmpty()) {
             if (!player.getProjectile(stack).isEmpty()) {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCrossbowSpecial(player.isCrouching());
-                player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCrossbowSpecial(player.isCrouching());
+                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
             }
         }
         return super.use(level, player, hand);
@@ -72,9 +74,11 @@ public class TieredCrossbowItem extends CrossbowItem {
         return BOLT_ONLY;
     }
 
-    @Override
+    /**
+     * NeoForge's {@code getDefaultCreativeAmmo}; applied through {@link com.aetherteam.aetherii.mixin.mixins.common.PlayerMixin}.
+     */
     public ItemStack getDefaultCreativeAmmo(@Nullable Player player, ItemStack projectileWeaponItem) {
-        return AetherIIItems.SCATTERGLASS_BOLT.get().getDefaultInstance();
+        return AetherIIItems.SCATTERGLASS_BOLT.getDefaultInstance();
     }
 
     public float getChargeTime(ItemStack stack, LivingEntity shooter, float crossbowChargingTime) {

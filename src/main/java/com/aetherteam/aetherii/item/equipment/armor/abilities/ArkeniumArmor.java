@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.equipment.armor.abilities;
 
+import com.aetherteam.aetherii.event.AetherIIEvents;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.item.equipment.EquipmentUtil;
@@ -12,15 +13,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public interface ArkeniumArmor {
     Identifier ARKENIUM_BLAST_RESISTANCE = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.arkenium.blast_resistance");
 
-    static void updatePlayerAttributes(PlayerTickEvent.Pre event) {
-        Player player = event.getEntity();
+    static void updatePlayerAttributes(Player player) {
         AttributeInstance blastResistanceAttribute = player.getAttribute(Attributes.EXPLOSION_KNOCKBACK_RESISTANCE);
 
         if (EquipmentUtil.hasArmorAbility(player, AetherIITags.Items.ARKENIUM_ARMOR)) {
@@ -34,17 +31,15 @@ public interface ArkeniumArmor {
         }
     }
 
-    static void modifyIncomingDamage(LivingIncomingDamageEvent event) {
-        DamageSource damageSource = event.getSource();
-        LivingEntity entity = event.getEntity();
+    /**
+     * Explosions are reduced as if the wearer had 4 extra armor points (NeoForge's armor reduction modifier).
+     */
+    static void modifyIncomingDamage(LivingEntity entity, AetherIIEvents.DamageContainer container) {
+        DamageSource damageSource = container.getSource();
         if (EquipmentUtil.hasArmorAbility(entity, AetherIITags.Items.ARKENIUM_ARMOR)) {
             if (damageSource.is(DamageTypeTags.IS_EXPLOSION) && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-                event.addReductionModifier(DamageContainer.Reduction.ARMOR, (container, reduction) -> {
-                    float f = Mth.clamp(4.0F, 0.0F, 20.0F);
-                    float f1 = container.getNewDamage() * (1.0F - f / 25.0F);
-                    float f2 = container.getNewDamage() - f1;
-                    return reduction + f2;
-                });
+                float f = Mth.clamp(4.0F, 0.0F, 20.0F);
+                container.setNewDamage(container.getNewDamage() * (1.0F - f / 25.0F));
             }
         }
     }

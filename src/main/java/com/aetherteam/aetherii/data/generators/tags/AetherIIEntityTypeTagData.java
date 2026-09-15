@@ -1,245 +1,254 @@
 package com.aetherteam.aetherii.data.generators.tags;
 
+import net.minecraft.tags.TagKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.BuiltInRegistries;
+import com.aetherteam.aetherii.data.providers.AetherTagAppender;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraft.world.entity.EntityTypes;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIEntityTypeTagData extends EntityTypeTagsProvider {
-    public AetherIIEntityTypeTagData(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, AetherII.MODID);
+public class AetherIIEntityTypeTagData extends FabricTagsProvider<EntityType<?>> {
+    public AetherIIEntityTypeTagData(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, Registries.ENTITY_TYPE, registries);
+    }
+
+    protected AetherTagAppender<EntityType<?>> tagOf(TagKey<EntityType<?>> key) {
+        return new AetherTagAppender<>(this.builder(key), BuiltInRegistries.ENTITY_TYPE);
     }
 
     @Override
     public void addTags(HolderLookup.Provider provider) {
         // Aether II
-        this.tag(AetherIITags.EntityTypes.AETHER_MOBS).add(
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.SHEEPUFF.get(),
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.AERBUNNY.get(),
-                AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(),
-                AetherIIEntityTypes.MAGNETIC_TAEGORE.get(),
-                AetherIIEntityTypes.ARCTIC_TAEGORE.get(),
-                AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(),
-                AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(),
-                AetherIIEntityTypes.ARCTIC_BURRUKAI.get(),
-                AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(),
-                AetherIIEntityTypes.MAGNETIC_KIRRID.get(),
-                AetherIIEntityTypes.ARCTIC_KIRRID.get(),
-                AetherIIEntityTypes.MOA.get(),
-                AetherIIEntityTypes.PRISMALLARD.get(),
-                AetherIIEntityTypes.SKYROOT_LIZARD.get(),
-                AetherIIEntityTypes.GLITTERWING.get(),
-                AetherIIEntityTypes.SHROUDWING.get(),
-                AetherIIEntityTypes.AECHOR_PLANT.get(),
-                AetherIIEntityTypes.CARRION_SPROUT.get(),
-                AetherIIEntityTypes.ZEPHYR.get(),
-                AetherIIEntityTypes.SKEPHID.get(),
-                AetherIIEntityTypes.TEMPEST.get(),
-                AetherIIEntityTypes.COCKATRICE.get(),
-                AetherIIEntityTypes.ARKENIUM_TALUTON.get(),
-                AetherIIEntityTypes.GRAVITITE_TALUTON.get(),
-                AetherIIEntityTypes.MIMIC.get(),
-                AetherIIEntityTypes.DETONATION_SENTRY.get(),
-                AetherIIEntityTypes.SENTRY_GOLEM.get(),
-                AetherIIEntityTypes.SLIDER.get(),
-                AetherIIEntityTypes.DEMOLITION_PROJECTILE.get(),
-                AetherIIEntityTypes.BLADESHROOM_HUNTER.get(),
-                AetherIIEntityTypes.HOLYSTONE_ROCK.get(),
-                AetherIIEntityTypes.ARCTIC_SNOWBALL.get(),
-                AetherIIEntityTypes.SKYROOT_PINECONE.get(),
-                AetherIIEntityTypes.PRISMALLARD_EGG.get(),
-                AetherIIEntityTypes.LASSO_LOOP.get(),
-                AetherIIEntityTypes.SCATTERGLASS_BOLT.get(),
-                AetherIIEntityTypes.AMBER_DART.get(),
-                AetherIIEntityTypes.TOXIC_DART.get(),
-                AetherIIEntityTypes.ZEPHYR_WEBBING_BALL.get(),
-                AetherIIEntityTypes.TEMPEST_THUNDERBALL.get()
+        this.tagOf(AetherIITags.EntityTypes.AETHER_MOBS).add(
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.SHEEPUFF,
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.AERBUNNY,
+                AetherIIEntityTypes.HIGHFIELDS_TAEGORE,
+                AetherIIEntityTypes.MAGNETIC_TAEGORE,
+                AetherIIEntityTypes.ARCTIC_TAEGORE,
+                AetherIIEntityTypes.HIGHFIELDS_BURRUKAI,
+                AetherIIEntityTypes.MAGNETIC_BURRUKAI,
+                AetherIIEntityTypes.ARCTIC_BURRUKAI,
+                AetherIIEntityTypes.HIGHFIELDS_KIRRID,
+                AetherIIEntityTypes.MAGNETIC_KIRRID,
+                AetherIIEntityTypes.ARCTIC_KIRRID,
+                AetherIIEntityTypes.MOA,
+                AetherIIEntityTypes.PRISMALLARD,
+                AetherIIEntityTypes.SKYROOT_LIZARD,
+                AetherIIEntityTypes.GLITTERWING,
+                AetherIIEntityTypes.SHROUDWING,
+                AetherIIEntityTypes.AECHOR_PLANT,
+                AetherIIEntityTypes.CARRION_SPROUT,
+                AetherIIEntityTypes.ZEPHYR,
+                AetherIIEntityTypes.SKEPHID,
+                AetherIIEntityTypes.TEMPEST,
+                AetherIIEntityTypes.COCKATRICE,
+                AetherIIEntityTypes.ARKENIUM_TALUTON,
+                AetherIIEntityTypes.GRAVITITE_TALUTON,
+                AetherIIEntityTypes.MIMIC,
+                AetherIIEntityTypes.DETONATION_SENTRY,
+                AetherIIEntityTypes.SENTRY_GOLEM,
+                AetherIIEntityTypes.SLIDER,
+                AetherIIEntityTypes.DEMOLITION_PROJECTILE,
+                AetherIIEntityTypes.BLADESHROOM_HUNTER,
+                AetherIIEntityTypes.HOLYSTONE_ROCK,
+                AetherIIEntityTypes.ARCTIC_SNOWBALL,
+                AetherIIEntityTypes.SKYROOT_PINECONE,
+                AetherIIEntityTypes.PRISMALLARD_EGG,
+                AetherIIEntityTypes.LASSO_LOOP,
+                AetherIIEntityTypes.SCATTERGLASS_BOLT,
+                AetherIIEntityTypes.AMBER_DART,
+                AetherIIEntityTypes.TOXIC_DART,
+                AetherIIEntityTypes.ZEPHYR_WEBBING_BALL,
+                AetherIIEntityTypes.TEMPEST_THUNDERBALL
         );
-        this.tag(AetherIITags.EntityTypes.TAEGORE).add(
-                AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(),
-                AetherIIEntityTypes.MAGNETIC_TAEGORE.get(),
-                AetherIIEntityTypes.ARCTIC_TAEGORE.get()
+        this.tagOf(AetherIITags.EntityTypes.TAEGORE).add(
+                AetherIIEntityTypes.HIGHFIELDS_TAEGORE,
+                AetherIIEntityTypes.MAGNETIC_TAEGORE,
+                AetherIIEntityTypes.ARCTIC_TAEGORE
         );
-        this.tag(AetherIITags.EntityTypes.BURRUKAI).add(
-                AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(),
-                AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(),
-                AetherIIEntityTypes.ARCTIC_BURRUKAI.get()
+        this.tagOf(AetherIITags.EntityTypes.BURRUKAI).add(
+                AetherIIEntityTypes.HIGHFIELDS_BURRUKAI,
+                AetherIIEntityTypes.MAGNETIC_BURRUKAI,
+                AetherIIEntityTypes.ARCTIC_BURRUKAI
         );
-        this.tag(AetherIITags.EntityTypes.KIRRID).add(
-                AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(),
-                AetherIIEntityTypes.MAGNETIC_KIRRID.get(),
-                AetherIIEntityTypes.ARCTIC_KIRRID.get()
+        this.tagOf(AetherIITags.EntityTypes.KIRRID).add(
+                AetherIIEntityTypes.HIGHFIELDS_KIRRID,
+                AetherIIEntityTypes.MAGNETIC_KIRRID,
+                AetherIIEntityTypes.ARCTIC_KIRRID
         );
-        this.tag(AetherIITags.EntityTypes.SWETS).add(
-                AetherIIEntityTypes.BLUE_SWET.get(),
-                AetherIIEntityTypes.GOLDEN_SWET.get()
+        this.tagOf(AetherIITags.EntityTypes.SWETS).add(
+                AetherIIEntityTypes.BLUE_SWET,
+                AetherIIEntityTypes.GOLDEN_SWET
         );
-        this.tag(AetherIITags.EntityTypes.TALUTONS).add(
-                AetherIIEntityTypes.ARKENIUM_TALUTON.get(),
-                AetherIIEntityTypes.GRAVITITE_TALUTON.get()
+        this.tagOf(AetherIITags.EntityTypes.TALUTONS).add(
+                AetherIIEntityTypes.ARKENIUM_TALUTON,
+                AetherIIEntityTypes.GRAVITITE_TALUTON
         );
-        this.tag(AetherIITags.EntityTypes.PLANT_MOBS).add(
-                AetherIIEntityTypes.CARRION_SPROUT.get(),
-                AetherIIEntityTypes.AECHOR_PLANT.get()
+        this.tagOf(AetherIITags.EntityTypes.PLANT_MOBS).add(
+                AetherIIEntityTypes.CARRION_SPROUT,
+                AetherIIEntityTypes.AECHOR_PLANT
         );
-        this.tag(AetherIITags.EntityTypes.SENTRY_RUINS_MOBS).add(
-                AetherIIEntityTypes.MIMIC.get(),
-                AetherIIEntityTypes.DETONATION_SENTRY.get(),
-                AetherIIEntityTypes.SENTRY_GOLEM.get(),
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(AetherIITags.EntityTypes.SENTRY_RUINS_MOBS).add(
+                AetherIIEntityTypes.MIMIC,
+                AetherIIEntityTypes.DETONATION_SENTRY,
+                AetherIIEntityTypes.SENTRY_GOLEM,
+                AetherIIEntityTypes.SLIDER
         );
-        this.tag(AetherIITags.EntityTypes.DUNGEON_MOBS).addTag(
+        this.tagOf(AetherIITags.EntityTypes.DUNGEON_MOBS).addTag(
                 AetherIITags.EntityTypes.SENTRY_RUINS_MOBS
         );
 
-        this.tag(AetherIITags.EntityTypes.NO_DOUBLE_DROPS).add(
-                EntityType.PLAYER
+        this.tagOf(AetherIITags.EntityTypes.NO_DOUBLE_DROPS).add(
+                EntityTypes.PLAYER
         ).addTag(
-                Tags.EntityTypes.BOSSES
+                ConventionalEntityTypeTags.BOSSES
         );
-        this.tag(AetherIITags.EntityTypes.NO_AMBROSIUM_DROPS).add(
-                EntityType.PLAYER
+        this.tagOf(AetherIITags.EntityTypes.NO_AMBROSIUM_DROPS).add(
+                EntityTypes.PLAYER
         );
-        this.tag(AetherIITags.EntityTypes.ZEPHYR_BLOW_BLACKLIST).addTag(
+        this.tagOf(AetherIITags.EntityTypes.ZEPHYR_BLOW_BLACKLIST).addTag(
                 AetherIITags.EntityTypes.PLANT_MOBS
         );
 
-        this.tag(AetherIITags.EntityTypes.PLANT_DAMAGING_PROJECTILES);
-        this.tag(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES);
-        this.tag(AetherIITags.EntityTypes.STICKABLE_PROJECTILES).add(
-                AetherIIEntityTypes.SCATTERGLASS_BOLT.get(),
-                AetherIIEntityTypes.AMBER_DART.get(),
-                AetherIIEntityTypes.TOXIC_DART.get(),
-                AetherIIEntityTypes.VENOMOUS_DART.get()
+        this.tagOf(AetherIITags.EntityTypes.PLANT_DAMAGING_PROJECTILES);
+        this.tagOf(AetherIITags.EntityTypes.SLIDER_DAMAGING_PROJECTILES);
+        this.tagOf(AetherIITags.EntityTypes.STICKABLE_PROJECTILES).add(
+                AetherIIEntityTypes.SCATTERGLASS_BOLT,
+                AetherIIEntityTypes.AMBER_DART,
+                AetherIIEntityTypes.TOXIC_DART,
+                AetherIIEntityTypes.VENOMOUS_DART
         );
-        this.tag(AetherIITags.EntityTypes.STICKABLE_PROJECTILES_EMISSIVE).add(
-                AetherIIEntityTypes.VENOMOUS_DART.get()
+        this.tagOf(AetherIITags.EntityTypes.STICKABLE_PROJECTILES_EMISSIVE).add(
+                AetherIIEntityTypes.VENOMOUS_DART
         );
 
-        this.tag(AetherIITags.EntityTypes.SPAWNING_ICE).add(
-                EntityType.POLAR_BEAR
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_ICE).add(
+                EntityTypes.POLAR_BEAR
         );
-        this.tag(AetherIITags.EntityTypes.SPAWNING_AERCLOUDS).add(
-                AetherIIEntityTypes.TEMPEST.get(),
-                AetherIIEntityTypes.ZEPHYR.get()
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_AERCLOUDS).add(
+                AetherIIEntityTypes.TEMPEST,
+                AetherIIEntityTypes.ZEPHYR
         );
-        this.tag(AetherIITags.EntityTypes.SPAWNING_LEAVES).add(
-                EntityType.OCELOT,
-                EntityType.PARROT
+        this.tagOf(AetherIITags.EntityTypes.SPAWNING_LEAVES).add(
+                EntityTypes.OCELOT,
+                EntityTypes.PARROT
         );
 
         // Vanilla
-        this.tag(EntityTypeTags.ARROWS).add(
-                AetherIIEntityTypes.SCATTERGLASS_BOLT.get(),
-                AetherIIEntityTypes.AMBER_DART.get()
+        this.tagOf(EntityTypeTags.ARROWS).add(
+                AetherIIEntityTypes.SCATTERGLASS_BOLT,
+                AetherIIEntityTypes.AMBER_DART
         );
-        this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(
-                AetherIIEntityTypes.HOLYSTONE_ROCK.get(),
-                AetherIIEntityTypes.ARCTIC_SNOWBALL.get(),
-                AetherIIEntityTypes.SKYROOT_PINECONE.get(),
-                AetherIIEntityTypes.TOXIC_DART.get(),
-                AetherIIEntityTypes.VENOMOUS_DART.get(),
-                AetherIIEntityTypes.TEMPEST_THUNDERBALL.get(),
-                AetherIIEntityTypes.GRAVITITE_DEBRIS_SHOT.get()
+        this.tagOf(EntityTypeTags.IMPACT_PROJECTILES).add(
+                AetherIIEntityTypes.HOLYSTONE_ROCK,
+                AetherIIEntityTypes.ARCTIC_SNOWBALL,
+                AetherIIEntityTypes.SKYROOT_PINECONE,
+                AetherIIEntityTypes.TOXIC_DART,
+                AetherIIEntityTypes.VENOMOUS_DART,
+                AetherIIEntityTypes.TEMPEST_THUNDERBALL,
+                AetherIIEntityTypes.GRAVITITE_DEBRIS_SHOT
         );
-        this.tag(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.SHEEPUFF.get(),
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.AERBUNNY.get(),
-                AetherIIEntityTypes.MOA.get(),
-                AetherIIEntityTypes.PRISMALLARD.get()
+        this.tagOf(EntityTypeTags.POWDER_SNOW_WALKABLE_MOBS).add(
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.SHEEPUFF,
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.AERBUNNY,
+                AetherIIEntityTypes.MOA,
+                AetherIIEntityTypes.PRISMALLARD
         ).addTag(
                 AetherIITags.EntityTypes.KIRRID
         );
-        this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(
-                AetherIIEntityTypes.DETONATION_SENTRY.get(),
-                AetherIIEntityTypes.SENTRY_GOLEM.get(),
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(
+                AetherIIEntityTypes.DETONATION_SENTRY,
+                AetherIIEntityTypes.SENTRY_GOLEM,
+                AetherIIEntityTypes.SLIDER
         ).addTag(
                 AetherIITags.EntityTypes.TALUTONS
         );
-        this.tag(EntityTypeTags.FROG_FOOD).addTag(
+        this.tagOf(EntityTypeTags.FROG_FOOD).addTag(
                 AetherIITags.EntityTypes.SWETS
         );
-        this.tag(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.AERBUNNY.get(),
-                AetherIIEntityTypes.MOA.get(),
-                AetherIIEntityTypes.PRISMALLARD.get(),
-                AetherIIEntityTypes.AERWHALE.get(),
-                AetherIIEntityTypes.SKYROOT_LIZARD.get(),
-                AetherIIEntityTypes.ZEPHYR.get(),
-                AetherIIEntityTypes.TEMPEST.get(),
-                AetherIIEntityTypes.SKEPHID.get(),
-                AetherIIEntityTypes.GRAVITITE_TALUTON.get(),
-                AetherIIEntityTypes.GLITTERWING.get(),
-                AetherIIEntityTypes.SHROUDWING.get()
+        this.tagOf(EntityTypeTags.FALL_DAMAGE_IMMUNE).add(
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.AERBUNNY,
+                AetherIIEntityTypes.MOA,
+                AetherIIEntityTypes.PRISMALLARD,
+                AetherIIEntityTypes.AERWHALE,
+                AetherIIEntityTypes.SKYROOT_LIZARD,
+                AetherIIEntityTypes.ZEPHYR,
+                AetherIIEntityTypes.TEMPEST,
+                AetherIIEntityTypes.SKEPHID,
+                AetherIIEntityTypes.GRAVITITE_TALUTON,
+                AetherIIEntityTypes.GLITTERWING,
+                AetherIIEntityTypes.SHROUDWING
         ).addTag(
                 AetherIITags.EntityTypes.KIRRID
         );
-        this.tag(EntityTypeTags.DISMOUNTS_UNDERWATER).add(
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.MOA.get()
+        this.tagOf(EntityTypeTags.DISMOUNTS_UNDERWATER).add(
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.MOA
         );
-        this.tag(EntityTypeTags.NON_CONTROLLING_RIDER).add(
-                AetherIIEntityTypes.AERBUNNY.get()
+        this.tagOf(EntityTypeTags.NON_CONTROLLING_RIDER).add(
+                AetherIIEntityTypes.AERBUNNY
         );
-        this.tag(EntityTypeTags.ARTHROPOD).add(
-                AetherIIEntityTypes.SKEPHID.get(),
-                AetherIIEntityTypes.ZEPHYR.get(),
-                AetherIIEntityTypes.TEMPEST.get()
+        this.tagOf(EntityTypeTags.ARTHROPOD).add(
+                AetherIIEntityTypes.SKEPHID,
+                AetherIIEntityTypes.ZEPHYR,
+                AetherIIEntityTypes.TEMPEST
         );
-        this.tag(EntityTypeTags.REDIRECTABLE_PROJECTILE).add(
-                AetherIIEntityTypes.ZEPHYR_WEBBING_BALL.get(),
-                AetherIIEntityTypes.TEMPEST_THUNDERBALL.get()
+        this.tagOf(EntityTypeTags.REDIRECTABLE_PROJECTILE).add(
+                AetherIIEntityTypes.ZEPHYR_WEBBING_BALL,
+                AetherIIEntityTypes.TEMPEST_THUNDERBALL
         );
-        this.tag(EntityTypeTags.BOAT).add(
-                AetherIIEntityTypes.CLOUD_SKIFF.get()
+        this.tagOf(EntityTypeTags.BOAT).add(
+                AetherIIEntityTypes.CLOUD_SKIFF
         );
-        this.tag(EntityTypeTags.FOLLOWABLE_FRIENDLY_MOBS).add(
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.SHEEPUFF.get(),
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.AERBUNNY.get(),
-                AetherIIEntityTypes.PRISMALLARD.get()
+        this.tagOf(EntityTypeTags.FOLLOWABLE_FRIENDLY_MOBS).add(
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.SHEEPUFF,
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.AERBUNNY,
+                AetherIIEntityTypes.PRISMALLARD
         ).addTags(
                 AetherIITags.EntityTypes.TAEGORE,
                 AetherIITags.EntityTypes.KIRRID,
                 AetherIITags.EntityTypes.BURRUKAI
         );
-        this.tag(EntityTypeTags.CANNOT_BE_PUSHED_ONTO_BOATS).add(
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(EntityTypeTags.CANNOT_BE_PUSHED_ONTO_BOATS).add(
+                AetherIIEntityTypes.SLIDER
         );
-        this.tag(EntityTypeTags.CAN_FLOAT_WHILE_RIDDEN).add(
-                AetherIIEntityTypes.PHYG.get(),
-                AetherIIEntityTypes.FLYING_COW.get(),
-                AetherIIEntityTypes.MOA.get()
+        this.tagOf(EntityTypeTags.CAN_FLOAT_WHILE_RIDDEN).add(
+                AetherIIEntityTypes.PHYG,
+                AetherIIEntityTypes.FLYING_COW,
+                AetherIIEntityTypes.MOA
         );
 
         // NeoForge
-        this.tag(Tags.EntityTypes.BOSSES).add(
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(ConventionalEntityTypeTags.BOSSES).add(
+                AetherIIEntityTypes.SLIDER
         );
-        this.tag(Tags.EntityTypes.BOATS).add(
-                AetherIIEntityTypes.CLOUD_SKIFF.get()
+        this.tagOf(ConventionalEntityTypeTags.BOATS).add(
+                AetherIIEntityTypes.CLOUD_SKIFF
         );
-        this.tag(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED).add(
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(ConventionalEntityTypeTags.CAPTURING_NOT_SUPPORTED).add(
+                AetherIIEntityTypes.SLIDER
         );
-        this.tag(Tags.EntityTypes.TELEPORTING_NOT_SUPPORTED).add(
-                AetherIIEntityTypes.SLIDER.get()
+        this.tagOf(ConventionalEntityTypeTags.TELEPORTING_NOT_SUPPORTED).add(
+                AetherIIEntityTypes.SLIDER
         );
     }
 }

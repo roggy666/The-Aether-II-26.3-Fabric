@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "cyan_dye",
+  "ingredients": [
+    {
+      "fabric:type": "fabric:components",
+      "base": "aether_ii:moa_feather",
+      "components": {
+        "aether_ii:feather_color": "cyan"
+      }
+    }
+  ],
+  "result": {
+    "id": "minecraft:cyan_dye"
+  }
+}

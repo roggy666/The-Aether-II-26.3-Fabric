@@ -9,7 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record MountJumpedPacket(int entityID) implements CustomPacketPayload {
     public static final Type<MountJumpedPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "mount_jumped"));
@@ -24,8 +24,8 @@ public record MountJumpedPacket(int entityID) implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(MountJumpedPacket payload, IPayloadContext context) {
-        Player sender = context.player();
+    public static void handleServer(MountJumpedPacket payload, ServerPlayer player) {
+        ServerPlayer sender = player;
         if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof MountableAetherAnimal mountableAetherAnimal) {
             mountableAetherAnimal.setMountJumping(true);
             mountableAetherAnimal.setEntityOnGround(false);

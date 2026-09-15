@@ -24,7 +24,7 @@ public class AccessoryFreezableRecipe extends AbstractBiomeParameterRecipe {
     public static final RecipeSerializer<AccessoryFreezableRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public AccessoryFreezableRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.ACCESSORY_FREEZABLE.get(), biome, ingredient, result, function);
+        super(AetherIIRecipeTypes.ACCESSORY_FREEZABLE, biome, ingredient, result, function);
     }
 
     public AccessoryFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {

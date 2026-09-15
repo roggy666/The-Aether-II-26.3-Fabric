@@ -179,7 +179,7 @@ public class AetherPoolElement extends StructurePoolElement {
 
     @Override
     public StructurePoolElementType<?> getType() {
-        return AetherIIPoolElementTypes.AETHER.get();
+        return AetherIIPoolElementTypes.AETHER;
     }
 
     @Override

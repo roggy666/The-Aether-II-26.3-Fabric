@@ -12,7 +12,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record AlkahestFizzPacket(BlockPos pos, Direction face) implements CustomPacketPayload {
     public static final Type<AlkahestFizzPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "alkahest_fizz"));
@@ -29,9 +31,10 @@ public record AlkahestFizzPacket(BlockPos pos, Direction face) implements Custom
         return TYPE;
     }
 
-    public static void execute(AlkahestFizzPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(AlkahestFizzPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            ParticleUtils.spawnParticlesOnBlockFace(context.player().level(), payload.pos().offset(payload.face().getOpposite().getUnitVec3i()), ParticleTypes.WHITE_SMOKE, UniformInt.of(10, 20), payload.face(), () -> Vec3.ZERO, 0.5);
+            ParticleUtils.spawnParticlesOnBlockFace(player.level(), payload.pos().offset(payload.face().getOpposite().getUnitVec3i()), ParticleTypes.WHITE_SMOKE, UniformInt.of(10, 20), payload.face(), () -> Vec3.ZERO, 0.5);
         }
     }
 }

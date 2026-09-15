@@ -120,7 +120,7 @@ public class InfectedPatchFeature extends Feature<InfectedPatchConfiguration> { 
     }
 
     public static BlockState infectBlocks(WorldGenLevel level, BlockPos.MutableBlockPos mutablePos) {
-        BlockInfection infection = BuiltInRegistries.BLOCK.wrapAsHolder(level.getBlockState(mutablePos).getBlock()).getData(AetherIIDataMaps.INFECTED_BLOCKS);
+        BlockInfection infection = AetherIIDataMaps.INFECTED_BLOCKS.get(BuiltInRegistries.BLOCK.wrapAsHolder(level.getBlockState(mutablePos).getBlock()));
         if (infection != null) {
             Block block = BuiltInRegistries.BLOCK.getValue(infection.block());
             if (block != null) {

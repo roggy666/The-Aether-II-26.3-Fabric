@@ -126,7 +126,7 @@ public class Zephyr extends Mob implements Enemy {
             });
 
             if (this.level().isClientSide()) {
-                this.level().addParticle(AetherIIParticleTypes.ZEPHYR_SNOWFLAKE.get(),
+                this.level().addParticle(AetherIIParticleTypes.ZEPHYR_SNOWFLAKE,
                         this.getX(), this.getY(0.45F), this.getZ(),
                         look.x * 1.5F + this.getRandom().nextFloat() * 0.1F,
                         look.y * 1.5F + this.getRandom().nextFloat() * 0.1F,
@@ -174,17 +174,17 @@ public class Zephyr extends Mob implements Enemy {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_ZEPHYR_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_ZEPHYR_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_ZEPHYR_HURT.get();
+        return AetherIISoundEvents.ENTITY_ZEPHYR_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_ZEPHYR_DEATH.get();
+        return AetherIISoundEvents.ENTITY_ZEPHYR_DEATH;
     }
 
     @Override
@@ -315,7 +315,7 @@ public class Zephyr extends Mob implements Enemy {
                     double accelX = this.trackedTarget.getX() - (this.zephyr.getX() + look.x() * 1.5);
                     double accelY = this.trackedTarget.getY() - (this.zephyr.getY() + 0.35);
                     double accelZ = this.trackedTarget.getZ() - (this.zephyr.getZ() + look.z() * 1.5);
-                    this.zephyr.playSound(AetherIISoundEvents.ENTITY_ZEPHYR_SHOOT.get(), this.zephyr.getSoundVolume(), (this.zephyr.getRandom().nextFloat() - this.zephyr.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    this.zephyr.playSound(AetherIISoundEvents.ENTITY_ZEPHYR_SHOOT, this.zephyr.getSoundVolume(), (this.zephyr.getRandom().nextFloat() - this.zephyr.getRandom().nextFloat()) * 0.2F + 1.0F);
                     ZephyrWebbingBall snowball = new ZephyrWebbingBall(this.zephyr.level(), this.zephyr, accelX, accelY, accelZ);
                     snowball.setPos(this.zephyr.getX() + look.x() * 1.55, this.zephyr.getY() + 0.35, this.zephyr.getZ() + look.z() * 1.55);
                     this.zephyr.level().addFreshEntity(snowball);

@@ -31,7 +31,7 @@ public class AccessoryLayer<S extends HumanoidRenderState, M extends HumanoidMod
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, S s, float v, float v1) {
         if (s instanceof AvatarRenderState avatarRenderState) {
-            ItemStack stack = avatarRenderState.getRenderData(AetherIIRenderers.ACCESSORY_EQUIPMENT_KEY);
+            ItemStack stack = avatarRenderState.getData(AetherIIRenderers.ACCESSORY_EQUIPMENT_KEY);
             if (stack != null && !stack.isEmpty()) {
                 HumanoidModel<S> model = this.accessoryModel;
 

@@ -2,7 +2,10 @@ package com.aetherteam.aetherii.item.equipment.weapons;
 
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
-import com.aetherteam.aetherii.item.equipment.AetherIINeoItemAbilities;
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+import com.aetherteam.aetherii.item.equipment.WeaponAbility;
+import com.aetherteam.aetherii.item.equipment.WeaponAbilityItem;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,19 +16,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
-public class TieredHammerItem extends Item {
+public class TieredHammerItem extends Item implements CustomEnchantmentItem, WeaponAbilityItem {
     public static final Identifier BASE_SHOCK_RANGE_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "base_shock_range");
 
     public TieredHammerItem(Item.Properties properties) {
@@ -35,8 +35,8 @@ public class TieredHammerItem extends Item {
     public static Item.Properties applyWeaponProperties(Item.Properties properties, ToolMaterial toolMaterial, float damage, float speed, List<ItemAttributeModifiers.Entry> specialDamage) {
         return properties.durability(toolMaterial.durability()).repairable(toolMaterial.repairItems()).enchantable(toolMaterial.enchantmentValue())
                 .component(DataComponents.TOOL, new Tool(List.of(
-                        Tool.Rule.overrideSpeed(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(Tags.Blocks.GLASS_BLOCKS), 15.0F),
-                        Tool.Rule.overrideSpeed(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(Tags.Blocks.GLASS_PANES), 15.0F)
+                        Tool.Rule.overrideSpeed(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(ConventionalBlockTags.GLASS_BLOCKS), 15.0F),
+                        Tool.Rule.overrideSpeed(BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK).getOrThrow(ConventionalBlockTags.GLASS_PANES), 15.0F)
                 ), 1.0F, 2, false))
                 .attributes(createAttributes(toolMaterial, damage, speed, specialDamage))
                 .component(DataComponents.WEAPON, new Weapon(1));
@@ -71,8 +71,8 @@ public class TieredHammerItem extends Item {
     }
 
     @Override
-    public boolean canPerformAction(ItemInstance item, ItemAbility toolAction) {
-        return AetherIINeoItemAbilities.DEFAULT_HAMMER_ACTIONS.contains(toolAction);
+    public boolean canPerformAction(ItemStack stack, WeaponAbility ability) {
+        return ability == WeaponAbility.HAMMER_SHOCK;
     }
 
     @Override

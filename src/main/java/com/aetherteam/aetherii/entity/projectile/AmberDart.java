@@ -35,7 +35,7 @@ public class AmberDart extends AbstractArrow {
     }
 
     public AmberDart(Level level, double x, double y, double z, ItemStack pickupStack, ItemStack weaponStack) {
-        super(AetherIIEntityTypes.AMBER_DART.get(), x, y, z, level, pickupStack, weaponStack);
+        super(AetherIIEntityTypes.AMBER_DART, x, y, z, level, pickupStack, weaponStack);
         this.pickup = AbstractArrow.Pickup.DISALLOWED;
         if (weaponStack.has(AetherIIDataComponents.BUILDUP_CONTENTS)) {
             this.entityData.set(ID_EFFECT_COLOR, this.getColor(weaponStack));
@@ -44,7 +44,7 @@ public class AmberDart extends AbstractArrow {
     }
 
     public AmberDart(Level level, LivingEntity owner, ItemStack pickupStack, ItemStack weaponStack) {
-        super(AetherIIEntityTypes.AMBER_DART.get(), owner, level, pickupStack, weaponStack);
+        super(AetherIIEntityTypes.AMBER_DART, owner, level, pickupStack, weaponStack);
         this.pickup = AbstractArrow.Pickup.DISALLOWED;
         if (weaponStack.has(AetherIIDataComponents.BUILDUP_CONTENTS)) {
             this.entityData.set(ID_EFFECT_COLOR, this.getColor(weaponStack));
@@ -86,7 +86,7 @@ public class AmberDart extends AbstractArrow {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.isBlocking()) {
-                livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
+                livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
                 if (entity instanceof Player player && player.isBlocking()) {
                     if (!player.getUseItem().isEmpty()) {
                         player.getUseItem().hurtAndBreak(3, player, player.getUsedItemHand());
@@ -99,10 +99,10 @@ public class AmberDart extends AbstractArrow {
             BuildupContents buildupContents = this.getWeaponItem().get(AetherIIDataComponents.BUILDUP_CONTENTS);
             if (buildupContents != null) {
                 if (entity instanceof LivingEntity livingEntity) {
-                    entity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), buildupContents.preset(), buildupContents.amount());
+                    entity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), buildupContents.preset(), buildupContents.amount());
                 }
                 Vec3 vec3 = result.getLocation();
-                serverLevel.sendParticles(ColorParticleOption.create(AetherIIParticleTypes.EFFECT_BUILDUP.get(), buildupContents.getColor()), vec3.x, vec3.y, vec3.z, 1, 0.0F, this.random.nextDouble() / 3.0, 0.0F, 0.0F);
+                serverLevel.sendParticles(ColorParticleOption.create(AetherIIParticleTypes.EFFECT_BUILDUP, buildupContents.getColor()), vec3.x, vec3.y, vec3.z, 1, 0.0F, this.random.nextDouble() / 3.0, 0.0F, 0.0F);
             }
         }
         this.discard();
@@ -110,7 +110,7 @@ public class AmberDart extends AbstractArrow {
 
     @Override
     protected ItemStack getDefaultPickupItem() {
-        return new ItemStack(AetherIIItems.AMBER_DARTS.get());
+        return new ItemStack(AetherIIItems.AMBER_DARTS);
     }
 
     public int getColor() {

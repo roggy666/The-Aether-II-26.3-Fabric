@@ -24,7 +24,7 @@ public class IcestoneFreezableRecipe extends AbstractBiomeParameterRecipe {
     public static final RecipeSerializer<IcestoneFreezableRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public IcestoneFreezableRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.ICESTONE_FREEZABLE.get(), biome, ingredient, result, function);
+        super(AetherIIRecipeTypes.ICESTONE_FREEZABLE, biome, ingredient, result, function);
     }
 
     public IcestoneFreezableRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {

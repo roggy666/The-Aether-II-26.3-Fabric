@@ -154,7 +154,7 @@ public class GuardianDonationBoxBlock extends BaseEntityBlock implements SimpleW
                         count = (float) storedItem.getCount() / (float) storedItem.getMaxStackSize();
                     }
 
-                    level.playSound(null, pos, AetherIISoundEvents.BLOCK_GUARDIAN_DONATION_BOX_INSERT.get(), SoundSource.BLOCKS, 1.0F, 0.7F + 0.5F * count);
+                    level.playSound(null, pos, AetherIISoundEvents.BLOCK_GUARDIAN_DONATION_BOX_INSERT, SoundSource.BLOCKS, 1.0F, 0.7F + 0.5F * count);
                     if (level instanceof ServerLevel serverLevel) {
                         serverLevel.sendParticles(ParticleTypes.DUST_PLUME, pos.getX() + 0.5, pos.getY() + 0.85, pos.getZ() + 0.5, 7, 0.0, 0.0, 0.0, 0.0);
                     }
@@ -171,7 +171,7 @@ public class GuardianDonationBoxBlock extends BaseEntityBlock implements SimpleW
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof GuardianDonationBoxBlockEntity) {
-            level.playSound(null, pos, AetherIISoundEvents.BLOCK_GUARDIAN_DONATION_BOX_INSERT_FAIL.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, AetherIISoundEvents.BLOCK_GUARDIAN_DONATION_BOX_INSERT_FAIL, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return InteractionResult.SUCCESS;
         } else {

@@ -9,8 +9,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.neoforged.neoforge.event.EventHooks;
+import net.minecraft.world.level.gamerules.GameRules;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;
@@ -39,7 +38,7 @@ public class EatAetherGrassGoal extends Goal {
             if (IS_TALL_GRASS.test(this.mob.level().getBlockState(blockpos))) {
                 return true;
             } else {
-                return this.mob.level().getBlockState(blockpos.below()).is(AetherIIBlocks.AETHER_GRASS_BLOCK.get());
+                return this.mob.level().getBlockState(blockpos.below()).is(AetherIIBlocks.AETHER_GRASS_BLOCK);
             }
         }
     }
@@ -71,16 +70,16 @@ public class EatAetherGrassGoal extends Goal {
         if (this.eatAnimationTick == this.adjustedTickDelay(4)) {
             BlockPos blockPos = this.mob.blockPosition();
             if (IS_TALL_GRASS.test(this.mob.level().getBlockState(blockPos))) {
-                if (EventHooks.canEntityGrief((ServerLevel) this.mob.level(), this.mob)) {
+                if (((ServerLevel) this.mob.level()).getGameRules().get(GameRules.MOB_GRIEFING)) {
                     this.mob.level().destroyBlock(blockPos, false);
                 }
                 this.mob.ate();
             } else {
                 BlockPos belowPos = blockPos.below();
-                if (this.mob.level().getBlockState(belowPos).is(AetherIIBlocks.AETHER_GRASS_BLOCK.get())) {
-                    if (EventHooks.canEntityGrief((ServerLevel) this.mob.level(), this.mob)) {
-                        this.mob.level().levelEvent(2001, belowPos, Block.getId(AetherIIBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
-                        this.mob.level().setBlock(belowPos, AetherIIBlocks.AETHER_DIRT.get().defaultBlockState(), 2);
+                if (this.mob.level().getBlockState(belowPos).is(AetherIIBlocks.AETHER_GRASS_BLOCK)) {
+                    if (((ServerLevel) this.mob.level()).getGameRules().get(GameRules.MOB_GRIEFING)) {
+                        this.mob.level().levelEvent(2001, belowPos, Block.getId(AetherIIBlocks.AETHER_GRASS_BLOCK.defaultBlockState()));
+                        this.mob.level().setBlock(belowPos, AetherIIBlocks.AETHER_DIRT.defaultBlockState(), 2);
                     }
                     this.mob.ate();
                 }

@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.entity.passive;
 
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
@@ -49,7 +51,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -62,8 +63,8 @@ import java.util.stream.Collectors;
  * Warning for "deprecation" is suppressed because we still need to use vanilla shearing behavior from {@link Shearable}.
  */
 @SuppressWarnings("deprecation")
-public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
-    private static final EntityDataAccessor<SheepuffColor> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, AetherIIDataSerializers.SHEEPUFF_COLOR.get());
+public class Sheepuff extends AetherAnimal implements Shearable {
+    private static final EntityDataAccessor<SheepuffColor> DATA_WOOL_COLOR_ID = SynchedEntityData.defineId(Sheepuff.class, AetherIIDataSerializers.SHEEPUFF_COLOR);
     private static final EntityDataAccessor<Boolean> DATA_SHEARED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_PUFFED_ID = SynchedEntityData.defineId(Sheepuff.class, EntityDataSerializers.BOOLEAN);
 
@@ -194,6 +195,16 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(ConventionalItemTags.SHEAR_TOOLS)) { // Vanilla shearing (NeoForge did this through IShearable)
+            if (this.level() instanceof ServerLevel serverLevel && this.readyForShearing()) {
+                this.shear(serverLevel, SoundSource.PLAYERS, itemStack);
+                this.gameEvent(GameEvent.SHEAR, player);
+                itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+                return InteractionResult.SUCCESS_SERVER;
+            } else {
+                return InteractionResult.CONSUME;
+            }
+        }
         if (itemStack.has(DataComponents.DYE)) {
             DyeColor dyeColor = itemStack.get(DataComponents.DYE);
             SheepuffColor sheepuffColor = SheepuffColor.SHEEPUFF_COLOR_BY_DYE.get(dyeColor);
@@ -211,37 +222,11 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     }
 
     /**
-     * Forge shearing method.
-     */
-    @Override
-    public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
-        level.playSound(null, this, AetherIISoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
-        if (!level.isClientSide()) {
-            int i;
-            this.amountEaten = 0;
-            if (this.getPuffed()) {
-                this.setPuffed(false);
-                i = 2;
-            } else {
-                this.setSheared(true);
-                i = 1;
-            }
-            i += this.getRandom().nextInt(3);
-            List<ItemStack> items = new ArrayList<>();
-            for (int j = 0; j < i; ++j) {
-                items.add(new ItemStack(SheepuffColor.CLOUDWOOL_BY_SHEEPUFF_COLOR.get(this.getColor())));
-            }
-            return items;
-        }
-        return Collections.emptyList();
-    }
-
-    /**
      * Vanilla shearing method (needed for dispenser behavior).
      */
     @Override
     public void shear(ServerLevel serverLevel, SoundSource soundSource, ItemStack itemStack) {
-        this.level().playSound(null, this, AetherIISoundEvents.ENTITY_SHEEPUFF_SHEAR.get(), soundSource, 1.0F, 1.0F);
+        this.level().playSound(null, this, AetherIISoundEvents.ENTITY_SHEEPUFF_SHEAR, soundSource, 1.0F, 1.0F);
         this.dropFromShearingLootTable(serverLevel, AetherIILoot.SHEARING_SHEEPUFF, itemStack, (level, item) -> {
             for (int i = 0; i < item.getCount(); ++i) {
                 ItemEntity drop = this.spawnAtLocation(serverLevel, item.copyWithCount(1), 1);
@@ -256,11 +241,6 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
         } else {
             this.setSheared(true);
         }
-    }
-
-    @Override
-    public boolean isShearable(Player player, ItemStack item, Level world, BlockPos pos) {
-        return this.readyForShearing();
     }
 
     @Override
@@ -353,24 +333,24 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_SHEEPUFF_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_SHEEPUFF_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SHEEPUFF_HURT.get();
+        return AetherIISoundEvents.ENTITY_SHEEPUFF_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SHEEPUFF_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SHEEPUFF_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_SHEEPUFF_STEP.get(), SoundSource.NEUTRAL, 0.15F, 1.0F);
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(), AetherIISoundEvents.ENTITY_SHEEPUFF_STEP, SoundSource.NEUTRAL, 0.15F, 1.0F);
     }
 
 
@@ -388,7 +368,7 @@ public class Sheepuff extends AetherAnimal implements Shearable, IShearable {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
         Sheepuff parent = (Sheepuff) entity;
-        Sheepuff baby = AetherIIEntityTypes.SHEEPUFF.get().create(level, EntitySpawnReason.BREEDING);
+        Sheepuff baby = AetherIIEntityTypes.SHEEPUFF.create(level, EntitySpawnReason.BREEDING);
         if (baby != null) {
             SheepuffColor parent1DyeColor = this.getColor();
             SheepuffColor parent2DyeColor = ((Sheepuff) entity).getColor();

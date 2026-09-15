@@ -13,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record DiscardCompanionDeathPacket(int entityID, ItemStack stack) implements CustomPacketPayload {
     public static final Type<DiscardCompanionDeathPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "discard_companion_death"));
@@ -28,8 +27,8 @@ public record DiscardCompanionDeathPacket(int entityID, ItemStack stack) impleme
         return TYPE;
     }
 
-    public static void execute(DiscardCompanionDeathPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(DiscardCompanionDeathPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof LivingEntity companion) {
             playerEntity.getCooldowns().addCooldown(payload.stack(), 1000);
             if (companion.level() instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.SHOW_DEATH_MESSAGES) && playerEntity instanceof ServerPlayer serverPlayer) {

@@ -45,7 +45,10 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -99,16 +102,16 @@ public class AltarBlockEntity extends BaseContainerBlockEntity implements Worldl
     private float inputItemRotation = 0.0F;
 
     public AltarBlockEntity() {
-        this(AetherIIBlockEntityTypes.ALTAR.get(), BlockPos.ZERO, AetherIIBlocks.ALTAR.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.ALTAR, BlockPos.ZERO, AetherIIBlocks.ALTAR.defaultBlockState());
     }
 
     public AltarBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        this(AetherIIBlockEntityTypes.ALTAR.get(), pPos, pBlockState);
+        this(AetherIIBlockEntityTypes.ALTAR, pPos, pBlockState);
     }
 
     public AltarBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.ALTAR_ENCHANTING.get());
+        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.ALTAR_ENCHANTING);
     }
 
     @Override
@@ -148,11 +151,6 @@ public class AltarBlockEntity extends BaseContainerBlockEntity implements Worldl
     }
 
     @Override
-    public void handleUpdateTag(ValueInput input) {
-        this.loadAdditional(input);
-    }
-
-    @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag;
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), AetherII.LOGGER)) {
@@ -186,7 +184,12 @@ public class AltarBlockEntity extends BaseContainerBlockEntity implements Worldl
                     blockEntity.processingTotalTime = getTotalProcessingTime(level, blockEntity);
                     if (blockEntity.process(level.registryAccess(), recipeHolder, blockEntity.items, i)) {
                         blockEntity.setRecipeUsed(recipeHolder);
-                        PacketDistributor.sendToAllPlayers(new AltarParticlesPacket(pos));
+                        if (level instanceof ServerLevel serverLevel) {
+                            AltarParticlesPacket packet = new AltarParticlesPacket(pos);
+                            for (ServerPlayer player : PlayerLookup.tracking(serverLevel, pos)) {
+                                ServerPlayNetworking.send(player, packet);
+                            }
+                        }
                     }
                 }
             } else {

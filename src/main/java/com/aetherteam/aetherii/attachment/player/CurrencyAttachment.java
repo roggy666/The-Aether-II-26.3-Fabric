@@ -41,26 +41,26 @@ public class CurrencyAttachment {
         if (player instanceof ServerPlayer serverPlayer && player.level() instanceof ServerLevel serverLevel) {
             GameRules gameRules = serverLevel.getGameRules();
             if (!gameRules.get(GameRules.KEEP_INVENTORY)) {
-                int amount = player.getData(AetherIIDataAttachments.CURRENCY).getAmount();
+                int amount = player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).getAmount();
                 int fullStacks = Math.floorDiv(amount, 64);
                 int leftoverStack = amount % 64;
                 Collection<ItemEntity> newStacks = new ArrayList<>();
                 for (int i = 0; i < fullStacks; i++) {
-                    ItemStack itemStack = new ItemStack(AetherIIItems.GLINT_COIN.get(), 64);
+                    ItemStack itemStack = new ItemStack(AetherIIItems.GLINT_COIN, 64);
                     ItemEntity itemEntity = ((LivingEntityAccessor) serverPlayer).callCreateItemStackToDrop(itemStack.copy(), true, false);
                     if (itemEntity != null) {
                         newStacks.add(itemEntity);
                     }
                 }
                 if (leftoverStack > 0) {
-                    ItemStack itemStack = new ItemStack(AetherIIItems.GLINT_COIN.get(), leftoverStack);
+                    ItemStack itemStack = new ItemStack(AetherIIItems.GLINT_COIN, leftoverStack);
                     ItemEntity itemEntity = ((LivingEntityAccessor) serverPlayer).callCreateItemStackToDrop(itemStack.copy(), true, false);
                     if (itemEntity != null) {
                         newStacks.add(itemEntity);
                     }
                 }
                 drops.addAll(newStacks);
-                player.getData(AetherIIDataAttachments.CURRENCY).setAmount(0);
+                player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).setAmount(0);
             }
         }
     }

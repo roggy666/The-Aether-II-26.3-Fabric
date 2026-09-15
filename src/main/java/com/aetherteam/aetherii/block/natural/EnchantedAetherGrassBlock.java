@@ -27,10 +27,10 @@ public class EnchantedAetherGrassBlock extends AetherGrassBlock {
             aboveState.randomTick(level, abovePos, random);
         }
         if (!canBeGrass(state, level, pos)) {
-            if (!level.isAreaLoaded(pos, 1)) {
+            if (!level.hasChunksAt(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
                 return;
             }
-            level.setBlockAndUpdate(pos, AetherIIBlocks.AETHER_DIRT.get().defaultBlockState());
+            level.setBlockAndUpdate(pos, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
         }
     }
 
@@ -42,7 +42,7 @@ public class EnchantedAetherGrassBlock extends AetherGrassBlock {
         } else if (aboveState.getFluidState().getAmount() == 8) {
             return false;
         } else {
-            int i = LightEngine.getLightBlockInto(state, aboveState, Direction.UP, aboveState.getLightDampening());
+            int i = LightEngine.getLightDampeningInto(state, aboveState, Direction.UP, aboveState.getLightDampening());
             return i < 15;
         }
     }

@@ -21,7 +21,7 @@ public class MoaEggBlockEntity extends BlockEntity {
     public int tickCount;
 
     public MoaEggBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.MOA_EGG.get(), pos, state);
+        super(AetherIIBlockEntityTypes.MOA_EGG, pos, state);
     }
 
     @Nullable

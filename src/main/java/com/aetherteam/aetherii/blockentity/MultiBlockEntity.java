@@ -38,11 +38,6 @@ public class MultiBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(ValueInput input) {
-        this.loadAdditional(input);
-    }
-
-    @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag;
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), AetherII.LOGGER)) {

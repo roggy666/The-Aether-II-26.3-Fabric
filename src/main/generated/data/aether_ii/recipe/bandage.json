@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "aether_ii:cloudtwine",
+    "#aether_ii:cloudwool"
+  ],
+  "result": {
+    "id": "aether_ii:bandage"
+  }
+}

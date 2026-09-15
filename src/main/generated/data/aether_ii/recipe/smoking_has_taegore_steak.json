@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "experience": 0.35,
+  "ingredient": "aether_ii:raw_taegore_meat",
+  "result": {
+    "id": "aether_ii:taegore_steak"
+  }
+}

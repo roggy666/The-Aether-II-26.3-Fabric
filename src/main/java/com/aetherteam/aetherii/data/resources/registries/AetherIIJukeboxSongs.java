@@ -26,16 +26,16 @@ public class AetherIIJukeboxSongs {
     }
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {
-        register(context, ASCENDING_DAWN, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_ASCENDING_DAWN.getDelegate(), 350, 2);
-        register(context, AERWHALE, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_AERWHALE.getDelegate(), 178, 3);
-        register(context, APPROACHES, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_APPROACHES.getDelegate(), 274, 4);
-        register(context, DEMISE, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_DEMISE.getDelegate(), 300, 5);
-        register(context, CHINCHILLA, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_CHINCHILLA.getDelegate(), 163, 6);
-        register(context, HIGH, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_HIGH.getDelegate(), 186, 7);
-        register(context, REVOLUTIONS, (Holder.Reference<SoundEvent>) AetherIISoundEvents.ITEM_ENGRAVED_DISC_REVOLUTIONS.getDelegate(), 221, 8);
+        register(context, ASCENDING_DAWN, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_ASCENDING_DAWN), 350, 2);
+        register(context, AERWHALE, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_AERWHALE), 178, 3);
+        register(context, APPROACHES, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_APPROACHES), 274, 4);
+        register(context, DEMISE, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_DEMISE), 300, 5);
+        register(context, CHINCHILLA, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_CHINCHILLA), 163, 6);
+        register(context, HIGH, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_HIGH), 186, 7);
+        register(context, REVOLUTIONS, net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ENGRAVED_DISC_REVOLUTIONS), 221, 8);
     }
 
-    private static void register(BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, Holder.Reference<SoundEvent> soundEvent, int lengthInSeconds, int comparatorOutput) {
+    private static void register(BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, Holder<SoundEvent> soundEvent, int lengthInSeconds, int comparatorOutput) {
         context.register(key, new JukeboxSong(soundEvent, Component.translatable(Util.makeDescriptionId("jukebox_song", key.identifier())), (float) lengthInSeconds, comparatorOutput));
     }
 }

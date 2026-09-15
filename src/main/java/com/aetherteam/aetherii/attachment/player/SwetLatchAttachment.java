@@ -1,5 +1,10 @@
 package com.aetherteam.aetherii.attachment.player;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.world.entity.EntitySpawnRequest;
+import com.aetherteam.aetherii.mixin.mixins.common.accessor.EntityAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.EntityUtil;
@@ -23,8 +28,7 @@ import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.util.ValueIOSerializable;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.aetherteam.aetherii.attachment.ValueIOSerializable;
 
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +43,7 @@ public class SwetLatchAttachment implements ValueIOSerializable {
         ValueOutput.ValueOutputList output = valueOutput.childrenList("swets");
         try {
             for (Swet swet : this.getLatchedSwets()) {
-                String id = swet.getEncodeId();
+                String id = ((EntityAccessor) swet).aether_ii$getEncodeId();
                 if (id != null) {
                     ValueOutput element = output.addChild();
                     element.putString("id", id);
@@ -59,18 +63,30 @@ public class SwetLatchAttachment implements ValueIOSerializable {
         ValueInput.ValueInputList list = valueInput.childrenListOrEmpty("swets");
 
         this.getLatchedSwets().clear();
-        list.stream().forEach(element -> EntityType.create(element, this.player.level(), EntitySpawnReason.TRIGGERED).ifPresent((entity) -> {
+        list.stream().forEach(element -> EntityType.create(element, this.player.level(), new EntitySpawnRequest(EntitySpawnReason.TRIGGERED, false)).ifPresent((entity) -> {
             if (entity instanceof Swet swet) {
                 this.getLatchedSwets().add(swet);
                 this.syncToClient = true;
             }
         }));
     }
-    private final Player player;
+    private Player player;
     private final List<Swet> swets = Lists.newArrayList();
     private boolean syncToClient = false;
 
+    public SwetLatchAttachment() {
+        this(null);
+    }
+
     public SwetLatchAttachment(Player player) {
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
@@ -80,7 +96,12 @@ public class SwetLatchAttachment implements ValueIOSerializable {
                 try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(this.player.problemPath(), AetherII.LOGGER)) {
                     TagValueOutput tagvalueoutput = TagValueOutput.createWithContext(problemreporter$scopedcollector, this.player.registryAccess());
                     this.serialize(tagvalueoutput);
-                    PacketDistributor.sendToAllPlayers(new SwetSyncPacket(this.player.getId(), tagvalueoutput.buildResult()));
+                    SwetSyncPacket packet = new SwetSyncPacket(this.player.getId(), tagvalueoutput.buildResult());
+                    if (this.player.level().getServer() != null) {
+                        for (ServerPlayer sp : PlayerLookup.all(this.player.level().getServer())) {
+                            ServerPlayNetworking.send(sp, packet);
+                        }
+                    }
                 }
 
 
@@ -105,7 +126,7 @@ public class SwetLatchAttachment implements ValueIOSerializable {
 
         if (!this.getLatchedSwets().isEmpty()) {
             if (this.player.tickCount % 20 == 0) {
-                this.player.level().playLocalSound(this.player, AetherIISoundEvents.ENTITY_SWET_LEECH.get(), SoundSource.HOSTILE, 1.0F, ((this.player.getRandom().nextFloat() - this.player.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                this.player.level().playLocalSound(this.player, AetherIISoundEvents.ENTITY_SWET_LEECH, SoundSource.HOSTILE, 1.0F, ((this.player.getRandom().nextFloat() - this.player.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
             }
         }
 

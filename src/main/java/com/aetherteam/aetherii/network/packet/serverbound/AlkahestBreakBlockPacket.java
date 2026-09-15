@@ -9,7 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record AlkahestBreakBlockPacket(BlockPos pos, boolean drop) implements CustomPacketPayload {
     public static final Type<AlkahestBreakBlockPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "alkahest_break_block"));
@@ -26,8 +26,8 @@ public record AlkahestBreakBlockPacket(BlockPos pos, boolean drop) implements Cu
         return TYPE;
     }
 
-    public static void execute(AlkahestBreakBlockPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(AlkahestBreakBlockPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity.level().getServer() != null) {
             AlkahestFluid.fullyDestroyBlock(playerEntity.level(), payload.pos(), payload.drop());
         }

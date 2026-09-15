@@ -87,30 +87,30 @@ public class Phyg extends WingedAnimal {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_PHYG_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_PHYG_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_PHYG_HURT.get();
+        return AetherIISoundEvents.ENTITY_PHYG_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_PHYG_DEATH.get();
+        return AetherIISoundEvents.ENTITY_PHYG_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_PHYG_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_PHYG_STEP, 0.15F, 1.0F);
     }
 
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
-        return AetherIIEntityTypes.PHYG.get().create(level, EntitySpawnReason.BREEDING);
+        return AetherIIEntityTypes.PHYG.create(level, EntitySpawnReason.BREEDING);
     }
 
     /**

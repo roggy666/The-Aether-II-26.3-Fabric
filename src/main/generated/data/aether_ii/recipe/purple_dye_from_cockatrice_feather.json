@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "purple_dye",
+  "ingredients": [
+    "aether_ii:cockatrice_feather"
+  ],
+  "result": {
+    "id": "minecraft:purple_dye"
+  }
+}

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.GhostSlotsAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.inventory.menu.AlkahestPurifierMenu;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.RecipeBookComponentAccessor;
@@ -46,11 +47,11 @@ public class AlkahestPurifierRecipeBookComponent extends RecipeBookComponent<Alk
 
     @Override
     public void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
-        ghostSlots.setResult(this.menu.getSlot(5), contextMap, recipeDisplay.result());
+        ((GhostSlotsAccessor) ghostSlots).aether_ii$setResult(this.menu.getSlot(5), contextMap, recipeDisplay.result());
         if (recipeDisplay instanceof AlkahestPurifierRecipeDisplay purifierRecipeDisplay) {
-            ghostSlots.setInput(this.menu.getSlot(0), contextMap, purifierRecipeDisplay.ingredient());
-            ghostSlots.setInput(this.menu.getSlot(1), contextMap, purifierRecipeDisplay.fuel());
-            ghostSlots.setInput(this.menu.getSlot(6), contextMap, purifierRecipeDisplay.byproduct());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(this.menu.getSlot(0), contextMap, purifierRecipeDisplay.ingredient());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(this.menu.getSlot(1), contextMap, purifierRecipeDisplay.fuel());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(this.menu.getSlot(6), contextMap, purifierRecipeDisplay.byproduct());
         }
     }
 

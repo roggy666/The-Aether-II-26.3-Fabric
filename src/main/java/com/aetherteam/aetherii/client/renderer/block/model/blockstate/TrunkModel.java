@@ -1,5 +1,9 @@
 package com.aetherteam.aetherii.client.renderer.block.model.blockstate;
 
+import net.minecraft.core.Direction;
+import java.util.function.Predicate;
+import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.api.client.model.loading.v1.CustomUnbakedBlockStateModel;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.natural.TrunkBlock;
 import com.mojang.math.OctahedralGroup;
@@ -18,12 +22,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WallSide;
-import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
-import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 
 import java.util.*;
 
-public class TrunkModel implements DynamicBlockStateModel {
+public class TrunkModel implements BlockStateModel {
     private final Map<Holder, BlockStateModelPart> connections;
     private final Material.Baked particleIcon;
     @BakedQuad.MaterialFlags
@@ -35,7 +37,6 @@ public class TrunkModel implements DynamicBlockStateModel {
         this.materialFlags = computeMaterialFlags(connections.values());
     }
 
-    @Override
     public void collectParts(BlockAndTintGetter blockAndTintGetter, BlockPos blockPos, BlockState blockState, RandomSource randomSource, List<BlockStateModelPart> list) {
         Map<String, WallSide> properties = TrunkBlock.getCornerProperties(blockAndTintGetter, blockPos);
         for (var entry : properties.entrySet()) {
@@ -45,6 +46,34 @@ public class TrunkModel implements DynamicBlockStateModel {
                 }
             }
         }
+    }
+
+    @Override
+    public void collectParts(RandomSource random, List<BlockStateModelPart> parts) {
+        for (var entry : this.connections.entrySet()) {
+            if (entry.getKey().value() == WallSide.LOW) parts.add(entry.getValue());
+        }
+    }
+
+    @Override
+    public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
+        List<BlockStateModelPart> parts = new ArrayList<>();
+        this.collectParts(level, pos, state, random, parts);
+        for (BlockStateModelPart part : parts) {
+            for (int side = 0; side <= 6; side++) {
+                Direction face = side == 6 ? null : Direction.values()[side];
+                if (face != null && cullTest.test(face)) continue;
+                for (BakedQuad quad : part.getQuads(face)) {
+                    emitter.fromBakedQuad(quad).cullFace(face)
+                            .ambientOcclusion(part.useAmbientOcclusion() ? net.fabricmc.fabric.api.util.TriState.TRUE : net.fabricmc.fabric.api.util.TriState.FALSE).emit();
+                }
+            }
+        }
+    }
+
+    @Override
+    public Object createGeometryKey(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random) {
+        return TrunkBlock.getCornerProperties(level, pos);
     }
 
     @Override

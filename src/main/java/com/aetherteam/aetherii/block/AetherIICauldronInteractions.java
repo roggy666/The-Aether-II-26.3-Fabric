@@ -28,17 +28,17 @@ public class AetherIICauldronInteractions {
             emptySkyrootBucket(level, pos, player, hand, stack, Blocks.POWDER_SNOW_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3), SoundEvents.BUCKET_EMPTY_POWDER_SNOW);
 
     public static final CauldronInteraction EMPTY_WATER = (state, level, pos, player, hand, stack) ->
-            CauldronInteractions.fillBucket(state, level, pos, player, hand, stack, new ItemStack(AetherIIItems.SKYROOT_WATER_BUCKET.get()), (blockState) ->
+            CauldronInteractions.fillBucket(state, level, pos, player, hand, stack, new ItemStack(AetherIIItems.SKYROOT_WATER_BUCKET), (blockState) ->
                     blockState.getValue(LayeredCauldronBlock.LEVEL) == 3, SoundEvents.BUCKET_FILL);
 
     public static final CauldronInteraction EMPTY_POWDER_SNOW = (state, level, pos, player, hand, stack) ->
-            CauldronInteractions.fillBucket(state, level, pos, player, hand, stack, new ItemStack(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET.get()), (blockState) ->
+            CauldronInteractions.fillBucket(state, level, pos, player, hand, stack, new ItemStack(AetherIIItems.SKYROOT_POWDER_SNOW_BUCKET), (blockState) ->
                     blockState.getValue(LayeredCauldronBlock.LEVEL) == 3, SoundEvents.BUCKET_FILL);
 
     private static InteractionResult emptySkyrootBucket(Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack, BlockState state, SoundEvent sound) {
         if (!level.isClientSide()) {
             Item item = stack.getItem();
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(AetherIIItems.SKYROOT_BUCKET.get())));
+            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, new ItemStack(AetherIIItems.SKYROOT_BUCKET)));
             player.awardStat(Stats.FILL_CAULDRON);
             player.awardStat(Stats.ITEM_USED.get(item));
             level.setBlockAndUpdate(pos, state);

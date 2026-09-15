@@ -26,7 +26,6 @@ public class AetherIIPools {
     public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {
         HolderGetter<StructureTemplatePool> templatePools = context.lookup(Registries.TEMPLATE_POOL);
         Holder<StructureTemplatePool> fallback = templatePools.getOrThrow(Pools.EMPTY);
-        context.register(Pools.EMPTY, new StructureTemplatePool(fallback, ImmutableList.of(), StructureTemplatePool.Projection.RIGID));
 
         OutpostPools.bootstrap(context);
         CampPools.bootstrap(context);

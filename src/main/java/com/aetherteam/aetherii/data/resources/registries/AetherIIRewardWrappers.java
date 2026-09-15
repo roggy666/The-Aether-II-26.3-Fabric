@@ -32,8 +32,8 @@ public class AetherIIRewardWrappers {
 
     public static void bestiaryWrappers(BootstrapContext<RewardWrapper> context) {
         String path = "bestiary/";
-        for (Map.Entry<ResourceKey<BestiaryEntry>, Holder<EntityType<?>>> entry : AetherIIBestiaryEntries.ENTITIES.entrySet()) {
-            EntityType<?> entityType = entry.getValue().value();
+        for (Map.Entry<ResourceKey<BestiaryEntry>, EntityType<?>> entry : AetherIIBestiaryEntries.ENTITIES.entrySet()) {
+            EntityType<?> entityType = entry.getValue();
             Identifier observeId = Identifier.fromNamespaceAndPath(AetherII.MODID, "observe_" + entityType.toShortString()).withPrefix(path);
             RewardWrapper observeWrapper = new RewardWrapper(observeId, entry.getKey().identifier(), List.of(
                     BestiaryEntry.ICON.id(),
@@ -63,7 +63,7 @@ public class AetherIIRewardWrappers {
         String path = "effects/";
         for (Map.Entry<ResourceKey<EffectsEntry>, Holder<MobEffect>> entry : AetherIIEffectsEntries.EFFECTS.entrySet()) {
             Holder<MobEffect> effect = entry.getValue();
-            Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.getKey().identifier().getPath()).withPrefix(path);
+            Identifier id = Identifier.fromNamespaceAndPath(AetherII.MODID, "obtain_" + effect.unwrapKey().orElseThrow().identifier().getPath()).withPrefix(path);
 
             RewardWrapper observeWrapper = new RewardWrapper(id, entry.getKey().identifier(), List.of(
                     EffectsEntry.ICON.id(),

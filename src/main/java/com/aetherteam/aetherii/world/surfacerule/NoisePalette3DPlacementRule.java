@@ -1,8 +1,8 @@
 package com.aetherteam.aetherii.world.surfacerule;
 
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SurfaceRules;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record NoisePalette3DPlacementRule(BlockState spot, int spotRatio, int emptyRatio, double noiseFreq) implements SurfaceRules.RuleSource {
-	public static final KeyDispatchDataCodec<NoisePalette3DPlacementRule> KEY_CODEC = KeyDispatchDataCodec.of(RecordCodecBuilder.mapCodec(inst -> inst.group(
+	public static final MapCodec<NoisePalette3DPlacementRule> KEY_CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
 			BlockState.CODEC.fieldOf("spot_blockstate").forGetter(NoisePalette3DPlacementRule::spot),
 			Codec.INT.fieldOf("spot_ratio").forGetter(NoisePalette3DPlacementRule::spotRatio),
 			Codec.INT.fieldOf("empty_ratio").forGetter(NoisePalette3DPlacementRule::emptyRatio),
 			Codec.DOUBLE.fieldOf("noise_frequency").forGetter(NoisePalette3DPlacementRule::noiseFreq)
-	).apply(inst, NoisePalette3DPlacementRule::new)));
+	).apply(inst, NoisePalette3DPlacementRule::new));
 
 	@Override
 	public SurfaceRules.SurfaceRule apply(SurfaceRules.Context context) {
@@ -44,7 +44,7 @@ public record NoisePalette3DPlacementRule(BlockState spot, int spotRatio, int em
 	}
 
 	@Override
-	public KeyDispatchDataCodec<? extends SurfaceRules.RuleSource> codec() {
+	public MapCodec<? extends SurfaceRules.RuleSource> codec() {
 		return KEY_CODEC;
 	}
 }

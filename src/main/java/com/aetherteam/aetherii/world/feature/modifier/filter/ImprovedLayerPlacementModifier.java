@@ -61,7 +61,7 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.IMPROVED_LAYER_PLACEMENT.get();
+        return AetherIIPlacementModifierTypes.IMPROVED_LAYER_PLACEMENT;
     }
 
     @Nullable

@@ -6,7 +6,7 @@ import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.entity.variant.GlitterwingVariant;
 import com.aetherteam.aetherii.entity.variant.spawning.LightCheck;
 import com.aetherteam.aetherii.entity.variant.spawning.RandomCheck;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;

@@ -1,7 +1,10 @@
 package com.aetherteam.aetherii.client.renderer;
 
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionContext;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import com.aetherteam.aetherii.AetherII;
-import com.aetherteam.aetherii.client.renderer.level.HolyIslesCloudsRenderer;
 import com.aetherteam.aetherii.client.renderer.level.HolyIslesSkyboxRenderer;
 import com.aetherteam.aetherii.client.renderer.level.HolyIslesWeatherEffectRenderer;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDimensions;
@@ -9,29 +12,33 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.context.ContextKey;
-import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
-import net.neoforged.neoforge.client.event.RegisterCustomEnvironmentEffectRendererEvent;
 
 public class AetherIIDimensionRenderers {
-    public static final ContextKey<Float> DATA_THUNDER_KEY = new ContextKey<>(
-            Identifier.fromNamespaceAndPath(AetherII.MODID, "thunder"));
-    public static final ContextKey<Float> DATA_TIME_OF_DAY_KEY = new ContextKey<>(
-            Identifier.fromNamespaceAndPath(AetherII.MODID, "time_of_day"));
+    public static final RenderStateDataKey<Boolean> IS_HOLY_ISLES = RenderStateDataKey.create();
+    public static final HolyIslesSkyboxRenderer SKY = new HolyIslesSkyboxRenderer();
+
+    public static boolean isHolyIsles(ClientLevel level) {
+        return level != null && level.dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE);
+    }
+    public static final RenderStateDataKey<Float> DATA_THUNDER_KEY = RenderStateDataKey.create(() -> AetherII.MODID + ":thunder");
+    public static final RenderStateDataKey<Float> DATA_TIME_OF_DAY_KEY = RenderStateDataKey.create(() -> AetherII.MODID + ":time_of_day");
 
     public static final Identifier HOLY_ISLES_SKY_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "holy_isles_sky");
     public static final Identifier HOLY_ISLES_WEATHER_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "holy_isles_weather");
     public static final Identifier HOLY_ISLES_CLOUDS_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "holy_isles_clouds");
 
-    public static void registerDimensionEffect(RegisterCustomEnvironmentEffectRendererEvent event) {
-        event.registerSkyboxRenderer(HOLY_ISLES_SKY_ID, new HolyIslesSkyboxRenderer());
-        event.registerWeatherEffectRenderer(HOLY_ISLES_WEATHER_ID, new HolyIslesWeatherEffectRenderer());
-        event.registerCloudRenderer(HOLY_ISLES_CLOUDS_ID, new HolyIslesCloudsRenderer());
+    public static void registerDimensionEffect() {
+        LevelExtractionEvents.END_EXTRACTION.register(AetherIIDimensionRenderers::extractDimensionEffect);
     }
 
-    public static void extractDimensionEffect(ExtractLevelRenderStateEvent event) {
-        if (event.getLevel().dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
-            event.getRenderState().setRenderData(DATA_THUNDER_KEY, event.getLevel().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
-            event.getRenderState().setRenderData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.getLevel().getDefaultClockTime()));
+    public static void extractDimensionEffect(LevelExtractionContext event) {
+        event.levelState().setData(IS_HOLY_ISLES, isHolyIsles(event.level()));
+        if (event.level().dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
+            event.levelState().setData(DATA_THUNDER_KEY, event.level().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
+            event.levelState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.level().getDefaultClockTime()));
+            float time = timeOfDay(event.level().getDefaultClockTime());
+            event.levelState().skyRenderState.sunriseAndSunsetColor = SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0;
+            event.levelState().skyRenderState.shouldRenderDarkDisc = false;
         }
     }
 

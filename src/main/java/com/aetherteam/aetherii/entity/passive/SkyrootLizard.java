@@ -35,7 +35,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import javax.annotation.Nullable;
 
 public class SkyrootLizard extends AetherAnimal {
-    private static final EntityDataAccessor<Holder<SkyrootLizardVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(SkyrootLizard.class, AetherIIDataSerializers.SKYROOT_LIZARD_VARIANT.get());
+    private static final EntityDataAccessor<Holder<SkyrootLizardVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(SkyrootLizard.class, AetherIIDataSerializers.SKYROOT_LIZARD_VARIANT);
 
     public SkyrootLizard(EntityType<? extends SkyrootLizard> type, Level level) {
         super(type, level);
@@ -75,8 +75,8 @@ public class SkyrootLizard extends AetherAnimal {
     public InteractionResult mobInteract(Player playerEntity, InteractionHand hand) {
         ItemStack itemStack = playerEntity.getItemInHand(hand);
         if (itemStack.is(AetherIIItems.SKYROOT_STICK)) {
-            playerEntity.playSound(AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_HURT.get(), 1.0F, 1.0F);
-            ItemStack result = ItemUtils.createFilledResult(itemStack, playerEntity, AetherIIItems.SKYROOT_LIZARD_ON_A_STICK.get().getDefaultInstance());
+            playerEntity.playSound(AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_HURT, 1.0F, 1.0F);
+            ItemStack result = ItemUtils.createFilledResult(itemStack, playerEntity, AetherIIItems.SKYROOT_LIZARD_ON_A_STICK.getDefaultInstance());
             playerEntity.setItemInHand(hand, result);
             this.discard();
             return InteractionResult.SUCCESS;
@@ -101,34 +101,34 @@ public class SkyrootLizard extends AetherAnimal {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_HURT.get();
+        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_SKYROOT_LIZARD_STEP, 0.15F, 1.0F);
     }
 
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        SkyrootLizard lizard = AetherIIEntityTypes.SKYROOT_LIZARD.get().create(level, EntitySpawnReason.BREEDING);
+        SkyrootLizard lizard = AetherIIEntityTypes.SKYROOT_LIZARD.create(level, EntitySpawnReason.BREEDING);
         if (lizard != null) {
             lizard.setVariant(level.getRandom().nextBoolean() ? this.getVariant() : ((SkyrootLizard) otherParent).getVariant());
         };
-        return AetherIIEntityTypes.SKYROOT_LIZARD.get().create(level, EntitySpawnReason.BREEDING);
+        return AetherIIEntityTypes.SKYROOT_LIZARD.create(level, EntitySpawnReason.BREEDING);
     }
 
     @Override

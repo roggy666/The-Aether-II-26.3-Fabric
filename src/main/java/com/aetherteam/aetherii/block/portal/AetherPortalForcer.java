@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.TeleportTransition;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class AetherPortalForcer {
 
     private static void playPortalSound(Entity entity) {
         if (entity instanceof ServerPlayer serverplayer) {
-            PacketDistributor.sendToPlayer(serverplayer, new PortalTravelSoundPacket());
+            ServerPlayNetworking.send(serverplayer, new PortalTravelSoundPacket());
         }
     }
 
@@ -142,7 +142,7 @@ public class AetherPortalForcer {
                 }
             }
 
-            BlockState blockState = AetherIIBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, axis);
+            BlockState blockState = AetherIIBlocks.AETHER_PORTAL.defaultBlockState().setValue(AetherPortalBlock.AXIS, axis);
             for (int k2 = 0; k2 < 2; ++k2) {
                 for (int l2 = 0; l2 < 3; ++l2) {
                     mutablePos.setWithOffset(blockPos, k2 * direction.getStepX(), l2, k2 * direction.getStepZ());

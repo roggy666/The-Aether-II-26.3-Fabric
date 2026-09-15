@@ -42,6 +42,7 @@ public class SliderRenderer extends MobRenderer<Slider, SliderRenderState, Slide
     @Override
     public void extractRenderState(Slider slider, SliderRenderState sliderRenderState, float partialTick) {
         super.extractRenderState(slider, sliderRenderState, partialTick);
+        sliderRenderState.partialTick = partialTick;
         sliderRenderState.awake = slider.isAwake();
         sliderRenderState.critical = slider.isCritical();
         sliderRenderState.hurtAngle = slider.getHurtAngle();
@@ -60,7 +61,6 @@ public class SliderRenderer extends MobRenderer<Slider, SliderRenderState, Slide
             poseStack.pushPose();
             poseStack.translate(0.0F, 1.0F, 0.0F);
             submitRays(poseStack, f2, submitNodeCollector, RenderTypes.dragonRays());
-            submitRays(poseStack, f2, submitNodeCollector, RenderTypes.dragonRaysDepth());
 
             poseStack.popPose();
         }

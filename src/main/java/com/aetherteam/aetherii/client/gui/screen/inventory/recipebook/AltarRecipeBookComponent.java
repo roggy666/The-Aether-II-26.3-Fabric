@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.GhostSlotsAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.inventory.menu.AltarMenu;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.OverlayRecipeComponentAccessor;
@@ -50,13 +51,13 @@ public class AltarRecipeBookComponent extends RecipeBookComponent<AltarMenu> {
 
     @Override
     public void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
-        ghostSlots.setResult(this.menu.getSlot(9), contextMap, recipeDisplay.result());
+        ((GhostSlotsAccessor) ghostSlots).aether_ii$setResult(this.menu.getSlot(9), contextMap, recipeDisplay.result());
         if (recipeDisplay instanceof AltarRecipeDisplay altarRecipeDisplay) {
-            ghostSlots.setInput(this.menu.getSlot(0), contextMap, altarRecipeDisplay.ingredient());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(this.menu.getSlot(0), contextMap, altarRecipeDisplay.ingredient());
             for (int i = 1; i <= altarRecipeDisplay.fuelCount(); i++) {
                 Slot fuelSlot = this.menu.getSlot(i);
                 if (fuelSlot.getItem().isEmpty()) {
-                    ghostSlots.setInput(fuelSlot, contextMap, altarRecipeDisplay.fuel());
+                    ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(fuelSlot, contextMap, altarRecipeDisplay.fuel());
                 }
             }
         }

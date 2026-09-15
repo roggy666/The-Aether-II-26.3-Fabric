@@ -8,7 +8,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClearItemPacket() implements CustomPacketPayload {
     public static final Type<ClearItemPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "clear_items"));
@@ -26,8 +25,8 @@ public record ClearItemPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(ClearItemPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(ClearItemPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
         }

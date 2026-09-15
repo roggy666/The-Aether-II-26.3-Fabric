@@ -125,7 +125,7 @@ public class AechorPlant extends PlantMob implements RangedAttackMob, PlantCutti
         if (this.deathTime == 1) {
             if (this.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(
-                        new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.AECHOR_CUTTING.get().defaultBlockState()),
+                        new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.AECHOR_CUTTING.defaultBlockState()),
                         this.getX(), this.getY(0.66), this.getZ(), 50,
                         this.getBbWidth() / 4.0F, this.getBbHeight() / 4.0F, this.getBbWidth() / 4.0F, 0.05);
             }
@@ -175,7 +175,7 @@ public class AechorPlant extends PlantMob implements RangedAttackMob, PlantCutti
             this.level().addFreshEntity(needle);
         }
 
-        this.playSound(AetherIISoundEvents.ENTITY_AECHOR_PLANT_SHOOT.get(), 2.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.playSound(AetherIISoundEvents.ENTITY_AECHOR_PLANT_SHOOT, 2.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
     }
 
     /**
@@ -220,12 +220,12 @@ public class AechorPlant extends PlantMob implements RangedAttackMob, PlantCutti
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_AECHOR_PLANT_HURT.get();
+        return AetherIISoundEvents.ENTITY_AECHOR_PLANT_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_AECHOR_PLANT_DEATH.get();
+        return AetherIISoundEvents.ENTITY_AECHOR_PLANT_DEATH;
     }
 
     @Override
@@ -241,7 +241,7 @@ public class AechorPlant extends PlantMob implements RangedAttackMob, PlantCutti
      */
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return effect.getEffect().value() != AetherIIMobEffects.TOXIN.get() && super.canBeAffected(effect);
+        return effect.getEffect().value() != AetherIIMobEffects.TOXIN.value() && super.canBeAffected(effect);
     }
 
     @Override

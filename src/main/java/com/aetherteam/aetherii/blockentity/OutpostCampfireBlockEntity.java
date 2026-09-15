@@ -10,11 +10,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class OutpostCampfireBlockEntity extends MultiBlockEntity {
     public OutpostCampfireBlockEntity() {
-        this(BlockPos.ZERO, AetherIIBlocks.OUTPOST_CAMPFIRE.get().defaultBlockState());
+        this(BlockPos.ZERO, AetherIIBlocks.OUTPOST_CAMPFIRE.defaultBlockState());
     }
 
     public OutpostCampfireBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.OUTPOST_CAMPFIRE.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.OUTPOST_CAMPFIRE, pos, blockState);
     }
 
     public static <T extends BlockEntity> void tick(Level level, BlockPos pos, BlockState state, T blockEntity) {

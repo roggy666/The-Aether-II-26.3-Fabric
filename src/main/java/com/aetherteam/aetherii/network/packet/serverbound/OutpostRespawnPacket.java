@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record OutpostRespawnPacket() implements CustomPacketPayload {
     public static final Type<OutpostRespawnPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "outpost_respawn"));
@@ -29,10 +29,10 @@ public record OutpostRespawnPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(OutpostRespawnPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(OutpostRespawnPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null) {
-            playerEntity.getData(AetherIIDataAttachments.OUTPOST_TRACKER).setShouldRespawnAtOutpost(true);
+            playerEntity.getAttachedOrCreate(AetherIIDataAttachments.OUTPOST_TRACKER).setShouldRespawnAtOutpost(true);
         }
     }
 }

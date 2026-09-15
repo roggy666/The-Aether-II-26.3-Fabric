@@ -25,7 +25,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.CommonHooks;
 
 public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<BrettlPlantTipBlock> CODEC = simpleCodec(BrettlPlantTipBlock::new);
@@ -51,7 +50,7 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
 
     @Override
     protected Block getBodyBlock() {
-        return AetherIIBlocks.BRETTL_PLANT.get();
+        return AetherIIBlocks.BRETTL_PLANT;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(AGE) < 2 && CommonHooks.canCropGrow(level, pos.relative(this.growthDirection), state, random.nextDouble() < 0.1)) {
+        if (state.getValue(AGE) < 2 && (random.nextDouble() < 0.1)) {
             BlockPos blockpos = pos.relative(this.growthDirection);
             if (this.canGrowInto(level.getBlockState(blockpos))) {
                 FluidState fluidstate = level.getFluidState(blockpos);
@@ -103,7 +102,6 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
                 } else {
                     level.setBlockAndUpdate(blockpos, this.getGrowIntoState(state.setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER), level.getRandom()));
                 }
-                CommonHooks.fireCropGrowPost(level, blockpos, level.getBlockState(blockpos));
             }
         }
     }

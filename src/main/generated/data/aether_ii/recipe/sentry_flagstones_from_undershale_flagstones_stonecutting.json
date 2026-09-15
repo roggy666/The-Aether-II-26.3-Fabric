@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:undershale_flagstones",
+  "result": {
+    "id": "aether_ii:sentry_flagstones"
+  }
+}

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.animation.GravititeTalutonAnimation;
 import com.aetherteam.aetherii.client.renderer.entity.state.GravititeTalutonRenderState;
@@ -11,13 +12,12 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class GravititeTalutonModel extends EntityModel<GravititeTalutonRenderState> {
-    public static final AnimationHolder SPIN_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_taluton/spin"));
-    public static final AnimationHolder ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_taluton/attack"));
-    private final KeyframeAnimation spinAimation;
-    private final KeyframeAnimation attackAnimation;
+    public static final Identifier SPIN_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_taluton/spin");
+    public static final Identifier ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "gravitite_taluton/attack");
+    private final AetherIIAnimations.ReloadableAnimation spinAimation;
+    private final AetherIIAnimations.ReloadableAnimation attackAnimation;
     private final KeyframeAnimation reloadAnimation;
     private final ModelPart body;
     private final ModelPart legsNode;
@@ -33,8 +33,8 @@ public class GravititeTalutonModel extends EntityModel<GravititeTalutonRenderSta
 
     public GravititeTalutonModel(ModelPart root) {
         super(root);
-        this.spinAimation = SPIN_ANIMATION.get().bake(root);
-        this.attackAnimation = ATTACK_ANIMATION.get().bake(root);
+        this.spinAimation = AetherIIAnimations.bake(SPIN_ANIMATION, root);
+        this.attackAnimation = AetherIIAnimations.bake(ATTACK_ANIMATION, root);
         this.reloadAnimation = GravititeTalutonAnimation.RELOAD.bake(root);
         this.body = root.getChild("body");
         this.legsNode = this.body.getChild("legs_node");

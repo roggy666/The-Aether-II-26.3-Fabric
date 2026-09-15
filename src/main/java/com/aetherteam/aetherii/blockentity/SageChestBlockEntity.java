@@ -9,11 +9,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SageChestBlockEntity extends ChestBlockEntity {
     public SageChestBlockEntity() {
-        this(AetherIIBlockEntityTypes.SAGE_CHEST.get(), BlockPos.ZERO, AetherIIBlocks.SAGE_CHEST.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.SAGE_CHEST, BlockPos.ZERO, AetherIIBlocks.SAGE_CHEST.defaultBlockState());
     }
 
     public SageChestBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.SAGE_CHEST.get(), pos, state);
+        this(AetherIIBlockEntityTypes.SAGE_CHEST, pos, state);
     }
 
     protected SageChestBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

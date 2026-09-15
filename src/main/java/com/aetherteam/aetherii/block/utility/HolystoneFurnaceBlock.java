@@ -39,7 +39,7 @@ public class HolystoneFurnaceBlock extends AbstractFurnaceBlock {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createFurnaceTicker(level, blockEntityType, AetherIIBlockEntityTypes.HOLYSTONE_FURNACE.get());
+        return createFurnaceTicker(level, blockEntityType, AetherIIBlockEntityTypes.HOLYSTONE_FURNACE);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class HolystoneFurnaceBlock extends AbstractFurnaceBlock {
             double d1 = pos.getY();
             double d2 = pos.getZ() + 0.5;
             if (random.nextDouble() < 0.1) {
-                level.playLocalSound(d0, d1, d2, AetherIISoundEvents.BLOCK_HOLYSTONE_FURNACE_CRACKLE.get(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
+                level.playLocalSound(d0, d1, d2, AetherIISoundEvents.BLOCK_HOLYSTONE_FURNACE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
             }
             Direction direction = state.getValue(FACING);
             Direction.Axis axis = direction.getAxis();

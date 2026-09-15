@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "hanging_sign",
+  "key": {
+    "#": "aether_ii:stripped_skyroot_log",
+    "X": "aether_ii:arkenium_chain"
+  },
+  "pattern": [
+    "X X",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "aether_ii:skyroot_hanging_sign"
+  }
+}

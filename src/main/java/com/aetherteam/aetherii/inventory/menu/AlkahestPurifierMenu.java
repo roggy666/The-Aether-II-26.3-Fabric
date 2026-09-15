@@ -35,7 +35,7 @@ public class AlkahestPurifierMenu extends RecipeBookMenu {
     }
 
     public AlkahestPurifierMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(AetherIIMenuTypes.ALKAHEST_PURIFIER.get(), containerId);
+        super(AetherIIMenuTypes.ALKAHEST_PURIFIER, containerId);
         checkContainerSize(container, 7);
         checkContainerDataCount(data, 3);
         this.container = container;

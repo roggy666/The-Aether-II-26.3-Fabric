@@ -33,6 +33,6 @@ public class IrradiationTreeDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return AetherIITreeDecoratorTypes.IRRADIATION.get();
+        return AetherIITreeDecoratorTypes.IRRADIATION;
     }
 }

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "aether_ii:moa_feed",
+    "aether_ii:blueberry"
+  ],
+  "result": {
+    "id": "aether_ii:blueberry_moa_feed"
+  }
+}

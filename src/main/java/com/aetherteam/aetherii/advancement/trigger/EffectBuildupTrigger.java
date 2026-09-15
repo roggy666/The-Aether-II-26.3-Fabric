@@ -2,10 +2,10 @@ package com.aetherteam.aetherii.advancement.trigger;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -36,7 +36,7 @@ public class EffectBuildupTrigger extends SimpleCriterionTrigger<EffectBuildupTr
                 .apply(instance, EffectBuildupTrigger.Instance::new));
 
         public static Criterion<EffectBuildupTrigger.Instance> effect(Optional<EntityPredicate> directSource, Optional<EntityPredicate> target, HolderSet<MobEffect> mobEffects, boolean triggered) {
-            return AetherIIAdvancementTriggers.EFFECT_BUILDUP.get().createCriterion(new EffectBuildupTrigger.Instance(Optional.empty(), directSource, target, mobEffects, triggered));
+            return AetherIIAdvancementTriggers.EFFECT_BUILDUP.createCriterion(new EffectBuildupTrigger.Instance(Optional.empty(), directSource, target, mobEffects, triggered));
         }
 
         public boolean test(ServerPlayer serverPlayer, Entity directSource, Entity target, Holder<MobEffect> effect, boolean triggered) {

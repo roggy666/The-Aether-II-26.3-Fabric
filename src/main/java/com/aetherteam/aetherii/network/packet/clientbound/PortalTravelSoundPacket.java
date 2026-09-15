@@ -7,7 +7,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record PortalTravelSoundPacket() implements CustomPacketPayload {
     public static final Type<PortalTravelSoundPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "play_portal_travel_sound"));
@@ -19,7 +21,8 @@ public record PortalTravelSoundPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(PortalTravelSoundPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(PortalTravelSoundPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             PortalClientUtil.playTravelSound();
         }

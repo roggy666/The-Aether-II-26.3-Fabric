@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.recipe.recipes.item;
 
+import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.item.AetherIIItems;
@@ -136,7 +137,7 @@ public class AlkahestPurificationRecipe implements Recipe<SingleRecipeInputWithR
 
     @Override
     public RecipeType<AlkahestPurificationRecipe> getType() {
-        return AetherIIRecipeTypes.ALKAHEST_PURIFICATION.get();
+        return AetherIIRecipeTypes.ALKAHEST_PURIFICATION;
     }
 
     @Override
@@ -147,10 +148,10 @@ public class AlkahestPurificationRecipe implements Recipe<SingleRecipeInputWithR
     @Override
     public List<RecipeDisplay> display() {
         SlotDisplay resultDisplay = new SlotDisplay.Composite(this.results().list().stream().map(SlotDisplay.ItemStackSlotDisplay::new).collect(Collectors.toUnmodifiableList()));
-        HolderSet<Item> ingredients = this.ingredient().getValues();
-        Holder<Item> item = ingredients.get(0);
-        if (item.is(AetherIITags.Items.IRRADIATED_ITEM)) {
-            Identifier location = item.getKey().identifier().withSuffix("_result");
+        java.util.Optional<Holder<Item>> firstItem = this.ingredient().items().findFirst();
+        if (firstItem.isPresent() && firstItem.get().is(AetherIITags.Items.IRRADIATED_ITEM)) {
+            Holder<Item> item = firstItem.get();
+            Identifier location = item.unwrapKey().map(k -> k.identifier()).orElse(Identifier.fromNamespaceAndPath(AetherII.MODID, "empty")).withSuffix("_result");
             resultDisplay = new SlotDisplay.ItemStackSlotDisplay(new ItemStackTemplate(item, 1, DataComponentPatch.builder()
                     .set(DataComponents.ITEM_MODEL, location)
                     .set(DataComponents.ITEM_NAME, Component.translatable(Util.makeDescriptionId("item", location)))
@@ -172,8 +173,8 @@ public class AlkahestPurificationRecipe implements Recipe<SingleRecipeInputWithR
     @Override
     public RecipeBookCategory recipeBookCategory() {
         return switch (this.category()) {
-            case ITEMS -> AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_ITEMS.get();
-            case BLOCKS -> AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_BLOCKS.get();
+            case ITEMS -> AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_ITEMS;
+            case BLOCKS -> AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_BLOCKS;
         };
     }
 

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class HolystoneSmokerBlockEntity extends AbstractFurnaceBlockEntity {
     public HolystoneSmokerBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.HOLYSTONE_SMOKER.get(), pos, state, RecipeType.SMOKING);
+        super(AetherIIBlockEntityTypes.HOLYSTONE_SMOKER, pos, state, RecipeType.SMOKING);
     }
 
     protected Component getDefaultName() {

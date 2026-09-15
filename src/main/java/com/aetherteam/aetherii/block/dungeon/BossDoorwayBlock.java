@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.dungeon;
 
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags;
 import com.aetherteam.aetherii.blockentity.BossDoorwayBlockEntity;
 import com.aetherteam.aetherii.blockentity.CopyBlockEntity;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
@@ -34,7 +35,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 public class BossDoorwayBlock extends CopyBlock {
@@ -49,7 +49,7 @@ public class BossDoorwayBlock extends CopyBlock {
 
     public BossDoorwayBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true).setValue(INVISIBLE, true));
+        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true).setValue(CopyBlock.LIGHT, 0).setValue(INVISIBLE, true));
     }
 
     @Override
@@ -92,9 +92,9 @@ public class BossDoorwayBlock extends CopyBlock {
     }
 
     @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+    protected boolean skipRendering(BlockState state, BlockState adjacentState, Direction direction) {
         if (!state.getValue(INVISIBLE)) {
-            return super.hidesNeighborFace(level, pos, state, neighborState, dir);
+            return super.skipRendering(state, adjacentState, direction);
         }
         return false;
     }
@@ -112,28 +112,13 @@ public class BossDoorwayBlock extends CopyBlock {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (!state.getValue(CopyBlock.EMPTY) && context instanceof EntityCollisionContext entity && entity.getEntity() != null && entity.getEntity().getType().builtInRegistryHolder().is(Tags.EntityTypes.BOSSES)) {
+        if (!state.getValue(CopyBlock.EMPTY) && context instanceof EntityCollisionContext entity && entity.getEntity() != null && entity.getEntity().getType().builtInRegistryHolder().is(ConventionalEntityTypeTags.BOSSES)) {
             return Shapes.block();
         } else {
             return state.getValue(INVISIBLE) ? Shapes.empty() : super.getCollisionShape(state, level, pos, context);
         }
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        if (!state.getValue(INVISIBLE)) {
-            return super.getLightEmission(state, level, pos);
-        }
-        return 0;
-    }
-
-    @Override
-    public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
-        if (!state.getValue(INVISIBLE)) {
-            return super.getMapColor(state, level, pos, defaultColor);
-        }
-        return defaultColor;
-    }
 
     @Override
     protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
@@ -176,7 +161,7 @@ public class BossDoorwayBlock extends CopyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, INVISIBLE);
+        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, CopyBlock.LIGHT, INVISIBLE);
     }
 
     @Override
@@ -188,17 +173,19 @@ public class BossDoorwayBlock extends CopyBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (item instanceof BlockItem blockItem && ((blockEntity == null || !blockEntity.collectComponents().has(AetherIIDataComponents.BLOCK_STATE)) || state.getValue(INVISIBLE))) {
                 if (blockItem.getBlock() == this) {
-                    minecraft.level.addParticle(AetherIIParticleTypes.BOSS_DOORWAY_BLOCK.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+                    minecraft.level.addParticle(AetherIIParticleTypes.BOSS_DOORWAY_BLOCK, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
                 }
             }
         }
     }
 
-    @Override
+    /**
+     * NeoForge's mob-aware {@code getBlockPathType}; applied through {@link com.aetherteam.aetherii.mixin.mixins.common.WalkNodeEvaluatorMixin}.
+     */
     public @Nullable PathType getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
-        if (mob != null && mob.getType().builtInRegistryHolder().is(Tags.EntityTypes.BOSSES)) {
+        if (mob != null && mob.getType().builtInRegistryHolder().is(ConventionalEntityTypeTags.BOSSES)) {
             return PathType.BLOCKED;
         }
-        return super.getBlockPathType(state, level, pos, mob);
+        return null;
     }
 }

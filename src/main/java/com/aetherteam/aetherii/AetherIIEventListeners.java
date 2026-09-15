@@ -3,201 +3,161 @@ package com.aetherteam.aetherii;
 import com.aetherteam.aetherii.advancement.trigger.AetherIIAdvancementTriggers;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
+import com.aetherteam.aetherii.block.natural.OrangeTreeBlock;
+import com.aetherteam.aetherii.block.utility.BedrollBlock;
 import com.aetherteam.aetherii.client.event.hooks.BiomeHooks;
-import com.aetherteam.aetherii.client.event.hooks.RenderHooks;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDamageTypes;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupPresets;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
+import com.aetherteam.aetherii.entity.ExtraSpawnData;
+import com.aetherteam.aetherii.event.AetherIIEvents;
 import com.aetherteam.aetherii.event.FreezeEvent;
 import com.aetherteam.aetherii.event.hooks.BlockHooks;
 import com.aetherteam.aetherii.event.hooks.PlayerHooks;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
+import com.aetherteam.aetherii.network.packet.clientbound.ExtraSpawnDataPacket;
 import com.aetherteam.aetherii.recipe.recipes.AetherIIRecipeTypes;
-import net.minecraft.advancements.AdvancementHolder;
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
-import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.living.*;
-import net.neoforged.neoforge.event.entity.player.*;
-import net.neoforged.neoforge.event.level.AlterGroundEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.level.ExplosionEvent;
-import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.*;
+import java.util.Optional;
 
+/**
+ * Game event listeners. Vanilla/Fabric callbacks are used where they exist; everything else goes through
+ * {@link AetherIIEvents}, which mirrors the NeoForge events this class listened to originally.
+ */
 public class AetherIIEventListeners {
-    public static void listen(IEventBus bus) {
+    public static void register() {
         // Player
-        bus.addListener(AetherIIEventListeners::onPlayerLogin);
-        bus.addListener(AetherIIEventListeners::onPlayerLogout);
-        bus.addListener(AetherIIEventListeners::onPlayerJoinLevel);
-        bus.addListener(AetherIIEventListeners::onPlayerRespawn);
-        bus.addListener(AetherIIEventListeners::onPlayerPositionRespawn);
-        bus.addListener(AetherIIEventListeners::onPlayerClone);
-        bus.addListener(AetherIIEventListeners::onPlayerChangedDimension);
-        bus.addListener(AetherIIEventListeners::onPlayerPostTick);
-        bus.addListener(AetherIIEventListeners::onPlayerRightClickBlock);
-        bus.addListener(AetherIIEventListeners::onPlayerEntityInteractSpecific);
-        bus.addListener(AetherIIEventListeners::onPlayerCriticalHitAttack);
-        bus.addListener(AetherIIEventListeners::onPlayerAdvancementProgression);
-        bus.addListener(AetherIIEventListeners::onPlayerSetSpawn);
-        bus.addListener(AetherIIEventListeners::canPlayerSleep);
-        bus.addListener(AetherIIEventListeners::onPlayerWakeUp);
-        bus.addListener(AetherIIEventListeners::onArmorDamaged);
-        bus.addListener(AetherIIEventListeners::onPlayerMount);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> onPlayerLogin(handler.getPlayer()));
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> onPlayerLogout(handler.getPlayer()));
+        ServerEntityEvents.ENTITY_LOAD.register((entity, level) -> onPlayerJoinLevel(entity));
+        ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> onPlayerRespawn(newPlayer));
+        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> onPlayerClone(oldPlayer, newPlayer, !alive));
+        ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) -> onPlayerChangedDimension(player, destination));
+        AetherIIEvents.PLAYER_TICK_POST.register(AetherIIEventListeners::onPlayerPostTick);
+        UseBlockCallback.EVENT.register(AetherIIEventListeners::onPlayerRightClickBlock);
+        UseEntityCallback.EVENT.register(AetherIIEventListeners::onPlayerEntityInteractSpecific);
+        AetherIIEvents.CRITICAL_HIT.register(AetherIIEventListeners::onPlayerCriticalHitAttack);
+        AetherIIEvents.ADVANCEMENT_PROGRESS.register(AetherIIEventListeners::onPlayerAdvancementProgression);
+        EntitySleepEvents.ALLOW_SETTING_SPAWN.register(AetherIIEventListeners::onPlayerSetSpawn);
+        EntitySleepEvents.ALLOW_BED.register(AetherIIEventListeners::allowBedroll);
+        EntitySleepEvents.ALLOW_SLEEPING.register(AetherIIEventListeners::canPlayerSleep);
+        EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> onPlayerWakeUp(entity));
+        AetherIIEvents.ARMOR_HURT.register(AetherIIEventListeners::onArmorDamaged);
+        AetherIIEvents.ENTITY_MOUNT.register(AetherIIEventListeners::onPlayerMount);
 
         // Entity
-        bus.addListener(AetherIIEventListeners::onEntityPostTick);
-        bus.addListener(AetherIIEventListeners::onEntitySpawn);
-        bus.addListener(AetherIIEventListeners::onEntityTravelToDimension);
-        bus.addListener(AetherIIEventListeners::onEntityCauseExplosion);
-        bus.addListener(AetherIIEventListeners::onProjectileImpact);
+        AetherIIEvents.ENTITY_TICK_POST.register(AetherIIEventListeners::onEntityPostTick);
+        AetherIIEvents.SPAWN_PLACEMENT_CHECK.register(AetherIIEventListeners::onEntitySpawn);
+        AetherIIEvents.ENTITY_TRAVEL_TO_DIMENSION.register(AetherIIEventListeners::onEntityTravelToDimension);
+        AetherIIEvents.EXPLOSION_DETONATE.register(AetherIIEventListeners::onEntityCauseExplosion);
+        AetherIIEvents.PROJECTILE_IMPACT.register(AetherIIEventListeners::onProjectileImpact);
+        EntityTrackingEvents.START_TRACKING.register(AetherIIEventListeners::onStartTracking);
 
         // Living
-        bus.addListener(AetherIIEventListeners::onLivingPreDamaged);
-        bus.addListener(AetherIIEventListeners::onLivingKnockBack);
-        bus.addListener(AetherIIEventListeners::onLivingBlockAttack);
-        bus.addListener(AetherIIEventListeners::onLivingItemUsed);
-        bus.addListener(AetherIIEventListeners::onLivingDrops);
-        bus.addListener(AetherIIEventListeners::onEffectRemove);
+        AetherIIEvents.LIVING_DAMAGE_PRE.register(AetherIIEventListeners::onLivingPreDamaged);
+        AetherIIEvents.LIVING_KNOCKBACK.register(AetherIIEventListeners::onLivingKnockBack);
+        AetherIIEvents.LIVING_SHIELD_BLOCK.register(AetherIIEventListeners::onLivingBlockAttack);
+        AetherIIEvents.LIVING_USE_ITEM_FINISH.register(AetherIIEventListeners::onLivingItemUsed);
+        AetherIIEvents.LIVING_DROPS.register(AetherIIEventListeners::onLivingDrops);
+        AetherIIEvents.MOB_EFFECT_REMOVE.register(AetherIIEventListeners::onEffectRemove);
+        AetherIIEvents.LIVING_BREATHE.register(AetherIIEventListeners::onBreatheInBlock);
 
         // Block
-        bus.addListener(AetherIIEventListeners::onBreakBlock);
-        bus.addListener(AetherIIEventListeners::onBlockUpdateNeighbor);
-        bus.addListener(AetherIIEventListeners::onModifyBlock);
-        bus.addListener(AetherIIEventListeners::onAlterGround);
-        bus.addListener(AetherIIEventListeners::onBlockFreeze);
-        bus.addListener(AetherIIEventListeners::onBreatheInBlock);
-
-        // Item
-        bus.addListener(EventPriority.LOWEST, AetherIIEventListeners::onAddTooltipsLowest);
-        bus.addListener(AetherIIEventListeners::onAddAttributeTooltips);
+        PlayerBlockBreakEvents.BEFORE.register(AetherIIEventListeners::onBreakBlock);
+        AetherIIEvents.NEIGHBOR_NOTIFY.register(AetherIIEventListeners::onBlockUpdateNeighbor);
+        UseBlockCallback.EVENT.register(AetherIIEventListeners::onModifyBlock);
+        FreezeEvent.FREEZE_FROM_BLOCK.register(AetherIIEventListeners::onBlockFreeze);
 
         // Level
-        bus.addListener(AetherIIEventListeners::onDatapackSync);
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register(AetherIIEventListeners::onDatapackSync);
     }
 
-    public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
-
-        player.getData(AetherIIDataAttachments.PLAYER).login(player);
-        player.getData(AetherIIDataAttachments.AERBUNNY_MOUNT).login(player);
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).login(player);
-        player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).login(player);
-        player.getData(AetherIIDataAttachments.OUTPOST_TRACKER).login(player);
+    public static void onPlayerLogin(ServerPlayer player) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).login(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).login(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).login(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).login(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.OUTPOST_TRACKER).login(player);
         BiomeHooks.sendColors(player);
     }
 
-    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        Player player = event.getEntity();
-
-        player.getData(AetherIIDataAttachments.PLAYER).logout(player);
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).logout(player);
+    public static void onPlayerLogout(ServerPlayer player) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).logout(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).logout(player);
     }
 
-    public static void onPlayerJoinLevel(EntityJoinLevelEvent event) {
-        Entity entity = event.getEntity();
-
+    public static void onPlayerJoinLevel(Entity entity) {
         if (entity instanceof Player player) {
-            player.getData(AetherIIDataAttachments.PLAYER).onJoinLevel(player);
-            player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).onJoinLevel(player);
-            player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).onJoinLevel(player);
+            player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).onJoinLevel(player);
+            player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).onJoinLevel(player);
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).onJoinLevel(player);
         }
     }
 
-    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        Player player = event.getEntity();
-
-        player.getData(AetherIIDataAttachments.OUTPOST_TRACKER).respawn(player);
+    public static void onPlayerRespawn(Player player) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.OUTPOST_TRACKER).respawn(player);
     }
 
-    public static void onPlayerPositionRespawn(PlayerRespawnPositionEvent event) {
-        Player player = event.getEntity();
-        TeleportTransition transition;
-
-        transition = player.getData(AetherIIDataAttachments.OUTPOST_TRACKER).findOutpostRespawnLocation(player);
-
-        if (transition != null) {
-            event.setTeleportTransition(transition);
-        }
+    public static void onPlayerClone(Player original, Player player, boolean wasDeath) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).clone(player);
     }
 
-    public static void onPlayerClone(PlayerEvent.Clone event) {
-        Player original = event.getOriginal();
-        Player player = event.getEntity();
-        boolean wasDeath = event.isWasDeath();
-
-        player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).clone(player);
+    public static void onPlayerChangedDimension(Player player, ServerLevel destination) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).changeDimension(player, destination.dimension());
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).changeDimension(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).remountAerbunny(player);
     }
 
-    public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        Player player = event.getEntity();
-        ResourceKey<Level> to = event.getTo();
-
-        player.getData(AetherIIDataAttachments.PLAYER).changeDimension(player, to);
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).changeDimension(player);
-        player.getData(AetherIIDataAttachments.AERBUNNY_MOUNT.get()).remountAerbunny(player);
-    }
-
-    public static void onPlayerPostTick(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
-
-        player.getData(AetherIIDataAttachments.PLAYER).postTickUpdate(player);
-        player.getData(AetherIIDataAttachments.AERBUNNY_MOUNT).postTickUpdate(player);
-        player.getData(AetherIIDataAttachments.SWET_LATCH).postTickUpdate();
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).postTickUpdate(player);
-        player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).postTickUpdate(player);
+    public static void onPlayerPostTick(Player player) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).postTickUpdate(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).postTickUpdate(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).postTickUpdate();
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).postTickUpdate(player);
+        player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).postTickUpdate(player);
         PlayerHooks.forceSpecialLoadingCrouch(player);
         PlayerHooks.mountAercloudEffects(player);
     }
 
-    public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        Player player = event.getEntity();
-        Level level = event.getLevel();
-        InteractionHand hand = event.getHand();
-        ItemStack itemStack = event.getItemStack();
-        BlockPos pos = event.getPos();
-        Direction face = event.getFace();
+    public static InteractionResult onPlayerRightClickBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        BlockPos pos = hitResult.getBlockPos();
+        Direction face = hitResult.getDirection();
         boolean cancelled = false;
 
         cancelled = PlayerHooks.playerActivatePortal(player, level, pos, face, itemStack, hand, cancelled);
@@ -206,103 +166,75 @@ public class AetherIIEventListeners {
         cancelled = PlayerHooks.ferrositeMudBottleConversion(player, level, pos, itemStack, hand, face, cancelled);
         cancelled = PlayerHooks.interactWithMimicContainer(level, pos, cancelled);
 
-        if (cancelled) {
-            event.setCanceled(true);
-        }
+        return cancelled ? InteractionResult.FAIL : InteractionResult.PASS;
     }
 
-    public static void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        Player player = event.getEntity();
-        InteractionHand interactionHand = event.getHand();
-        Entity targetEntity = event.getTarget();
+    public static InteractionResult onPlayerEntityInteractSpecific(Player player, Level level, InteractionHand interactionHand, Entity targetEntity, EntityHitResult hitResult) {
         Optional<InteractionResult> result = Optional.empty();
 
         PlayerHooks.milkWithSkyrootBucket(targetEntity, player, interactionHand);
-        PlayerHooks.feedCarrionSprout(event.getLevel(), targetEntity, player, interactionHand);
+        PlayerHooks.feedCarrionSprout(level, targetEntity, player, interactionHand);
         PlayerHooks.useGoldenWyndberry(targetEntity, player, interactionHand);
 
         result = PlayerHooks.pickupBucketableTarget(targetEntity, player, interactionHand, result);
 
-        if (result.isPresent()) {
-            event.setCancellationResult(result.get());
-            event.setCanceled(true);
+        return result.orElse(InteractionResult.PASS);
+    }
+
+    public static void onPlayerCriticalHitAttack(Player player, Entity target, boolean critical, float modifier) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).setCriticalDamageModifier(modifier);
+    }
+
+    public static void onPlayerAdvancementProgression(Player player, net.minecraft.advancements.AdvancementHolder advancementHolder) {
+        player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).progressAdvancement(player, advancementHolder);
+    }
+
+    public static boolean onPlayerSetSpawn(Player player, BlockPos pos) {
+        return !PlayerHooks.cancelBedrollSpawn(player, pos);
+    }
+
+    /**
+     * NeoForge's {@code IBlockExtension#isBed} for the bedroll.
+     */
+    public static net.fabricmc.fabric.api.util.EventResult allowBedroll(LivingEntity entity, BlockPos sleepingPos, BlockState state, boolean vanillaResult) {
+        return state.getBlock() instanceof BedrollBlock ? net.fabricmc.fabric.api.util.EventResult.ALLOW : net.fabricmc.fabric.api.util.EventResult.PASS;
+    }
+
+    public static Player.BedSleepingProblem canPlayerSleep(Player player, BlockPos pos) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            Level level = player.level();
+            BlockState state = level.getBlockState(pos);
+            return PlayerHooks.handleBedrollSleeping(serverPlayer, level, pos, state, null);
+        }
+        return null;
+    }
+
+    public static void onPlayerWakeUp(LivingEntity entity) {
+        if (entity instanceof Player player) {
+            PlayerHooks.breakBedrollAfterSleeping(player);
         }
     }
 
-    public static void onPlayerCriticalHitAttack(CriticalHitEvent event) {
-        Player player = event.getEntity();
-        float modifier = event.getDamageMultiplier();
-
-        player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM.get()).setCriticalDamageModifier(modifier);
-    }
-
-    public static void onPlayerAdvancementProgression(AdvancementEvent.AdvancementProgressEvent event) {
-        Player player = event.getEntity();
-        AdvancementHolder advancementHolder = event.getAdvancement();
-
-        player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).progressAdvancement(player, advancementHolder);
-    }
-
-    public static void onPlayerSetSpawn(PlayerSetSpawnEvent event) {
-        Player player = event.getEntity();
-        BlockPos pos = event.getNewSpawn();
-
-        if (PlayerHooks.cancelBedrollSpawn(player, pos)) {
-            event.setCanceled(true);
+    public static boolean onArmorDamaged(LivingEntity livingEntity, net.minecraft.world.damagesource.DamageSource source, ItemStack armor) {
+        if (source != null && source.is(AetherIIDamageTypes.ALKAHEST) && armor.has(AetherIIDataComponents.REINFORCEMENT_TIER)) {
+            return false;
         }
+        return true;
     }
 
-    public static void canPlayerSleep(CanPlayerSleepEvent event) {
-        ServerPlayer player = event.getEntity();
-        Level level = event.getLevel();
-        BlockPos pos = event.getPos();
-        BlockState state = event.getState();
-        Player.BedSleepingProblem vanillaProblem = event.getVanillaProblem();
-
-        event.setProblem(PlayerHooks.handleBedrollSleeping(player, level, pos, state, vanillaProblem));
+    public static boolean onPlayerMount(Entity riderEntity, Entity mountEntity, boolean isDismounting) {
+        return !PlayerHooks.dismountPrevention(riderEntity, mountEntity, isDismounting);
     }
 
-    public static void onPlayerWakeUp(PlayerWakeUpEvent event) {
-        Player player = event.getEntity();
-
-        PlayerHooks.breakBedrollAfterSleeping(player);
-    }
-
-    public static void onArmorDamaged(ArmorHurtEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        Map<EquipmentSlot, ArmorHurtEvent.ArmorEntry> armorEntries = event.getArmorMap();
-
-        if (livingEntity.getLastDamageSource() != null && livingEntity.getLastDamageSource().is(AetherIIDamageTypes.ALKAHEST)) {
-            for (Map.Entry<EquipmentSlot, ArmorHurtEvent.ArmorEntry> entry : armorEntries.entrySet()) {
-                ArmorHurtEvent.ArmorEntry armor = entry.getValue();
-                if (armor.armorItemStack.has(AetherIIDataComponents.REINFORCEMENT_TIER)) {
-                    event.setNewDamage(entry.getKey(), 0.0F);
-                }
-            }
-        }
-    }
-
-    public static void onPlayerMount(EntityMountEvent event) {
-        Entity riderEntity = event.getEntityMounting();
-        Entity mountEntity = event.getEntityBeingMounted();
-        boolean isDismounting = event.isDismounting();
-        event.setCanceled(PlayerHooks.dismountPrevention(riderEntity, mountEntity, isDismounting));
-    }
-
-    public static void onEntityPostTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
-
+    public static void onEntityPostTick(Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).postTickUpdate(livingEntity);
-            livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).postTickUpdate(livingEntity);
-            livingEntity.getData(AetherIIDataAttachments.ACCESSORIES).postTickUpdate(livingEntity);
+            livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).postTickUpdate(livingEntity);
+            livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).postTickUpdate(livingEntity);
+            livingEntity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES).postTickUpdate(livingEntity);
         }
     }
 
-    public static void onEntitySpawn(MobSpawnEvent.SpawnPlacementCheck event) {
-        EntityType<?> type = event.getEntityType();
-        ServerLevelAccessor level = event.getLevel();
-        BlockPos pos = event.getPos();
+    public static boolean onEntitySpawn(EntityType<?> type, net.minecraft.world.level.ServerLevelAccessor level, BlockPos pos) {
         ServerLevel serverLevel = level.getLevel();
         StructureManager structureManager = serverLevel.structureManager();
         Registry<Structure> structureRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.STRUCTURE);
@@ -311,203 +243,137 @@ public class AetherIIEventListeners {
             for (Holder<Structure> structure : structureRegistry.getTagOrEmpty(AetherIITags.Structures.DUNGEONS)) {
                 StructureStart structureStart = structureManager.getStructureAt(pos, structure.value());
                 if (structureStart.isValid() && structureManager.structureHasPieceAt(pos, structureStart)) {
-                    event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
+                    return false;
                 }
             }
         }
+        return true;
     }
 
-    public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
-        Entity entity = event.getEntity();
-        ResourceKey<Level> dimension = event.getDimension();
-
+    public static boolean onEntityTravelToDimension(Entity entity, net.minecraft.resources.ResourceKey<Level> dimension) {
         if (entity instanceof Player player && !player.level().dimension().equals(dimension)) {
-            player.getData(AetherIIDataAttachments.AERBUNNY_MOUNT.get()).removeAerbunny();
+            player.getAttachedOrCreate(AetherIIDataAttachments.AERBUNNY_MOUNT).removeAerbunny();
         }
+        return true;
     }
 
-    public static void onEntityCauseExplosion(ExplosionEvent.Detonate event) {
-        ServerExplosion explosion = event.getExplosion();
+    public static void onEntityCauseExplosion(net.minecraft.world.level.ServerExplosion explosion, java.util.List<Entity> affectedEntities) {
         Entity directSource = explosion.getDirectSourceEntity();
         Entity indirectSource = explosion.getIndirectSourceEntity();
 
-        if (indirectSource != null && (indirectSource.getType() == AetherIIEntityTypes.DETONATION_SENTRY.get() || indirectSource.getType() == AetherIIEntityTypes.SENTRY_GOLEM.get())) {
-            event.getAffectedEntities().removeIf((entity) -> entity instanceof ItemEntity);
-            event.getAffectedEntities().forEach((entity) -> {
+        if (indirectSource != null && (indirectSource.getType() == AetherIIEntityTypes.DETONATION_SENTRY || indirectSource.getType() == AetherIIEntityTypes.SENTRY_GOLEM)) {
+            affectedEntities.removeIf((entity) -> entity instanceof ItemEntity);
+            affectedEntities.forEach((entity) -> {
                 if (entity instanceof LivingEntity livingEntity) {
                     if (!livingEntity.isBlocking()) {
-                        livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, indirectSource, directSource, EffectBuildupPresets.STUN, 150);
+                        livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, indirectSource, directSource, EffectBuildupPresets.STUN, 150);
                     }
                 }
             });
         }
     }
 
-    public static void onProjectileImpact(ProjectileImpactEvent event) {
-        HitResult hitResult = event.getRayTraceResult();
-        Projectile projectile = event.getProjectile();
-
+    public static void onProjectileImpact(net.minecraft.world.entity.projectile.Projectile projectile, net.minecraft.world.phys.HitResult hitResult) {
         if (hitResult instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity() instanceof Player player) {
-                player.getData(AetherIIDataAttachments.PLAYER.get()).stickProjectile(projectile, player);
+                player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).stickProjectile(projectile, player);
             }
         }
     }
 
-    public static void onLivingPreDamaged(LivingDamageEvent.Pre event) {
-        LivingEntity target = event.getEntity();
-        DamageSource source = event.getContainer().getSource();
-        float damage = event.getContainer().getNewDamage();
-
-        damage = target.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).getDamageTypeModifiedValue(target, source, damage);
-
-        event.getContainer().setNewDamage(damage);
-    }
-
-    public static void onLivingKnockBack(LivingKnockBackEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-
-        if (!event.isCanceled() && livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).cancelKnockback(livingEntity)) {
-            event.setCanceled(true);
+    /**
+     * Sends {@link ExtraSpawnData} (NeoForge's {@code IEntityWithComplexSpawn}) to players that start tracking an entity.
+     */
+    public static void onStartTracking(Entity entity, ServerPlayer player) {
+        if (entity instanceof ExtraSpawnData && ServerPlayNetworking.canSend(player, ExtraSpawnDataPacket.TYPE)) {
+            ServerPlayNetworking.send(player, ExtraSpawnDataPacket.create(entity));
         }
     }
 
-    public static void onLivingBlockAttack(LivingShieldBlockEvent event) {
-        LivingEntity livingEntity = event.getEntity();
-        DamageSource source = event.getDamageSource();
-        double blockedDamage = event.getBlockedDamage();
-
-        livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, source.getEntity(), blockedDamage);
+    public static void onLivingPreDamaged(LivingEntity target, AetherIIEvents.DamageContainer container) {
+        float damage = target.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).getDamageTypeModifiedValue(target, container.getSource(), container.getNewDamage());
+        container.setNewDamage(damage);
     }
 
-    public static void onLivingItemUsed(LivingEntityUseItemEvent.Finish event) {
-        ItemStack itemStack = event.getItem();
+    public static boolean onLivingKnockBack(LivingEntity livingEntity) {
+        return !livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).cancelKnockback(livingEntity);
+    }
 
-        if (event.getEntity() instanceof Player player) {
+    public static void onLivingBlockAttack(LivingEntity livingEntity, net.minecraft.world.damagesource.DamageSource source, float blockedDamage) {
+        livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, source.getEntity(), blockedDamage);
+    }
+
+    public static void onLivingItemUsed(LivingEntity entity, ItemStack itemStack) {
+        if (entity instanceof Player player) {
             PlayerHooks.valkyrieTeaAbility(player, itemStack);
         }
     }
 
-    public static void onLivingDrops(LivingDropsEvent event) {
-        LivingEntity entity = event.getEntity();
-        Collection<ItemEntity> drops = event.getDrops();
-
-        entity.getData(AetherIIDataAttachments.ACCESSORIES).dropItems(entity, drops);
+    public static void onLivingDrops(LivingEntity entity, net.minecraft.world.damagesource.DamageSource source, java.util.Collection<ItemEntity> drops) {
+        entity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES).dropItems(entity, drops);
         if (entity instanceof Player player) {
-            player.getData(AetherIIDataAttachments.CURRENCY).dropAll(player, drops);
+            player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).dropAll(player, drops);
         }
     }
 
-    public static void onEffectRemove(MobEffectEvent.Remove event) {
-        LivingEntity livingEntity = event.getEntity();
-        Holder<MobEffect> effect = event.getEffect();
-        if (effect.is(AetherIITags.MobEffects.MILK_DOESNT_CLEAR) && livingEntity.getUseItem().is(Tags.Items.BUCKETS_MILK)) {
-            event.setCanceled(true);
-        }
+    public static boolean onEffectRemove(LivingEntity livingEntity, Holder<net.minecraft.world.effect.MobEffect> effect) {
+        ItemStack useItem = livingEntity.getUseItem();
+        return !(effect.is(AetherIITags.MobEffects.MILK_DOESNT_CLEAR) && (useItem.is(ConventionalItemTags.MILK_BUCKETS) || useItem.is(ConventionalItemTags.MILK_DRINKS)));
     }
 
-    public static void onBreakBlock(BreakBlockEvent event) {
-        LevelAccessor level = event.getLevel();
-        Player player = event.getPlayer();
-        BlockPos pos = event.getPos();
-        ItemStack stack = event.getPlayer().getMainHandItem();
+    public static boolean onBreatheInBlock(LivingEntity entity, boolean canBreathe) {
+        return canBreathe && BlockHooks.canBreathe(entity);
+    }
+
+    public static boolean onBreakBlock(Level level, Player player, BlockPos pos, BlockState state, net.minecraft.world.level.block.entity.BlockEntity blockEntity) {
+        ItemStack stack = player.getMainHandItem();
 
         PlayerHooks.interactWithMimicContainer(level, pos, false);
         if (player instanceof ServerPlayer serverPlayer) {
-            AetherIIAdvancementTriggers.ITEM_BREAK_BLOCK.get().trigger(serverPlayer, pos, stack);
+            AetherIIAdvancementTriggers.ITEM_BREAK_BLOCK.trigger(serverPlayer, pos, stack);
         }
+        // NeoForge's OrangeTreeBlock#onDestroyedByPlayer: harvesting the ripe top keeps the block
+        return !(state.getBlock() instanceof OrangeTreeBlock && OrangeTreeBlock.keepsBlockOnBreak(state));
     }
 
-    public static void onBlockUpdateNeighbor(BlockEvent.NeighborNotifyEvent event) {
-        LevelAccessor levelAccessor = event.getLevel();
-        BlockPos blockPos = event.getPos();
+    public static boolean onBlockUpdateNeighbor(net.minecraft.world.level.LevelAccessor levelAccessor, BlockPos blockPos) {
         boolean cancelled = false;
 
         BlockHooks.sendIcestoneFreezableUpdateEvent(levelAccessor, blockPos);
 
         cancelled = BlockHooks.activatePortalFromBlockUpdate(levelAccessor, blockPos, cancelled);
 
-        if (cancelled) {
-            event.setCanceled(true);
+        return !cancelled;
+    }
+
+    /**
+     * NeoForge's {@code BlockToolModificationEvent}: extra drops when stripping mossy wisproot / amberoot deposits with an
+     * axe. The block conversions themselves are registered through the Fabric registries in {@link AetherIIBlocks}.
+     */
+    public static InteractionResult onModifyBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(ItemTags.AXES) && !player.isSpectator()) {
+            BlockState oldState = level.getBlockState(hitResult.getBlockPos());
+            UseOnContext context = new UseOnContext(player, hand, hitResult);
+            BlockHooks.stripMossyWisproot(level, oldState, itemStack, context);
+            BlockHooks.stripAmberoot(level, oldState, itemStack, context);
         }
+        return InteractionResult.PASS;
     }
 
-    public static void onModifyBlock(BlockEvent.BlockToolModificationEvent event) {
-        LevelAccessor levelAccessor = event.getLevel();
-        UseOnContext context = event.getContext();
-        ItemAbility toolAction = event.getItemAbility();
-        ItemStack itemStack = event.getHeldItemStack();
-        BlockPos blockPos = event.getPos();
-        BlockState oldState = event.getState();
-        BlockState newState = oldState;
-
-        if (!event.isSimulated() && !event.isCanceled()) {
-            BlockHooks.stripMossyWisproot(levelAccessor, oldState, itemStack, toolAction, context);
-            BlockHooks.stripAmberoot(levelAccessor, oldState, itemStack, toolAction, context);
-
-            newState = AetherIIBlocks.registerBlockModifications(levelAccessor, toolAction, blockPos, oldState, newState);
-
-            if (newState != oldState) {
-                event.setFinalState(newState);
-            }
-        }
-    }
-
-    public static void onAlterGround(AlterGroundEvent event) {
-        TreeDecorator.Context context = event.getContext();
-        AlterGroundEvent.StateProvider provider = event.getStateProvider();
-
-        event.setStateProvider(BlockHooks.modifyPodzolAlterGroundStateProvider(context, provider));
-    }
-
-    public static void onBlockFreeze(FreezeEvent.FreezeFromBlock event) {
-        LevelAccessor level = event.getLevel();
+    public static boolean onBlockFreeze(FreezeEvent.FreezeFromBlock event) {
+        net.minecraft.world.level.LevelAccessor level = event.getLevel();
         BlockPos sourcePos = event.getSourcePos();
         BlockPos pos = event.getPos();
         boolean cancelled = false;
 
         cancelled = BlockHooks.preventBlockFreezing(level, sourcePos, pos, cancelled);
 
-        if (cancelled) {
-            event.setCanceled(true);
-        }
+        return cancelled;
     }
 
-    public static void onBreatheInBlock(LivingBreatheEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (!BlockHooks.canBreathe(entity)) {
-            event.setCanBreathe(false);
-        }
-    }
-
-    public static void onAddTooltipsLowest(ItemTooltipEvent event) {
-        ItemStack itemStack = event.getItemStack();
-        List<Component> itemTooltips = event.getToolTip();
-        Item.TooltipContext context = event.getContext();
-        TooltipFlag flag = event.getFlags();
-
-        RenderHooks.addReinforcementTooltip(itemStack, itemTooltips, context, flag);
-    }
-
-    public static void onAddAttributeTooltips(AddAttributeTooltipsEvent event) {
-        ItemStack itemStack = event.getStack();
-        AttributeTooltipContext context = event.getContext();
-        List<Component> tooltipLines = new ArrayList<>();
-
-        RenderHooks.addAbilityAttributeTooltip(itemStack, tooltipLines, context);
-
-        event.addTooltipLines(tooltipLines.toArray(Component[]::new));
-    }
-
-    public static void onDatapackSync(OnDatapackSyncEvent event) {
-        event.sendRecipes(
-                AetherIIRecipeTypes.ALKAHEST_PURIFICATION.get(),
-                AetherIIRecipeTypes.ALKAHEST_CORROSION.get(),
-                AetherIIRecipeTypes.ALTAR_ENCHANTING.get(),
-                AetherIIRecipeTypes.AMBROSIUM_ENCHANTING.get(),
-                AetherIIRecipeTypes.DUST_IRRADIATION.get(),
-                AetherIIRecipeTypes.HOURGLASS_RESTORING.get(),
-                AetherIIRecipeTypes.ICESTONE_FREEZABLE.get(),
-                AetherIIRecipeTypes.SWET_GEL_CONVERSION.get());
+    public static void onDatapackSync(ServerPlayer player, boolean joined) {
+        // NeoForge's OnDatapackSyncEvent#sendRecipes: the client needs these recipe types for the guidebook and integrations
+        AetherIIRecipeTypes.syncRecipes(player);
     }
 }

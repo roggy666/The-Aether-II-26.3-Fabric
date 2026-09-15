@@ -18,8 +18,8 @@ public class TaegoreFinishedDigging extends Behavior<Taegore> {
         super(Map.of(
                 MemoryModuleType.IS_PANICKING, MemoryStatus.VALUE_ABSENT,
                 MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get(), MemoryStatus.VALUE_PRESENT,
-                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN.get(), MemoryStatus.VALUE_PRESENT
+                AetherIIMemoryModuleTypes.TAEGORE_DIGGING, MemoryStatus.VALUE_PRESENT,
+                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN, MemoryStatus.VALUE_PRESENT
         ), duration, duration);
     }
 
@@ -28,7 +28,7 @@ public class TaegoreFinishedDigging extends Behavior<Taegore> {
     }
 
     protected boolean canStillUse(ServerLevel serverLevel, Taegore owner, long gameTime) {
-        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get()).isPresent();
+        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING).isPresent();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class TaegoreFinishedDigging extends Behavior<Taegore> {
     protected void stop(ServerLevel serverLevel, Taegore owner, long gameTime) {
         boolean flag = this.timedOut(gameTime);
         this.onDiggingComplete(owner, flag);
-        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get());
+        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING);
     }
 
     public void onDiggingComplete(Taegore owner, boolean storeExploredPosition) {
@@ -51,6 +51,6 @@ public class TaegoreFinishedDigging extends Behavior<Taegore> {
     private void storeExploredPosition(Taegore owner, BlockPos pos) {
         List<GlobalPos> list = owner.getExploredPositions().limit(20L).collect(Collectors.toList());
         list.addFirst(GlobalPos.of(owner.level().dimension(), pos));
-        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS.get(), list);
+        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS, list);
     }
 }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice",
+    "aether_ii:arctic_ice"
+  ],
+  "result": {
+    "id": "aether_ii:arctic_packed_ice"
+  }
+}

@@ -12,9 +12,9 @@ public record CloudbedConfiguration(BlockStateProvider block, BlockPredicate pre
             BlockStateProvider.CODEC.fieldOf("block").forGetter(CloudbedConfiguration::block),
             BlockPredicate.CODEC.fieldOf("predicate").forGetter(CloudbedConfiguration::predicate),
             Codec.INT.fieldOf("y_level").forGetter(CloudbedConfiguration::yLevel),
-            DensityFunction.HOLDER_HELPER_CODEC.fieldOf("cloud_noise").forGetter(CloudbedConfiguration::cloudNoise),
+            DensityFunction.CODEC.fieldOf("cloud_noise").forGetter(CloudbedConfiguration::cloudNoise),
             Codec.DOUBLE.fieldOf("cloud_radius").forGetter(CloudbedConfiguration::cloudRadius),
-            DensityFunction.HOLDER_HELPER_CODEC.fieldOf("offset_noise").forGetter(CloudbedConfiguration::yOffset),
+            DensityFunction.CODEC.fieldOf("offset_noise").forGetter(CloudbedConfiguration::yOffset),
             Codec.DOUBLE.fieldOf("offset_max").forGetter(CloudbedConfiguration::maxYOffset)
     ).apply(instance, CloudbedConfiguration::new));
 }

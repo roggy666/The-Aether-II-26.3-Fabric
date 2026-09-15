@@ -24,7 +24,7 @@ public class IcestoneBlockEntity extends BlockEntity implements FreezingBlock {
     private final Map<BlockPos, Integer> lastBrokenPositions = new HashMap<>();
 
     public IcestoneBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.ICESTONE.get(), pos, state);
+        super(AetherIIBlockEntityTypes.ICESTONE, pos, state);
         PositionSource positionSource = new BlockPositionSource(this.getBlockPos());
         this.listener = new FreezingListener(positionSource, 4);
     }

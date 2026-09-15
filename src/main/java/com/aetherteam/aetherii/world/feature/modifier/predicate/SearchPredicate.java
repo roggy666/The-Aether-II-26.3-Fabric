@@ -39,6 +39,6 @@ public record SearchPredicate(Direction directionOfSearch, BlockPredicate target
 
     @Override
     public BlockPredicateType<?> type() {
-        return AetherIIBlockPredicateTypes.SEARCH.get();
+        return AetherIIBlockPredicateTypes.SEARCH;
     }
 }

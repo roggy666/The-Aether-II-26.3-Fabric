@@ -1,8 +1,9 @@
 package com.aetherteam.aetherii.client;
 
+import net.minecraft.world.item.Item;
+import java.util.Set;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
-import com.aetherteam.aetherii.block.AetherIIFluidTypes;
 import com.aetherteam.aetherii.effect.AetherIIMobEffects;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -28,43 +29,38 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.client.extensions.common.*;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector4f;
 
 public class AetherIIClientExtensions {
-    public static final IClientItemExtensions BEAST_PELT = new IClientItemExtensions() {
-        @Override
-        public int getDefaultDyeColor(ItemStack stack) {
-            return DyedItemColor.getOrDefault(stack, 0xFFCFEEF9);
-        }
-    };
-    public static final IClientItemExtensions BURRUKAI_PLATE = new IClientItemExtensions() {
-        @Override
-        public int getDefaultDyeColor(ItemStack stack) {
-            return DyedItemColor.getOrDefault(stack, 0xFF619CC0);
-        }
-    };
-    public static final IClientItemExtensions MOA_SADDLE = new IClientItemExtensions() {
-        @Override
-        public int getDefaultDyeColor(ItemStack stack) {
-            return DyedItemColor.getOrDefault(stack, 0xFF7D8BA3);
-        }
-    };
+    private static final Set<Item> BEAST_PELT = Set.of(AetherIIItems.BEAST_PELT_HELMET, AetherIIItems.BEAST_PELT_CHESTPLATE, AetherIIItems.BEAST_PELT_LEGGINGS, AetherIIItems.BEAST_PELT_BOOTS, AetherIIItems.BEAST_PELT_GLOVES);
+    private static final Set<Item> BURRUKAI_PLATE = Set.of(AetherIIItems.BURRUKAI_PLATE_HELMET, AetherIIItems.BURRUKAI_PLATE_CHESTPLATE, AetherIIItems.BURRUKAI_PLATE_LEGGINGS, AetherIIItems.BURRUKAI_PLATE_BOOTS, AetherIIItems.BURRUKAI_PLATE_GLOVES);
+    private static final Set<Item> THROWABLES = Set.of(AetherIIBlocks.HOLYSTONE_ROCK.asItem(), AetherIIItems.PRISMALLARD_EGG, AetherIIItems.SKYROOT_PINECONE, AetherIIItems.ARCTIC_SNOWBALL, AetherIIItems.BRETTL_LASSO);
+    private static final Set<Item> GLIDERS = Set.of(AetherIIItems.COLD_AERCLOUD_GLIDER, AetherIIItems.GOLDEN_AERCLOUD_GLIDER, AetherIIItems.BLUE_AERCLOUD_GLIDER, AetherIIItems.PURPLE_AERCLOUD_GLIDER);
+    public static final Identifier ALKAHEST_OVERLAY = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/misc/alkahest.png");
 
-    public static final IClientItemExtensions THROWABLE = new IClientItemExtensions() {
-        @Nullable
-        @Override
-        public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-            if (entityLiving.getUsedItemHand() == hand && entityLiving.getItemInHand(hand).is(itemStack.getItem()) && entityLiving.isUsingItem()) {
-                return HumanoidModel.ArmPose.THROW_TRIDENT;
-            }
-            return IClientItemExtensions.super.getArmPose(entityLiving, hand, itemStack);
-        }
+    public static int getDefaultDyeColor(ItemStack stack) {
+        int color = BEAST_PELT.contains(stack.getItem()) ? 0xFFCFEEF9
+                : BURRUKAI_PLATE.contains(stack.getItem()) ? 0xFF619CC0
+                : stack.is(AetherIIItems.MOA_SADDLE) ? 0xFF7D8BA3 : 0;
+        return DyedItemColor.getOrDefault(stack, color);
+    }
 
-        @Override
-        public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
-            if (player.isUsingItem()) {
+    public static boolean isThrowable(ItemStack stack) {
+        return THROWABLES.contains(stack.getItem());
+    }
+
+    public static @Nullable HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
+        if (entity.isUsingItem() && entity.getUsedItemHand() == hand) {
+            if (isThrowable(stack)) return HumanoidModel.ArmPose.THROW_TRIDENT;
+            if (stack.is(AetherIIItems.DART_SHOOTER)) return AetherIIArmPoses.DART_SHOOTER;
+            if (GLIDERS.contains(stack.getItem())) return AetherIIArmPoses.GLIDING;
+        }
+        return null;
+    }
+
+    public static boolean transformThrowable(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+            if (player.isUsingItem() && isThrowable(itemInHand)) {
                 int i = arm == HumanoidArm.RIGHT ? 1 : -1;
                 poseStack.translate((float)i * 0.56F, -0.52F + equipProcess * -0.6F, -0.72F);
 
@@ -95,39 +91,15 @@ public class AetherIIClientExtensions {
                 return true;
             }
             return false;
-        }
-    };
+        
+    }
 
-    public static final IClientItemExtensions DART_SHOOTER = new IClientItemExtensions() {
-        @Nullable
-        @Override
-        public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-            if (entityLiving.getUsedItemHand() == hand && entityLiving.getItemInHand(hand).is(itemStack.getItem()) && entityLiving.isUsingItem()) {
-                return AetherIIArmPoses.DART_SHOOTER;
-            }
-            return IClientItemExtensions.super.getArmPose(entityLiving, hand, itemStack);
-        }
-    };
+    public static boolean isUnstableBlock(BlockState state) {
+        return state.is(AetherIIBlocks.UNSTABLE_HOLYSTONE) || state.is(AetherIIBlocks.UNSTABLE_UNDERSHALE)
+                || state.is(AetherIIBlocks.FRAGILE_ARCTIC_ICE) || state.is(AetherIIBlocks.UNSTABLE_GUARDIAN_ROOTS);
+    }
 
-    public static final IClientItemExtensions GLIDER = new IClientItemExtensions() {
-        @Nullable
-        @Override
-        public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-            if (entityLiving.getUsedItemHand() == hand && entityLiving.getItemInHand(hand).is(itemStack.getItem()) && entityLiving.isUsingItem()) {
-                return AetherIIArmPoses.GLIDING;
-            }
-            return IClientItemExtensions.super.getArmPose(entityLiving, hand, itemStack);
-        }
-    };
-
-    public static final IClientBlockExtensions UNSTABLE_BLOCK = new IClientBlockExtensions() {
-        @Override
-        public boolean playBreakSound(BlockState state, Level level, BlockPos pos) {
-            return !level.getBlockState(pos.above()).isAir();
-        }
-
-        @Override
-        public boolean addDestroyEffects(BlockState state, Level level, BlockPos pos, ParticleEngine manager) {
+    public static boolean addUnstableDestroyEffects(BlockState state, Level level, BlockPos pos, ParticleEngine manager) {
             VoxelShape voxelshape = state.getShape(level, pos);
             voxelshape.forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> {
                 double d1 = Math.min(1.0F, maxX - minX);
@@ -147,58 +119,20 @@ public class AetherIIClientExtensions {
                             double d8 = d5 * d2 + minY;
                             double d9 = d6 * d3 + minZ;
                             if (level.getRandom().nextInt(5) == 0) {
-                                manager.add((new TerrainParticle((ClientLevel) level, (double) pos.getX() + d7, (double) pos.getY() + d8, (double) pos.getZ() + d9, d4 - (double) 0.5F, d5 - (double) 0.5F, d6 - (double) 0.5F, state, pos)).updateSprite(state, pos));
+                                manager.add((new TerrainParticle((ClientLevel) level, (double) pos.getX() + d7, (double) pos.getY() + d8, (double) pos.getZ() + d9, d4 - (double) 0.5F, d5 - (double) 0.5F, d6 - (double) 0.5F, state, pos)));
                             }
                         }
                     }
                 }
             });
             return true;
-        }
-    };
+        
+    }
 
-    public static final IClientFluidTypeExtensions ALKAHEST_FLUID = new IClientFluidTypeExtensions() {
-        @Override
-        public Identifier getRenderOverlayTexture(Minecraft mc) {
-            return Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/misc/alkahest.png");
-        }
-
-        @Override
-        public void modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector4f fluidFogColor) {
-            new Vector4f(170 / 255.0F, 226 / 255.0F, 149 / 255.0F, 1F);
-        }
-
-        @Override
-        public void modifyFogRender(Camera camera, @Nullable FogEnvironment environment, float renderDistance, float partialTick, FogData fogData) {
-            fogData.environmentalStart = 0F;
-            fogData.environmentalEnd = 12.0F;
-        }
-    };
-
-    public static final IClientMobEffectExtensions HIDE_EFFECT = new IClientMobEffectExtensions() {
-        @Override
-        public boolean isVisibleInInventory(MobEffectInstance instance) {
-            return false;
-        }
-
-        @Override
-        public boolean isVisibleInGui(MobEffectInstance instance) {
-            return false;
-        }
-    };
-
-    public static void registerClientItemExtensions(RegisterClientExtensionsEvent event) {
-        event.registerItem(BEAST_PELT, AetherIIItems.BEAST_PELT_HELMET.get(), AetherIIItems.BEAST_PELT_CHESTPLATE.get(), AetherIIItems.BEAST_PELT_LEGGINGS.get(), AetherIIItems.BEAST_PELT_BOOTS.get(), AetherIIItems.BEAST_PELT_GLOVES.get());
-        event.registerItem(BURRUKAI_PLATE, AetherIIItems.BURRUKAI_PLATE_HELMET.get(), AetherIIItems.BURRUKAI_PLATE_CHESTPLATE.get(), AetherIIItems.BURRUKAI_PLATE_LEGGINGS.get(), AetherIIItems.BURRUKAI_PLATE_BOOTS.get(), AetherIIItems.BURRUKAI_PLATE_GLOVES.get());
-        event.registerItem(THROWABLE, AetherIIBlocks.HOLYSTONE_ROCK.asItem(), AetherIIItems.PRISMALLARD_EGG.get(), AetherIIItems.SKYROOT_PINECONE.get(), AetherIIItems.ARCTIC_SNOWBALL.get(), AetherIIItems.BRETTL_LASSO.get());
-        event.registerItem(DART_SHOOTER, AetherIIItems.DART_SHOOTER);
-        event.registerItem(GLIDER, AetherIIItems.COLD_AERCLOUD_GLIDER, AetherIIItems.GOLDEN_AERCLOUD_GLIDER, AetherIIItems.BLUE_AERCLOUD_GLIDER, AetherIIItems.PURPLE_AERCLOUD_GLIDER);
-        event.registerItem(MOA_SADDLE, AetherIIItems.MOA_SADDLE);
-
-        event.registerBlock(UNSTABLE_BLOCK, AetherIIBlocks.UNSTABLE_HOLYSTONE.get(), AetherIIBlocks.UNSTABLE_UNDERSHALE.get(), AetherIIBlocks.FRAGILE_ARCTIC_ICE.get(), AetherIIBlocks.UNSTABLE_GUARDIAN_ROOTS.get());
-
-        event.registerFluidType(ALKAHEST_FLUID, AetherIIFluidTypes.ALKAHEST_TYPE.get());
-
-        event.registerMobEffect(HIDE_EFFECT, AetherIIMobEffects.NATURAL_CAMOUFLAGE.get(), AetherIIMobEffects.ELECTRIC_SHOCK.get(), AetherIIMobEffects.CARRION_TRAP.get(), AetherIIMobEffects.GRAVITATIONAL_PULL.get(), AetherIIMobEffects.HEALING_OVERFLOW.get());
+    public static boolean hideEffect(MobEffectInstance effect) {
+        var type = effect.getEffect();
+        return type.equals(AetherIIMobEffects.NATURAL_CAMOUFLAGE) || type.equals(AetherIIMobEffects.ELECTRIC_SHOCK)
+                || type.equals(AetherIIMobEffects.CARRION_TRAP) || type.equals(AetherIIMobEffects.GRAVITATIONAL_PULL)
+                || type.equals(AetherIIMobEffects.HEALING_OVERFLOW);
     }
 }

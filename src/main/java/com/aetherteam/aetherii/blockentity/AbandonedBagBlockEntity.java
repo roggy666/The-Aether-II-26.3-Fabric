@@ -11,11 +11,11 @@ public class AbandonedBagBlockEntity extends ChestBlockEntity {
     private static final Component NAME = Component.translatable("aether_ii.container.abandoned_bag");
 
     public AbandonedBagBlockEntity() {
-        this(AetherIIBlockEntityTypes.ABANDONED_BAG.get(), BlockPos.ZERO, AetherIIBlocks.ABANDONED_BAG.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.ABANDONED_BAG, BlockPos.ZERO, AetherIIBlocks.ABANDONED_BAG.defaultBlockState());
     }
 
     public AbandonedBagBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.ABANDONED_BAG.get(), pos, state);
+        this(AetherIIBlockEntityTypes.ABANDONED_BAG, pos, state);
     }
 
     protected AbandonedBagBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

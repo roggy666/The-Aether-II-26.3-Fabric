@@ -87,6 +87,6 @@ public class SkypineFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.SKYPINE_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.SKYPINE_FOLIAGE_PLACER;
     }
 }

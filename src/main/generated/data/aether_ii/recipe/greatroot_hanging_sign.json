@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "hanging_sign",
+  "key": {
+    "#": "aether_ii:stripped_greatroot_log",
+    "X": "aether_ii:arkenium_chain"
+  },
+  "pattern": [
+    "X X",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "aether_ii:greatroot_hanging_sign"
+  }
+}

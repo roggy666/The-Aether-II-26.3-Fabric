@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": "aether_ii:skyroot_stick"
+  },
+  "pattern": [
+    " #",
+    "# "
+  ],
+  "result": {
+    "id": "aether_ii:skyroot_twig"
+  }
+}

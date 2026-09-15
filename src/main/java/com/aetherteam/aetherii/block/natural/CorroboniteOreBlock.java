@@ -37,7 +37,7 @@ public class CorroboniteOreBlock extends DropExperienceBlock {
         for (Direction direction : Direction.values()) {
             BlockPos offset = pos.relative(direction);
             BlockState offsetState = level.getBlockState(offset);
-            BlockState newState = AetherIIBlocks.CORROBONITE_CLUSTER.get().defaultBlockState();
+            BlockState newState = AetherIIBlocks.CORROBONITE_CLUSTER.defaultBlockState();
             if (offsetState.isAir()) {
                 level.setBlockAndUpdate(offset, newState.trySetValue(MultifaceBlock.getFaceProperty(direction.getOpposite()), true));
             } else if (offsetState.is(newState.getBlock())) {

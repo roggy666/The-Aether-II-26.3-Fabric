@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class AetherFlowerBlock extends FlowerBlock implements Snowable {
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
@@ -34,15 +35,15 @@ public class AetherFlowerBlock extends FlowerBlock implements Snowable {
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
         super.destroy(level, pos, state);
         if (this.isSnowy(state)) {
-            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState(), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
         }
     }
 
     @Override
-    public void onBlockExploded(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion) {
-        super.onBlockExploded(state, level, pos, explosion);
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> onHit) {
+        super.onExplosionHit(state, level, pos, explosion, onHit);
         if (this.isSnowy(state)) {
-            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState(), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
         }
     }
 

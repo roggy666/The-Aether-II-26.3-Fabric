@@ -82,6 +82,6 @@ public class GroundFeatureDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return AetherIITreeDecoratorTypes.GROUND_FEATURE.get();
+        return AetherIITreeDecoratorTypes.GROUND_FEATURE;
     }
 }

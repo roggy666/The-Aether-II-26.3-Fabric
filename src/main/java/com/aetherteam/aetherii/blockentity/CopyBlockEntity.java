@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.blockentity;
 
+import org.jetbrains.annotations.Nullable;
+import net.fabricmc.fabric.api.blockgetter.v2.RenderDataBlockEntity;
 import com.aetherteam.aetherii.client.AetherIIClientProxy;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import net.minecraft.core.BlockPos;
@@ -8,18 +10,15 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import com.aetherteam.aetherii.block.dungeon.CopyBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.world.AuxiliaryLightManager;
-import net.neoforged.neoforge.model.data.ModelData;
-import net.neoforged.neoforge.model.data.ModelProperty;
 
 public abstract class CopyBlockEntity extends BlockEntity {
     protected BlockState copyState;
@@ -34,6 +33,22 @@ public abstract class CopyBlockEntity extends BlockEntity {
 
     public void setCopyState(BlockState copyState) {
         this.copyState = copyState;
+        this.syncLight();
+    }
+
+    /**
+     * Mirrors the copied block's light emission into {@link CopyBlock#LIGHT} (NeoForge's {@code AuxiliaryLightManager}).
+     */
+    protected void syncLight() {
+        if (this.level != null && !this.level.isClientSide()) {
+            BlockState state = this.getBlockState();
+            if (state.hasProperty(CopyBlock.LIGHT)) {
+                int light = this.copyState != null && !state.getValue(CopyBlock.EMPTY) ? this.copyState.getLightEmission() : 0;
+                if (state.getValue(CopyBlock.LIGHT) != light) {
+                    this.level.setBlock(this.getBlockPos(), state.setValue(CopyBlock.LIGHT, light), Block.UPDATE_ALL);
+                }
+            }
+        }
     }
 
     @Override
@@ -48,13 +63,22 @@ public abstract class CopyBlockEntity extends BlockEntity {
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.copyState = input.read("copy_state", BlockState.CODEC).orElse(null);
+        this.syncLight();
+        if (this.level != null && this.level.isClientSide()) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
+            AetherIIClientProxy.setSectionDirty(SectionPos.of(this.getBlockPos()));
+        }
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        this.setChanged();
-        this.getLevel().blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 1, 0);
+    public void setLevel(Level level) {
+        boolean added = this.level == null && level != null;
+        super.setLevel(level);
+        if (added) { // NeoForge's onLoad
+            this.setChanged();
+            level.blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 1, 0);
+            this.syncLight();
+        }
     }
 
     @Override
@@ -62,12 +86,7 @@ public abstract class CopyBlockEntity extends BlockEntity {
         super.setChanged();
         if (this.level != null) {
             BlockPos pos = this.getBlockPos();
-            AuxiliaryLightManager lightManager = this.level.getAuxLightManager(pos);
-            if (lightManager != null) {
-                lightManager.setLightAt(pos, this.getCopyState() != null ? this.getCopyState().getLightEmission() : 0);
-            }
             this.level.getLightEngine().checkBlock(pos);
-            this.requestModelDataUpdate();
             if (this.level.isClientSide()) {
                 AetherIIClientProxy.setSectionDirty(SectionPos.of(pos));
             }
@@ -88,6 +107,7 @@ public abstract class CopyBlockEntity extends BlockEntity {
     protected void applyImplicitComponents(DataComponentGetter getter) {
         super.applyImplicitComponents(getter);
         this.copyState = getter.getOrDefault(AetherIIDataComponents.BLOCK_STATE, null);
+        this.syncLight();
     }
 
     @Override
@@ -101,18 +121,6 @@ public abstract class CopyBlockEntity extends BlockEntity {
         output.discard("copy_state");
     }
 
-    @Override
-    public void handleUpdateTag(ValueInput input) {
-        super.handleUpdateTag(input);
-        this.requestModelDataUpdate();
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ValueInput valueInput) {
-        super.onDataPacket(net, valueInput);
-        this.handleUpdateTag(valueInput);
-        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
-    }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
@@ -120,11 +128,11 @@ public abstract class CopyBlockEntity extends BlockEntity {
     }
 
     @Override
-    public ModelData getModelData() {
+    public @Nullable Object getRenderData() {
         if (this.copyState != null) {
-            return ModelData.of(CopyData.PROPERTY, new CopyData(this.copyState));
+            return new CopyData(this.copyState);
         }
-        return super.getModelData();
+        return null;
     }
 
     public BlockState open(Level level, BlockPos pos) {
@@ -142,6 +150,5 @@ public abstract class CopyBlockEntity extends BlockEntity {
     public abstract ItemStack getItem();
 
     public record CopyData(BlockState state) {
-        public static final ModelProperty<CopyData> PROPERTY = new ModelProperty<>();
     }
 }

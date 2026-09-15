@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.function.Supplier;
 
@@ -27,7 +26,7 @@ public class PlantMobCuttingBlock extends AetherFlowerBlock implements Bonemeala
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (CommonHooks.canCropGrow(level, pos, state, random.nextInt(20) == 0)) {
+        if ((random.nextInt(20) == 0)) {
             this.spawnPlantMob(level, pos);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }

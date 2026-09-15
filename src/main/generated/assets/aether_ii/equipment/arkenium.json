@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "aether_ii:arkenium"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "aether_ii:arkenium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "aether_ii:arkenium"
+      }
+    ]
+  }
+}

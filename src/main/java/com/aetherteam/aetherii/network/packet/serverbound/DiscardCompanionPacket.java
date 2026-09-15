@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record DiscardCompanionPacket(int entityID) implements CustomPacketPayload {
     public static final Type<DiscardCompanionPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "discard_companion"));
@@ -22,8 +22,8 @@ public record DiscardCompanionPacket(int entityID) implements CustomPacketPayloa
         return TYPE;
     }
 
-    public static void execute(DiscardCompanionPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(DiscardCompanionPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof LivingEntity companion) {
             companion.discard();
         }

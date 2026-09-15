@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.client.renderer.block.model.blockstate;
 
+import net.fabricmc.fabric.api.util.TriState;
+import java.util.function.Predicate;
+import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.natural.AetherLeavesBlock;
 import net.minecraft.client.Minecraft;
@@ -15,8 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.DelegateBlockStateModel;
-import net.neoforged.neoforge.client.model.quad.BakedColors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,10 +30,9 @@ public class OverlaidLeavesModel extends BreakingFixModel {
         super(originalModel);
     }
 
-    @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         List<BlockStateModelPart> newParts = new ArrayList<>();
-        this.delegate.collectParts(level, pos, state, random, newParts);
+        this.wrapped.collectParts(random, newParts);
         for (BlockStateModelPart part : newParts) {
             QuadCollection.Builder builder = new QuadCollection.Builder();
             for (Direction direction : DIRECTIONS) {
@@ -84,12 +84,32 @@ public class OverlaidLeavesModel extends BreakingFixModel {
         }
     }
 
+    @Override
+    public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
+        List<BlockStateModelPart> parts = new ArrayList<>();
+        this.collectParts(level, pos, state, random, parts);
+        for (BlockStateModelPart part : parts) {
+            for (Direction face : DIRECTIONS) {
+                if (face != null && cullTest.test(face)) continue;
+                for (BakedQuad quad : part.getQuads(face)) {
+                    emitter.fromBakedQuad(quad).cullFace(face)
+                            .ambientOcclusion(part.useAmbientOcclusion() ? TriState.TRUE : TriState.FALSE).emit();
+                }
+            }
+        }
+    }
+
+    @Override
+    public Object createGeometryKey(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random) {
+        return null; // Geometry depends on adjacent leaves and the current graphics setting.
+    }
+
     public BakedQuad convertQuad(BakedQuad oldQuad) {
         return this.convertQuad(oldQuad, false);
     }
 
     public BakedQuad convertQuad(BakedQuad oldQuad, boolean forceCutout) {
-        ChunkSectionLayer layer = Minecraft.getInstance().gameRenderer.getGameRenderState().optionsRenderState.cutoutLeaves ? oldQuad.materialInfo().layer() : ChunkSectionLayer.SOLID;
+        ChunkSectionLayer layer = Minecraft.getInstance().gameRenderer.gameRenderState().optionsRenderState.cutoutLeaves ? oldQuad.materialInfo().layer() : ChunkSectionLayer.SOLID;
         if (forceCutout) {
             layer = ChunkSectionLayer.CUTOUT;
         }
@@ -103,9 +123,7 @@ public class OverlaidLeavesModel extends BreakingFixModel {
                 oldQuad.packedUV2(),
                 oldQuad.packedUV3(),
                 oldQuad.direction(),
-                new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), layer, oldQuad.materialInfo().itemRenderType(), oldQuad.materialInfo().tintIndex(), oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission(), oldQuad.materialInfo().ambientOcclusion()),
-                oldQuad.bakedNormals(),
-                oldQuad.bakedColors()
+                new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), layer, oldQuad.materialInfo().itemRenderType(), oldQuad.materialInfo().tintIndex(), oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission())
         );
     }
 }

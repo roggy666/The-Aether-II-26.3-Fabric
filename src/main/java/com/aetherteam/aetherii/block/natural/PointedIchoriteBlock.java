@@ -5,17 +5,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 import net.minecraft.world.level.material.Fluids;
 
 public class PointedIchoriteBlock extends AbstractPointedStoneBlock {
     public PointedIchoriteBlock(Properties properties) {
-        super(properties);
+        super(AetherIIBlocks.ICHORITE.defaultBlockState(), properties);
     }
 
     @Override
-    public void createDripstone(LevelAccessor level, BlockPos pos, Direction direction, DripstoneThickness thickness) {
-        BlockState blockstate = AetherIIBlocks.POINTED_ICHORITE.get().defaultBlockState().setValue(TIP_DIRECTION, direction).setValue(THICKNESS, thickness).setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
+    public void createDripstone(LevelAccessor level, BlockPos pos, Direction direction, SpeleothemThickness thickness) {
+        BlockState blockstate = AetherIIBlocks.POINTED_ICHORITE.defaultBlockState().setValue(TIP_DIRECTION, direction).setValue(THICKNESS, thickness).setValue(WATERLOGGED, level.getFluidState(pos).getType() == Fluids.WATER);
         level.setBlock(pos, blockstate, 3);
     }
 }

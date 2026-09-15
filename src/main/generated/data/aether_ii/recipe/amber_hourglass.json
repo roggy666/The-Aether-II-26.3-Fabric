@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#aether_ii:gems/amber",
+    "P": "#aether_ii:planks_crafting",
+    "S": "#aether_ii:rods/skyroot"
+  },
+  "pattern": [
+    "APA",
+    "SAS",
+    "APA"
+  ],
+  "result": {
+    "id": "aether_ii:amber_hourglass"
+  }
+}

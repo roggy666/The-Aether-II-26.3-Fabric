@@ -94,6 +94,6 @@ public class GreatboaFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.GREATBOA_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.GREATBOA_FOLIAGE_PLACER;
     }
 }

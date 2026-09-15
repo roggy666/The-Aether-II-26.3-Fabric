@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_bars_side",
+  "textures": {
+    "bars": "aether_ii:block/floral_arkenium_bars",
+    "edge": "aether_ii:block/arkenium_bars_edge"
+  }
+}

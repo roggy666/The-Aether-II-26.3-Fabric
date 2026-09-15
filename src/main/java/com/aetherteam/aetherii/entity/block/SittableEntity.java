@@ -34,7 +34,7 @@ public class SittableEntity extends Entity {
     }
 
     public SittableEntity(Level level, Vec3 pos, float yRot, BlockState state) {
-        this(AetherIIEntityTypes.SITTABLE.get(), level);
+        this(AetherIIEntityTypes.SITTABLE, level);
         this.setPos(pos);
         this.setYRot(yRot);
         this.blockState = state;

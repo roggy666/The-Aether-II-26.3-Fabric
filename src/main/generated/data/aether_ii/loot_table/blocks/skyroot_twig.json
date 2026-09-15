@@ -1,0 +1,72 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "1"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "2"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "3"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "conditions": [
+                {
+                  "block": "aether_ii:skyroot_twig",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "twig_amount": "4"
+                  }
+                }
+              ],
+              "count": 4.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "aether_ii:skyroot_twig"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "aether_ii:blocks/skyroot_twig"
+}

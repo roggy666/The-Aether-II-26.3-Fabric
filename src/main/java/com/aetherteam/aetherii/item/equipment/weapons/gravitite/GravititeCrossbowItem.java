@@ -18,7 +18,7 @@ public class GravititeCrossbowItem extends TieredCrossbowItem {
     @Override
     protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weapon, ItemStack ammo, boolean isCrit) {
         Projectile projectile = super.createProjectile(level, shooter, weapon, ammo, isCrit);
-        if (shooter.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (shooter.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             projectile.setNoGravity(true);
         }
         return projectile;

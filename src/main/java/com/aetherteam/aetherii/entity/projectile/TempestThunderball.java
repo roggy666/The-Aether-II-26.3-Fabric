@@ -22,7 +22,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 public class TempestThunderball extends AbstractHurtingProjectile {
     private int ticksInAir;
@@ -33,7 +32,7 @@ public class TempestThunderball extends AbstractHurtingProjectile {
     }
 
     public TempestThunderball(Level level, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(AetherIIEntityTypes.TEMPEST_THUNDERBALL.get(), shooter, new Vec3(accelX, accelY, accelZ), level);
+        super(AetherIIEntityTypes.TEMPEST_THUNDERBALL, shooter, new Vec3(accelX, accelY, accelZ), level);
         this.setNoGravity(true);
     }
 
@@ -55,7 +54,7 @@ public class TempestThunderball extends AbstractHurtingProjectile {
         }
         if (this.level().isClientSide() || (this.getOwner() == null || this.getOwner().isAlive()) && this.level().hasChunkAt(this.blockPosition())) {
             HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-            if (hitResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitResult)) {
+            if (hitResult.getType() != HitResult.Type.MISS) {
                 this.onHit(hitResult);
             }
 
@@ -109,7 +108,7 @@ public class TempestThunderball extends AbstractHurtingProjectile {
         electricCircle.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 10, 1, false, false, false));
 
         this.level().addFreshEntity(electricCircle);
-        electricCircle.playSound(AetherIISoundEvents.ENTITY_ELECTRIC_FIELD_CREATE.get());
+        electricCircle.playSound(AetherIISoundEvents.ENTITY_ELECTRIC_FIELD_CREATE);
     }
 
     @Override

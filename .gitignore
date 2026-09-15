@@ -25,3 +25,13 @@ __pycache__
 logs
 src/generated/resources/.cache
 .vscode/
+geminimistakes.md
+forgemini.md
+forgemini-report.md
+forgemini-fix.md
+fixedaftergemini.md
+foropus.md
+forgeminiagents.md
+analysis/
+compile_errors.log
+neoforged_files.txt

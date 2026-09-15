@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.CockatriceRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -10,18 +11,17 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class CockatriceModel extends EntityModel<CockatriceRenderState> {
-    public static final AnimationHolder RUN_START_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/run_start")); //todo
-    public static final AnimationHolder RUN_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/run"));
-    public static final AnimationHolder DART_ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/dart_attack"));
-    public static final AnimationHolder CLAW_ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/claw_attack"));
-    public static final AnimationHolder DIG_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/dig"));
-    private final KeyframeAnimation runAnimation;
-    private final KeyframeAnimation dartAttackAnimation;
-    private final KeyframeAnimation clawAttackAnimation;
-    private final KeyframeAnimation digAnimation;
+    public static final Identifier RUN_START_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/run_start"); //todo
+    public static final Identifier RUN_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/run");
+    public static final Identifier DART_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/dart_attack");
+    public static final Identifier CLAW_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/claw_attack");
+    public static final Identifier DIG_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "cockatrice/dig");
+    private final AetherIIAnimations.ReloadableAnimation runAnimation;
+    private final AetherIIAnimations.ReloadableAnimation dartAttackAnimation;
+    private final AetherIIAnimations.ReloadableAnimation clawAttackAnimation;
+    private final AetherIIAnimations.ReloadableAnimation digAnimation;
 
     private final ModelPart body;
     private final ModelPart body_front;
@@ -30,10 +30,10 @@ public class CockatriceModel extends EntityModel<CockatriceRenderState> {
 
     public CockatriceModel(ModelPart root) {
         super(root);
-        this.runAnimation = RUN_ANIMATION.get().bake(root);
-        this.dartAttackAnimation = DART_ATTACK_ANIMATION.get().bake(root);
-        this.clawAttackAnimation = CLAW_ATTACK_ANIMATION.get().bake(root);
-        this.digAnimation = DIG_ANIMATION.get().bake(root);
+        this.runAnimation = AetherIIAnimations.bake(RUN_ANIMATION, root);
+        this.dartAttackAnimation = AetherIIAnimations.bake(DART_ATTACK_ANIMATION, root);
+        this.clawAttackAnimation = AetherIIAnimations.bake(CLAW_ATTACK_ANIMATION, root);
+        this.digAnimation = AetherIIAnimations.bake(DIG_ANIMATION, root);
         this.body = root.getChild("body");
         this.body_front = this.body.getChild("body_front");
         this.neck = this.body_front.getChild("neck");

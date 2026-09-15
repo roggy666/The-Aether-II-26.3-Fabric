@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:holystone_bricks",
+  "result": {
+    "id": "aether_ii:holystone_brick_wall"
+  }
+}

@@ -28,7 +28,7 @@ public class ChunkBuilderMeshingTaskMixin {
     private void aetherii$renderSnowOverlay(@Coerce Object instance, BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin, Operation<Void> original, @Local BlockRenderCache cache) {
         original.call(instance, model, state, pos, origin);
         if (AetherGrassBlock.plantIsSnowed(state)) {
-            BlockState snow = AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState();
+            BlockState snow = AetherIIBlocks.ARCTIC_SNOW.defaultBlockState();
             BlockStateModel snowModel = cache.getBlockModels().get(snow);
             original.call(instance, snowModel, snow, pos, origin);
         }

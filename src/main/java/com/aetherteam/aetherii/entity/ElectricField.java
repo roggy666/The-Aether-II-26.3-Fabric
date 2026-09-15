@@ -16,7 +16,7 @@ public class ElectricField extends AreaEffectCloud {
     }
 
     public ElectricField(Level level, double x, double y, double z) {
-        this(AetherIIEntityTypes.ELECTRIC_FIELD.get(), level);
+        this(AetherIIEntityTypes.ELECTRIC_FIELD, level);
         this.setPos(x, y, z);
     }
 

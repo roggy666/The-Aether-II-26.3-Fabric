@@ -59,7 +59,7 @@ public class MusicBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return blockState.getValue(HAS_RECORD) ? createTickerHelper(type, AetherIIBlockEntityTypes.MUSIC_BLOCK.get(), MusicBlockEntity::tick) : null;
+        return blockState.getValue(HAS_RECORD) ? createTickerHelper(type, AetherIIBlockEntityTypes.MUSIC_BLOCK, MusicBlockEntity::tick) : null;
     }
 
     @Override

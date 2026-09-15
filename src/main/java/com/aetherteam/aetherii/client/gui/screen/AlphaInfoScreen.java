@@ -265,7 +265,7 @@ This is a list of some major features that have not yet been implemented but are
         this.textWidth = Math.min(this.width - (65 * 2), 350);
 
         ImageButton goBackButton = new ImageButton(this.textPosition - 49, 12, 8, 8, Guidebook.RETURN, (button) -> {
-            Minecraft.getInstance().setScreen(this.lastScreen);
+            Minecraft.getInstance().gui.setScreen(this.lastScreen);
         });
         goBackButton.setTooltip(Tooltip.create(Component.translatable("gui.aether_ii.guidebook.description.button.close")));
 

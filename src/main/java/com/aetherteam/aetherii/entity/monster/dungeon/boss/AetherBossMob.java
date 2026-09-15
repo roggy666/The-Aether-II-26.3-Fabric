@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.monster.dungeon.boss;
 
+import net.minecraft.world.level.gamerules.GameRules;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.dungeon.CopyBlock;
 import com.aetherteam.aetherii.block.dungeon.GroundTrapBlock;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.event.EventHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -77,7 +77,7 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
      */
     default void evaporate(T entity, BlockPos min, BlockPos max, Predicate<BlockState> check) {
         if (entity.level() instanceof ServerLevel serverLevel) {
-            if (EventHooks.canEntityGrief(serverLevel, entity)) {
+            if (serverLevel.getGameRules().get(GameRules.MOB_GRIEFING)) {
                 for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
                     if (entity.level().getBlockState(pos).getBlock() instanceof LiquidBlock && check.test(entity.level().getBlockState(pos))) {
                         entity.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -105,7 +105,7 @@ public interface AetherBossMob<T extends Mob & AetherBossMob<T>> extends BossMob
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.POOF, a, b, c, 1, 0.0, 0.0, 0.0, 0.0);
         }
-        entity.level().playSound(null, pos, AetherIISoundEvents.WATER_EVAPORATE.get(), SoundSource.BLOCKS, 0.5F, 2.6F + (entity.level().getRandom().nextFloat() - entity.level().getRandom().nextFloat()) * 0.8F);
+        entity.level().playSound(null, pos, AetherIISoundEvents.WATER_EVAPORATE, SoundSource.BLOCKS, 0.5F, 2.6F + (entity.level().getRandom().nextFloat() - entity.level().getRandom().nextFloat()) * 0.8F);
     }
 
     /**

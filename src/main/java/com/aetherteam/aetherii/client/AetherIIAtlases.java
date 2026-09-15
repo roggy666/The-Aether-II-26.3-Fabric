@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client;
 
+import net.fabricmc.fabric.api.client.rendering.v1.AtlasRegistry;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.Mural;
 import com.aetherteam.aetherii.blockentity.MuralSection;
@@ -15,7 +16,6 @@ import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.properties.ChestType;
-import net.neoforged.neoforge.client.event.RegisterTextureAtlasesEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,15 +69,15 @@ public class AetherIIAtlases {
     public static final MultiblockChestResources<Identifier> SAGE_CHEST_RESOURCES_IDENTIFIER = AetherIIAtlases.createDefaultChestTextures("sage_chest");
     public static final MultiblockChestResources<SpriteId> SAGE_CHEST_RESOURCES_SPRITE = SAGE_CHEST_RESOURCES_IDENTIFIER.map(SAGE_CHEST_MAPPER::apply);
 
-    public static void registerAtlases(RegisterTextureAtlasesEvent event) {
-        event.register(new AtlasManager.AtlasConfig(MOA_FEATHER_SHEET, MOA_FEATHER_ID, false));
-        event.register(new AtlasManager.AtlasConfig(MOA_EYES_SHEET, MOA_EYES_ID, false));
-        event.register(new AtlasManager.AtlasConfig(MOA_KERATIN_SHEET, MOA_KERATIN_ID, false));
-        event.register(new AtlasManager.AtlasConfig(ARMOR_STYLES_SHEET, ARMOR_STYLES_ID, false));
-        event.register(new AtlasManager.AtlasConfig(ALKAHEST_PURIFIER_SHEET, ALKAHEST_PURIFIER_ID, false));
-        event.register(new AtlasManager.AtlasConfig(SENTRY_CRATE_SHEET, SENTRY_CRATE_ID, false));
-        event.register(new AtlasManager.AtlasConfig(SENTRY_SPAWNER_SHEET, SENTRY_SPAWNER_ID, false));
-        event.register(new AtlasManager.AtlasConfig(SAGE_CHEST_SHEET, SAGE_CHEST_ID, false));
+    public static void registerAtlases() {
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(MOA_FEATHER_SHEET, MOA_FEATHER_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(MOA_EYES_SHEET, MOA_EYES_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(MOA_KERATIN_SHEET, MOA_KERATIN_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(ARMOR_STYLES_SHEET, ARMOR_STYLES_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(ALKAHEST_PURIFIER_SHEET, ALKAHEST_PURIFIER_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(SENTRY_CRATE_SHEET, SENTRY_CRATE_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(SENTRY_SPAWNER_SHEET, SENTRY_SPAWNER_ID, false));
+        AtlasRegistry.register(new AtlasManager.AtlasConfig(SAGE_CHEST_SHEET, SAGE_CHEST_ID, false));
     }
 
     private static MultiblockChestResources<Identifier> createDefaultChestTextures(String prefix) {

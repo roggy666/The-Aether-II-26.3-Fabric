@@ -95,6 +95,8 @@ public class SageChestRenderer implements BlockEntityRenderer<SageChestBlockEnti
     }
 
     @Override
+    public boolean shouldRenderOffScreen() { return true; }
+
     public AABB getRenderBoundingBox(SageChestBlockEntity blockEntity) {
         BlockPos pos = blockEntity.getBlockPos();
         return AABB.encapsulatingFullBlocks(pos.offset(-1, 0, -1), pos.offset(1, 1, 1));

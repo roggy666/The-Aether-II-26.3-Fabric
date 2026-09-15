@@ -117,6 +117,6 @@ public class LargeAmberootFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.LARGE_AMBEROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.LARGE_AMBEROOT_FOLIAGE_PLACER;
     }
 }

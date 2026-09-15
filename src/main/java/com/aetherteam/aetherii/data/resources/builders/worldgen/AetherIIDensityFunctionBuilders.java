@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.data.resources.builders.worldgen;
 
+import net.minecraft.core.Holder;
+import java.util.List;
+import it.unimi.dsi.fastutil.doubles.DoubleList;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDensityFunctions;
 import com.aetherteam.aetherii.data.resources.registries.AetherIINoises;
@@ -124,11 +127,11 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     public static DensityFunction buildContinents(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate heightmap = new DensityFunctions.Spline.Coordinate(function.getOrThrow(CONTINENTS_HEIGHTMAP));
+        DensityFunctions.Spline.Coordinate heightmap = new DensityFunctions.Spline.Coordinate(getFunction(function, CONTINENTS_HEIGHTMAP));
         return DensityFunctions.spline(continents(heightmap));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> continents(I heightmap) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> continents(I heightmap) {
         return CubicSpline.builder(heightmap)
                 .addPoint(96, 0.0F)
                 .addPoint(160, 1.0F)
@@ -176,14 +179,14 @@ public class AetherIIDensityFunctionBuilders {
 
     // Base Islands
     public static DensityFunction buildFactor(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(function.getOrThrow(TEMPERATURE));
-        DensityFunctions.Spline.Coordinate erosion = new DensityFunctions.Spline.Coordinate(function.getOrThrow(EROSION));
-        DensityFunctions.Spline.Coordinate ridges = new DensityFunctions.Spline.Coordinate(function.getOrThrow(RIDGES));
+        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(getFunction(function, TEMPERATURE));
+        DensityFunctions.Spline.Coordinate erosion = new DensityFunctions.Spline.Coordinate(getFunction(function, EROSION));
+        DensityFunctions.Spline.Coordinate ridges = new DensityFunctions.Spline.Coordinate(getFunction(function, RIDGES));
         return DensityFunctions.spline(factor(temperature, erosion, ridges));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> factor(I temperature, I erosion, I ridges) {
-        CubicSpline<C, I> temperatureSpline = CubicSpline.builder(temperature)
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> factor(I temperature, I erosion, I ridges) {
+        CubicSpline<I> temperatureSpline = CubicSpline.builder(temperature)
                 .addPoint(ARCTIC_START_VALUE - 0.06F, 1.0F)
                 .addPoint(ARCTIC_START_VALUE - 0.03F, 1.5F)
                 .addPoint(ARCTIC_START_VALUE, 7.5F)
@@ -193,7 +196,7 @@ public class AetherIIDensityFunctionBuilders {
                 .addPoint(IRRADIATED_START_VALUE + 0.06F, 1.0F)
                 .build();
 
-        CubicSpline<C, I> erosionSpline = CubicSpline.builder(erosion)
+        CubicSpline<I> erosionSpline = CubicSpline.builder(erosion)
                 .addPoint(MAGNETIC_START_VALUE - 0.075F, temperatureSpline)
                 .addPoint(MAGNETIC_START_VALUE, 7.5F)
                 .addPoint(MAGNETIC_START_VALUE + 0.06F, 1.0F)
@@ -214,12 +217,12 @@ public class AetherIIDensityFunctionBuilders {
 
 
     public static DensityFunction buildTopSlide(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_MAPPER));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_MAPPER));
         return DensityFunctions.spline(topSlide(y, elevation, 0.0F));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> topSlide(I y, I elevation, float value) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> topSlide(I y, I elevation, float value) {
         return CubicSpline.builder(elevation)
                 .addPoint(0.1F, slidePiece(y, 128, 184, 1, value))
                 .addPoint(0.15F, slidePiece(y, 136, 192, 1, value))
@@ -239,12 +242,12 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     public static DensityFunction buildBottomSlide(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_MAPPER));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_MAPPER));
         return DensityFunctions.spline(bottomSlide(y, elevation));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> bottomSlide(I y, I elevation) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> bottomSlide(I y, I elevation) {
         return CubicSpline.builder(elevation)
                 .addPoint(0.1F, slidePiece(y, -64, 128, 0, 1))
                 .addPoint(0.15F, slidePiece(y, -56, 136, 0, 1))
@@ -263,7 +266,7 @@ public class AetherIIDensityFunctionBuilders {
                 .build();
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> slidePiece(I y, float locationFrom, float locationTo, float valueFrom, float valueTo) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> slidePiece(I y, float locationFrom, float locationTo, float valueFrom, float valueTo) {
         return CubicSpline.builder(y)
                 .addPoint(locationFrom, valueFrom)
                 .addPoint(locationTo, valueTo)
@@ -280,8 +283,8 @@ public class AetherIIDensityFunctionBuilders {
 
 
     public static DensityFunction buildSloper(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_MAPPER));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_MAPPER));
         return DensityFunctions.spline(topSlide(y, elevation, 2.0F));
     }
 
@@ -312,12 +315,12 @@ public class AetherIIDensityFunctionBuilders {
 
     // Arctic Islands
     public static DensityFunction buildTopSlideArctic(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_MAPPER));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_MAPPER));
         return DensityFunctions.spline(topSlideArctic(y, elevation, 0.0F));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> topSlideArctic(I y, I elevation, float value) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> topSlideArctic(I y, I elevation, float value) {
         return CubicSpline.builder(elevation)
                 .addPoint(0.0F, slidePiece(y, 128, 200, 1, value))
                 .addPoint(0.05F, slidePiece(y, 136, 212, 1, value))
@@ -337,21 +340,21 @@ public class AetherIIDensityFunctionBuilders {
 
 
     public static DensityFunction buildSloperArctic(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_MAPPER));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_MAPPER));
         return DensityFunctions.spline(topSlideArctic(y, elevation, 2.0F));
     }
 
     // Shattered Islands
     public static DensityFunction buildFactorShattered(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(function.getOrThrow(TEMPERATURE));
-        DensityFunctions.Spline.Coordinate erosion = new DensityFunctions.Spline.Coordinate(function.getOrThrow(EROSION));
-        DensityFunctions.Spline.Coordinate ridges = new DensityFunctions.Spline.Coordinate(function.getOrThrow(RIDGES));
+        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(getFunction(function, TEMPERATURE));
+        DensityFunctions.Spline.Coordinate erosion = new DensityFunctions.Spline.Coordinate(getFunction(function, EROSION));
+        DensityFunctions.Spline.Coordinate ridges = new DensityFunctions.Spline.Coordinate(getFunction(function, RIDGES));
         return DensityFunctions.spline(factorShattered(temperature, erosion, ridges));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> factorShattered(I temperature, I erosion, I ridges) {
-        CubicSpline<C, I> temperatureSpline = CubicSpline.builder(temperature)
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> factorShattered(I temperature, I erosion, I ridges) {
+        CubicSpline<I> temperatureSpline = CubicSpline.builder(temperature)
                 .addPoint(ARCTIC_START_VALUE - 0.06F, 1.0F)
                 .addPoint(ARCTIC_START_VALUE - 0.03F, 1.5F)
                 .addPoint(ARCTIC_START_VALUE, 7.5F)
@@ -361,7 +364,7 @@ public class AetherIIDensityFunctionBuilders {
                 .addPoint(IRRADIATED_START_VALUE + 0.06F, 1.0F)
                 .build();
 
-        CubicSpline<C, I> erosionSpline = CubicSpline.builder(erosion)
+        CubicSpline<I> erosionSpline = CubicSpline.builder(erosion)
                 .addPoint(MAGNETIC_START_VALUE - 0.075F, temperatureSpline)
                 .addPoint(MAGNETIC_START_VALUE, 7.5F)
                 .addPoint(MAGNETIC_START_VALUE + 0.06F, 1.0F)
@@ -381,12 +384,12 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     public static DensityFunction buildTopSlideShattered(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_SHATTERED));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_SHATTERED));
         return DensityFunctions.spline(topSlideShattered(y, elevation));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> topSlideShattered(I y, I elevation) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> topSlideShattered(I y, I elevation) {
         return CubicSpline.builder(elevation)
                 .addPoint(0.05F, slidePiece(y, 162, 182, 1, 0.0F))
                 .addPoint(0.1F, slidePiece(y, 166, 186, 1, 0.0F))
@@ -402,12 +405,12 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     public static DensityFunction buildBottomSlideShattered(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
-        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(function.getOrThrow(ELEVATION_SHATTERED));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
+        DensityFunctions.Spline.Coordinate elevation = new DensityFunctions.Spline.Coordinate(getFunction(function, ELEVATION_SHATTERED));
         return DensityFunctions.spline(bottomSlideShattered(y, elevation));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> bottomSlideShattered(I y, I elevation) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> bottomSlideShattered(I y, I elevation) {
         return CubicSpline.builder(elevation)
                 .addPoint(0.05F, slidePiece(y, 130, 162, 0, 1))
                 .addPoint(0.1F, slidePiece(y, 134, 166, 0, 1))
@@ -423,7 +426,7 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     // Underground
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> caveGradient(I y) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> caveGradient(I y) {
         return CubicSpline.builder(y)
                 .addPoint(96, 0.0F)
                 .addPoint(112, 0.175F)
@@ -431,11 +434,11 @@ public class AetherIIDensityFunctionBuilders {
     }
 
     public static DensityFunction buildNoiseCaves(HolderGetter<DensityFunction> function, HolderGetter<NormalNoise.NoiseParameters> noise) {
-        DensityFunction density = DensityFunctions.weirdScaledSampler(getFunction(function, BASE_3D_NOISE), noise.getOrThrow(AetherIINoises.CAVE_THICKNESS), DensityFunctions.WeirdScaledSampler.RarityValueMapper.TYPE1);
+        DensityFunction density = wrapRarity3d(getFunction(function, BASE_3D_NOISE), noise.getOrThrow(AetherIINoises.CAVE_THICKNESS));
         density = DensityFunctions.add(density, DensityFunctions.yClampedGradient(16, 32, 0.05, 0.0));
         density = DensityFunctions.add(density, DensityFunctions.constant(-0.125));
-        density = DensityFunctions.add(density, DensityFunctions.weirdScaledSampler(getFunction(function, BASE_3D_NOISE), noise.getOrThrow(AetherIINoises.CAVES), DensityFunctions.WeirdScaledSampler.RarityValueMapper.TYPE2));
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
+        density = DensityFunctions.add(density, wrapRarity2d(getFunction(function, BASE_3D_NOISE), noise.getOrThrow(AetherIINoises.CAVES)));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
         density = DensityFunctions.add(density, DensityFunctions.spline(caveGradient(y)));
         density = DensityFunctions.cacheOnce(density);
         return density;
@@ -443,11 +446,11 @@ public class AetherIIDensityFunctionBuilders {
 
 
     public static DensityFunction buildUndergroundShaper(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(function.getOrThrow(Y));
+        DensityFunctions.Spline.Coordinate y = new DensityFunctions.Spline.Coordinate(getFunction(function, Y));
         return DensityFunctions.spline(undergroundShaper(y));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> undergroundShaper(I y) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> undergroundShaper(I y) {
         return CubicSpline.builder(y)
                 .addPoint(0, 3.0F)
                 .addPoint(8, 1.0F)
@@ -463,14 +466,14 @@ public class AetherIIDensityFunctionBuilders {
 
     // Lakes
     public static DensityFunction buildLakeFactor(HolderGetter<DensityFunction> function) {
-        DensityFunctions.Spline.Coordinate lakes = new DensityFunctions.Spline.Coordinate(function.getOrThrow(LAKES_NOISE));
-        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(function.getOrThrow(TEMPERATURE));
+        DensityFunctions.Spline.Coordinate lakes = new DensityFunctions.Spline.Coordinate(getFunction(function, LAKES_NOISE));
+        DensityFunctions.Spline.Coordinate temperature = new DensityFunctions.Spline.Coordinate(getFunction(function, TEMPERATURE));
         return DensityFunctions.spline(lakeFactor(lakes, temperature));
     }
 
-    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<C, I> lakeFactor(I lakes, I temperature) {
+    public static <C, I extends BoundedFloatFunction<C>> CubicSpline<I> lakeFactor(I lakes, I temperature) {
 
-        CubicSpline<C, I> lakeSpline = CubicSpline.builder(lakes)
+        CubicSpline<I> lakeSpline = CubicSpline.builder(lakes)
                 .addPoint(0.15F, 1.0F)
                 .addPoint(0.3F, 1.35F)
                 .addPoint(0.325F, 1.75F)
@@ -497,5 +500,21 @@ public class AetherIIDensityFunctionBuilders {
 
     public static DensityFunction getFunction(HolderGetter<DensityFunction> function, ResourceKey<DensityFunction> key) {
         return new DensityFunctions.HolderHolder(function.getOrThrow(key));
+    }
+
+    // Replacement for the removed DensityFunctions.weirdScaledSampler, mirrors NoiseRouterData.QuantizedSpaghettiRarity (26.2)
+    public static DensityFunction wrapRarity2d(DensityFunction input, Holder<NormalNoise.NoiseParameters> noise) {
+        return DensityFunctions.intervalSelect(input, DoubleList.of(-0.75, -0.5, 0.5, 0.75), List.of(
+                noiseFunctionForRarity(noise, 0.5), noiseFunctionForRarity(noise, 0.75), noiseFunctionForRarity(noise, 1.0),
+                noiseFunctionForRarity(noise, 2.0), noiseFunctionForRarity(noise, 3.0))).abs();
+    }
+
+    public static DensityFunction wrapRarity3d(DensityFunction input, Holder<NormalNoise.NoiseParameters> noise) {
+        return DensityFunctions.intervalSelect(input, DoubleList.of(-0.5, 0.0, 0.5), List.of(
+                noiseFunctionForRarity(noise, 0.75), noiseFunctionForRarity(noise, 1.0), noiseFunctionForRarity(noise, 1.5), noiseFunctionForRarity(noise, 2.0))).abs();
+    }
+
+    private static DensityFunction noiseFunctionForRarity(Holder<NormalNoise.NoiseParameters> noise, double rarity) {
+        return DensityFunctions.mul(DensityFunctions.constant(rarity), DensityFunctions.noise(noise, 1.0 / rarity, 1.0 / rarity));
     }
 }

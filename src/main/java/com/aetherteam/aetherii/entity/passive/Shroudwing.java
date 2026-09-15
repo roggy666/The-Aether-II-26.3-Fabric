@@ -25,7 +25,7 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 public class Shroudwing extends Insect {
-    private static final EntityDataAccessor<Holder<ShroudwingVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Shroudwing.class, AetherIIDataSerializers.SHROUDWING_VARIANT.get());
+    private static final EntityDataAccessor<Holder<ShroudwingVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Shroudwing.class, AetherIIDataSerializers.SHROUDWING_VARIANT);
 
     public static int LAND_EVENT = 101;
     public static int TAKEOFF_EVENT = 102;

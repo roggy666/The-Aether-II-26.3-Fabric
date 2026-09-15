@@ -36,7 +36,7 @@ public class AltarMenu extends RecipeBookMenu {
     }
 
     public AltarMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(AetherIIMenuTypes.ALTAR.get(), containerId);
+        super(AetherIIMenuTypes.ALTAR, containerId);
         checkContainerSize(container, 10);
         checkContainerDataCount(data, 3);
         this.container = container;

@@ -24,7 +24,7 @@ public class AnimalStashBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     public AnimalStashBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.ANIMAL_STASH.get(), pos, state);
+        this(AetherIIBlockEntityTypes.ANIMAL_STASH, pos, state);
     }
 
     public int getContainerSize() {

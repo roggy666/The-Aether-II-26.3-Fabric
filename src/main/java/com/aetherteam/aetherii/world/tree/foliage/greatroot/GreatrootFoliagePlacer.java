@@ -87,6 +87,6 @@ public class GreatrootFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.GREATROOT_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.GREATROOT_FOLIAGE_PLACER;
     }
 }

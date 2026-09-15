@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AmbrosiumWallTorchBlock extends WallTorchBlock {
     public AmbrosiumWallTorchBlock(Properties properties) {
-        super(ParticleTypes.SMOKE, properties.overrideLootTable(AetherIIBlocks.AMBROSIUM_TORCH.get().getLootTable()));
+        super(ParticleTypes.SMOKE, properties.overrideLootTable(AetherIIBlocks.AMBROSIUM_TORCH.getLootTable()));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class AmbrosiumWallTorchBlock extends WallTorchBlock {
         double d2 = (double) pos.getZ() + 0.5;
         Direction opposite = direction.getOpposite();
         if (random.nextInt(7) == 0) {
-            level.addParticle(AetherIIParticleTypes.AMBROSIUM.get(), d0 + 0.27 * (double) opposite.getStepX(), d1 + 0.2, d2 + 0.27 * (double) opposite.getStepZ(), 0.0, 0.0, 0.0);
+            level.addParticle(AetherIIParticleTypes.AMBROSIUM, d0 + 0.27 * (double) opposite.getStepX(), d1 + 0.2, d2 + 0.27 * (double) opposite.getStepZ(), 0.0, 0.0, 0.0);
         }
     }
 }

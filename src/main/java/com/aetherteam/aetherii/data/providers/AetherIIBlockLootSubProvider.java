@@ -10,8 +10,8 @@ import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import com.aetherteam.aetherii.loot.conditions.TierCompare;
 import com.aetherteam.aetherii.loot.functions.SpawnSkyrootLizard;
 import com.aetherteam.nitrogen.data.providers.NitrogenBlockLootSubProvider;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
@@ -44,8 +44,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.loot.CanItemPerformAbility;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.core.registries.Registries;
 
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -61,20 +62,20 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(this.hasSilkTouch()).add(LootItem.lootTableItem(block)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(this.hasSilkTouch().invert())
-                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_WEAPON.get()))
-                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_TOOL.get()))
-                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_ARMOR.get()))
-                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_CHUNK.get()))
+                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_WEAPON))
+                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_TOOL))
+                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_ARMOR))
+                        .add(LootItem.lootTableItem(AetherIIItems.IRRADIATED_CHUNK))
                 );
     }
 
     protected LootTable.Builder createSkyRootsDrops(Block block) {
-        return this.createSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))
+        return this.createSilkTouchOrShearsDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))))
                 .withPool(
                         LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0F))
                                 .when(this.hasShears().or(this.hasSilkTouch()).invert())
-                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherIIItems.ARCTIC_SNOWBALL.get())
+                                .add(this.applyExplosionDecay(block, LootItem.lootTableItem(AetherIIItems.ARCTIC_SNOWBALL)
                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(AetherHangingRootsBlock.SNOWY, true)))
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                 )));
@@ -149,10 +150,10 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
         return createForgeSilkTouchOrShearsDispatchTable(itemLookup, block, this.applyExplosionCondition( block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(this.hasShears().or(this.hasSilkTouch()).invert())
                         .add(this.applyExplosionDecay(block,
-                                        LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))).apply(SpawnSkyrootLizard.builder(block.builtInRegistryHolder()))
+                                        LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))).apply(SpawnSkyrootLizard.builder(block.builtInRegistryHolder()))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(this.hasShears().or(this.hasSilkTouch()).invert())
-                        .add(this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_PINECONE.get()))
+                        .add(this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_PINECONE))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 0.01F, 0.011111112F, 0.0125F, 0.0111111125F, 0.05F))));
     }
 
@@ -162,10 +163,10 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
         return createForgeSilkTouchOrShearsDispatchTable(itemLookup, block, this.applyExplosionCondition( block, LootItem.lootTableItem(sapling)).when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), chances)))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(this.hasShears().or(this.hasSilkTouch()).invert())
                         .add(this.applyExplosionDecay(block,
-                                        LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                        LootItem.lootTableItem(AetherIIItems.SKYROOT_STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                                 .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(this.hasShears().or(this.hasSilkTouch()).invert())
-                                .add(this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_PINECONE.get()))
+                                .add(this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.SKYROOT_PINECONE))
                                         .when(BonusLevelTableCondition.bonusLevelFlatChance(enchantmentLookup.getOrThrow(Enchantments.FORTUNE), 0.01F, 0.011111112F, 0.0125F, 0.0111111125F, 0.05F))));
     }
 
@@ -299,12 +300,12 @@ public abstract class AetherIIBlockLootSubProvider extends NitrogenBlockLootSubP
     protected LootTable.Builder droppingMoaEgg(Block block) {
         return LootTable.lootTable().withPool(this.applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(block)
-                        .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(AetherIIDataComponents.MOA_EGG_TYPE.get()))))
+                        .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(AetherIIDataComponents.MOA_EGG_TYPE))))
         );
     }
 
     @Override
-    protected LootItemCondition.Builder hasShears() {
-        return CanItemPerformAbility.canItemPerformAbility(ItemAbilities.SHEARS_DIG);
+    public LootItemCondition.Builder hasShears() {
+        return MatchTool.toolMatches(ItemPredicate.Builder.item().of(this.registries.lookupOrThrow(Registries.ITEM), ConventionalItemTags.SHEAR_TOOLS)).or(super.hasShears());
     }
 }

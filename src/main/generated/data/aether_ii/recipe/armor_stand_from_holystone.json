@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "/": "#aether_ii:rods/skyroot",
+    "_": "aether_ii:holystone_slab"
+  },
+  "pattern": [
+    "///",
+    " / ",
+    "/_/"
+  ],
+  "result": {
+    "id": "minecraft:armor_stand"
+  }
+}

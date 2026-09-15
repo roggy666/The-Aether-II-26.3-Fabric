@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.TempestRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -9,21 +10,20 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class TempestModel extends EntityModel<TempestRenderState> {
-	public static final AnimationHolder FLY_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/fly"));
-	public static final AnimationHolder ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/attack"));
-	public static final AnimationHolder DESPAWN_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/despawn"));
-	private final KeyframeAnimation flyAnimation;
-	private final KeyframeAnimation attackAnimation;
-	private final KeyframeAnimation despawnAnimation;
+	public static final Identifier FLY_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/fly");
+	public static final Identifier ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/attack");
+	public static final Identifier DESPAWN_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "tempest/despawn");
+	private final AetherIIAnimations.ReloadableAnimation flyAnimation;
+	private final AetherIIAnimations.ReloadableAnimation attackAnimation;
+	private final AetherIIAnimations.ReloadableAnimation despawnAnimation;
 
 	public TempestModel(ModelPart root) {
 		super(root);
-		this.flyAnimation = FLY_ANIMATION.get().bake(root);
-		this.attackAnimation = ATTACK_ANIMATION.get().bake(root);
-		this.despawnAnimation = DESPAWN_ANIMATION.get().bake(root);
+		this.flyAnimation = AetherIIAnimations.bake(FLY_ANIMATION, root);
+		this.attackAnimation = AetherIIAnimations.bake(ATTACK_ANIMATION, root);
+		this.despawnAnimation = AetherIIAnimations.bake(DESPAWN_ANIMATION, root);
 	}
 
 	public static LayerDefinition createBodyLayer() {

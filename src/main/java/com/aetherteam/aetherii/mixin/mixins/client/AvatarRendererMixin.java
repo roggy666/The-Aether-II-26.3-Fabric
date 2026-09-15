@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.mixin.mixins.client;
 
+import com.aetherteam.aetherii.client.AetherIIClientExtensions;
+import com.aetherteam.aetherii.client.renderer.AetherIIRenderers;
 import com.aetherteam.aetherii.client.AetherIIArmPoses;
 import com.aetherteam.aetherii.client.renderer.accessory.FirstPersonRendering;
 import com.aetherteam.aetherii.entity.vehicle.CloudSkiff;
@@ -28,8 +30,6 @@ import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.neoforged.neoforge.common.Tags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +39,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AvatarRenderer.class)
 public abstract class AvatarRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, AvatarRenderState, PlayerModel> {
+    @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("TAIL"))
+    private void aether_ii$extractData(Avatar avatar, AvatarRenderState state, float partialTick, CallbackInfo ci) {
+        AetherIIRenderers.extractAvatarRenderState(avatar, state);
+    }
+
     @Unique
     private static HumanoidArm currentArm = null;
 
@@ -46,13 +51,13 @@ public abstract class AvatarRendererMixin extends LivingEntityRenderer<AbstractC
         super(context, model, shadowRadius);
     }
 
-    @Inject(method = "renderRightHand(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/resources/Identifier;ZLnet/minecraft/client/player/AbstractClientPlayer;)V", at = @At("HEAD"))
-    private void firstPersonRightAccessories(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, Identifier skinTexture, boolean isSleeveVisible, AbstractClientPlayer player, CallbackInfo ci) {
+    @Inject(method = "renderRightHand(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/resources/Identifier;Z)V", at = @At("HEAD"))
+    private void firstPersonRightAccessories(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, Identifier skinTexture, boolean isSleeveVisible, CallbackInfo ci) {
         currentArm = HumanoidArm.RIGHT;
     }
 
-    @Inject(method = "renderLeftHand(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/resources/Identifier;ZLnet/minecraft/client/player/AbstractClientPlayer;)V", at = @At("HEAD"))
-    private void firstPersonLeftAccessories(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, Identifier skinTexture, boolean isSleeveVisible, AbstractClientPlayer player, CallbackInfo ci) {
+    @Inject(method = "renderLeftHand(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/resources/Identifier;Z)V", at = @At("HEAD"))
+    private void firstPersonLeftAccessories(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, Identifier skinTexture, boolean isSleeveVisible, CallbackInfo ci) {
         currentArm = HumanoidArm.LEFT;
     }
 
@@ -83,15 +88,17 @@ public abstract class AvatarRendererMixin extends LivingEntityRenderer<AbstractC
 
     @Inject(method = "getArmPose(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;", at = @At(value = "HEAD"), cancellable = true)
     private static void getArmPose(Avatar player, ItemStack stack, InteractionHand hand, CallbackInfoReturnable<HumanoidModel.ArmPose> cir) {
-        IClientItemExtensions extensions = IClientItemExtensions.of(stack);
-        HumanoidModel.ArmPose armPose = extensions.getArmPose(player, hand, stack);
-        if (armPose == null) {
+
+        HumanoidModel.ArmPose armPose = AetherIIClientExtensions.getArmPose(player, hand, stack);
+        if (armPose != null) {
+            cir.setReturnValue(armPose);
+        } else {
             if (player.getVehicle() instanceof CloudSkiff && !player.swinging && !(player.getUsedItemHand() == hand && player.getUseItemRemainingTicks() > 0)) {
                 cir.setReturnValue(AetherIIArmPoses.SKIFF_SAILING);
             }
             if (!stack.isEmpty()) {
                 if (player.getUsedItemHand() != hand || player.getUseItemRemainingTicks() <= 0) {
-                    if (!player.swinging && stack.is(Tags.Items.TOOLS_CROSSBOW) && stack.getItem() instanceof TieredCrossbowItem && TieredCrossbowItem.isCharged(stack)) {
+                    if (!player.swinging && stack.getItem() instanceof TieredCrossbowItem && TieredCrossbowItem.isCharged(stack)) {
                         cir.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_HOLD);
                     }
                 }

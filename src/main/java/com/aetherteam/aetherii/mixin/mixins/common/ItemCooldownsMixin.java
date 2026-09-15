@@ -9,7 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
-import net.neoforged.neoforge.common.Tags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,13 +27,13 @@ public class ItemCooldownsMixin implements ItemCooldownsWrapper {
 
     @Inject(at = @At(value = "HEAD"), method = "onCooldownEnded(Lnet/minecraft/resources/Identifier;)V")
     private void onCooldownEnded(Identifier resourceLocation, CallbackInfo ci) {
-        List<Identifier> tagContents = StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(Tags.Items.TOOLS_SHIELD).spliterator(), false)
+        List<Identifier> tagContents = StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(ConventionalItemTags.SHIELD_TOOLS).spliterator(), false)
                 .map(Holder::unwrapKey).filter(Optional::isPresent).map(optional -> optional.get().identifier()).toList();
         if (tagContents.contains(resourceLocation)) {
             if (!this.player.level().isClientSide()) {
-                DamageSystemAttachment attachment = this.player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+                DamageSystemAttachment attachment = this.player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM);
                 attachment.setShieldEndurance(AetherIIAttributes.getMaxEndurance(this.player));
-                this.player.syncData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+                this.player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, this.player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
             }
         }
     }

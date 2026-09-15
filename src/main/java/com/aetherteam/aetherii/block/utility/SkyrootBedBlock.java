@@ -1,6 +1,5 @@
 package com.aetherteam.aetherii.block.utility;
 
-import com.aetherteam.aetherii.blockentity.SkyrootBedBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Util;
@@ -34,11 +33,6 @@ public class SkyrootBedBlock extends BedBlock {
     public SkyrootBedBlock(DyeColor dyeColor, Properties properties) {
         super(dyeColor, properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(PART, BedPart.FOOT).setValue(OCCUPIED, false));
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new SkyrootBedBlockEntity(pos, state);
     }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

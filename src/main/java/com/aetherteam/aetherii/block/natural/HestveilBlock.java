@@ -34,7 +34,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3i;
 
@@ -69,7 +71,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
         if (state.getValue(HORIZONTAL_DISTANCE) < MAX_HORIZONTAL_DISTANCE && state.getValue(VERTICAL_DISTANCE) < MAX_VERTICAL_DISTANCE) {
             for (Vec3i offset : PLACEMENT_OFFSETS) {
                 BlockPos offsetPos = pos.offset(offset);
-                if (level.getBlockState(offsetPos).isEmpty()) {
+                if (level.getBlockState(offsetPos).isAir()) {
                     level.setBlock(offsetPos, updateDistance(state, level, offsetPos), 3);
                 }
             }
@@ -79,7 +81,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (random.nextInt(200) == 0) {
-            level.addParticle(AetherIIParticleTypes.HESTVEIL.get(), pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble(), 0, 0, 0);
+            level.addParticle(AetherIIParticleTypes.HESTVEIL, pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble(), 0, 0, 0);
         }
     }
 
@@ -105,7 +107,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
 
     @Override
     protected BlockState updateShape(BlockState state, LevelReader levelReader, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource randomSource) {
-        if (this.shouldExplode(neighborState) || (neighborState.getBlock() == AetherIIBlocks.HESTVEIL.get() && neighborState.getValue(IGNITED))) {
+        if (this.shouldExplode(neighborState) || (neighborState.getBlock() == AetherIIBlocks.HESTVEIL && neighborState.getValue(IGNITED))) {
             state = state.setValue(IGNITED, true);
             scheduledTickAccess.scheduleTick(pos, this, 1);
         }
@@ -139,13 +141,13 @@ public class HestveilBlock extends Block implements CanisterPickup {
 
     @Override
     protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
-        this.onBlockExploded(state, level, pos, explosion);
+        super.onExplosionHit(state, level, pos, explosion, dropConsumer);
     }
 
     @Override
     public void wasExploded(ServerLevel level, BlockPos pos, Explosion explosion) {
         BlockState state = level.getBlockState(pos);
-        if (state.getBlock() == AetherIIBlocks.HESTVEIL.get()) {
+        if (state.getBlock() == AetherIIBlocks.HESTVEIL) {
             level.setBlock(pos, state.setValue(IGNITED, true), 3);
             level.scheduleTick(pos, this, 1);
         }
@@ -182,11 +184,13 @@ public class HestveilBlock extends Block implements CanisterPickup {
                             pos.getZ() + serverLevel.getRandom().nextDouble(),
                             1, 0, 0, 0, 0);
                 }
-                PacketDistributor.sendToPlayersInDimension(serverLevel, new HestveilExplosionEffectsPacket(pos));
+                for (ServerPlayer player : PlayerLookup.level(serverLevel)) {
+                    ServerPlayNetworking.send(player, new HestveilExplosionEffectsPacket(pos));
+                }
             }
             for (Entity entity : level.getEntities(null, AABB.encapsulatingFullBlocks(pos, pos))) {
                 if (entity instanceof LivingEntity livingEntity) {
-                    livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, EffectBuildupPresets.IMMOLATION, 150);
+                    livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, EffectBuildupPresets.IMMOLATION, 150);
                 }
             }
             for (Direction direction : Direction.values()) {
@@ -230,7 +234,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (context.isHoldingItem(AetherIIItems.ARKENIUM_CANISTER.get()) || context.isHoldingItem(AetherIIItems.ARKENIUM_HESTVEIL_CANISTER.get())) ? Shapes.block() : Shapes.empty();
+        return (context.isHoldingItem(AetherIIItems.ARKENIUM_CANISTER) || context.isHoldingItem(AetherIIItems.ARKENIUM_HESTVEIL_CANISTER)) ? Shapes.block() : Shapes.empty();
     }
 
     @Override
@@ -264,7 +268,7 @@ public class HestveilBlock extends Block implements CanisterPickup {
         if (!levelAccessor.isClientSide()) {
             levelAccessor.levelEvent(2001, blockPos, Block.getId(blockState));
         }
-        return new ItemStack(AetherIIItems.ARKENIUM_HESTVEIL_CANISTER.get());
+        return new ItemStack(AetherIIItems.ARKENIUM_HESTVEIL_CANISTER);
     }
 
     @Override

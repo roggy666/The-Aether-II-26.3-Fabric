@@ -131,7 +131,7 @@ public class Tempest extends Mob implements Blighted {
         if (this.tickCount % 3 == 0) {
             if (this.level() instanceof ServerLevel serverLevel) {
                 for (int i = 0; i < Math.max(0, this.getHideTime() - HIDE_PARTICLE_START); ++i) {
-                    serverLevel.sendParticles(AetherIIParticleTypes.TEMPEST_SMOKE.get(),
+                    serverLevel.sendParticles(AetherIIParticleTypes.TEMPEST_SMOKE,
                             this.getRandomX(0.85F), this.getRandomY(), this.getRandomZ(0.85F), 1,
                             0, 0, 0, this.getRandom().nextGaussian() * 0.02);
                 }
@@ -164,17 +164,17 @@ public class Tempest extends Mob implements Blighted {
 
     @Override
     public SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_TEMPEST_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_TEMPEST_AMBIENT;
     }
 
     @Override
     public SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_TEMPEST_HURT.get();
+        return AetherIISoundEvents.ENTITY_TEMPEST_HURT;
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_TEMPEST_DEATH.get();
+        return AetherIISoundEvents.ENTITY_TEMPEST_DEATH;
     }
 
     @Override
@@ -236,7 +236,7 @@ public class Tempest extends Mob implements Blighted {
                     double accelX = this.trackedTarget.getX() - (this.tempest.getX() + look.x * 0.25);
                     double accelY = this.trackedTarget.getY(0.5) - (this.tempest.getY(0.25));
                     double accelZ = this.trackedTarget.getZ() - (this.tempest.getZ() + look.z * 0.25);
-                    this.tempest.playSound(AetherIISoundEvents.ENTITY_TEMPEST_SHOOT.get(), 0.75F, (this.tempest.getRandom().nextFloat() - this.tempest.getRandom().nextFloat()) * 0.2F + 1.0F);
+                    this.tempest.playSound(AetherIISoundEvents.ENTITY_TEMPEST_SHOOT, 0.75F, (this.tempest.getRandom().nextFloat() - this.tempest.getRandom().nextFloat()) * 0.2F + 1.0F);
                     TempestThunderball thunderBall = new TempestThunderball(this.tempest.level(), this.tempest, accelX, accelY, accelZ);
                     thunderBall.setPos(this.tempest.getX() + look.x * 0.75, this.tempest.getY(0.25), this.tempest.getZ() + look.z * 0.75);
                     this.tempest.level().addFreshEntity(thunderBall);

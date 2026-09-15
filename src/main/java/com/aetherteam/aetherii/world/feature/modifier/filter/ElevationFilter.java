@@ -31,6 +31,6 @@ public class ElevationFilter extends PlacementFilter {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.ELEVATION_FILTER.get();
+        return AetherIIPlacementModifierTypes.ELEVATION_FILTER;
     }
 }

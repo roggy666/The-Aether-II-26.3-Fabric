@@ -1,5 +1,10 @@
 package com.aetherteam.aetherii.client.renderer;
 
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.gui.Hud;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.living.DamageSystemAttachment;
@@ -37,8 +42,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.GameType;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
-import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 import java.awt.*;
 import java.util.Collection;
@@ -62,51 +65,51 @@ public class AetherIIOverlays {
     protected static final Identifier TEXTURE_DEFAULT_JUMPS = Identifier.fromNamespaceAndPath(AetherII.MODID, "hud/jumps");
 
 
-    public static void registerOverlays(RegisterGuiLayersEvent event) {
-        event.registerAboveAll(Identifier.fromNamespaceAndPath(AetherII.MODID, "aether_portal_overlay"), (guiGraphics, partialTicks) -> {
+    public static void registerOverlays() {
+        HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(AetherII.MODID, "aether_portal_overlay"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.options.hideGui) {
-                    renderAetherPortalOverlay(guiGraphics, minecraft, player.getData(AetherIIDataAttachments.PLAYER.get()), partialTicks);
+                if (!minecraft.gui.hud.isHidden()) {
+                    renderAetherPortalOverlay(guiGraphics, minecraft, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER), partialTicks);
                 }
             }
         });
-        event.registerAboveAll(Identifier.fromNamespaceAndPath(AetherII.MODID, "effect_buildups"), (guiGraphics, partialTicks) -> {
+        HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(AetherII.MODID, "effect_buildups"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.options.hideGui) {
+                if (!minecraft.gui.hud.isHidden()) {
                     renderEffects(minecraft, player, guiGraphics);
                 }
             }
         });
-        event.registerAboveAll(Identifier.fromNamespaceAndPath(AetherII.MODID, "shield_blocking"), (guiGraphics, partialTicks) -> {
+        HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(AetherII.MODID, "shield_blocking"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.options.hideGui) {
+                if (!minecraft.gui.hud.isHidden()) {
                     renderBlockIndicator(minecraft, guiGraphics, player, partialTicks);
                 }
             }
         });
-        event.registerBelowAll(Identifier.fromNamespaceAndPath(AetherII.MODID, "swet_overlay"), (guiGraphics, partialTicks) -> {
+        HudElementRegistry.addFirst(Identifier.fromNamespaceAndPath(AetherII.MODID, "swet_overlay"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
-                if (!minecraft.options.hideGui) {
+                if (!minecraft.gui.hud.isHidden()) {
                     renderSwetOverlay(guiGraphics, player);
                 }
             }
         });
-        event.registerAboveAll(Identifier.fromNamespaceAndPath(AetherII.MODID, "moa_jumps"), (guiGraphics, partialTicks) -> {
+        HudElementRegistry.addLast(Identifier.fromNamespaceAndPath(AetherII.MODID, "moa_jumps"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
                 renderMoaJumps(guiGraphics, player);
             }
         });
-        event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Identifier.fromNamespaceAndPath(AetherII.MODID, "aerbunny_health"), (guiGraphics, partialTicks) -> {
+        HudElementRegistry.attachElementAfter(VanillaHudElements.AIR_BAR, Identifier.fromNamespaceAndPath(AetherII.MODID, "aerbunny_health"), (guiGraphics, partialTicks) -> {
             Minecraft minecraft = Minecraft.getInstance();
             LocalPlayer player = minecraft.player;
             if (player != null) {
@@ -116,7 +119,7 @@ public class AetherIIOverlays {
     }
 
     private static void extractAerbunnyHealth(GuiGraphicsExtractor graphics, Gui gui, LocalPlayer player) {
-        if (!Minecraft.getInstance().options.hideGui && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
+        if (!Minecraft.getInstance().gui.hud.isHidden() && player.getFirstPassenger() instanceof Aerbunny aerbunny) {
             float maxHealth = aerbunny.getMaxHealth();
             int hearts = (int) (maxHealth + 0.5F) / 2;
             if (hearts > 30) {
@@ -124,8 +127,11 @@ public class AetherIIOverlays {
             }
             if (hearts != 0) {
                 int currentHealth = (int) Math.ceil(aerbunny.getHealth());
-                Profiler.get().popPush("mountHealth");
-                int yLine1 = graphics.guiHeight() - gui.rightHeight;
+                int vehicleRows = player.getVehicle() instanceof LivingEntity vehicle && vehicle.showVehicleHealth()
+                        ? Mth.ceil(Math.min(30, (int) (vehicle.getMaxHealth() + 0.5F) / 2) / 10.0F) : 0;
+                int rightHeight = 39 + 10 * Math.max(1, vehicleRows);
+                if (player.isUnderWater() || player.getAirSupply() < player.getMaxAirSupply()) rightHeight += 10;
+                int yLine1 = graphics.guiHeight() - rightHeight;
                 int xRight = graphics.guiWidth() / 2 + 91;
                 int yo = yLine1;
 
@@ -146,14 +152,13 @@ public class AetherIIOverlays {
                     }
 
                     yo -= 10;
-                    gui.rightHeight += 10;
                 }
             }
         }
     }
 
     private static void renderMoaJumps(GuiGraphicsExtractor guiGraphics, LocalPlayer player) {
-        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().options.hideGui) {
+        if (player.getVehicle() instanceof Moa moa && !Minecraft.getInstance().gui.hud.isHidden()) {
             for (int jumpCount = 0; jumpCount < moa.getMaxStamina(); jumpCount++) {
                 int xPos = ((guiGraphics.guiWidth() / 2) + (jumpCount * 8)) - (moa.getMaxStamina() * 8) / 2;
                 int yPos = 18;
@@ -203,15 +208,15 @@ public class AetherIIOverlays {
             }
 
             int i = ARGB.white(timeInPortal);
-            TextureAtlasSprite textureatlassprite = minecraft.getModelManager().getBlockStateModelSet().getParticleMaterial(AetherIIBlocks.AETHER_PORTAL.get().defaultBlockState()).sprite();
+            TextureAtlasSprite textureatlassprite = minecraft.getModelManager().getBlockStateModelSet().getParticleMaterial(AetherIIBlocks.AETHER_PORTAL.defaultBlockState()).sprite();
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, textureatlassprite, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), i);
         }
     }
 
     private static void renderEffects(Minecraft minecraft, LocalPlayer player, GuiGraphicsExtractor guiGraphics) {
-        Collection<EffectBuildupInstance> collection = minecraft.player.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().values();
+        Collection<EffectBuildupInstance> collection = minecraft.player.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).getActiveBuildups().values();
         if (!collection.isEmpty()) {
-            Screen $$4 = minecraft.screen;
+            Screen $$4 = minecraft.gui.screen();
             if ($$4 instanceof InventoryScreen inventoryScreen && ((InventoryScreenAccessor) inventoryScreen).aether_ii$getEffects() != null && ((InventoryScreenAccessor) inventoryScreen).aether_ii$getEffects().canSeeEffects()) {
                 return;
             }
@@ -268,7 +273,7 @@ public class AetherIIOverlays {
                     guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BUILDUP_BACKGROUND_OUTLINE_SPRITE, i, j, 24, 24, ARGB.white(flashInterval));
                 }
 
-                Identifier location = Gui.getMobEffectSprite(effect);
+                Identifier location = Hud.getMobEffectSprite(effect);
                 int i1 = j;
                 int i_f = i;
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, location, i_f + 3, i1 + 3, 18, 18);
@@ -281,7 +286,7 @@ public class AetherIIOverlays {
     private static void renderBlockIndicator(Minecraft minecraft, GuiGraphicsExtractor guiGraphics, LocalPlayer player, DeltaTracker partialTicks) {
         Options options = minecraft.options;
         if (minecraft.gameMode.getPlayerMode() != GameType.SPECTATOR) {
-            DamageSystemAttachment attachment = player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+            DamageSystemAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM);
             boolean missingEndurance = attachment.getShieldEndurance() < AetherIIAttributes.getMaxEndurance(player);
             boolean displayIndicator = player.isBlocking() || missingEndurance;
             if (displayIndicator) {
@@ -297,7 +302,7 @@ public class AetherIIOverlays {
                             guiGraphics.blitSprite(RenderPipelines.CROSSHAIR, CROSSHAIR_BLOCK_INDICATOR_BACKGROUND_SPRITE, k, j, 10, 10);
 
                             if (attachment.getShieldEndurance() == 0) {
-                                int l = Mth.clamp((int) (player.getCooldowns().getCooldownPercent(AetherIIItems.SKYROOT_SHIELD.toStack(), partialTicks.getGameTimeDeltaPartialTick(false)) * 10.0F), 0, 10);
+                                int l = Mth.clamp((int) (player.getCooldowns().getCooldownPercent(new ItemStack(AetherIIItems.SKYROOT_SHIELD), partialTicks.getGameTimeDeltaPartialTick(false)) * 10.0F), 0, 10);
                                 guiGraphics.blitSprite(RenderPipelines.CROSSHAIR, CROSSHAIR_BLOCK_INDICATOR_BROKEN_SPRITE, 10, 10, 0, 10 - l, k, j + 10 - l, 10, l);
                             } else {
                                 int l = Mth.clamp((int) (f * 10.0F), 0, 10);
@@ -318,7 +323,7 @@ public class AetherIIOverlays {
                     guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_BLOCK_INDICATOR_BACKGROUND_SPRITE, k2, j2, 18, 18);
 
                     if (attachment.getShieldEndurance() == 0) {
-                        int l1 = (int) (player.getCooldowns().getCooldownPercent(AetherIIItems.SKYROOT_SHIELD.toStack(), partialTicks.getGameTimeDeltaPartialTick(false)) * 18.0F);
+                        int l1 = (int) (player.getCooldowns().getCooldownPercent(new ItemStack(AetherIIItems.SKYROOT_SHIELD), partialTicks.getGameTimeDeltaPartialTick(false)) * 18.0F);
                         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_BLOCK_INDICATOR_BROKEN_SPRITE, 18, 18, 0, 18 - l1, k2, j2 + 18 - l1, 18, l1);
                     } else {
                         int l1 = (int) (f * 18.0F);
@@ -330,7 +335,7 @@ public class AetherIIOverlays {
     }
 
     private static void renderSwetOverlay(GuiGraphicsExtractor guiGraphics, LocalPlayer player) {
-        SwetLatchAttachment attachment = player.getData(AetherIIDataAttachments.SWET_LATCH);
+        SwetLatchAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH);
         List<Swet> swets = attachment.getLatchedSwets();
         if (!swets.isEmpty()) {
             Swet swet = attachment.getLatchedSwets().getFirst();

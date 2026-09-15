@@ -89,7 +89,7 @@ public class GreatoakFoliagePlacer extends AbstractBranchedFoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.GREATOAK_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.GREATOAK_FOLIAGE_PLACER;
     }
 
 }

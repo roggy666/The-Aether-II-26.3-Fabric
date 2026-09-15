@@ -19,7 +19,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public abstract class DiscoverySection<S extends GuidebookEntry, T extends Mutab
 
 
     public void renderEntries(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.text(this.screen.getMinecraft().font, this.getTitle(), 40, 48, 0xffffffff, true);
+        guiGraphics.text(Minecraft.getInstance().font, this.getTitle(), 40, 48, 0xffffffff, true);
     }
 
     public abstract void renderInformation(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick);
@@ -237,7 +237,7 @@ public abstract class DiscoverySection<S extends GuidebookEntry, T extends Mutab
                 values.getValue().view();
             }
         }
-        ClientPacketDistributor.sendToServer(this.getViewedPacket(entry));
+        ClientPlayNetworking.send(this.getViewedPacket(entry));
     }
 
     public boolean areAnyUnchecked() {

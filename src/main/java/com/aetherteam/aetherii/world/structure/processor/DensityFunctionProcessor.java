@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class DensityFunctionProcessor extends StructureProcessor {
+public class DensityFunctionProcessor implements StructureProcessor {
     private final BlockState inputState;
     private final BlockState outputState;
     public final DensityFunction density;
@@ -26,7 +26,7 @@ public class DensityFunctionProcessor extends StructureProcessor {
     public static final MapCodec<DensityFunctionProcessor> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             BlockState.CODEC.fieldOf("input_state").forGetter(codec -> codec.inputState),
             BlockState.CODEC.fieldOf("output_state").forGetter(codec -> codec.outputState),
-            DensityFunction.HOLDER_HELPER_CODEC.fieldOf("density_function").forGetter(codec -> codec.density),
+            DensityFunction.CODEC.fieldOf("density_function").forGetter(codec -> codec.density),
             Codec.BOOL.fieldOf("modify_copy_blocks").forGetter(codec -> codec.modifyCopyBlocks)
             ).apply(instance, DensityFunctionProcessor::new)
     );
@@ -40,39 +40,35 @@ public class DensityFunctionProcessor extends StructureProcessor {
 
     @Nullable
     @Override
-    public StructureTemplate.StructureBlockInfo process(LevelReader level, BlockPos origin, BlockPos centerBottom, StructureTemplate.StructureBlockInfo blockInfo, StructureTemplate.StructureBlockInfo modifiedBlockInfo, StructurePlaceSettings settings, @Nullable StructureTemplate template) {
+    public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
         if (level instanceof WorldGenLevel worldGenLevel) {
-
             DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(worldGenLevel.getSeed());
             density.mapAll(visitor);
-            double noise = this.density.compute(new DensityFunction.SinglePointContext(modifiedBlockInfo.pos().getX(), modifiedBlockInfo.pos().getY(), modifiedBlockInfo.pos().getZ()));
-            BlockState state = blockInfo.state();
-
+            double noise = this.density.compute(new DensityFunction.SinglePointContext(processedBlockInfo.pos().getX(), processedBlockInfo.pos().getY(), processedBlockInfo.pos().getZ()));
+            BlockState state = processedBlockInfo.state();
             if (noise > 0) {
-
                 if (modifyCopyBlocks) {
                     if (state.getBlock() instanceof CopyBlock copyBlock) {
-                        CompoundTag tag = blockInfo.nbt();
+                        CompoundTag tag = processedBlockInfo.nbt();
                         if (tag != null) {
                             Optional<BlockState> copyState = tag.read("copy_state", BlockState.CODEC);
                             if (copyState.isPresent() && copyState.equals(Optional.of(inputState))) {
-                                modifiedBlockInfo.nbt().store("copy_state", BlockState.CODEC, outputState);
-                                return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), copyBlock.defaultBlockState().setValue(CopyBlock.EMPTY, false), modifiedBlockInfo.nbt());
+                                tag.store("copy_state", BlockState.CODEC, outputState);
+                                return new StructureTemplate.StructureBlockInfo(processedBlockInfo.pos(), copyBlock.defaultBlockState().setValue(CopyBlock.EMPTY, false), tag);
                             }
                         }
                     }
                 }
-
                 if (state == inputState) {
-                    return new StructureTemplate.StructureBlockInfo(modifiedBlockInfo.pos(), outputState, modifiedBlockInfo.nbt());
+                    return new StructureTemplate.StructureBlockInfo(processedBlockInfo.pos(), outputState, processedBlockInfo.nbt());
                 }
             }
         }
-        return super.process(level, origin, centerBottom, blockInfo, modifiedBlockInfo, settings, template);
+        return processedBlockInfo;
     }
 
     @Override
-    protected StructureProcessorType<?> getType() {
-        return AetherIIStructureProcessorTypes.DENSITY_FUNCTION.get();
+    public MapCodec<? extends StructureProcessor> codec() {
+        return AetherIIStructureProcessorTypes.DENSITY_FUNCTION;
     }
 }

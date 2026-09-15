@@ -12,8 +12,8 @@ public class FloatWaterPathNavigation extends FallPathNavigation {
     }
 
     @Override
-    protected boolean hasValidPathType(PathType pathType) {
-        return pathType != PathType.WATER ? super.hasValidPathType(pathType) : true;
+    protected boolean canUpdatePath() { // NeoForge's hasValidPathType(PathType.WATER)
+        return super.canUpdatePath() || this.mob.isInWater();
     }
 
     @Override

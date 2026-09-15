@@ -8,7 +8,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record AerbunnyMessagePacket() implements CustomPacketPayload {
     public static final Type<AerbunnyMessagePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "aerbunny_message"));
@@ -20,10 +22,11 @@ public record AerbunnyMessagePacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(AerbunnyMessagePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(AerbunnyMessagePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Component component = Component.translatable("aether_ii.message.passenger.onboard", AetherIIKeyMappings.ALLOW_DISMOUNTING_PASSENGER.getTranslatedKeyMessage(), Minecraft.getInstance().options.keyUse.getTranslatedKeyMessage());
-            Minecraft.getInstance().gui.setOverlayMessage(component, false);
+            Minecraft.getInstance().gui.hud.setOverlayMessage(component, false);
             Minecraft.getInstance().getNarrator().saySystemNow(component);
         }
     }

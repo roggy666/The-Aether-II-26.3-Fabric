@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.client.renderer.block.model.blockstate;
 
+import java.util.function.Predicate;
+import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.api.client.model.loading.v1.wrapper.WrapperBlockStateModel;
 import com.aetherteam.aetherii.blockentity.LockedBlockEntity;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.BlockModelRenderStateAccessor;
 import net.minecraft.client.Minecraft;
@@ -17,14 +20,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.DelegateBlockStateModel;
-import net.neoforged.neoforge.client.model.quad.BakedColors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CopyBlockModel extends DelegateBlockStateModel {
+public class CopyBlockModel extends WrapperBlockStateModel {
     private static final Direction[] DIRECTIONS = Arrays.copyOfRange(Direction.values(), 0, 7);
 
     public CopyBlockModel(BlockStateModel delegate) {
@@ -32,16 +33,26 @@ public class CopyBlockModel extends DelegateBlockStateModel {
     }
 
     @Override
-    public void collectParts(BlockAndTintGetter blockAndTintGetter, BlockPos blockPos, BlockState blockState, RandomSource randomSource, List<BlockStateModelPart> list) {
-        LockedBlockEntity.CopyData data = blockAndTintGetter.getModelData(blockPos).get(LockedBlockEntity.CopyData.PROPERTY);
-        if (data == null) {
-            return;
+    public void emitQuads(QuadEmitter emitter, BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, Predicate<Direction> cullTest) {
+        if (!(level.getBlockEntityRenderData(pos) instanceof LockedBlockEntity.CopyData data)) return;
+        BlockState mimicState = data.state();
+        BlockStateModel model = Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(mimicState);
+        if (model instanceof CopyBlockModel) return;
+        emitter.pushTransform(quad -> {
+            quad.chunkLayer(quad.lightmap(0) > 0 ? ChunkSectionLayer.CUTOUT : ChunkSectionLayer.SOLID);
+            quad.tintIndex(0).multiplyColor(-4276546);
+            return true;
+        });
+        try {
+            model.emitQuads(emitter, level, pos, mimicState, random, cullTest);
+        } finally {
+            emitter.popTransform();
         }
-        BlockState state = data.state();
-        List<BlockStateModelPart> copyParts = new ArrayList<>();
-        Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(state).collectParts(blockAndTintGetter, blockPos, state, randomSource, copyParts);
+    }
 
-        this.collectCopyParts(copyParts, list);
+    @Override
+    public Object createGeometryKey(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random) {
+        return null;
     }
 
     public void collectCopyParts(List<BlockStateModelPart> baseList, List<BlockStateModelPart> addTo) {
@@ -61,9 +72,7 @@ public class CopyBlockModel extends DelegateBlockStateModel {
                             oldQuad.packedUV2(),
                             oldQuad.packedUV3(),
                             oldQuad.direction(),
-                            new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), blockRenderType, Sheets.cutoutBlockItemSheet(), 0, oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission(), oldQuad.materialInfo().ambientOcclusion()),
-                            oldQuad.bakedNormals(),
-                            new BakedColors.PerQuad(-4276546)
+                            new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), blockRenderType, Sheets.cutoutBlockItemSheet(), 0, oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission())
                     );
                     if (side == null) {
                         builder.addUnculledFace(newQuad);
@@ -78,8 +87,8 @@ public class CopyBlockModel extends DelegateBlockStateModel {
 
     @Override
     public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
-        LockedBlockEntity.CopyData data = level.getModelData(pos).get(LockedBlockEntity.CopyData.PROPERTY);
-        if (data == null) {
+        Object renderData = level.getBlockEntityRenderData(pos);
+        if (!(renderData instanceof LockedBlockEntity.CopyData data)) {
             return super.particleMaterial(level, pos, state);
         }
         BlockState mimicState = data.state();

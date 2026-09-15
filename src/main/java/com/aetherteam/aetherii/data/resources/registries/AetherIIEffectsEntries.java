@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.resources.registries;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.guidebook.EffectsEntry;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
@@ -70,12 +71,12 @@ public class AetherIIEffectsEntries {
 
     public static final Map<Holder<MobEffect>, List<Holder<Item>>> ITEMS = Map.ofEntries(
             Map.entry(AetherIIMobEffects.VULNERABILITY, List.of()),
-            Map.entry(AetherIIMobEffects.WOUND, List.of(AetherIIItems.BANDAGE)),
-            Map.entry(AetherIIMobEffects.STUN, List.of(AetherIIItems.BANDAGE)),
-            Map.entry(AetherIIMobEffects.FRACTURE, List.of(AetherIIItems.BANDAGE, AetherIIItems.SPLINT)),
+            Map.entry(AetherIIMobEffects.WOUND, List.of(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BANDAGE))),
+            Map.entry(AetherIIMobEffects.STUN, List.of(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BANDAGE))),
+            Map.entry(AetherIIMobEffects.FRACTURE, List.of(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BANDAGE), BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.SPLINT))),
             Map.entry(AetherIIMobEffects.AMBROSIUM_POISONING, List.of()),
-            Map.entry(AetherIIMobEffects.TOXIN, List.of(AetherIIItems.ANTITOXIN_VIAL)),
-            Map.entry(AetherIIMobEffects.VENOM, List.of(AetherIIItems.ANTIVENOM_VIAL)),
+            Map.entry(AetherIIMobEffects.TOXIN, List.of(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ANTITOXIN_VIAL))),
+            Map.entry(AetherIIMobEffects.VENOM, List.of(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ANTIVENOM_VIAL))),
             Map.entry(AetherIIMobEffects.CHARGED, List.of()),
             Map.entry(AetherIIMobEffects.WEBBED, List.of()),
             Map.entry(AetherIIMobEffects.IMMOLATION, List.of()),
@@ -94,11 +95,11 @@ public class AetherIIEffectsEntries {
             Holder<MobEffect> holder = entry.getValue();
             context.register(entry.getKey(), new EffectsEntry(
                     entry.getKey().identifier(),
-                    Identifier.parse(holder.getKey().identifier().getPath()),
+                    Identifier.parse(holder.unwrapKey().orElseThrow().identifier().getPath()),
                     holder.value().getDescriptionId(),
                     holder.value().getDescriptionId(),
                     Optional.empty(),
-                    "aether_ii.guidebook_effects.description.effect.aether_ii." + holder.getKey().identifier().getPath(),
+                    "aether_ii.guidebook_effects.description.effect.aether_ii." + holder.unwrapKey().orElseThrow().identifier().getPath(),
                     holder,
                     ITEMS.get(holder)
             ));

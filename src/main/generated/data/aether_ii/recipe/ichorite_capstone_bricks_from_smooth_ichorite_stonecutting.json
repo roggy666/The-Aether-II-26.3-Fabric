@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:smooth_ichorite",
+  "result": {
+    "id": "aether_ii:ichorite_capstone_bricks"
+  }
+}

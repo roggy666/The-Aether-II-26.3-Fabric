@@ -85,7 +85,7 @@ public class AltarEnchantingRecipe extends SingleItemRecipe {
 
     @Override
     public RecipeType<AltarEnchantingRecipe> getType() {
-        return AetherIIRecipeTypes.ALTAR_ENCHANTING.get();
+        return AetherIIRecipeTypes.ALTAR_ENCHANTING;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AltarEnchantingRecipe extends SingleItemRecipe {
 
     @Override
     public List<RecipeDisplay> display() {
-        if (this.input().getCustomIngredient() == null && this.input().getValues().contains(this.result().typeHolder())) {
+        if (this.input().acceptsItem(this.result().typeHolder())) {
             ItemStackTemplate input = new ItemStackTemplate(this.result().item(), this.result().count(), DataComponentPatch.builder().set(DataComponents.DAMAGE, this.result().create().getMaxDamage()).build());
             return List.of(new AltarRecipeDisplay(
                     new SlotDisplay.ItemStackSlotDisplay(input),
@@ -122,10 +122,10 @@ public class AltarEnchantingRecipe extends SingleItemRecipe {
     @Override
     public RecipeBookCategory recipeBookCategory() {
         return switch (this.category()) {
-            case BLOCKS -> AetherIIRecipeBookCategories.ALTAR_BLOCKS.get();
-            case FOOD -> AetherIIRecipeBookCategories.ALTAR_FOOD.get();
-            case REPAIRING -> AetherIIRecipeBookCategories.ALTAR_REPAIRING.get();
-            case MISC -> AetherIIRecipeBookCategories.ALTAR_MISC.get();
+            case BLOCKS -> AetherIIRecipeBookCategories.ALTAR_BLOCKS;
+            case FOOD -> AetherIIRecipeBookCategories.ALTAR_FOOD;
+            case REPAIRING -> AetherIIRecipeBookCategories.ALTAR_REPAIRING;
+            case MISC -> AetherIIRecipeBookCategories.ALTAR_MISC;
         };
     }
 

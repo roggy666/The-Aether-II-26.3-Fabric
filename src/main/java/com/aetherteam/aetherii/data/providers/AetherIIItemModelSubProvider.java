@@ -21,6 +21,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.renderer.item.SelectItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.CustomModelDataProperty;
 import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
@@ -33,12 +34,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.neoforged.neoforge.client.model.ExtraFaceData;
+import com.aetherteam.aetherii.data.resources.builders.models.ExtendedModelTemplate.ExtraFaceData;
 
 import java.util.List;
 import java.util.function.BiConsumer;
 
 public class AetherIIItemModelSubProvider extends ItemModelGenerators {
+    // Private in ItemModelGenerators
+    private static final ItemTintSource BLANK_LAYER = ItemModelUtils.constantTint(-1);
+
     public AetherIIItemModelSubProvider(ItemModelOutput itemModelOutput, BiConsumer<Identifier, ModelInstance> modelOutput) {
         super(itemModelOutput, modelOutput);
     }
@@ -50,7 +54,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
         this.itemModelOutput.accept(item, ItemModelUtils.rangeSelect(new ReinforcementTierRange(), base, ItemModelUtils.override(reinforced1, 0.1F), ItemModelUtils.override(reinforced2, tier.getTierNumber() * 0.1F)));
     }
 
-    public void generateCrossbow(Item item) {
+    public void generateAetherCrossbow(Item item) {
         ItemModel.Unbaked base = ItemModelUtils.plainModel(this.createFlatItemModel(item, ModelTemplates.CROSSBOW));
         ItemModel.Unbaked pulling0 = ItemModelUtils.plainModel(this.createFlatItemModel(item, "_pulling_0", ModelTemplates.CROSSBOW));
         ItemModel.Unbaked pulling1 = ItemModelUtils.plainModel(this.createFlatItemModel(item, "_pulling_1", ModelTemplates.CROSSBOW));
@@ -93,7 +97,7 @@ public class AetherIIItemModelSubProvider extends ItemModelGenerators {
         ItemModel.Unbaked using3 = ItemModelUtils.tintedModel(AetherIIModelTemplates.USING_DART_SHOOTER_TWO_LAYER.create(ModelLocationUtils.getModelLocation(item, "_using_3"), TextureMapping.layered(TextureMapping.getItemTexture(item, "_tip_3"), TextureMapping.getItemTexture(item, "_base")), this.modelOutput), new EffectBuildupColorSource());
 
         this.itemModelOutput.accept(item, ItemModelUtils.conditional(
-                new HasComponent(AetherIIDataComponents.DARTS_LOADED.get(), true), ItemModelUtils.conditional(new BetterIsUsingItem(),
+                new HasComponent(AetherIIDataComponents.DARTS_LOADED, true), ItemModelUtils.conditional(new BetterIsUsingItem(),
                         ItemModelUtils.rangeSelect(new DartsLoadedRange(), using0, ItemModelUtils.override(using1, 0.25F), ItemModelUtils.override(using2, 0.5F), ItemModelUtils.override(using3, 0.75F)),
                         ItemModelUtils.rangeSelect(new DartsLoadedRange(), loaded0, ItemModelUtils.override(loaded1, 0.25F), ItemModelUtils.override(loaded2, 0.5F), ItemModelUtils.override(loaded3, 0.75F))),
                 normal));

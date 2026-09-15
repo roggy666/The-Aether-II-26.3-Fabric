@@ -257,7 +257,7 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
         double length = Math.sqrt(x * x + z * z);
         bomb.shoot(x, y + (length * 0.5F), z, (float) (0.5F + (length * 0.01F)), 8.0F);
         bomb.setYRot(this.yBodyRot);
-        this.playSound(AetherIISoundEvents.ENTITY_SENTRY_GOLEM_THROW_BOMB.get(), 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.playSound(AetherIISoundEvents.ENTITY_SENTRY_GOLEM_THROW_BOMB, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(bomb);
         this.cooldowns.addCooldown(this.getMainHandItem(), 40);
 
@@ -298,17 +298,17 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_HURT.get();
+        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_HURT;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_SAY.get();
+        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_SAY;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SENTRY_GOLEM_DEATH;
     }
 
 

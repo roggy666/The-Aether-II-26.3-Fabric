@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.item.equipment.accessories;
 
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.integration.AccessoryUtil;
 import com.aetherteam.aetherii.inventory.container.AccessoryContainer;
@@ -17,8 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 import java.util.Set;
 
@@ -41,19 +42,14 @@ public class ZanitePendantItem extends AccessoryItem {
         return false;
     }
 
-    public static void onBlockBreak(BreakBlockEvent event) {
-        Player player = event.getPlayer();
-        LevelAccessor level = event.getLevel();
-        BlockState state = event.getState();
-        BlockPos pos = event.getPos();
-
-        if (!event.isCanceled()) {
+    public static void onBlockBreak(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
+        {
             if (level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
                 AccessoryUtil.getFirst(player, AccessoryContainer.SlotType.ACCESSORY).ifPresent((stack) -> {
                     if (stack.is(AetherIIItems.ZANITE_PENDANT)) {
                         if (state.getDestroySpeed(level, pos) > 0 && player.getRandom().nextInt(6) == 0) {
                             ItemStack copyStack = stack.copy();
-                            stack.hurtAndBreak(1, serverLevel, player, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+                            stack.hurtAndBreak(1, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
                         }
                     }
                 });

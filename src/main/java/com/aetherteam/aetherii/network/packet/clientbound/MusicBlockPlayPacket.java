@@ -20,7 +20,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
 
@@ -37,7 +39,8 @@ public record MusicBlockPlayPacket(Holder<JukeboxSong> songHolder, BlockPos pos)
         return TYPE;
     }
 
-    public static void execute(MusicBlockPlayPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(MusicBlockPlayPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             AetherIIClientProxy.playMusicBlock(payload.songHolder(), payload.pos());
         }

@@ -37,10 +37,6 @@ public class SentrySlabBlock extends SlabBlock implements SentryBlockUpdating {
         return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(LIT) ? super.getLightEmission(state, level, pos) : 0;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

@@ -8,7 +8,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
@@ -46,7 +48,8 @@ public abstract class BossInfoPacket implements CustomPacketPayload {
             return TYPE;
         }
 
-        public static void execute(Display payload, IPayloadContext context) {
+        @Environment(EnvType.CLIENT)
+    public static void handleClient(Display payload, Player player) {
             RenderHooks.BOSS_EVENTS.put(payload.bossEvent, payload.entityID);
         }
     }
@@ -73,7 +76,8 @@ public abstract class BossInfoPacket implements CustomPacketPayload {
             return TYPE;
         }
 
-        public static void execute(Remove payload, IPayloadContext context) {
+        @Environment(EnvType.CLIENT)
+    public static void handleClient(Remove payload, Player player) {
             RenderHooks.BOSS_EVENTS.remove(payload.bossEvent);
         }
     }

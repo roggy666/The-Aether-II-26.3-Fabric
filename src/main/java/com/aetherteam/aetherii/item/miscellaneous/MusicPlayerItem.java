@@ -23,7 +23,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,8 +116,7 @@ public class MusicPlayerItem extends Item {
         }
     }
 
-    public static void entityPostTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
+    public static void entityPostTick(Entity entity) {
         if (entity instanceof Player player && player.level().isClientSide() && player.tickCount % 5 == 0) {
             boolean flag = false;
             List<ItemStack> stacks = new ArrayList<>();

@@ -27,7 +27,7 @@ public class AmberFuel implements SlotDisplay {
     @Override
     public <T> Stream<T> resolve(ContextMap contextMap, DisplayContentsFactory<T> factory) {
         if (factory instanceof DisplayContentsFactory.ForStacks<T> forstacks) {
-            Stream<Holder.Reference<Item>> items = BuiltInRegistries.ITEM.getDataMap(AetherIIDataMaps.AMBER_HOURGLASS_FUELS).keySet().stream().map(BuiltInRegistries.ITEM::getOrThrow);
+            Stream<Holder.Reference<Item>> items = AetherIIDataMaps.AMBER_HOURGLASS_FUELS.getAll(BuiltInRegistries.ITEM).keySet().stream().map(BuiltInRegistries.ITEM::getOrThrow);
             return items.map(forstacks::forStack);
         }
         return Stream.empty();

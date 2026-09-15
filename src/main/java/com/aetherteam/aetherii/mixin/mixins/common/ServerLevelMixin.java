@@ -30,10 +30,8 @@ public class ServerLevelMixin {
         if (biomeHolder.is(AetherIITags.Biomes.ARCTIC_ICE)) {
             Biome biome = biomeHolder.value();
 
-            if (serverLevel.isAreaLoaded(belowHeightmapPos, 1)) {
-                if (biome.shouldFreeze(serverLevel, belowHeightmapPos)) {
-                    serverLevel.setBlockAndUpdate(belowHeightmapPos, AetherIIBlocks.ARCTIC_ICE.get().defaultBlockState());
-                }
+            if (biome.shouldFreeze(serverLevel, belowHeightmapPos)) {
+                serverLevel.setBlockAndUpdate(belowHeightmapPos, AetherIIBlocks.ARCTIC_ICE.defaultBlockState());
             }
 
             Biome.Precipitation precipitation = biome.getPrecipitationAt(belowHeightmapPos, serverLevel.getSeaLevel());
@@ -41,7 +39,7 @@ public class ServerLevelMixin {
                 int i = serverLevel.getGameRules().get(GameRules.MAX_SNOW_ACCUMULATION_HEIGHT);
                 if (i > 0 && AetherGrassBlock.shouldSnow(biome, serverLevel, heightmapPos)) {
                     BlockState blockState = serverLevel.getBlockState(heightmapPos);
-                    if (blockState.is(AetherIIBlocks.ARCTIC_SNOW.get())) {
+                    if (blockState.is(AetherIIBlocks.ARCTIC_SNOW)) {
                         int layers = blockState.getValue(SnowLayerBlock.LAYERS);
                         if (layers < Math.min(i, 8)) {
                             BlockState blockstate1 = blockState.setValue(SnowLayerBlock.LAYERS, layers + 1);
@@ -51,7 +49,7 @@ public class ServerLevelMixin {
                     } else if (AetherGrassBlock.plantNotSnowed(blockState) && blockState.getBlock() instanceof Snowable snowable) {
                         serverLevel.setBlockAndUpdate(heightmapPos, snowable.setSnowy(blockState));
                     } else {
-                        serverLevel.setBlockAndUpdate(heightmapPos, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState());
+                        serverLevel.setBlockAndUpdate(heightmapPos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState());
                     }
                 }
 

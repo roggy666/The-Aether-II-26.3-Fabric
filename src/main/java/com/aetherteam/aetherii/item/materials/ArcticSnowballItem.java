@@ -25,7 +25,7 @@ public class ArcticSnowballItem extends SnowballItem implements ThrowableItem {
 
     @Override
     public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
-        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_ARCTIC_SNOWBALL_THROW.get(), new ArcticSnowball(level, livingEntity, stack));
+        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_ARCTIC_SNOWBALL_THROW, new ArcticSnowball(level, livingEntity, stack));
         return true;
     }
 

@@ -45,7 +45,7 @@ public class SageChestBlock extends ChestBlock {
                         return ChestMenu.sixRows(containerId, inventory, container);
                     } else {
                         Direction connectedDirection = ChestBlock.getConnectedDirection(first.getBlockState());
-                        Vec3 firstCenter = first.getBlockPos().getCenter();
+                        Vec3 firstCenter = Vec3.atCenterOf(first.getBlockPos());
                         Vec3 centerBetweenChests = firstCenter.add(connectedDirection.getStepX() / 2.0F, 0.0F, connectedDirection.getStepZ() / 2.0F);
                         BaseContainerBlockEntity.sendChestLockedNotifications(centerBetweenChests, player, this.getDisplayName());
                         return null;
@@ -75,7 +75,7 @@ public class SageChestBlock extends ChestBlock {
     };
 
     public SageChestBlock(BlockBehaviour.Properties properties) {
-        super(AetherIIBlockEntityTypes.SAGE_CHEST::get, SoundEvents.CHEST_OPEN, SoundEvents.CHEST_CLOSE, properties);
+        super(() -> AetherIIBlockEntityTypes.SAGE_CHEST, SoundEvents.CHEST_OPEN, SoundEvents.CHEST_CLOSE, properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TYPE, ChestType.SINGLE).setValue(WATERLOGGED, false));
     }
 

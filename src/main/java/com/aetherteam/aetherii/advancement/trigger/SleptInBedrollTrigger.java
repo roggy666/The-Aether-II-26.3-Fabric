@@ -2,10 +2,10 @@ package com.aetherteam.aetherii.advancement.trigger;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class SleptInBedrollTrigger  extends SimpleCriterionTrigger<SleptInBedrol
         ).apply(instance, Instance::new));
 
         public static Criterion<Instance> sleptInBedroll() {
-            return AetherIIAdvancementTriggers.SLEPT_IN_BEDROLL.get().createCriterion(new Instance(Optional.empty()));
+            return AetherIIAdvancementTriggers.SLEPT_IN_BEDROLL.createCriterion(new Instance(Optional.empty()));
         }
     }
 }

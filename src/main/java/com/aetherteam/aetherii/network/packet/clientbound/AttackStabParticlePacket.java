@@ -10,7 +10,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Vector3fc;
 
 public record AttackStabParticlePacket(Vector3fc playerPos, Vector3fc targetPos) implements CustomPacketPayload {
@@ -28,7 +30,8 @@ public record AttackStabParticlePacket(Vector3fc playerPos, Vector3fc targetPos)
         return TYPE;
     }
 
-    public static void execute(AttackStabParticlePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(AttackStabParticlePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             float shade = Minecraft.getInstance().level.getRandom().nextFloat() * 0.15F + 0.85F;
 

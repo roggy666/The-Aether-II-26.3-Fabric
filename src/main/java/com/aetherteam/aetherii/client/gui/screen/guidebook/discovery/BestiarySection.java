@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.guidebook.discovery;
 
+import net.minecraft.client.gui.Hud;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.guidebook.BestiaryEntry;
 import com.aetherteam.aetherii.api.guidebook.GuidebookEntry;
@@ -72,14 +73,14 @@ public class BestiarySection extends DiscoverySection<BestiaryEntry, BestiaryEnt
         this.getOrderedEntries().clear();
         Player player = Minecraft.getInstance().player;
         if (player != null) {
-            GuidebookDiscoveryAttachment attachment = player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            GuidebookDiscoveryAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
             attachment.getBestiaryEntries().forEach((mutable) -> this.registryAccess.lookupOrThrow(this.registryKey).asHolderIdMap().forEach((entry) -> {
                 if (entry.value().getEntityType().value() == mutable.getEntityType().value()) {
                     this.entries.add(mutable);
                 }
             }));
-            AetherIIBestiaryEntries.ENTRY_ORDER.forEach((entityTypeHolder) -> this.entries.forEach((entry) -> {
-                if (entry.getEntityType().value() == entityTypeHolder.value()) {
+            AetherIIBestiaryEntries.ENTRY_ORDER.forEach((entityType) -> this.entries.forEach((entry) -> {
+                if (entry.getEntityType().value() == entityType) {
                     this.getOrderedEntries().add(entry);
                 }
             }));
@@ -286,7 +287,7 @@ public class BestiarySection extends DiscoverySection<BestiaryEntry, BestiaryEnt
                             if (effectResistanceDisplay.attribute().value() instanceof EffectResistanceAttribute effectResistanceAttribute) {
                                 if (entry.getClientValues().containsKey(BestiaryEntry.EFFECT_RESISTANCE.id() + "_" + i) && this.isUnlocked(entry, BestiaryEntry.EFFECT_RESISTANCE.id() + "_" + i)) {
                                     Holder<MobEffect> effectHolder = effectResistanceAttribute.getEffect();
-                                    Identifier location = Gui.getMobEffectSprite(effectHolder);
+                                    Identifier location = Hud.getMobEffectSprite(effectHolder);
                                     guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, location, x, y, 18, 18);
                                     int effectValue = effectResistanceDisplay.value();
                                     Component effectTooltip = Component.literal(effectValue * 100 + "%")

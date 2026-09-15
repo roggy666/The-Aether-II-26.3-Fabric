@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "arilum_lantern",
+  "ingredients": [
+    "minecraft:cyan_dye",
+    "#aether_ii:arilum_lantern"
+  ],
+  "result": {
+    "id": "aether_ii:cyan_arilum_lantern"
+  }
+}

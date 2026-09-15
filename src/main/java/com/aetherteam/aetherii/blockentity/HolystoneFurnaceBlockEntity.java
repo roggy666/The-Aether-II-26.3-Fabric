@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class HolystoneFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     public HolystoneFurnaceBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.HOLYSTONE_FURNACE.get(), pos, state, RecipeType.SMELTING);
+        super(AetherIIBlockEntityTypes.HOLYSTONE_FURNACE, pos, state, RecipeType.SMELTING);
     }
 
     protected Component getDefaultName() {

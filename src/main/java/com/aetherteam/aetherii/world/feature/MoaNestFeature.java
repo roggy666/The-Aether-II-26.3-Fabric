@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.tags.BlockItemTags;
+import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.miscellaneous.MoaEggBlock;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
@@ -42,12 +44,12 @@ public class MoaNestFeature extends Feature<MoaNestConfiguration> {
         Moa.EyeColor eyeColor = Moa.EyeColor.getRandom(random, false);
         Moa.FeatherColor featherColor = Moa.FeatherColor.getRandom(random, false);
         Moa.FeatherShape featherShape = Moa.FeatherShape.getRandom(random, false);
-        this.setBlock(level, pos, AetherIIBlocks.MOA_EGG.get().defaultBlockState().setValue(MoaEggBlock.KERATIN, keratinColor).setValue(MoaEggBlock.EYES, eyeColor).setValue(MoaEggBlock.FEATHERS, featherColor).setValue(MoaEggBlock.FEATHER_SHAPE, featherShape).setValue(MoaEggBlock.WILD, true));
+        this.setBlock(level, pos, AetherIIBlocks.MOA_EGG.defaultBlockState().setValue(MoaEggBlock.KERATIN, keratinColor).setValue(MoaEggBlock.EYES, eyeColor).setValue(MoaEggBlock.FEATHERS, featherColor).setValue(MoaEggBlock.FEATHER_SHAPE, featherShape).setValue(MoaEggBlock.WILD, true));
         if (config.spawnMoas()) {
             for (int i = 0; i < 1; i++) {
-                Moa moa = AetherIIEntityTypes.MOA.get().create(level.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
+                Moa moa = AetherIIEntityTypes.MOA.create(level.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
                 assert moa != null;
-                moa.setPos(pos.getCenter().add(i, 0, i));
+                moa.setPos(Vec3.atCenterOf(pos).add(i, 0, i));
                 MoaAi.initMoaHomeMemories(moa, level.getRandom());
                 moa.setBaby(false);
                 moa.setKeratinColor(keratinColor);
@@ -77,7 +79,7 @@ public class MoaNestFeature extends Feature<MoaNestConfiguration> {
     @SuppressWarnings("UnusedReturnValue")
     public static boolean placeNestBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, RandomSource random) {
         BlockState state = provider.getState(level, random, pos);
-        if (!level.getBlockState(pos).is(BlockTags.LOGS_THAT_BURN)) {
+        if (!level.getBlockState(pos).is(BlockItemTags.LOGS_THAT_BURN.block())) {
             if (state.isAir() || !level.getBlockState(pos).is(BlockTags.LOGS)) {
                 return level.setBlock(pos, state, 2);
             }

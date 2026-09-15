@@ -101,11 +101,11 @@ public class AlkahestPurifierBlockEntity extends BaseContainerBlockEntity implem
     protected int processingTotalTime;
 
     public AlkahestPurifierBlockEntity() {
-        this(AetherIIBlockEntityTypes.ALKAHEST_PURIFIER.get(), BlockPos.ZERO, AetherIIBlocks.ALKAHEST_PURIFIER.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.ALKAHEST_PURIFIER, BlockPos.ZERO, AetherIIBlocks.ALKAHEST_PURIFIER.defaultBlockState());
     }
 
     public AlkahestPurifierBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.ALKAHEST_PURIFIER.get(), pos, state);
+        this(AetherIIBlockEntityTypes.ALKAHEST_PURIFIER, pos, state);
     }
 
     public AlkahestPurifierBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -133,7 +133,7 @@ public class AlkahestPurifierBlockEntity extends BaseContainerBlockEntity implem
             }
         };
         this.chestLidController = new ChestLidController();
-        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.ALKAHEST_PURIFICATION.get());
+        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.ALKAHEST_PURIFICATION);
     }
 
     @Override
@@ -298,7 +298,7 @@ public class AlkahestPurifierBlockEntity extends BaseContainerBlockEntity implem
     }
 
     private boolean isFuel(ItemStack stack) {
-        return stack.is(AetherIIItems.ARKENIUM_ALKAHEST_CANISTER.get());
+        return stack.is(AetherIIItems.ARKENIUM_ALKAHEST_CANISTER);
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record CheckBestiaryEntryPacket(EntityType<?> entityType) implements CustomPacketPayload {
     public static final Type<CheckBestiaryEntryPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "check_bestiary_entry"));
@@ -27,10 +26,10 @@ public record CheckBestiaryEntryPacket(EntityType<?> entityType) implements Cust
         return TYPE;
     }
 
-    public static void execute(CheckBestiaryEntryPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(CheckBestiaryEntryPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            GuidebookDiscoveryAttachment attachment = serverPlayer.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            GuidebookDiscoveryAttachment attachment = serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
             attachment.getBestiaryEntries().forEach((entry) -> {
                 if (entry.getEntityType().value() == payload.entityType()) {
                     entry.getClientValues().values().forEach((info) -> {

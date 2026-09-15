@@ -11,11 +11,11 @@ public class FungalCacheBlockEntity extends ChestBlockEntity {
     private static final Component NAME = Component.translatable("aether_ii.container.fungal_cache");
 
     public FungalCacheBlockEntity() {
-        this(AetherIIBlockEntityTypes.FUNGAL_CACHE.get(), BlockPos.ZERO, AetherIIBlocks.FUNGAL_CACHE.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.FUNGAL_CACHE, BlockPos.ZERO, AetherIIBlocks.FUNGAL_CACHE.defaultBlockState());
     }
 
     public FungalCacheBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.FUNGAL_CACHE.get(), pos, state);
+        this(AetherIIBlockEntityTypes.FUNGAL_CACHE, pos, state);
     }
 
     protected FungalCacheBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

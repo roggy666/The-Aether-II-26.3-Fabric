@@ -24,8 +24,8 @@ public class MergedChannelSoundInstance extends SimpleSoundInstance {
     }
 
     @Override
-    public CompletableFuture<AudioStream> getStream(SoundBufferLibrary soundBuffers, Sound sound, boolean looping) {
-        return super.getStream(soundBuffers, sound, looping).thenApply((audioStream) -> {
+    public CompletableFuture<AudioStream> getAudioStream(SoundBufferLibrary soundBuffers, Identifier sound, boolean looping) {
+        return soundBuffers.getStream(sound, looping).thenApply((audioStream) -> {
             if (audioStream instanceof FloatSampleSource floatSampleSource) {
                 return new MergedChannelSampleSource(floatSampleSource);
             }

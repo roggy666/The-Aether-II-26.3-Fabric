@@ -38,7 +38,7 @@ public class RockItem extends BlockItem implements ThrowableItem {
 
     @Override
     public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
-        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_ROCK_THROW.get(), new HolystoneRock(level, livingEntity, stack));
+        this.throwItem(stack, level, livingEntity, timeLeft, AetherIISoundEvents.ENTITY_ROCK_THROW, new HolystoneRock(level, livingEntity, stack));
         return true;
     }
 

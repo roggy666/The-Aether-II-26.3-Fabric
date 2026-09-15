@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.effect.harmful;
 
+import net.minecraft.world.entity.EntityTypes;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.living.EffectsSystemAttachment;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDamageTypes;
@@ -14,13 +15,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.Map;
 
 public class ImmolationEffect extends MobEffect {
     private static final Map<EntityType<?>, Float> DAMAGE_AMOUNT = new ImmutableMap.Builder<EntityType<?>, Float>()
-            .put(EntityType.PLAYER, 10.0F)
+            .put(EntityTypes.PLAYER, 10.0F)
             .build();
 
     public ImmolationEffect() {
@@ -31,7 +31,7 @@ public class ImmolationEffect extends MobEffect {
     public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
         for (Entity entity : serverLevel.getEntities(livingEntity, AABB.ofSize(livingEntity.position(), 5, 5, 5), (entity) -> entity instanceof LivingEntity living && !living.hasEffect(AetherIIMobEffects.IMMOLATION))) {
             if (entity instanceof LivingEntity living) {
-                living.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(living, EffectBuildupPresets.IMMOLATION, 20);
+                living.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(living, EffectBuildupPresets.IMMOLATION, 20);
             }
         }
         if (livingEntity.tickCount % 10 == 0) {
@@ -60,10 +60,9 @@ public class ImmolationEffect extends MobEffect {
         return true;
     }
 
-    public static void onEntityPostTick(EntityTickEvent.Post event) {
-        Entity entity = event.getEntity();
+    public static void onEntityPostTick(Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            EffectsSystemAttachment attachment = livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM);
+            EffectsSystemAttachment attachment = livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM);
             if (attachment.hasBuildup(AetherIIMobEffects.IMMOLATION)) {
                 if (livingEntity.isInWater()) {
                     attachment.removeBuildup(AetherIIMobEffects.IMMOLATION);

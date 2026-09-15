@@ -27,7 +27,7 @@ public class IrradiationRecipe extends AbstractBlockStateRecipe implements Match
     public static final RecipeSerializer<IrradiationRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public IrradiationRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.DUST_IRRADIATION.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.DUST_IRRADIATION, ingredient, result, function);
     }
 
     @Override

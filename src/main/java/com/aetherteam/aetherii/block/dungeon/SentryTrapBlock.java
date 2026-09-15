@@ -35,6 +35,6 @@ public class SentryTrapBlock extends GroundTrapBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, AetherIIBlockEntityTypes.SENTRY_TRAP.get(), level.isClientSide() ? SentryTrapBlockEntity::clientTick : SentryTrapBlockEntity::serverTick);
+        return createTickerHelper(type, AetherIIBlockEntityTypes.SENTRY_TRAP, level.isClientSide() ? SentryTrapBlockEntity::clientTick : SentryTrapBlockEntity::serverTick);
     }
 }

@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -62,7 +63,8 @@ public class AetherIIBlockBuilders {
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F)
                 .sound(SoundType.WOOD)
-                .ignitedByLava();
+                .ignitedByLava()
+                .dynamicShape(); // shape depends on neighbors; Fabric builds the state shape cache at registration (tags not bound yet)
     }
 
     @SuppressWarnings("deprecation")
@@ -126,14 +128,14 @@ public class AetherIIBlockBuilders {
     }
 
     public static int lightLevel6(BlockState state) {
-        return 6;
+        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 6;
     }
 
     public static int lightLevel8(BlockState state) {
-        return 8;
+        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 8;
     }
 
     public static int lightLevel11(BlockState state) {
-        return 11;
+        return state.hasProperty(BlockStateProperties.LIT) && !state.getValue(BlockStateProperties.LIT) ? 0 : 11;
     }
 }

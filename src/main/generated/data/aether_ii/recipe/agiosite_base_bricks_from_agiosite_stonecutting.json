@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:agiosite",
+  "result": {
+    "id": "aether_ii:agiosite_base_bricks"
+  }
+}

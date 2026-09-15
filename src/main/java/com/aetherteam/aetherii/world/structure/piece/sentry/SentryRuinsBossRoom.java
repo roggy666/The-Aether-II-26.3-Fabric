@@ -34,11 +34,11 @@ import java.util.function.Function;
  */
 public class SentryRuinsBossRoom extends SentryRuinsPiece {
     public SentryRuinsBossRoom(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
-        this(AetherIIStructurePieceTypes.SENTRY_RUINS_BOSS_ROOM.get(), manager, name, AetherTemplateStructurePiece.makeSettingsWithPivot(makeSettings(), manager, SentryRuinsPiece.makeLocation(name), rotation), pos, processors);
+        this(AetherIIStructurePieceTypes.SENTRY_RUINS_BOSS_ROOM, manager, name, AetherTemplateStructurePiece.makeSettingsWithPivot(makeSettings(), manager, SentryRuinsPiece.makeLocation(name), rotation), pos, processors);
     }
 
     public SentryRuinsBossRoom(StructurePieceSerializationContext context, CompoundTag tag) {
-        this(AetherIIStructurePieceTypes.SENTRY_RUINS_BOSS_ROOM.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> SentryRuinsBossRoom.makeSettings());
+        this(AetherIIStructurePieceTypes.SENTRY_RUINS_BOSS_ROOM, context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> SentryRuinsBossRoom.makeSettings());
     }
 
     public SentryRuinsBossRoom(StructurePieceType type, StructureTemplateManager manager, String name, StructurePlaceSettings settings, BlockPos pos, Holder<StructureProcessorList> processors) {
@@ -61,7 +61,7 @@ public class SentryRuinsBossRoom extends SentryRuinsPiece {
     @Override
     public void postProcess(WorldGenLevel level, StructureManager manager, ChunkGenerator chunkGenerator, RandomSource random, BoundingBox boundingBox, ChunkPos chunkPos, BlockPos blockPos) {
         super.postProcess(level, manager, chunkGenerator, random, boundingBox, chunkPos, blockPos);
-        for (StructureTemplate.StructureBlockInfo info : this.template.filterBlocks(this.templatePosition, this.placeSettings, AetherIIBlocks.LOCKED_BLOCK.get())) {
+        for (StructureTemplate.StructureBlockInfo info : this.template.filterBlocks(this.templatePosition, this.placeSettings, AetherIIBlocks.LOCKED_BLOCK)) {
             if (level.getBlockEntity(info.pos()) instanceof CopyBlockEntity blockEntity) {
                 if (this.getMirror() != Mirror.NONE) {
                     blockEntity.setCopyState(blockEntity.getCopyState().mirror(this.getMirror()));

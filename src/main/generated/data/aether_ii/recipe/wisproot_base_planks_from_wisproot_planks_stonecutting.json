@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:wisproot_planks",
+  "result": {
+    "id": "aether_ii:wisproot_base_planks"
+  }
+}

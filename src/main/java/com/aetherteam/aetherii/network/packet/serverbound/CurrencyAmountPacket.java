@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record CurrencyAmountPacket(int amount) implements CustomPacketPayload {
     public static final Type<CurrencyAmountPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "currency_amount"));
@@ -31,12 +30,12 @@ public record CurrencyAmountPacket(int amount) implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(CurrencyAmountPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(CurrencyAmountPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.getData(AetherIIDataAttachments.CURRENCY.get()).setAmount(payload.amount);
-            serverPlayer.syncData(AetherIIDataAttachments.CURRENCY);
-            AetherIIAdvancementTriggers.CURRENCY.get().trigger(serverPlayer, serverPlayer.getData(AetherIIDataAttachments.CURRENCY.get()).getAmount());
+            serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).setAmount(payload.amount);
+            serverPlayer.setAttached(AetherIIDataAttachments.CURRENCY, serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY));
+            AetherIIAdvancementTriggers.CURRENCY.trigger(serverPlayer, serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).getAmount());
         }
     }
 }

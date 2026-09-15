@@ -16,7 +16,7 @@ public class BossDoorwayBlockEntity extends CopyBlockEntity {
     }
 
     public BossDoorwayBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.BOSS_DOORWAY_BLOCK.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.BOSS_DOORWAY_BLOCK, pos, blockState);
     }
 
     @Override

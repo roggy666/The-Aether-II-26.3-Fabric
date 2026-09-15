@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "aether_ii:arkenium_framed_crude_scatterglass_pane",
+  "result": {
+    "id": "aether_ii:crude_scatterglass_pane"
+  }
+}

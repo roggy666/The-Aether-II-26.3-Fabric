@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.ai.goal.boss;
 
+import net.minecraft.world.level.gamerules.GameRules;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.entity.monster.dungeon.boss.Slider;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 public class CrushGoal extends Goal {
     private final Slider slider;
@@ -36,11 +36,11 @@ public class CrushGoal extends Goal {
     public void start() {
         boolean crushed = false;
         if (this.slider.level() instanceof ServerLevel serverLevel) {
-            if (EventHooks.canEntityGrief(serverLevel, this.slider)) {
+            if (serverLevel.getGameRules().get(GameRules.MOB_GRIEFING)) {
                 if (this.slider.getMoveDirection() != null) {
                     AABB crushBox = this.slider.getBoundingBox().expandTowards(this.slider.getMoveDirection().getUnitVec3().scale(0.1));
                     for (BlockPos pos : BlockPos.betweenClosed(Mth.floor(crushBox.minX), Mth.floor(crushBox.minY), Mth.floor(crushBox.minZ), Mth.floor(crushBox.maxX), Mth.floor(crushBox.maxY), Mth.floor(crushBox.maxZ))) {
-                        if (this.slider.getDungeon() == null || this.slider.getDungeon().roomBounds().contains(pos.getCenter())) {
+                        if (this.slider.getDungeon() == null || this.slider.getDungeon().roomBounds().contains(Vec3.atCenterOf(pos))) {
                             BlockState blockState = this.slider.level().getBlockState(pos);
                             if (this.isBreakable(blockState, pos)) {
                                 crushed = this.slider.level().destroyBlock(pos, !blockState.is(AetherIITags.Blocks.NOT_DROPPED_BY_SLIDER_COLLISION), this.slider) || crushed;
@@ -82,7 +82,7 @@ public class CrushGoal extends Goal {
     }
 
     private boolean isBreakable(BlockState blockState, BlockPos pos) {
-        return !blockState.isAir() && !blockState.is(AetherIITags.Blocks.SLIDER_UNBREAKABLE) && blockState.getBlock().defaultDestroyTime() >= 0.0F && blockState.getBlock().defaultDestroyTime() < 100.0F && blockState.getBlock().canEntityDestroy(blockState, this.slider.level(), pos, this.slider);
+        return !blockState.isAir() && !blockState.is(AetherIITags.Blocks.SLIDER_UNBREAKABLE) && blockState.getBlock().defaultDestroyTime() >= 0.0F && blockState.getBlock().defaultDestroyTime() < 100.0F && (!(blockState.getBlock() instanceof com.aetherteam.aetherii.block.dungeon.GroundTrapBlock trap) || trap.canEntityDestroy(blockState, this.slider.level(), pos, this.slider));
     }
 
     @Override

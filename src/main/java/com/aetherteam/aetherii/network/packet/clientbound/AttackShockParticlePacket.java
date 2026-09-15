@@ -11,7 +11,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Vector3fc;
 
 public record AttackShockParticlePacket(Vector3fc targetPos, float playerRot) implements CustomPacketPayload {
@@ -29,7 +31,8 @@ public record AttackShockParticlePacket(Vector3fc targetPos, float playerRot) im
         return TYPE;
     }
 
-    public static void execute(AttackShockParticlePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(AttackShockParticlePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             float shade = Minecraft.getInstance().level.getRandom().nextFloat() * 0.15F + 0.85F;
             for (Direction direction : Direction.Plane.HORIZONTAL) {

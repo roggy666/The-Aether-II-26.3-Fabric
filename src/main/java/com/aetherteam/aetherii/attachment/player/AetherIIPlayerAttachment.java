@@ -39,7 +39,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import com.aetherteam.aetherii.network.AetherIIPackets;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class AetherIIPlayerAttachment {
                 this.removeStuckProjectileTime--;
                 if (this.removeStuckProjectileTime <= 0) {
                     this.getStuckProjectiles().removeLast();
-                    player.syncData(AetherIIDataAttachments.PLAYER);
+                    player.setAttached(AetherIIDataAttachments.PLAYER, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER));
                 }
             }
         }
@@ -216,7 +216,7 @@ public class AetherIIPlayerAttachment {
             sync = true;
         }
         if (sync) {
-            ClientPacketDistributor.sendToServer(new MovementDataPacket(isJumping, isMovingHorizontally, isMovingOverall));
+            AetherIIPackets.sendToServer(new MovementDataPacket(isJumping, isMovingHorizontally, isMovingOverall));
         }
     }
 
@@ -236,14 +236,14 @@ public class AetherIIPlayerAttachment {
      */
     private void givePortalItem(Player player) {
         if (this.canGetPortal()) {
-            player.addItem(new ItemStack(AetherIIItems.AETHER_PORTAL_FRAME.get()));
+            player.addItem(new ItemStack(AetherIIItems.AETHER_PORTAL_FRAME));
             this.setCanGetPortal(false);
         }
     }
 
     public void startInAether(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            var aetherIIPlayer = player.getData(AetherIIDataAttachments.PLAYER.get());
+            var aetherIIPlayer = player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER);
             if (AetherIIConfig.COMMON.spawn_in_aether.get()) {
                 if (aetherIIPlayer.canSpawnInAether()) { // Checks if the player has been set to spawn in the Aether.
                     MinecraftServer server = serverPlayer.level().getServer();
@@ -273,7 +273,7 @@ public class AetherIIPlayerAttachment {
         EntityType<?> entityType = projectile.getType();
         if (projectile.is(AetherIITags.EntityTypes.STICKABLE_PROJECTILES)) {
             this.stuckProjectiles.addLast(entityType);
-            player.syncData(AetherIIDataAttachments.PLAYER);
+            player.setAttached(AetherIIDataAttachments.PLAYER, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER));
         }
     }
 

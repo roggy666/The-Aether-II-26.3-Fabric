@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public class MossFlowersBlock extends AetherBushBlock implements BonemealableBlock, SegmentableBlock, Snowable {
@@ -40,15 +41,15 @@ public class MossFlowersBlock extends AetherBushBlock implements BonemealableBlo
     public void destroy(LevelAccessor level, BlockPos pos, BlockState state) {
         super.destroy(level, pos, state);
         if (this.isSnowy(state)) {
-            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState(), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
         }
     }
 
     @Override
-    public void onBlockExploded(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion) {
-        super.onBlockExploded(state, level, pos, explosion);
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> onHit) {
+        super.onExplosionHit(state, level, pos, explosion, onHit);
         if (this.isSnowy(state)) {
-            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState(), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 1 | 2);
         }
     }
 

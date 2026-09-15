@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.entity.EntityTypes;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.effect.AetherIIMobEffects;
@@ -94,13 +95,13 @@ public class FullAetherBushBlock extends AetherBushBlock implements SimpleWaterl
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean p_451772_) {
-        if (entity instanceof LivingEntity livingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
+        if (entity instanceof LivingEntity livingEntity && entity.getType() != EntityTypes.FOX && entity.getType() != EntityTypes.BEE) {
             if (!livingEntity.level().isClientSide()) {
                 livingEntity.addEffect(new MobEffectInstance(AetherIIMobEffects.NATURAL_CAMOUFLAGE, 1, 0, false, false, false));
             } else {
                 if (entity.getX() != entity.xOld && entity.getZ() != entity.zOld) {
                     if (level.getRandom().nextInt(10) == 0) {
-                        level.playSound(null, pos, AetherIISoundEvents.BLOCK_BUSH_RUSTLE.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.getRandom().nextFloat() * 0.4F);
+                        level.playSound(null, pos, AetherIISoundEvents.BLOCK_BUSH_RUSTLE, SoundSource.BLOCKS, 1.0F, 0.8F + level.getRandom().nextFloat() * 0.4F);
                     }
                     int count = entity.isCrouching() ? 1 : 2;
                     this.spawnParticles(level, entity.position(), count);
@@ -131,20 +132,12 @@ public class FullAetherBushBlock extends AetherBushBlock implements SimpleWaterl
             double d3 = Mth.nextDouble(level.getRandom(), -0.3, 0.3);
             double d4 = Mth.nextDouble(level.getRandom(), 0, 1.0);
             double d5 = Mth.nextDouble(level.getRandom(), -0.3, 0.3);
-            level.addParticle(AetherIIParticleTypes.SKYROOT_LEAVES.get(), d0, d1, d2, d3, d4, d5);
+            level.addParticle(AetherIIParticleTypes.SKYROOT_LEAVES, d0, d1, d2, d3, d4, d5);
         }
     }
 
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
-    }
-
-    @Override
-    public @Nullable PathType getAdjacentBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob, PathType originalType) {
-        if (mob == null || mob.getType() != EntityType.FOX && mob.getType() != EntityType.BEE) {
-            return PathType.DAMAGING;
-        }
-        return super.getAdjacentBlockPathType(state, level, pos, mob, originalType);
     }
 }

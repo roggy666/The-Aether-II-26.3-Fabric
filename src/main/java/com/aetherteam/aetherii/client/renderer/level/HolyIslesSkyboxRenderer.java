@@ -1,64 +1,66 @@
 package com.aetherteam.aetherii.client.renderer.level;
 
+import java.util.OptionalDouble;
+import java.util.Optional;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.systems.RenderPass;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.PrimitiveTopology;
+import com.aetherteam.aetherii.client.AetherIIRenderPipelines;
 import com.aetherteam.aetherii.client.renderer.AetherIIDimensionRenderers;
 import com.aetherteam.aetherii.client.renderer.AetherIIRenderTypes;
-import com.aetherteam.aetherii.mixin.mixins.client.accessor.LevelRendererAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.SkyRenderer;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.CustomSkyboxRenderer;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 
 import java.awt.*;
 
-public class HolyIslesSkyboxRenderer implements CustomSkyboxRenderer {
-    @Override
-    public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
-        RenderBuffers renderBuffers = ((LevelRendererAccessor) Minecraft.getInstance().levelRenderer).aether_ii$getRenderBuffers();
-        SkyRenderer skyRenderer = ((LevelRendererAccessor) Minecraft.getInstance().levelRenderer).aether_ii$getSkyRenderer();
-        setupFog.run();
-        PoseStack poseStack = new PoseStack();
-        float timeOfDay = levelRenderState.getRenderDataOrDefault(AetherIIDimensionRenderers.DATA_TIME_OF_DAY_KEY, 0.0F);
-        float sunAngle = skyRenderState.sunAngle;
-        int sunColor = getSunriseOrSunsetColor(timeOfDay);
-        skyRenderer.renderSkyDisc(skyRenderState.skyColor);
-        MultiBufferSource.BufferSource multiBufferSource = renderBuffers.bufferSource();
-        if (this.isSunriseOrSunset(timeOfDay)) {
-            skyRenderer.renderSunriseAndSunset(poseStack, sunAngle, sunColor);
+public class HolyIslesSkyboxRenderer {
+    public void renderCloudCover(LevelRenderState state, RenderTarget target) {
+        float time = state.getDataOrDefault(AetherIIDimensionRenderers.DATA_TIME_OF_DAY_KEY, 0.0F);
+        try (ByteBufferBuilder bytes = new ByteBufferBuilder(4096)) {
+            BufferBuilder vertices = new BufferBuilder(bytes, PrimitiveTopology.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+            this.renderCloudCoverDisc(state, new PoseStack(), vertices, time, state.skyRenderState.skyColor, getSunriseOrSunsetColor(time));
+            try (MeshData mesh = vertices.buildOrThrow();
+                 GpuBuffer buffer = RenderSystem.getDevice().createBuffer(() -> "Aether cloud cover", GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer())) {
+                var transform = RenderSystem.getDynamicUniforms().writeTransform(RenderSystem.getModelViewMatrixCopy(), new org.joml.Vector4f(1.0F));
+                try (RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Aether cloud cover", target.getColorTextureView(), Optional.empty(), target.getDepthTextureView(), OptionalDouble.empty())) {
+                    pass.setPipeline(AetherIIRenderPipelines.getCloudCoverShader());
+                    RenderSystem.bindDefaultUniforms(pass);
+                    pass.setUniform("DynamicTransforms", transform);
+                    pass.setVertexBuffer(0, buffer.slice());
+                    pass.draw(mesh.drawState().vertexCount(), 1, 0, 0);
+                }
+            }
         }
-        skyRenderer.renderSunMoonAndStars(poseStack, skyRenderState.sunAngle,
-                skyRenderState.moonAngle,
-                skyRenderState.starAngle,
-                skyRenderState.moonPhase,
-                skyRenderState.rainBrightness,
-                skyRenderState.starBrightness);
-        this.renderCloudCoverDisc(levelRenderState, poseStack, multiBufferSource, timeOfDay, skyRenderState.skyColor, sunColor);
-        multiBufferSource.endBatch();
-        return true;
     }
 
-    public void renderCloudCoverDisc(LevelRenderState levelRenderState, PoseStack poseStack, MultiBufferSource.BufferSource multiBufferSource, float timeOfDay, int skyColor, int sunColor) {
+    public void renderCloudCoverDisc(LevelRenderState levelRenderState, PoseStack poseStack, VertexConsumer cloudCoverBuffer, float timeOfDay, int skyColor, int sunColor) {
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
         Matrix4f matrix4f = poseStack.last().pose();
 
-        VertexConsumer cloudCoverBuffer = multiBufferSource.getBuffer(AetherIIRenderTypes.cloudCover());
 
         float r = ARGB.redFloat(skyColor);
         float g = ARGB.greenFloat(skyColor);
         float b = ARGB.blueFloat(skyColor);
         Color color = new Color((int) (r * 255), (int) (g * 255), (int) (b * 255)).brighter();
-        float weatherMultiplier = Math.max(1.0F - (((Math.abs(levelRenderState.skyRenderState.rainBrightness - 1) + levelRenderState.getRenderDataOrDefault(AetherIIDimensionRenderers.DATA_THUNDER_KEY, 0.0F)) * 0.5F) * 0.275F), 0.175F);
+        float weatherMultiplier = Math.max(1.0F - (((Math.abs(levelRenderState.skyRenderState.rainBrightness - 1) + levelRenderState.getDataOrDefault(AetherIIDimensionRenderers.DATA_THUNDER_KEY, 0.0F)) * 0.5F) * 0.275F), 0.175F);
         float bluePower = Math.min(0.5F / weatherMultiplier, 0.85F);
         r = (Math.min(color.getRed() + 20, 255.0F) / 255.0F) * weatherMultiplier;
         g = (Math.min(color.getGreen() + 20, 255.0F) / 255.0F) * weatherMultiplier;
@@ -77,7 +79,7 @@ public class HolyIslesSkyboxRenderer implements CustomSkyboxRenderer {
             b = Mth.clamp(((ARGB.blueFloat(sunColor)) * alpha + b * (1.0F - alpha)), 0.0F, 1.0F);
         }
 
-        double cameraHeight = (Minecraft.getInstance().player.getEyePosition(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)).y - 66) * 0.03125F;
+        double cameraHeight = (levelRenderState.cameraRenderState.pos.y - 66) * 0.03125F;
         if (cameraHeight < 1.0) {
             if (cameraHeight < 0.0) {
                 cameraHeight = 0.0;

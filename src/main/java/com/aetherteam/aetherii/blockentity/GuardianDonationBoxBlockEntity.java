@@ -29,7 +29,7 @@ public class GuardianDonationBoxBlockEntity extends BlockEntity implements Rando
     protected long lootTableSeed;
 
     public GuardianDonationBoxBlockEntity(BlockPos pos, BlockState state) {
-        super(AetherIIBlockEntityTypes.GUARDIAN_DONATION_BOX.get(), pos, state);
+        super(AetherIIBlockEntityTypes.GUARDIAN_DONATION_BOX, pos, state);
         this.item = ItemStack.EMPTY;
     }
 

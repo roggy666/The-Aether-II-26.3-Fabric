@@ -9,14 +9,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public interface BurrukaiPlateArmor {
     Identifier BURRUKAI_PLATE_KNOCKBACK_RESISTANCE = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.burrukai_plate.knockback_resistance");
     Identifier BURRUKAI_PLATE_STUN_RESISTANCE = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.burrukai_plate.stun_resistance");
 
-    static void updatePlayerAttributes(PlayerTickEvent.Pre event) {
-        Player player = event.getEntity();
+    static void updatePlayerAttributes(Player player) {
         AttributeInstance knockbackResistanceAttribute = player.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         AttributeInstance stunResistanceAttribute = player.getAttribute(AetherIIAttributes.STUN_EFFECT_RESISTANCE);
 

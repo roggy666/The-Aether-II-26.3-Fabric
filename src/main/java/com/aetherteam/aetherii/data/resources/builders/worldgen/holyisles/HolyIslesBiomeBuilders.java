@@ -59,13 +59,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.VALKYRIE_SPROUT_PATCH)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.AETHER_BUSH_PATCH_FIELD),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.218F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -85,13 +85,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.AETHER_BUSH_PATCH_DEFAULT)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.ORANGE_TREE_PATCH),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.224F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -113,13 +113,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.AETHER_BUSH_PATCH_DEFAULT)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.BRYALINN_FLOWER_PATCH),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.224F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -137,13 +137,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.BRETTL_PATCH_LAKE)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.FALLEN_SKYROOT_LOG),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.218F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.HIGHFIELDS_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -205,25 +205,25 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 HIGHFIELDS_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.PRISMALLARD.get(), 0.55, 0.12)
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addMobCharge(AetherIIEntityTypes.AERWHALE.get(), 0.5, 0.11)
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_WATER_SURFACE_CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PRISMALLARD.get(), 1, 3))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.PRISMALLARD, 0.55, 0.12)
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addMobCharge(AetherIIEntityTypes.AERWHALE, 0.5, 0.11)
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_WATER_SURFACE_CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PRISMALLARD, 1, 3))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 builder.build(),
                 Biome.TemperatureModifier.NONE
@@ -240,13 +240,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, HolyIslesPlacedFeatures.HOLYSTONE_ROCKS)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.GRASS_FIELD),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.218F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -263,13 +263,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.LARGE_GRASS_PATCH)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.ORANGE_TREE_PATCH_RARE),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.224F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -287,13 +287,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.SWAMP_BRYALINN_MOSS_COVER)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.ORANGE_TREE_PATCH_RARE),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.218F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -311,13 +311,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.FALLEN_WISPROOT_LOG)
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.ORANGE_TREE_PATCH_RARE),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.224F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.MAGNETIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall);
     }
 
@@ -379,23 +379,23 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 MAGNETIC_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addMobCharge(AetherIIEntityTypes.AERWHALE.get(), 0.5, 0.11)
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addMobCharge(AetherIIEntityTypes.AERWHALE, 0.5, 0.11)
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 builder.build(),
                 Biome.TemperatureModifier.NONE
@@ -410,13 +410,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.GRASS_FIELD)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, HolyIslesPlacedFeatures.FREEZE_TOP_LAYER_ARCTIC),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.208F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall, true);
     }
 
@@ -432,13 +432,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.ORANGE_TREE_PATCH_RARE)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, HolyIslesPlacedFeatures.FREEZE_TOP_LAYER_ARCTIC),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.212F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall, true);
     }
 
@@ -449,13 +449,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.GRASS_FIELD)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, HolyIslesPlacedFeatures.FREEZE_TOP_LAYER_ARCTIC),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.212F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall, true);
     }
 
@@ -472,13 +472,13 @@ public class HolyIslesBiomeBuilders {
                         .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, HolyIslesPlacedFeatures.EXPOSED_SHAYELINN_MOSS_COVER)
                         .addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, HolyIslesPlacedFeatures.FREEZE_TOP_LAYER_TUNDRA),
                 new MobSpawnSettings.Builder().creatureGenerationProbability(0.218F)
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI.get(), 1, 1))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID.get(), 1, 2))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF.get(), 2, 4))
-                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY.get(), 1, 3)),
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_TAEGORE, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_BURRUKAI, 1, 1))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARCTIC_KIRRID, 1, 2))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.PHYG, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.FLYING_COW, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHEEPUFF, 2, 4))
+                        .addSpawn(MobCategory.CREATURE, 14, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERBUNNY, 1, 3)),
                 temperature, downfall, true);
     }
 
@@ -534,23 +534,23 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 ARCTIC_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addMobCharge(AetherIIEntityTypes.AERWHALE.get(), 0.5, 0.11)
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addMobCharge(AetherIIEntityTypes.AERWHALE, 0.5, 0.11)
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GLITTERWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_AMBIENT, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SHROUDWING, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 5, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AECHOR_PLANT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_PLANT_HAZARD, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.CARRION_SPROUT, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 builder.build(),
                 Biome.TemperatureModifier.FROZEN
@@ -624,13 +624,13 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 IRRADIATED_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 builder.build(),
                 Biome.TemperatureModifier.NONE
@@ -646,17 +646,17 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 AERCLOUD_SEA_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addMobCharge(AetherIIEntityTypes.AERWHALE.get(), 0.5, 0.11)
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addMobCharge(AetherIIEntityTypes.AERWHALE, 0.5, 0.11)
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_AERWHALE, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.AERWHALE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 generationSettingsBuilder
                         .addFeature(GenerationStep.Decoration.RAW_GENERATION, HolyIslesPlacedFeatures.CLOUDBED)
@@ -688,17 +688,17 @@ public class HolyIslesBiomeBuilders {
                 downfall,
                 AERCLOUD_SEA_EFFECTS,
                 spawnSettingsBuilder
-                        .addMobCharge(AetherIIEntityTypes.ZEPHYR.get(), 0.8, 0.14)
-                        .addMobCharge(AetherIIEntityTypes.TEMPEST.get(), 0.65, 0.13)
-                        .addMobCharge(AetherIIEntityTypes.COCKATRICE.get(), 0.6, 0.12)
-                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET.get(), 1, 2))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON.get(), 1, 1))
-                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON.get(), 1, 1))
+                        .addMobCharge(AetherIIEntityTypes.ZEPHYR, 0.8, 0.14)
+                        .addMobCharge(AetherIIEntityTypes.TEMPEST, 0.65, 0.13)
+                        .addMobCharge(AetherIIEntityTypes.COCKATRICE, 0.6, 0.12)
+                        .addSpawn(AetherIIMobCategory.AETHER_SKY_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ZEPHYR, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 2, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.BLUE_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GOLDEN_SWET, 1, 2))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_HAZARD, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.SKEPHID, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.COCKATRICE, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_BLIGHT_MONSTER, 1, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.TEMPEST, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 3, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.ARKENIUM_TALUTON, 1, 1))
+                        .addSpawn(AetherIIMobCategory.AETHER_DARKNESS_MONSTER, 4, new MobSpawnSettings.SpawnerData(AetherIIEntityTypes.GRAVITITE_TALUTON, 1, 1))
                         .build(),
                 generationSettingsBuilder
                         .addCarver(AetherIICarvers.HESTVEIL_CAVE)
@@ -743,7 +743,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xecebfc)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xc9d1ff)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x55708a)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -759,7 +759,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xedeef5)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xc5cbeb)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x607496)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -775,7 +775,7 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xf3f0ff)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xe7e3fc)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0x3e5082)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)
@@ -791,8 +791,8 @@ public class HolyIslesBiomeBuilders {
                 .setAttribute(EnvironmentAttributes.FOG_COLOR, 0xF0E8BE)
                 .setAttribute(EnvironmentAttributes.SKY_COLOR, 0xfcebc5)
                 .setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0xbccc81)
-                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(AetherIISoundEvents.MUSIC_AETHER, 3600, 10800, false)))
-                .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, List.of(new AmbientParticle(AetherIIParticleTypes.AMBROSIUM.get(), 0.00625F)))
+                .setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(new Music(net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_AETHER), 3600, 10800, false)))
+                .setAttribute(EnvironmentAttributes.AMBIENT_PARTICLES, List.of(new AmbientParticle(AetherIIParticleTypes.AMBROSIUM, 0.00625F)))
                 .hasPrecipitation(precipitation)
                 .temperature(temperature)
                 .downfall(downfall)

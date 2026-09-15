@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
@@ -16,10 +17,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -33,9 +36,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.ItemAbility;
 import org.jspecify.annotations.Nullable;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.ToIntFunction;
@@ -83,16 +84,25 @@ public class PrayerCandleBlock extends AbstractCandleBlock implements SimpleWate
     private static void addParticlesAndSound(Level level, Vec3 pos, RandomSource random) {
         float chance = random.nextFloat();
         if (chance < 0.3F) {
-            level.addParticle(AetherIIParticleTypes.AMBROSIUM.get(), pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
+            level.addParticle(AetherIIParticleTypes.AMBROSIUM, pos.x(), pos.y(), pos.z(), 0.0, 0.0, 0.0);
             if (chance < 0.17F) {
                 level.playLocalSound(pos.x + 0.5F, pos.y + 0.5F, pos.z + 0.5F, SoundEvents.CANDLE_AMBIENT, SoundSource.BLOCKS, 1.0F + random.nextFloat(), random.nextFloat() * 0.7F + 0.3F, false);
             }
         }
     }
 
+    @Override
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (itemStack.isEmpty() && player.getAbilities().mayBuild && state.getValue(LIT)) {
             extinguish(player, state, level, pos);
+            return InteractionResult.SUCCESS;
+        } else if ((itemStack.is(Items.FLINT_AND_STEEL) || itemStack.is(ItemTags.CREEPER_IGNITERS)) && canLight(state)) {
+            level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+            level.setBlock(pos, state.setValue(BlockStateProperties.LIT, true), 11);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+            if (player != null) {
+                itemStack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+            }
             return InteractionResult.SUCCESS;
         } else {
             return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
@@ -195,14 +205,6 @@ public class PrayerCandleBlock extends AbstractCandleBlock implements SimpleWate
         return !state.getValue(WATERLOGGED) && super.canBeLit(state);
     }
 
-    @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
-        ItemStack itemStack = context.getItemInHand();
-        if (itemStack.canPerformAction(itemAbility) && canLight(state)) {
-            return state.setValue(BlockStateProperties.LIT, Boolean.valueOf(true));
-        }
-        return super.getToolModifiedState(state, context, itemAbility, simulate);
-    }
 
     public static boolean canLight(BlockState state) {
         return !state.getValue(LIT) && !state.getValue(WATERLOGGED);

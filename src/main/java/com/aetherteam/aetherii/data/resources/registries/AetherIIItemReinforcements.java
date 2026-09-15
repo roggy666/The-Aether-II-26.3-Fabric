@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.data.resources.registries;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import com.aetherteam.aetherii.api.ItemReinforcement;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
@@ -33,8 +35,9 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
 
@@ -1811,7 +1814,7 @@ public class AetherIIItemReinforcements {
     }
 
     private static ItemReinforcement.Set charmsComponent(Charms.CharmHolder charmHolder) {
-        return new ItemReinforcement.Set(AetherIIDataComponents.CHARMS.get(), new Charms(charmHolder));
+        return new ItemReinforcement.Set(AetherIIDataComponents.CHARMS, new Charms(charmHolder));
     }
 
     private static ItemReinforcement.Set rarityComponent() {
@@ -1819,19 +1822,21 @@ public class AetherIIItemReinforcements {
     }
 
     private static ItemReinforcement.Set tierComponent(ReinforcementTier tier) {
-        return new ItemReinforcement.Set(AetherIIDataComponents.REINFORCEMENT_TIER.get(), tier);
+        return new ItemReinforcement.Set(AetherIIDataComponents.REINFORCEMENT_TIER, tier);
     }
 
-    public static void register(BootstrapContext<ItemReinforcement> context, DeferredItem<?> key, ItemReinforcement itemReinforcement) {
+    public static void register(BootstrapContext<ItemReinforcement> context, ItemLike key, ItemReinforcement itemReinforcement) {
         ItemReinforcement design = itemReinforcement;
-        context.register(ResourceKey.create(AetherIIRegistries.ITEM_REINFORCEMENT, key.getId()), design);
+        context.register(ResourceKey.create(AetherIIRegistries.ITEM_REINFORCEMENT, BuiltInRegistries.ITEM.getKey(key.asItem())), design);
     }
 
     public static Registry<ItemReinforcement> getRegistry(RegistryAccess registryAccess) {
         return registryAccess.lookupOrThrow(AetherIIRegistries.ITEM_REINFORCEMENT);
     }
 
-    public static ItemReinforcement get(RegistryAccess registryAccess, ItemStack stack) {
-        return getRegistry(registryAccess).getOptional(stack.typeHolder().getKey().identifier()).orElse(null);
+    public static ItemReinforcement get(HolderLookup.Provider registryAccess, ItemStack stack) {
+        return registryAccess.lookupOrThrow(AetherIIRegistries.ITEM_REINFORCEMENT)
+                .get(ResourceKey.create(AetherIIRegistries.ITEM_REINFORCEMENT, BuiltInRegistries.ITEM.getKey(stack.getItem())))
+                .map(Holder::value).orElse(null);
     }
 }

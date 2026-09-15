@@ -16,7 +16,6 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -52,10 +51,9 @@ public class AlkahestPurifierRecipeCategory extends AbstractRecipeCategory<Alkah
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, AlkahestPurificationRecipe recipe, IFocusGroup focuses) {
         SlotDisplay resultDisplay = new SlotDisplay.Composite(recipe.results().list().stream().map(SlotDisplay.ItemStackSlotDisplay::new).collect(Collectors.toUnmodifiableList()));
-        HolderSet<Item> ingredients = recipe.ingredient().getValues();
-        Holder<Item> item = ingredients.get(0);
-        if (item.is(AetherIITags.Items.IRRADIATED_ITEM)) {
-            Identifier location = item.getKey().identifier().withSuffix("_result");
+        Holder<Item> item = recipe.ingredient().items().findFirst().orElse(null);
+        if (item != null && item.is(AetherIITags.Items.IRRADIATED_ITEM)) {
+            Identifier location = item.unwrapKey().orElseThrow().identifier().withSuffix("_result");
             resultDisplay = new SlotDisplay.ItemStackSlotDisplay(new ItemStackTemplate(item, 1, DataComponentPatch.builder()
                     .set(DataComponents.ITEM_MODEL, location)
                     .set(DataComponents.ITEM_NAME, Component.translatable(Util.makeDescriptionId("item", location)))

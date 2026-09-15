@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.passive;
 
+import net.minecraft.world.entity.EntityTypes;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class FlyingCow extends WingedAnimal {
-    private static final EntityDimensions BABY_DIMENSIONS = EntityType.COW.getDimensions().scale(0.5F).withEyeHeight(0.665F);
+    private static final EntityDimensions BABY_DIMENSIONS = EntityTypes.COW.getDimensions().scale(0.5F).withEyeHeight(0.665F);
 
     public FlyingCow(EntityType<? extends FlyingCow> type, Level level) {
         super(type, level);
@@ -60,7 +61,7 @@ public class FlyingCow extends WingedAnimal {
                 return InteractionResult.SUCCESS;
             }
         } else if (itemStack.is(Items.BUCKET) && !this.isBaby()) {
-            player.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
+            player.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_MILK, 1.0F, 1.0F);
             ItemStack itemStack1 = ItemUtils.createFilledResult(itemStack, player, Items.MILK_BUCKET.getDefaultInstance());
             player.setItemInHand(hand, itemStack1);
             return InteractionResult.SUCCESS;
@@ -95,24 +96,24 @@ public class FlyingCow extends WingedAnimal {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_FLYING_COW_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_FLYING_COW_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_FLYING_COW_HURT.get();
+        return AetherIISoundEvents.ENTITY_FLYING_COW_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_FLYING_COW_DEATH.get();
+        return AetherIISoundEvents.ENTITY_FLYING_COW_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_STEP, 0.15F, 1.0F);
     }
 
     @Override
@@ -123,7 +124,7 @@ public class FlyingCow extends WingedAnimal {
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob entity) {
-        return AetherIIEntityTypes.FLYING_COW.get().create(level, EntitySpawnReason.BREEDING);
+        return AetherIIEntityTypes.FLYING_COW.create(level, EntitySpawnReason.BREEDING);
     }
 
     @Override

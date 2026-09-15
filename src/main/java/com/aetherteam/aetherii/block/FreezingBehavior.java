@@ -10,7 +10,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
 
@@ -126,7 +129,12 @@ public interface FreezingBehavior<T> {
             if (newBlockState.isRandomlyTicking()) {
                 level.scheduleTick(pos, newBlockState.getBlock(), Mth.nextInt(level.getRandom(), 60, 120));
             }
-            PacketDistributor.sendToAllPlayers(new FreezingParticlePacket(newBlockState.getBlock(), pos));
+            if (level instanceof ServerLevel serverLevel) {
+                FreezingParticlePacket packet = new FreezingParticlePacket(newBlockState.getBlock(), pos);
+                for (ServerPlayer player : PlayerLookup.tracking(serverLevel, pos)) {
+                    ServerPlayNetworking.send(player, packet);
+                }
+            }
             BlockStateRecipeUtil.executeFunction(level, pos, function);
             return 1;
         }

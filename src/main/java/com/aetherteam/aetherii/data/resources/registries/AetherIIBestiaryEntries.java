@@ -64,7 +64,7 @@ public class AetherIIBestiaryEntries {
     public static final ResourceKey<BestiaryEntry> SLIDER = createKey("slider");
     public static final ResourceKey<BestiaryEntry> BLADESHROOM_HUNTER = createKey("bladeshroom_hunter");
 
-    public static final List<Holder<EntityType<?>>> ENTRY_ORDER = List.of(
+    public static final List<EntityType<?>> ENTRY_ORDER = List.of(
             AetherIIEntityTypes.HIGHFIELDS_TAEGORE, AetherIIEntityTypes.MAGNETIC_TAEGORE, AetherIIEntityTypes.ARCTIC_TAEGORE,
             AetherIIEntityTypes.HIGHFIELDS_KIRRID, AetherIIEntityTypes.MAGNETIC_KIRRID, AetherIIEntityTypes.ARCTIC_KIRRID,
             AetherIIEntityTypes.HIGHFIELDS_BURRUKAI, AetherIIEntityTypes.MAGNETIC_BURRUKAI, AetherIIEntityTypes.ARCTIC_BURRUKAI,
@@ -78,7 +78,7 @@ public class AetherIIBestiaryEntries {
             AetherIIEntityTypes.MIMIC, AetherIIEntityTypes.DETONATION_SENTRY, AetherIIEntityTypes.SENTRY_GOLEM, AetherIIEntityTypes.SLIDER
     );
 
-    public static final Map<ResourceKey<BestiaryEntry>, Holder<EntityType<?>>> ENTITIES = Map.ofEntries(
+    public static final Map<ResourceKey<BestiaryEntry>, EntityType<?>> ENTITIES = Map.ofEntries(
             Map.entry(FLYING_COW, AetherIIEntityTypes.FLYING_COW),
             Map.entry(SHEEPUFF, AetherIIEntityTypes.SHEEPUFF),
             Map.entry(PHYG, AetherIIEntityTypes.PHYG),
@@ -113,7 +113,7 @@ public class AetherIIBestiaryEntries {
             Map.entry(SLIDER, AetherIIEntityTypes.SLIDER)
 //            Map.entry(BLADESHROOM_HUNTER, AetherIIEntityTypes.BLADESHROOM_HUNTER)
     );
-    public static final List<Holder<EntityType<?>>> NAMED = List.of(
+    public static final List<EntityType<?>> NAMED = List.of(
             AetherIIEntityTypes.HIGHFIELDS_TAEGORE,
             AetherIIEntityTypes.MAGNETIC_TAEGORE,
             AetherIIEntityTypes.ARCTIC_TAEGORE,
@@ -124,10 +124,10 @@ public class AetherIIBestiaryEntries {
             AetherIIEntityTypes.MAGNETIC_KIRRID,
             AetherIIEntityTypes.ARCTIC_KIRRID
     );
-    public static final Map<Holder<EntityType<?>>, Double> SCALED = Map.ofEntries(
+    public static final Map<EntityType<?>, Double> SCALED = Map.ofEntries(
             Map.entry(AetherIIEntityTypes.ZEPHYR, 1.0)
     );
-    public static final Map<Holder<EntityType<?>>, ImmutableMap<Holder<Attribute>, Double>> ATTRIBUTES = Map.ofEntries(
+    public static final Map<EntityType<?>, ImmutableMap<Holder<Attribute>, Double>> ATTRIBUTES = Map.ofEntries(
             Map.entry(AetherIIEntityTypes.AERBUNNY, AetherIIStats.AERBUNNY),
             Map.entry(AetherIIEntityTypes.HIGHFIELDS_TAEGORE, AetherIIStats.HIGHFIELDS_TAEGORE),
             Map.entry(AetherIIEntityTypes.MAGNETIC_TAEGORE, AetherIIStats.MAGNETIC_TAEGORE),
@@ -159,7 +159,7 @@ public class AetherIIBestiaryEntries {
             Map.entry(AetherIIEntityTypes.SLIDER, AetherIIStats.SLIDER)
 //            Map.entry(AetherIIEntityTypes.BLADESHROOM_HUNTER, AetherIIStats.BLADESHROOM_HUNTER)
     );
-    public static final Map<Holder<EntityType<?>>, List<BestiaryEntry.LootDisplay>> LOOT = Map.ofEntries(
+    public static final Map<EntityType<?>, List<BestiaryEntry.LootDisplay>> LOOT = Map.ofEntries(
             Map.entry(AetherIIEntityTypes.FLYING_COW, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.BURRUKAI_RIB_CUT, 1.0, 1, 2))),
             Map.entry(AetherIIEntityTypes.SHEEPUFF, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.KIRRID_LOIN, 1.0, 1, 2), BestiaryEntry.LootDisplay.block(AetherIIBlocks.WHITE_CLOUDWOOL, 1.0, 1, 1))),
             Map.entry(AetherIIEntityTypes.PHYG, List.of(BestiaryEntry.LootDisplay.item(AetherIIItems.RAW_TAEGORE_MEAT, 1.0, 1, 2))),
@@ -190,7 +190,7 @@ public class AetherIIBestiaryEntries {
             Map.entry(AetherIIEntityTypes.SLIDER, List.of())
 //            Map.entry(AetherIIEntityTypes.BLADESHROOM_HUNTER, List.of())
     );
-    public static final Map<Holder<EntityType<?>>, TagKey<Item>> FED = Map.ofEntries(
+    public static final Map<EntityType<?>, TagKey<Item>> FED = Map.ofEntries(
             Map.entry(AetherIIEntityTypes.FLYING_COW, AetherIITags.Items.FLYING_COW_FOOD),
             Map.entry(AetherIIEntityTypes.SHEEPUFF, AetherIITags.Items.SHEEPUFF_FOOD),
             Map.entry(AetherIIEntityTypes.PHYG, AetherIITags.Items.PHYG_FOOD),
@@ -213,20 +213,20 @@ public class AetherIIBestiaryEntries {
     }
 
     public static void bootstrap(BootstrapContext<BestiaryEntry> context) {
-        for (Map.Entry<ResourceKey<BestiaryEntry>, Holder<EntityType<?>>> entry : ENTITIES.entrySet()) {
-            Holder<EntityType<?>> holder = entry.getValue();
-            EntityType<?> entity = holder.value();
-            String name = NAMED.contains(holder) ? "aether_ii.guidebook_bestiary.name.entity.aether_ii." + entity.toShortString() : entity.getDescriptionId();
-            String slotName = NAMED.contains(holder) ? "aether_ii.guidebook_bestiary.slot_name.entity.aether_ii." + entity.toShortString() : entity.getDescriptionId();
-            Optional<String> slotSubtitle = NAMED.contains(holder) ? Optional.of("aether_ii.guidebook_bestiary.slot_subtitle.entity.aether_ii." + entity.toShortString()) : Optional.empty();
-            double health = ATTRIBUTES.containsKey(holder) ? ATTRIBUTES.get(holder).getOrDefault(Attributes.MAX_HEALTH, 0.0) : 0.0;
-            double slashDefense = ATTRIBUTES.containsKey(holder) ? ATTRIBUTES.get(holder).getOrDefault(AetherIIAttributes.SLASH_RESISTANCE, 0.0) : 0.0;
-            double impactDefense = ATTRIBUTES.containsKey(holder) ? ATTRIBUTES.get(holder).getOrDefault(AetherIIAttributes.IMPACT_RESISTANCE, 0.0) : 0.0;
-            double pierceDefense = ATTRIBUTES.containsKey(holder) ? ATTRIBUTES.get(holder).getOrDefault(AetherIIAttributes.PIERCE_RESISTANCE, 0.0) : 0.0;
-            List<BestiaryEntry.EffectResistanceDisplay> effectResistances = getEffectResistances(holder);
-            Optional<Double> scaleMultiplier = SCALED.containsKey(holder) ? Optional.of(SCALED.get(holder)) : Optional.empty();
-            List<BestiaryEntry.LootDisplay> loot = LOOT.containsKey(holder) ? LOOT.get(holder) : new ArrayList<>();
-            Optional<TagKey<Item>> food = FED.containsKey(holder) ? Optional.of(FED.get(holder)) : Optional.empty();
+        for (Map.Entry<ResourceKey<BestiaryEntry>, EntityType<?>> entry : ENTITIES.entrySet()) {
+            EntityType<?> entity = entry.getValue();
+            Holder<EntityType<?>> holder = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(entity);
+            String name = NAMED.contains(entity) ? "aether_ii.guidebook_bestiary.name.entity.aether_ii." + entity.toShortString() : entity.getDescriptionId();
+            String slotName = NAMED.contains(entity) ? "aether_ii.guidebook_bestiary.slot_name.entity.aether_ii." + entity.toShortString() : entity.getDescriptionId();
+            Optional<String> slotSubtitle = NAMED.contains(entity) ? Optional.of("aether_ii.guidebook_bestiary.slot_subtitle.entity.aether_ii." + entity.toShortString()) : Optional.empty();
+            double health = ATTRIBUTES.containsKey(entity) ? ATTRIBUTES.get(entity).getOrDefault(Attributes.MAX_HEALTH, 0.0) : 0.0;
+            double slashDefense = ATTRIBUTES.containsKey(entity) ? ATTRIBUTES.get(entity).getOrDefault(AetherIIAttributes.SLASH_RESISTANCE, 0.0) : 0.0;
+            double impactDefense = ATTRIBUTES.containsKey(entity) ? ATTRIBUTES.get(entity).getOrDefault(AetherIIAttributes.IMPACT_RESISTANCE, 0.0) : 0.0;
+            double pierceDefense = ATTRIBUTES.containsKey(entity) ? ATTRIBUTES.get(entity).getOrDefault(AetherIIAttributes.PIERCE_RESISTANCE, 0.0) : 0.0;
+            List<BestiaryEntry.EffectResistanceDisplay> effectResistances = getEffectResistances(entity);
+            Optional<Double> scaleMultiplier = SCALED.containsKey(entity) ? Optional.of(SCALED.get(entity)) : Optional.empty();
+            List<BestiaryEntry.LootDisplay> loot = LOOT.containsKey(entity) ? LOOT.get(entity) : new ArrayList<>();
+            Optional<TagKey<Item>> food = FED.containsKey(entity) ? Optional.of(FED.get(entity)) : Optional.empty();
 
             context.register(entry.getKey(), new BestiaryEntry(
                     entry.getKey().identifier(),
@@ -252,10 +252,10 @@ public class AetherIIBestiaryEntries {
         return registryAccess.lookupOrThrow(AetherIIRegistries.BESTIARY_ENTRY);
     }
 
-    public static List<BestiaryEntry.EffectResistanceDisplay> getEffectResistances(Holder<EntityType<?>> holder) {
+    public static List<BestiaryEntry.EffectResistanceDisplay> getEffectResistances(EntityType<?> entity) {
         ArrayList<BestiaryEntry.EffectResistanceDisplay> effectResistances = new ArrayList<>();
-        if (ATTRIBUTES.containsKey(holder)) {
-            for (Map.Entry<Holder<Attribute>, Double> attribute : ATTRIBUTES.get(holder).entrySet()) {
+        if (ATTRIBUTES.containsKey(entity)) {
+            for (Map.Entry<Holder<Attribute>, Double> attribute : ATTRIBUTES.get(entity).entrySet()) {
                 if (attribute.getKey().value() instanceof EffectResistanceAttribute) {
                     effectResistances.add(new BestiaryEntry.EffectResistanceDisplay(attribute.getKey(), attribute.getValue().intValue()));
                 }
@@ -265,6 +265,6 @@ public class AetherIIBestiaryEntries {
     }
 
     public static Map<EntityType<?>, TagKey<Item>> getFedEntityTypes() {
-         return AetherIIBestiaryEntries.FED.entrySet().stream().collect(Collectors.toMap((e) -> e.getKey().value(), Map.Entry::getValue));
+         return AetherIIBestiaryEntries.FED;
     }
 }

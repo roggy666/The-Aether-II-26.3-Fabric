@@ -21,6 +21,6 @@ public class HangingUndergrowthPlantBlock extends GrowingPlantBodyBlock {
     }
 
     protected GrowingPlantHeadBlock getHeadBlock() {
-        return (GrowingPlantHeadBlock) AetherIIBlocks.HANGING_UNDERGROWTH.get();
+        return (GrowingPlantHeadBlock) AetherIIBlocks.HANGING_UNDERGROWTH;
     }
 }

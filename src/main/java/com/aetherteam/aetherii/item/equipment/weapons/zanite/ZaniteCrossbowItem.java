@@ -21,7 +21,7 @@ public class ZaniteCrossbowItem extends TieredCrossbowItem implements ZaniteBuff
     @Override
     protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weapon, ItemStack ammo, boolean isCrit) { //todo make this noticeable in tooltip?
         Projectile projectile = super.createProjectile(level, shooter, weapon, ammo, isCrit);
-        if (shooter.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (shooter.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             if (projectile instanceof AbstractArrow arrow) {
                 arrow.setBaseDamage(this.calculateZaniteBuff(weapon, ((AbstractArrowAccessor) arrow).aether$getBaseDamage()));
             }

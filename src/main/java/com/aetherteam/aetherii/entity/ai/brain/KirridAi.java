@@ -13,6 +13,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
@@ -32,7 +33,7 @@ public class KirridAi {
             SensorType.NEAREST_ITEMS,
             SensorType.NEAREST_ADULT,
             SensorType.HURT_BY,
-            AetherIISensorTypes.KIRRID_TEMPTATIONS.get()
+            AetherIISensorTypes.KIRRID_TEMPTATIONS
     );
     public static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.LOOK_TARGET,
@@ -47,8 +48,8 @@ public class KirridAi {
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
             MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.RAM_COOLDOWN_TICKS,
-            AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get(),
-            AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get(),
+            AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET,
+            AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN,
             MemoryModuleType.IS_PANICKING
     );
 
@@ -67,7 +68,7 @@ public class KirridAi {
 
     public static void initMemories(Kirrid kirrid, RandomSource random) {
         kirrid.getBrain().setMemory(MemoryModuleType.RAM_COOLDOWN_TICKS, TIME_BETWEEN_RAMS.sample(random));
-        kirrid.getBrain().setMemory(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get(), TIME_BETWEEN_EAT.sample(random));
+        kirrid.getBrain().setMemory(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN, TIME_BETWEEN_EAT.sample(random));
     }
 
 
@@ -79,13 +80,13 @@ public class KirridAi {
                 new MoveToTargetSink(),
                 new CountDownCooldownTicks(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
                 new CountDownCooldownTicks(MemoryModuleType.RAM_COOLDOWN_TICKS),
-                new CountDownCooldownTicks(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get())
+                new CountDownCooldownTicks(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN)
         ));
     }
 
     private static ActivityData<Kirrid> initIdleActivity(EntityType<? extends Kirrid> entityType) {
         return ActivityData.create(Activity.IDLE, ImmutableList.of(
-                Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
+                Pair.of(0, SetEntityLookTargetSometimes.create(EntityTypes.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(0, new AnimalMakeLove(entityType)),
                 Pair.of(1, new FollowTemptation(livingEntity -> 1.25F)),
                 Pair.of(2, BabyFollowAdult.create(ADULT_FOLLOW_RANGE, 1.25F)),

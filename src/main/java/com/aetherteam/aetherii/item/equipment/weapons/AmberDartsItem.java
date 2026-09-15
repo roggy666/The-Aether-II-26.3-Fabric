@@ -29,14 +29,14 @@ public class AmberDartsItem extends ArrowItem {
 
     @Override
     public Component getName(ItemStack stack) {
-        BuildupContents contents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS.get());
+        BuildupContents contents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS);
         return contents != null ? contents.getName(this.descriptionId + ".effect.") : super.getName(stack);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltipComponents, tooltipFlag);
-        BuildupContents contents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS.get());
+        BuildupContents contents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS);
         if (contents != null) {
             contents.addToTooltip(context, tooltipComponents, tooltipFlag, stack.getComponents());
         }

@@ -9,14 +9,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public interface NeptuneArmor {
     Identifier NEPTUNE_SWIM_SPEED_BOOST = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.neptune.swim_speed_boost");
     Identifier NEPTUNE_OXYGEN_BONUS = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.neptune.oxygen_bonus");
 
-    static void updatePlayerAttributes(PlayerTickEvent.Pre event) {
-        Player player = event.getEntity();
+    static void updatePlayerAttributes(Player player) {
         AttributeInstance fallDamageMultiplierAttribute = player.getAttribute(Attributes.WATER_MOVEMENT_EFFICIENCY);
         AttributeInstance oxygenBonusAttribute = player.getAttribute(Attributes.OXYGEN_BONUS);
 

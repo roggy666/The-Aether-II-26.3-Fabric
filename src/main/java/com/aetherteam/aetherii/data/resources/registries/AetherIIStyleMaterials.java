@@ -25,11 +25,11 @@ public class AetherIIStyleMaterials {
     }
 
     public static void bootstrap(BootstrapContext<StyleMaterial> context) {
-        register(context, AetherIIItems.BEAST_PELT.get(), BEAST_PELT);
-        register(context, AetherIIItems.BURRUKAI_PLATE.get(), BURRUKAI_PLATE);
-        register(context, AetherIIItems.ZANITE_GEMSTONE.get(), ZANITE);
-        register(context, AetherIIItems.ARKENIUM_PLATE.get(), ARKENIUM);
-        register(context, AetherIIItems.GRAVITITE_PLATE.get(), GRAVITITE);
+        register(context, AetherIIItems.BEAST_PELT, BEAST_PELT);
+        register(context, AetherIIItems.BURRUKAI_PLATE, BURRUKAI_PLATE);
+        register(context, AetherIIItems.ZANITE_GEMSTONE, ZANITE);
+        register(context, AetherIIItems.ARKENIUM_PLATE, ARKENIUM);
+        register(context, AetherIIItems.GRAVITITE_PLATE, GRAVITITE);
     }
 
     public static void register(BootstrapContext<StyleMaterial> context, Item item, ResourceKey<StyleMaterial> key) {

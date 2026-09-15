@@ -162,14 +162,14 @@ public class Edward extends MerchantEntity {
             if (this.edward.isSitting()) {
                 return null;
             } else {
-                return this.edward.getRandom().nextInt(4) == 0 ? this.edward.getHomePosition().getBottomCenter() : super.getPosition();
+                return this.edward.getRandom().nextInt(4) == 0 ? Vec3.atBottomCenterOf(this.edward.getHomePosition()) : super.getPosition();
             }
         }
 
         @Override
         public void stop() {
             super.stop();
-            if (this.edward.getBoundingBox().inflate(2.0).contains(this.edward.getHomePosition().getBottomCenter())) {
+            if (this.edward.getBoundingBox().inflate(2.0).contains(Vec3.atBottomCenterOf(this.edward.getHomePosition()))) {
                 this.edward.setSitting(true);
             }
         }

@@ -29,7 +29,7 @@ public class ArkeniumForgeBlockEntity extends BaseContainerBlockEntity implement
     protected NonNullList<ItemStack> items = NonNullList.withSize(11, ItemStack.EMPTY);
 
     public ArkeniumForgeBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.ARKENIUM_FORGE.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.ARKENIUM_FORGE, pos, blockState);
     }
 
     @Override
@@ -58,11 +58,6 @@ public class ArkeniumForgeBlockEntity extends BaseContainerBlockEntity implement
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
-    }
-
-    @Override
-    public void handleUpdateTag(ValueInput input) {
-        this.loadAdditional(input);
     }
 
     @Override

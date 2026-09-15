@@ -26,7 +26,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class ArkeniumForgeMenu extends AbstractContainerMenu {
     }
 
     public ArkeniumForgeMenu(int containerId, Inventory playerInventory, Container container) {
-        super(AetherIIMenuTypes.ARKENIUM_FORGE.get(), containerId);
+        super(AetherIIMenuTypes.ARKENIUM_FORGE, containerId);
         this.container = container;
 
         this.addSlot(new Slot(this.container, 0, 29, 65) {
@@ -223,7 +226,7 @@ public class ArkeniumForgeMenu extends AbstractContainerMenu {
                             newCharms.charmHolders().add(forgeCharmSlot.getCharmIndex(), new Charms.CharmHolder(charmHolder, slot.getItem()));
                             if (!slot.getItem().isEmpty() && lock) {
                                 if (player instanceof ServerPlayer serverPlayer) {
-                                    AetherIIAdvancementTriggers.FORGING_CHARM.get().trigger(serverPlayer, slot.getItem());
+                                    AetherIIAdvancementTriggers.FORGING_CHARM.trigger(serverPlayer, slot.getItem());
                                 }
                             }
                         }
@@ -258,7 +261,12 @@ public class ArkeniumForgeMenu extends AbstractContainerMenu {
 
     public void playSound() {
         if (this.container instanceof ArkeniumForgeBlockEntity blockEntity) {
-            PacketDistributor.sendToAllPlayers(new ForgeSoundPacket(blockEntity.getBlockPos()));
+            if (blockEntity.getLevel() instanceof ServerLevel serverLevel) {
+                ForgeSoundPacket packet = new ForgeSoundPacket(blockEntity.getBlockPos());
+                for (ServerPlayer player : PlayerLookup.tracking(serverLevel, blockEntity.getBlockPos())) {
+                    ServerPlayNetworking.send(player, packet);
+                }
+            }
         }
     }
 

@@ -59,7 +59,7 @@ public class SentryCrateBlockEntity extends RandomizableContainerBlockEntity {
     public final ChestLidController chestLidController = new ChestLidController();
 
     public SentryCrateBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.SENTRY_CRATE.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.SENTRY_CRATE, pos, blockState);
     }
 
     @Override
@@ -91,15 +91,6 @@ public class SentryCrateBlockEntity extends RandomizableContainerBlockEntity {
     public void recheckOpen() {
         if (!this.remove) {
             this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
-        }
-    }
-
-    @Override
-    public void setBlockState(BlockState state) {
-        BlockState oldState = this.getBlockState();
-        super.setBlockState(state);
-        if (oldState.getValue(SentryCrateBlock.FACING) != state.getValue(SentryCrateBlock.FACING) || oldState.getValue(SentryCrateBlock.TYPE) != state.getValue(SentryCrateBlock.TYPE)) {
-            this.invalidateCapabilities();
         }
     }
 

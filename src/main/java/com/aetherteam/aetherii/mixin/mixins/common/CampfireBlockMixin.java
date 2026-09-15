@@ -13,7 +13,7 @@ public class CampfireBlockMixin {
 
     @Inject(method = "isSmokeSource", at = @At("HEAD"), cancellable = true)
     private void aetherII$isSmokeSource(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(AetherIIBlocks.BRETTL_GRASS_BUNDLE.get())) {
+        if (state.is(AetherIIBlocks.BRETTL_GRASS_BUNDLE)) {
             cir.setReturnValue(true);
         }
     }

@@ -8,6 +8,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Optional;
 
 public class AerbunnyRenderState extends TamableRenderState {
+    public float partialTick;
     public DyeColor collarColor = DyeColor.RED;
     public boolean isSitting;
     public float puffiness;

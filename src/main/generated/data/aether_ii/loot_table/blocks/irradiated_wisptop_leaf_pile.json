@@ -1,0 +1,329 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "#c:tools/shear"
+              }
+            },
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "minecraft:shears"
+              }
+            }
+          ]
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {}
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "1"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 1.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "2"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 2.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "3"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 3.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "4"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 4.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "5"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 5.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "6"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 6.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "7"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 7.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "8"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 8.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "9"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 9.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "10"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 10.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "11"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 11.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "12"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 12.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "13"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 13.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "14"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 14.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "aether_ii:irradiated_wisptop_leaf_pile",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "piles": "15"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "count": 15.0,
+                  "function": "minecraft:set_count"
+                }
+              ],
+              "name": "aether_ii:irradiated_wisptop_leaf_pile"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "aether_ii:irradiated_wisptop_leaves"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "aether_ii:blocks/irradiated_wisptop_leaf_pile"
+}

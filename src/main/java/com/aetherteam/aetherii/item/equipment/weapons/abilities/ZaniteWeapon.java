@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.equipment.weapons.abilities;
 
+import com.aetherteam.aetherii.event.ItemAttributeModifierEvent;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
 import com.aetherteam.aetherii.item.equipment.ZaniteBuff;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;

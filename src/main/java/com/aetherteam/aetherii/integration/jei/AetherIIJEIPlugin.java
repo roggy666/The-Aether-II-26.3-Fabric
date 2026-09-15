@@ -67,15 +67,15 @@ public class AetherIIJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(AlkahestPurifierRecipeCategory.ALKAHEST_PURIFICATION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALKAHEST_PURIFICATION.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(AltarRecipeCategory.ALTAR_ENCHANTING, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALTAR_ENCHANTING.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(AmberHourglassRecipeCategory.HOURGLASS_RESTORING, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.HOURGLASS_RESTORING.get()).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(AlkahestPurifierRecipeCategory.ALKAHEST_PURIFICATION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALKAHEST_PURIFICATION).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(AltarRecipeCategory.ALTAR_ENCHANTING, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALTAR_ENCHANTING).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(AmberHourglassRecipeCategory.HOURGLASS_RESTORING, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.HOURGLASS_RESTORING).stream().map(RecipeHolder::value).toList());
 
-        registration.addRecipes(AlkahestCorrosionRecipeCategory.ALKAHEST_CORROSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALKAHEST_CORROSION.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(AmbrosiumConversionRecipeCategory.AMBROSIUM_CONVERSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(DustIrradiationRecipeCategory.DUST_IRRADIATION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.DUST_IRRADIATION.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(IcestoneFreezingRecipeCategory.ICESTONE_FREEZABLE, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ICESTONE_FREEZABLE.get()).stream().map(RecipeHolder::value).toList());
-        registration.addRecipes(SwetGelConversionRecipeCategory.SWET_GEL_CONVERSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.SWET_GEL_CONVERSION.get()).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(AlkahestCorrosionRecipeCategory.ALKAHEST_CORROSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ALKAHEST_CORROSION).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(AmbrosiumConversionRecipeCategory.AMBROSIUM_CONVERSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(DustIrradiationRecipeCategory.DUST_IRRADIATION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.DUST_IRRADIATION).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(IcestoneFreezingRecipeCategory.ICESTONE_FREEZABLE, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.ICESTONE_FREEZABLE).stream().map(RecipeHolder::value).toList());
+        registration.addRecipes(SwetGelConversionRecipeCategory.SWET_GEL_CONVERSION, AetherIIClientCaches.CLIENT_CACHES.byType(AetherIIRecipeTypes.SWET_GEL_CONVERSION).stream().map(RecipeHolder::value).toList());
     }
 
     @Override
@@ -98,20 +98,20 @@ public class AetherIIJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(SkyrootCraftingMenu.class, AetherIIMenuTypes.SKYROOT_CRAFTING_TABLE.get(), RecipeTypes.CRAFTING, 1, 9, 10, 36);
-        registration.addRecipeTransferHandler(HolystoneFurnaceMenu.class, AetherIIMenuTypes.HOLYSTONE_FURNACE.get(), RecipeTypes.SMELTING, 0, 1, 3, 36);
-        registration.addRecipeTransferHandler(HolystoneFurnaceMenu.class, AetherIIMenuTypes.HOLYSTONE_FURNACE.get(), RecipeTypes.SMELTING_FUEL, 1, 1, 3, 36);
-        registration.addRecipeTransferHandler(HolystoneSmokerMenu.class, AetherIIMenuTypes.HOLYSTONE_SMOKER.get(), RecipeTypes.SMOKING, 0, 1, 3, 36);
-        registration.addRecipeTransferHandler(HolystoneSmokerMenu.class, AetherIIMenuTypes.HOLYSTONE_SMOKER.get(), RecipeTypes.SMOKING_FUEL, 1, 1, 3, 36);
+        registration.addRecipeTransferHandler(SkyrootCraftingMenu.class, AetherIIMenuTypes.SKYROOT_CRAFTING_TABLE, RecipeTypes.CRAFTING, 1, 9, 10, 36);
+        registration.addRecipeTransferHandler(HolystoneFurnaceMenu.class, AetherIIMenuTypes.HOLYSTONE_FURNACE, RecipeTypes.SMELTING, 0, 1, 3, 36);
+        registration.addRecipeTransferHandler(HolystoneFurnaceMenu.class, AetherIIMenuTypes.HOLYSTONE_FURNACE, RecipeTypes.SMELTING_FUEL, 1, 1, 3, 36);
+        registration.addRecipeTransferHandler(HolystoneSmokerMenu.class, AetherIIMenuTypes.HOLYSTONE_SMOKER, RecipeTypes.SMOKING, 0, 1, 3, 36);
+        registration.addRecipeTransferHandler(HolystoneSmokerMenu.class, AetherIIMenuTypes.HOLYSTONE_SMOKER, RecipeTypes.SMOKING_FUEL, 1, 1, 3, 36);
 
-        registration.addRecipeTransferHandler(AlkahestPurifierMenu.class, AetherIIMenuTypes.ALKAHEST_PURIFIER.get(), AlkahestPurifierRecipeCategory.ALKAHEST_PURIFICATION, 0, 1, 7, 36);
-        registration.addRecipeTransferHandler(AltarMenu.class, AetherIIMenuTypes.ALTAR.get(), AltarRecipeCategory.ALTAR_ENCHANTING, 0, 9, 10, 36);
-        registration.addRecipeTransferHandler(AmberHourglassMenu.class, AetherIIMenuTypes.AMBER_HOURGLASS.get(), AmberHourglassRecipeCategory.HOURGLASS_RESTORING, 0, 2, 5, 36);
+        registration.addRecipeTransferHandler(AlkahestPurifierMenu.class, AetherIIMenuTypes.ALKAHEST_PURIFIER, AlkahestPurifierRecipeCategory.ALKAHEST_PURIFICATION, 0, 1, 7, 36);
+        registration.addRecipeTransferHandler(AltarMenu.class, AetherIIMenuTypes.ALTAR, AltarRecipeCategory.ALTAR_ENCHANTING, 0, 9, 10, 36);
+        registration.addRecipeTransferHandler(AmberHourglassMenu.class, AetherIIMenuTypes.AMBER_HOURGLASS, AmberHourglassRecipeCategory.HOURGLASS_RESTORING, 0, 2, 5, 36);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(AetherIIItems.AMBER_DARTS.get(), new AmberDartInterpreter());
-        registration.registerSubtypeInterpreter(AetherIIItems.HEALING_STONE.get(), new HealingStoneInterpreter());
+        registration.registerSubtypeInterpreter(AetherIIItems.AMBER_DARTS, new AmberDartInterpreter());
+        registration.registerSubtypeInterpreter(AetherIIItems.HEALING_STONE, new HealingStoneInterpreter());
     }
 }

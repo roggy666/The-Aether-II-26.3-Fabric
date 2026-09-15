@@ -78,9 +78,4 @@ public class FragileIceBlock extends IceBlock {
     protected boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
         return adjacentBlockState.is(AetherIIBlocks.ARCTIC_ICE) || super.skipRendering(state, adjacentBlockState, side);
     }
-
-    @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
-        return neighborState.is(AetherIIBlocks.ARCTIC_ICE) || super.hidesNeighborFace(level, pos, state, neighborState, dir);
-    }
-}
+}

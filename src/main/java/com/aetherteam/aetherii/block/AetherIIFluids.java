@@ -2,18 +2,18 @@ package com.aetherteam.aetherii.block;
 
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.fluid.AlkahestFluid;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.material.FlowingFluid;
-import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AetherIIFluids {
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, AetherII.MODID);
+    public static final FlowingFluid FLOWING_ALKAHEST = register("flowing_alkahest", new AlkahestFluid.Flowing());
+    public static final FlowingFluid ALKAHEST = register("alkahest", new AlkahestFluid.Source());
 
-    public static final DeferredHolder<Fluid, FlowingFluid> FLOWING_ALKAHEST = FLUIDS.register("flowing_alkahest", () -> new AlkahestFluid.Flowing(AetherIIFluids.ALKAHEST_PROPERTIES));
-    public static final DeferredHolder<Fluid, FlowingFluid> ALKAHEST = FLUIDS.register("alkahest", () -> new AlkahestFluid.Source(AetherIIFluids.ALKAHEST_PROPERTIES));
+    private static <T extends FlowingFluid> T register(String name, T fluid) {
+        return Registry.register(BuiltInRegistries.FLUID, Identifier.fromNamespaceAndPath(AetherII.MODID, name), fluid);
+    }
 
-    public static final BaseFlowingFluid.Properties ALKAHEST_PROPERTIES = new BaseFlowingFluid.Properties(AetherIIFluidTypes.ALKAHEST_TYPE, ALKAHEST, FLOWING_ALKAHEST).block(AetherIIBlocks.ALKAHEST);
+    public static void init() {}
 }

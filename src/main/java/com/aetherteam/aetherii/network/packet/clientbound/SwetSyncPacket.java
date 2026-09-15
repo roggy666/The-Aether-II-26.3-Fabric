@@ -13,7 +13,8 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.TagValueInput;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public record SwetSyncPacket(int entityID, CompoundTag compoundTag) implements CustomPacketPayload {
     public static final Type<SwetSyncPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "swet_sync"));
@@ -30,13 +31,14 @@ public record SwetSyncPacket(int entityID, CompoundTag compoundTag) implements C
         return TYPE;
     }
 
-    public static void execute(SwetSyncPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(SwetSyncPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Level level = Minecraft.getInstance().player.level();
-            if (level.getEntity(payload.entityID()) instanceof Player player) {
-                try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(player.problemPath(), AetherII.LOGGER)) {
+            if (level.getEntity(payload.entityID()) instanceof Player targetPlayer) {
+                try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(targetPlayer.problemPath(), AetherII.LOGGER)) {
 
-                    player.getData(AetherIIDataAttachments.SWET_LATCH.get()).deserialize(TagValueInput.create(problemreporter$scopedcollector, player.level().registryAccess(), payload.compoundTag()));
+                    targetPlayer.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).deserialize(TagValueInput.create(problemreporter$scopedcollector, targetPlayer.level().registryAccess(), payload.compoundTag()));
                 }
             }
         }

@@ -15,7 +15,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record FreezingParticlePacket(Block block, BlockPos pos) implements CustomPacketPayload {
     public static final Type<FreezingParticlePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "freezing_particles"));
@@ -30,11 +32,12 @@ public record FreezingParticlePacket(Block block, BlockPos pos) implements Custo
         return TYPE;
     }
 
-    public static void execute(FreezingParticlePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(FreezingParticlePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             for (Direction direction : Direction.values()) {
                 for (int i = 0; i < 25; i++) {
-                    ParticleUtils.spawnParticleOnFace(context.player().level(), payload.pos(), direction, new BlockParticleOption(ParticleTypes.BLOCK, payload.block().defaultBlockState()), Vec3.ZERO, 0.5F);
+                    ParticleUtils.spawnParticleOnFace(player.level(), payload.pos(), direction, new BlockParticleOption(ParticleTypes.BLOCK, payload.block().defaultBlockState()), Vec3.ZERO, 0.5F);
                 }
             }
         }

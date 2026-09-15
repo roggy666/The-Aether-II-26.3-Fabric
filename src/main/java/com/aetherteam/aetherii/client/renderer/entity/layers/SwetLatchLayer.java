@@ -24,7 +24,7 @@ public class SwetLatchLayer<T extends LivingEntityRenderState, M extends EntityM
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, T livingEntity, float v, float v1) {
         if (this.getParentModel() instanceof PlayerModel) {
-            List<SwetRenderState> swets = livingEntity.getRenderDataOrDefault(AetherIIRenderers.SWET_KEY, List.of());
+            List<SwetRenderState> swets = livingEntity.getDataOrDefault(AetherIIRenderers.SWET_KEY, List.of());
             for (int i = 0; i < swets.size(); i++) {
                 SwetRenderState swet = swets.get(i);
                 poseStack.pushPose();
@@ -46,7 +46,7 @@ public class SwetLatchLayer<T extends LivingEntityRenderState, M extends EntityM
                 poseStack.scale(1 + scale, 1 + scale, 1 + scale);
                 EntityRenderer<?, ? super SwetRenderState> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(swet);
 
-                CameraRenderState camerarenderstate = Minecraft.getInstance().gameRenderer.getGameRenderState().levelRenderState.cameraRenderState;
+                CameraRenderState camerarenderstate = Minecraft.getInstance().gameRenderer.gameRenderState().levelRenderState.cameraRenderState;
                 renderer.submit(swet, poseStack, submitNodeCollector, camerarenderstate);
                 poseStack.popPose();
             }

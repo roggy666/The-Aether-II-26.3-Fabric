@@ -16,6 +16,6 @@ public class SkyrootCraftingMenu extends CraftingMenu {
 
     @Override
     public MenuType<?> getType() {
-        return AetherIIMenuTypes.SKYROOT_CRAFTING_TABLE.get();
+        return AetherIIMenuTypes.SKYROOT_CRAFTING_TABLE;
     }
 }

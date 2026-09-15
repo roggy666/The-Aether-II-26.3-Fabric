@@ -8,7 +8,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record SetVehiclePacket(int passengerID, int vehicleID) implements CustomPacketPayload {
     public static final Type<SetVehiclePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "set_mount"));
@@ -25,7 +27,8 @@ public record SetVehiclePacket(int passengerID, int vehicleID) implements Custom
         return TYPE;
     }
 
-    public static void execute(SetVehiclePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(SetVehiclePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity passenger = Minecraft.getInstance().player.level().getEntity(payload.passengerID());
             Entity vehicle = Minecraft.getInstance().player.level().getEntity(payload.vehicleID());

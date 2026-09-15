@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.resources.builders.worldgen.holyisles;
 
+import net.minecraft.world.level.biome.Biome;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.data.resources.builders.worldgen.AetherIIDensityFunctionBuilders;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDensityFunctions;
@@ -11,14 +12,14 @@ import net.minecraft.world.level.levelgen.*;
 import java.util.List;
 
 public class HolyIslesNoiseBuilders extends AetherIIDensityFunctionBuilders {
-    public static NoiseGeneratorSettings holyIslesNoiseSettings(HolderGetter<DensityFunction> function) {
-        BlockState holystone = AetherIIBlocks.HOLYSTONE.get().defaultBlockState();
+    public static NoiseGeneratorSettings holyIslesNoiseSettings(HolderGetter<DensityFunction> function, HolderGetter<Biome> biomes) {
+        BlockState holystone = AetherIIBlocks.HOLYSTONE.defaultBlockState();
         return new NoiseGeneratorSettings(
                 new NoiseSettings(0, 384, 2, 1), // noiseSettings
                 holystone, // defaultBlock
                 Blocks.WATER.defaultBlockState(), // defaultFluid
                 makeNoiseRouter(function), // noiseRouter
-                HolyIslesSurfaceBuilders.surfaceRules(), // surfaceRule
+                HolyIslesSurfaceBuilders.surfaceRules(biomes), // surfaceRule
                 List.of(), // spawnTarget
                 -64, // seaLevel
                 false, // disableMobGeneration

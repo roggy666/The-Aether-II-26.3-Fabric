@@ -27,7 +27,7 @@ public class PistonMovingBlockEntityMixin {
 
     @Inject(method = "isStickyForEntities()Z", at = @At(value = "HEAD"), cancellable = true)
     private void isStickyForEntities(CallbackInfoReturnable<Boolean> cir) {
-        if (this.movedState.is(AetherIIBlocks.GEL_BLOCK.get())) {
+        if (this.movedState.is(AetherIIBlocks.GEL_BLOCK)) {
             cir.setReturnValue(true);
         }
     }

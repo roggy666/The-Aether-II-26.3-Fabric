@@ -15,7 +15,7 @@ public class TreasureDoorwayBlockEntity extends CopyBlockEntity {
     }
 
     public TreasureDoorwayBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.TREASURE_DOORWAY_BLOCK.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.TREASURE_DOORWAY_BLOCK, pos, blockState);
     }
 
     @Override

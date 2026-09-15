@@ -13,18 +13,18 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.neoforged.neoforge.common.world.PieceBeardifierModifier;
+import com.aetherteam.aetherii.world.structure.BeardifierModifierPiece;
 
 /**
  * The entrance to the Bronze Dungeon. It shouldn't replace air so that it matches the landscape.
  */
-public class SentryRuinsTunnel extends SentryRuinsPiece implements PieceBeardifierModifier {
+public class SentryRuinsTunnel extends SentryRuinsPiece implements BeardifierModifierPiece {
     public SentryRuinsTunnel(StructureTemplateManager manager, String name, BlockPos pos, Rotation rotation, Holder<StructureProcessorList> processors) {
-        super(AetherIIStructurePieceTypes.SENTRY_RUINS_TUNNEL.get(), manager, name, new StructurePlaceSettings().setRotation(rotation), pos, processors);
+        super(AetherIIStructurePieceTypes.SENTRY_RUINS_TUNNEL, manager, name, new StructurePlaceSettings().setRotation(rotation), pos, processors);
     }
 
     public SentryRuinsTunnel(StructurePieceSerializationContext context, CompoundTag tag) {
-        super(AetherIIStructurePieceTypes.SENTRY_RUINS_TUNNEL.get(), context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> new StructurePlaceSettings());
+        super(AetherIIStructurePieceTypes.SENTRY_RUINS_TUNNEL, context.registryAccess(), tag, context.structureTemplateManager(), resourceLocation -> new StructurePlaceSettings());
     }
 
     @Override

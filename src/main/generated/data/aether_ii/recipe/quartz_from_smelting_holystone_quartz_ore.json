@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 0.5,
+  "group": "quartz",
+  "ingredient": "aether_ii:holystone_quartz_ore",
+  "result": {
+    "id": "minecraft:quartz"
+  }
+}

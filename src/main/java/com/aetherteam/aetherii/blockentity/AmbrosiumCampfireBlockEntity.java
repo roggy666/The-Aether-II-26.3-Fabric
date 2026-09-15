@@ -12,6 +12,6 @@ public class AmbrosiumCampfireBlockEntity extends CampfireBlockEntity {
 
     @Override
     public BlockEntityType<AmbrosiumCampfireBlockEntity> getType() {
-        return AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE.get();
+        return AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE;
     }
 }

@@ -19,8 +19,8 @@ public class TaegoreBeginSearch extends Behavior<Taegore> {
     public TaegoreBeginSearch(int minDuration, int maxDuration) {
         super(Map.of(
                 MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get(), MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN.get(), MemoryStatus.VALUE_ABSENT
+                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET, MemoryStatus.VALUE_ABSENT,
+                AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN, MemoryStatus.VALUE_ABSENT
         ), minDuration, maxDuration);
     }
 
@@ -36,7 +36,7 @@ public class TaegoreBeginSearch extends Behavior<Taegore> {
         boolean finished = this.timedOut(gameTime);
         if (finished) {
             this.calculateDigPosition(owner).ifPresent(pos -> {
-                owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get(), pos);
+                owner.getBrain().setMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET, pos);
                 owner.getBrain().setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(pos, 0.75F, 0));
             });
         }

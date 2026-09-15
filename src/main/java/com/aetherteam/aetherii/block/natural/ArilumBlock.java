@@ -11,6 +11,6 @@ public class ArilumBlock extends KelpBlock {
 
     @Override
     protected Block getBodyBlock() {
-        return AetherIIBlocks.ARILUM_PLANT.get();
+        return AetherIIBlocks.ARILUM_PLANT;
     }
 }

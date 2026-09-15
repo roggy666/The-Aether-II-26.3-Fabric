@@ -47,7 +47,7 @@ public interface Blighted {
                 }
             }
             if (tickCount % 20 == 0) {
-                livingEntity.level().playSound(livingEntity, livingEntity.getOnPos(), AetherIISoundEvents.ENTITY_BLIGHTED_BURN.get(), SoundSource.HOSTILE, 0.5F, 1.0F);
+                livingEntity.level().playSound(livingEntity, livingEntity.getOnPos(), AetherIISoundEvents.ENTITY_BLIGHTED_BURN, SoundSource.HOSTILE, 0.5F, 1.0F);
             }
         }
     }

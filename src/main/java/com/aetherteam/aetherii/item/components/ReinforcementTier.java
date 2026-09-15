@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.components;
 
+import net.minecraft.core.HolderLookup;
 import com.aetherteam.aetherii.AetherIIStats;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.api.ItemReinforcement;
@@ -72,7 +73,7 @@ public enum ReinforcementTier implements StringRepresentable, TooltipProvider {
         return Component.translatable("aether_ii.tooltip.item.reinforcement", Component.translatable("enchantment.level." + tier)).withColor(14408667);
     }
 
-    public static int getTierCount(RegistryAccess registryAccess, ItemStack stack) {
+    public static int getTierCount(HolderLookup.Provider registryAccess, ItemStack stack) {
         int count = 0;
         ItemReinforcement reinforcement = AetherIIItemReinforcements.get(registryAccess, stack);
         if (reinforcement != null) {
@@ -81,7 +82,7 @@ public enum ReinforcementTier implements StringRepresentable, TooltipProvider {
         return count;
     }
 
-    public static boolean isItemAtMaxTier(RegistryAccess registryAccess, ItemStack itemStack) {
+    public static boolean isItemAtMaxTier(HolderLookup.Provider registryAccess, ItemStack itemStack) {
         int max = getTierCount(registryAccess, itemStack);
         ReinforcementTier tier = itemStack.get(AetherIIDataComponents.REINFORCEMENT_TIER);
         return tier != null && tier.getTierNumber() == max;

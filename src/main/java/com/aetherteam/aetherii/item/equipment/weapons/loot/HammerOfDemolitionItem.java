@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.item.equipment.weapons.loot;
 
+import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.entity.Entity;
 import com.aetherteam.aetherii.AetherIIStats;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.projectile.DemolitionProjectile;
@@ -18,7 +21,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 
 public class HammerOfDemolitionItem extends TieredHammerItem implements ProjectileItem, SpecialAttackStrengthScale {
     public HammerOfDemolitionItem(Properties properties) {
@@ -36,7 +38,7 @@ public class HammerOfDemolitionItem extends TieredHammerItem implements Projecti
                 }
                 Projectile.spawnProjectileFromRotation((l, e, s) -> new DemolitionProjectile(e, l), serverlevel, heldStack, player, 0.0F, 1.0F, 1.0F);
             }
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.ITEM_HAMMER_OF_DEMOLITION_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (player.getRandom().nextFloat() * 0.4F + 0.8F), false);
+            level.playLocalSound(player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.ITEM_HAMMER_OF_DEMOLITION_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (player.getRandom().nextFloat() * 0.4F + 0.8F), false);
             player.awardStat(Stats.ITEM_USED.get(this));
             return InteractionResult.SUCCESS;
         }
@@ -53,12 +55,12 @@ public class HammerOfDemolitionItem extends TieredHammerItem implements Projecti
         return DispenseConfig.builder().uncertainty(1.0F).build();
     }
 
-    public static void disableAttacks(AttackEntityEvent event) {
-        Player entity = event.getEntity();
-        ItemStack stack = entity.getMainHandItem();
-        if (entity instanceof Player player && player.getCooldowns().getCooldownPercent(stack, 0.0F) != 0) {
-            event.setCanceled(true);
+    public static InteractionResult disableAttacks(Player player, Level level, InteractionHand hand, Entity target, @Nullable EntityHitResult hitResult) {
+        ItemStack stack = player.getMainHandItem();
+        if (player.getCooldowns().getCooldownPercent(stack, 0.0F) != 0) {
+            return InteractionResult.FAIL;
         }
+        return InteractionResult.PASS;
     }
 
     @Override

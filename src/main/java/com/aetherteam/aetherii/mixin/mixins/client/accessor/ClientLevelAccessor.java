@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.mixin.mixins.client.accessor;
 
+import net.minecraft.server.level.BlockDestructionProgress;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelEventHandler;
@@ -12,4 +14,6 @@ import java.util.List;
 public interface ClientLevelAccessor {
     @Accessor("levelEventHandler")
     LevelEventHandler aether_ii$getLevelEventHandler();
+    @Accessor("destroyingBlocks")
+    Int2ObjectMap<BlockDestructionProgress> aether_ii$getDestroyingBlocks();
 }

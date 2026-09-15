@@ -31,7 +31,7 @@ public class SwetGelRecipe extends AbstractBiomeParameterRecipe implements Match
     public static final RecipeSerializer<SwetGelRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public SwetGelRecipe(Optional<Either<ResourceKey<Biome>, TagKey<Biome>>> biome, BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.SWET_GEL_CONVERSION.get(), biome, ingredient, result, function);
+        super(AetherIIRecipeTypes.SWET_GEL_CONVERSION, biome, ingredient, result, function);
     }
 
     public SwetGelRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {

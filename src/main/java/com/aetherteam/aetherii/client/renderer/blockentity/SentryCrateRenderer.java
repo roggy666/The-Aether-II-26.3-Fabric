@@ -111,7 +111,7 @@ public class SentryCrateRenderer implements BlockEntityRenderer<SentryCrateBlock
     public void extractRenderState(SentryCrateBlockEntity blockEntity, SentryCrateRenderState state, float p_446851_, Vec3 vec3, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, vec3, p_446944_);
         boolean flag = blockEntity.getLevel() != null;
-        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.SENTRY_CRATE.get().defaultBlockState().setValue(SentryCrateBlock.FACING, Direction.SOUTH);
+        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.SENTRY_CRATE.defaultBlockState().setValue(SentryCrateBlock.FACING, Direction.SOUTH);
         state.facing = blockstate.getValue(SentryCrateBlock.FACING);
         ChestType type = blockstate.hasProperty(SentryCrateBlock.TYPE) ? blockstate.getValue(SentryCrateBlock.TYPE) : ChestType.SINGLE;
         state.type = type;

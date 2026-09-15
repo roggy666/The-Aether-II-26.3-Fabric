@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class Glitterwing extends Insect {
-    private static final EntityDataAccessor<Holder<GlitterwingVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Glitterwing.class, AetherIIDataSerializers.GLITTERWING_VARIANT.get());
+    private static final EntityDataAccessor<Holder<GlitterwingVariant>> DATA_VARIANT_ID = SynchedEntityData.defineId(Glitterwing.class, AetherIIDataSerializers.GLITTERWING_VARIANT);
     public static int LAND_EVENT = 101;
     public static int TAKE_OFF_EVENT = 102;
     public AnimationState landAnimationState = new AnimationState();
@@ -32,7 +32,7 @@ public class Glitterwing extends Insect {
     }
 
     public Glitterwing(Level level) {
-        super(AetherIIEntityTypes.GLITTERWING.get(), level);
+        super(AetherIIEntityTypes.GLITTERWING, level);
     }
 
     @Override

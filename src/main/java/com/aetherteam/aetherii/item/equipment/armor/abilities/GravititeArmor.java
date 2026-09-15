@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.equipment.armor.abilities;
 
+import com.aetherteam.aetherii.event.AetherIIEvents;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
@@ -14,14 +15,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public interface GravititeArmor {
     Identifier GRAVITITE_FALL_DAMAGE_SUPPRESSION = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.gravitite.fall_damage_suppression");
 
-    static void updatePlayerAttributes(PlayerTickEvent.Pre event) {
-        Player player = event.getEntity();
+    static void updatePlayerAttributes(Player player) {
         AttributeInstance fallDamageMultiplierAttribute = player.getAttribute(Attributes.FALL_DAMAGE_MULTIPLIER);
 
         if (EquipmentUtil.hasArmorAbility(player, AetherIITags.Items.GRAVITITE_ARMOR)) {
@@ -35,19 +33,17 @@ public interface GravititeArmor {
         }
     }
 
-    static void playerFall(LivingFallEvent event) { //todo
-        LivingEntity livingEntity = event.getEntity();
+    static void playerFall(LivingEntity livingEntity, AetherIIEvents.FallContainer container) { //todo
         if (EquipmentUtil.hasArmorAbility(livingEntity, AetherIITags.Items.GRAVITITE_ARMOR)) {
             if (livingEntity.fallDistance < 8) {
-                event.setDistance(0);
+                container.setDistance(0);
             }
         }
     }
 
-    static void playerUpdate(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
+    static void playerUpdate(Player player) {
         LivingEntityAccessor accessor = (LivingEntityAccessor) player;
-        AbilityBehaviorAttachment attachment = player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+        AbilityBehaviorAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR);
         boolean isFluid = player.isInWater() /*|| player.isInFluidType()*/;
         if (isFluid) {
             accessor.aether$setNoJumpDelay(6);

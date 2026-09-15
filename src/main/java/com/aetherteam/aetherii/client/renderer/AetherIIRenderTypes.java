@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.rendertype.TextureTransform;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
-import net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent;
 
 import java.util.function.BiFunction;
 
@@ -58,8 +57,5 @@ public class AetherIIRenderTypes {
         return IRRADIATED_GLINT;
     }
 
-    public static void registerRenderBuffers(RegisterRenderBuffersEvent event) {
-        event.registerRenderBuffer(cloudCover());
-        event.registerRenderBuffer(irradiatedGlint());
-    }
+
 }

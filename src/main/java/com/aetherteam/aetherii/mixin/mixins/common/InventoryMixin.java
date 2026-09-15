@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +29,7 @@ public class InventoryMixin {
     @Inject(method = "Lnet/minecraft/world/entity/player/Inventory;clearOrCountMatchingItems(Ljava/util/function/Predicate;ILnet/minecraft/world/Container;)I", at = @At(value = "RETURN"), cancellable = true)
     public void clearOrCountMatchingItems(Predicate<ItemStack> predicate, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> ci) {
         boolean countingOnly = amountToRemove == 0;
-        Container container = this.player.getData(AetherIIDataAttachments.ACCESSORIES);
+        Container container = this.player.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
         int count = ContainerHelper.clearOrCountMatchingItems(container, predicate, amountToRemove - ci.getReturnValue(), countingOnly);
         ci.setReturnValue(ci.getReturnValue() + count);
     }

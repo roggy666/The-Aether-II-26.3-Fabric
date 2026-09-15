@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "arkenium_chip",
+  "ingredients": [
+    "aether_ii:arkenium_plate"
+  ],
+  "result": {
+    "count": 9,
+    "id": "aether_ii:arkenium_chip"
+  }
+}

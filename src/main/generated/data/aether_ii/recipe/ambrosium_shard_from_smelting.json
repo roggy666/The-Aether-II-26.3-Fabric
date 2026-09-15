@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 0.1,
+  "group": "ambrosium",
+  "ingredient": "aether_ii:ambrosium_ore",
+  "result": {
+    "id": "aether_ii:ambrosium_shard"
+  }
+}

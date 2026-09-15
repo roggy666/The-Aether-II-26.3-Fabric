@@ -31,7 +31,7 @@ public class SentryCrateMimic extends Mimic {
      * @return The type of {@link ParticleOptions} to render when a Mimic is hurt.
      */
     public ParticleOptions getHurtParticle() {
-        return new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.SENTRY_CRATE.get().defaultBlockState());
+        return new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.SENTRY_CRATE.defaultBlockState());
     }
 
     /**
@@ -44,7 +44,7 @@ public class SentryCrateMimic extends Mimic {
     public boolean doHurtTarget(ServerLevel level, Entity entity) {
         boolean result = super.doHurtTarget(level, entity);
         if (entity instanceof LivingEntity livingEntity) { // Choose between attack or kill sound depending on remaining target health.
-            SoundEvent sound = livingEntity.getHealth() <= 0.0 ? AetherIISoundEvents.ENTITY_MIMIC_KILL.get() : AetherIISoundEvents.ENTITY_MIMIC_ATTACK.get();
+            SoundEvent sound = livingEntity.getHealth() <= 0.0 ? AetherIISoundEvents.ENTITY_MIMIC_KILL : AetherIISoundEvents.ENTITY_MIMIC_ATTACK;
             this.playSound(sound, 1.0F, this.getVoicePitch());
         }
         return result;

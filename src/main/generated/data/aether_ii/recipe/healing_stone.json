@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#aether_ii:gems/ambrosium",
+    "H": "#aether_ii:stone_crafting"
+  },
+  "pattern": [
+    "HAH",
+    "AAA",
+    "HAH"
+  ],
+  "result": {
+    "components": {
+      "aether_ii:healing_stone_charges": 1
+    },
+    "id": "aether_ii:healing_stone"
+  }
+}

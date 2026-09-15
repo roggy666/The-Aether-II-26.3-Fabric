@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "aether_ii:beast_pelt",
+    "-": "aether_ii:cloudtwine"
+  },
+  "pattern": [
+    "-",
+    "#"
+  ],
+  "result": {
+    "id": "aether_ii:beast_pelt_bundle"
+  }
+}

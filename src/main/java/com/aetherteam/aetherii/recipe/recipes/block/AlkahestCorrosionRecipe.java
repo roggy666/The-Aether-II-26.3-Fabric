@@ -27,7 +27,7 @@ public class AlkahestCorrosionRecipe extends AbstractBlockStateRecipe implements
     public static final RecipeSerializer<AlkahestCorrosionRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public AlkahestCorrosionRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.ALKAHEST_CORROSION.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.ALKAHEST_CORROSION, ingredient, result, function);
     }
 
     @Override

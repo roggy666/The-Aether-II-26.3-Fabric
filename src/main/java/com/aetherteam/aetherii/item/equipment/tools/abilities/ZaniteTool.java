@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.equipment.tools.abilities;
 
+import com.aetherteam.aetherii.event.ItemAttributeModifierEvent;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.item.equipment.ZaniteBuff;
 import net.minecraft.core.Holder;
@@ -10,12 +11,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-public interface ZaniteTool extends ZaniteBuff {
+public interface ZaniteTool extends ZaniteBuff, CustomEnchantmentItem {
     Identifier MINING_EFFICIENCY_MODIFIER_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "zanite_modified_mining_efficiency");
 
     static void updateToolAttributes(ItemAttributeModifierEvent event) {

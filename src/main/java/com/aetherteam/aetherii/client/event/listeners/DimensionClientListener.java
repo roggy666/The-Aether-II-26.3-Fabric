@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.client.event.listeners;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.fog.FogData;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.client.renderer.level.HolyIslesSkyboxRenderer;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDimensions;
@@ -12,23 +14,20 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.FogType;
-import net.neoforged.neoforge.client.event.ViewportEvent;
 import org.joml.Vector3fc;
 
 public class DimensionClientListener {
     private static Float modifiedNearDistance = null;
     private static Float modifiedFarDistance = null;
 
-    public static void onRenderFog(ViewportEvent.RenderFog event) {
-        Camera camera = event.getCamera();
-        FogType fogMode = event.getType();
-        float nearDistance = event.getNearPlaneDistance();
-        float farDistance = event.getFarPlaneDistance();
+    public static void adjustFog(Camera camera, FogData fog) {
+        float nearDistance = fog.environmentalStart;
+        float farDistance = fog.environmentalEnd;
 
         if (camera.entity().level() instanceof ClientLevel clientLevel && clientLevel.getBiome(camera.blockPosition()).is(AetherIITags.Biomes.THE_AETHER)) {
             Holder<Biome> biome = clientLevel.getBiome(camera.blockPosition());
             FogType fluidState = camera.getFluidInCamera();
-            if (fogMode == FogType.ATMOSPHERIC && fluidState == FogType.NONE) {
+            if (fluidState == FogType.NONE) {
                 if (modifiedNearDistance == null) {
                     modifiedNearDistance = nearDistance;
                 }
@@ -60,8 +59,8 @@ public class DimensionClientListener {
                 modifiedNearDistance = Mth.lerp(0.05F, modifiedNearDistance, nearDistanceGoal);
                 modifiedFarDistance = Mth.lerp(0.05F, modifiedFarDistance, farDistanceGoal);
 
-                event.setNearPlaneDistance(modifiedNearDistance);
-                event.setFarPlaneDistance(modifiedFarDistance);
+                fog.environmentalStart = modifiedNearDistance;
+                fog.environmentalEnd = modifiedFarDistance;
             } else {
                 modifiedNearDistance = null;
                 modifiedFarDistance = null;
@@ -69,19 +68,10 @@ public class DimensionClientListener {
         }
     }
 
-    public static void onFogColorComputed(ViewportEvent.ComputeFogColor event) {
-        Camera camera = event.getCamera();
-        DeltaTracker deltaTracker = DeltaTracker.ONE;
-        float f = deltaTracker.getGameTimeDeltaPartialTick(false);
-
-        if (camera.entity().level() instanceof ClientLevel clientLevel) {
-            if (clientLevel.dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE)) {
-                int i = getBaseFogColor(clientLevel, camera, event.getRenderer().getMinecraft().options.getEffectiveRenderDistance(), f);
-                i = adjustHeightBasedFogColors(clientLevel, camera, camera.getFluidInCamera(), i);
-                event.setRed(ARGB.redFloat(i));
-                event.setGreen(ARGB.greenFloat(i));
-                event.setBlue(ARGB.blueFloat(i));
-            }
+    public static void adjustFogColor(Camera camera, ClientLevel level, int renderDistance, float partialTick, FogData fog) {
+        if (level.dimensionTypeRegistration().is(AetherIIDimensions.AETHER_HOLY_ISLES_DIMENSION_TYPE) && camera.getFluidInCamera() == FogType.NONE) {
+            int color = adjustHeightBasedFogColors(level, camera, camera.getFluidInCamera(), getBaseFogColor(level, camera, renderDistance, partialTick));
+            fog.color.set(ARGB.redFloat(color), ARGB.greenFloat(color), ARGB.blueFloat(color), fog.color.w);
         }
     }
 

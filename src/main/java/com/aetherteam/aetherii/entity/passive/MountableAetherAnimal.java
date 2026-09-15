@@ -19,7 +19,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import com.aetherteam.aetherii.network.AetherIIPackets;
 
 public abstract class MountableAetherAnimal extends AetherAnimal implements NotGrounded {
     private static final EntityDataAccessor<Boolean> DATA_ENTITY_ON_GROUND_ID = SynchedEntityData.defineId(MountableAetherAnimal.class, EntityDataSerializers.BOOLEAN);
@@ -85,10 +85,9 @@ public abstract class MountableAetherAnimal extends AetherAnimal implements NotG
         Vec3 movement = this.getDeltaMovement();
         this.setDeltaMovement(movement.x, impulse, movement.z);
         this.needsSync = true;
-        net.neoforged.neoforge.common.CommonHooks.onLivingJump(this);
         this.setMountJumping(true);
         this.setEntityOnGround(false);
-        ClientPacketDistributor.sendToServer(new MountJumpedPacket(this.getId()));
+        AetherIIPackets.sendToServer(new MountJumpedPacket(this.getId()));
         if (input.z > 0.0) {
             float sin = Mth.sin(this.getYRot() * (float) (Math.PI / 180.0));
             float cos = Mth.cos(this.getYRot() * (float) (Math.PI / 180.0));

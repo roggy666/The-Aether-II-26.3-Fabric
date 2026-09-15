@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "arkenium_plate",
+  "key": {
+    "#": "aether_ii:arkenium_chip"
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "result": {
+    "id": "aether_ii:arkenium_plate"
+  }
+}

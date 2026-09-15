@@ -12,7 +12,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record CheckEffectsEntryPacket(MobEffect effect) implements CustomPacketPayload {
     public static final Type<CheckEffectsEntryPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "check_effects_entry"));
@@ -27,10 +26,10 @@ public record CheckEffectsEntryPacket(MobEffect effect) implements CustomPacketP
         return TYPE;
     }
 
-    public static void execute(CheckEffectsEntryPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(CheckEffectsEntryPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
-            GuidebookDiscoveryAttachment attachment = serverPlayer.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            GuidebookDiscoveryAttachment attachment = serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
             attachment.getEffectsEntries().forEach((entry) -> {
                 if (entry.getEffect().value() == payload.effect()) {
                     entry.getClientValues().values().forEach((info) -> {

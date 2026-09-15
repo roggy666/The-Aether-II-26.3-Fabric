@@ -127,10 +127,6 @@ public class CellingPathNavigation extends GroundPathNavigation {
         this.nodeEvaluator.setCanFloat(p_26563_);
     }
 
-    @Override
-    protected boolean hasValidPathType(PathType p_326937_) {
-        return super.hasValidPathType(p_326937_) || p_326937_ == PathType.OPEN;
-    }
 
     @Override
     protected Vec3 getTempMobPos() {

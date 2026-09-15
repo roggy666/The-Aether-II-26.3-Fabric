@@ -66,7 +66,7 @@ public class Skephid extends CellingMonster implements RangedAttackMob {
         double d3 = target.getZ() - this.getZ();
         double d4 = Math.sqrt(d1 * d1 + d3 * d3) * 0.2F;
         dart.shoot(d1, d0 + d4, d3, 0.8F, 6.0F);
-        this.playSound(AetherIISoundEvents.ENTITY_SKEPHID_SHOOT.value(), 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.playSound(AetherIISoundEvents.ENTITY_SKEPHID_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(dart);
     }
 
@@ -82,24 +82,24 @@ public class Skephid extends CellingMonster implements RangedAttackMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_SKEPHID_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_SKEPHID_AMBIENT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SKEPHID_HURT.get();
+        return AetherIISoundEvents.ENTITY_SKEPHID_HURT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SKEPHID_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SKEPHID_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_SKEPHID_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_SKEPHID_STEP, 0.15F, 1.0F);
     }
 
     protected static class SkephidAttackGoal extends Goal {

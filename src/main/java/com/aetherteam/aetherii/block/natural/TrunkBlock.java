@@ -151,6 +151,9 @@ public class TrunkBlock extends Block implements SimpleWaterloggedBlock {
 
     public static Map<String, WallSide> getCornerProperties(BlockGetter level, BlockPos pos) {
         Map<String, WallSide> properties = new LinkedHashMap<>();
+        if (level instanceof EmptyBlockGetter) { // state shape cache (built at registration on Fabric, before tags are bound): no neighbors, no corners
+            return properties;
+        }
         for (Direction facing : Direction.Plane.HORIZONTAL) {
             for (Direction adjacent : getAdjacentDirections(facing)) {
                 String cornerProperty = getNameForCorner(facing, adjacent);

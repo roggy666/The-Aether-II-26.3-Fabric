@@ -36,7 +36,7 @@ public class AmberHourglassMenu extends RecipeBookMenu {
     }
 
     public AmberHourglassMenu(int containerId, Inventory playerInventory, Container container, ContainerData data) {
-        super(AetherIIMenuTypes.AMBER_HOURGLASS.get(), containerId);
+        super(AetherIIMenuTypes.AMBER_HOURGLASS, containerId);
         checkContainerSize(container, 5);
         checkContainerDataCount(data, 4);
         this.container = container;
@@ -141,7 +141,7 @@ public class AmberHourglassMenu extends RecipeBookMenu {
     }
 
     public boolean isFuel(ItemStack stack) {
-        return BuiltInRegistries.ITEM.wrapAsHolder(stack.getItem()).getData(AetherIIDataMaps.AMBER_HOURGLASS_FUELS) != null;
+        return AetherIIDataMaps.AMBER_HOURGLASS_FUELS.get(BuiltInRegistries.ITEM.wrapAsHolder(stack.getItem())) != null;
     }
 
     public float getProcessingProgress() {

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skyroot_bed",
+  "key": {
+    "#": "#aether_ii:planks_crafting",
+    "W": "aether_ii:purple_cloudwool"
+  },
+  "pattern": [
+    "WWW",
+    "###"
+  ],
+  "result": {
+    "id": "aether_ii:purple_skyroot_bed"
+  }
+}

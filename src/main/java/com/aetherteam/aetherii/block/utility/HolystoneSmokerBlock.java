@@ -44,7 +44,7 @@ public class HolystoneSmokerBlock extends AbstractFurnaceBlock {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createFurnaceTicker(level, blockEntityType, AetherIIBlockEntityTypes.HOLYSTONE_SMOKER.get());
+        return createFurnaceTicker(level, blockEntityType, AetherIIBlockEntityTypes.HOLYSTONE_SMOKER);
     }
 
     @Override

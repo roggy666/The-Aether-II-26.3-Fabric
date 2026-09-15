@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
@@ -34,7 +35,7 @@ public class BurrukaiAi {
             SensorType.NEAREST_ITEMS,
             SensorType.NEAREST_ADULT,
             SensorType.HURT_BY,
-            AetherIISensorTypes.BURRUKAI_TEMPTATIONS.get()
+            AetherIISensorTypes.BURRUKAI_TEMPTATIONS
     );
     public static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.LOOK_TARGET,
@@ -88,7 +89,7 @@ public class BurrukaiAi {
 
     private static ActivityData<Burrukai> initIdleActivity(EntityType<? extends Burrukai> entityType) {
         return ActivityData.create(Activity.IDLE, ImmutableList.of(
-                Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
+                Pair.of(0, SetEntityLookTargetSometimes.create(EntityTypes.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(0, StartAttacking.create(BurrukaiAi::findNearestValidAttackTarget)),
                 Pair.of(1, new AnimalMakeLove(entityType)),
                 Pair.of(2, new FollowTemptation(livingEntity -> 1.25F)),
@@ -147,7 +148,7 @@ public class BurrukaiAi {
             burrukai.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             burrukai.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), 600L);
 
-            if (target.getType() == EntityType.PLAYER && serverLevel.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
+            if (target.getType() == EntityTypes.PLAYER && serverLevel.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
                 burrukai.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, 600L);
             }
         }

@@ -3,9 +3,9 @@ package com.aetherteam.aetherii.data.generators;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+import com.aetherteam.aetherii.data.providers.AetherIISoundDefinitionsProvider;
 
-public class AetherIISoundData extends SoundDefinitionsProvider {
+public class AetherIISoundData extends AetherIISoundDefinitionsProvider {
     public AetherIISoundData(PackOutput output) {
         super(output, AetherII.MODID);
     }

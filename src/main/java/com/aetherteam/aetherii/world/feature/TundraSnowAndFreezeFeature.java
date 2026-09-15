@@ -58,14 +58,14 @@ public class TundraSnowAndFreezeFeature extends Feature<NoneFeatureConfiguration
                     if (AetherGrassBlock.plantNotSnowed(state) && state.getBlock() instanceof Snowable snowable) {
                         level.setBlock(posAbove, snowable.setSnowy(state), 2);
                     } else {
-                        level.setBlock(posAbove, AetherIIBlocks.ARCTIC_SNOW.get().defaultBlockState(), 2);
+                        level.setBlock(posAbove, AetherIIBlocks.ARCTIC_SNOW.defaultBlockState(), 2);
                     }
                     if (ground.hasProperty(SnowyBlock.SNOWY)) {
                         level.setBlock(posBelow, ground.setValue(SnowyBlock.SNOWY, Boolean.TRUE), 2);
                     }
                 }
                 if (biome.shouldFreeze(level, posBelow, false)) {
-                    level.setBlock(posBelow, AetherIIBlocks.ARCTIC_ICE.get().defaultBlockState(), 2);
+                    level.setBlock(posBelow, AetherIIBlocks.ARCTIC_ICE.defaultBlockState(), 2);
                 }
             }
         }

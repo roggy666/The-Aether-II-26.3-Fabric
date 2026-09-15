@@ -27,7 +27,7 @@ public class TreasureDoorwayBlock extends CopyBlock {
 
     public TreasureDoorwayBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true));
+        this.registerDefaultState(this.defaultBlockState().setValue(CopyBlock.WATERLOGGED, false).setValue(CopyBlock.EMPTY, true).setValue(CopyBlock.LIGHT, 0));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class TreasureDoorwayBlock extends CopyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY);
+        builder.add(CopyBlock.WATERLOGGED, CopyBlock.EMPTY, CopyBlock.LIGHT);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class TreasureDoorwayBlock extends CopyBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (item instanceof BlockItem blockItem && (blockEntity == null || !blockEntity.collectComponents().has(AetherIIDataComponents.BLOCK_STATE))) {
                 if (blockItem.getBlock() == this) {
-                    minecraft.level.addParticle(AetherIIParticleTypes.TREASURE_DOORWAY_BLOCK.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+                    minecraft.level.addParticle(AetherIIParticleTypes.TREASURE_DOORWAY_BLOCK, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
                 }
             }
         }

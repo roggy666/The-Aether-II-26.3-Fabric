@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.attachment.player;
 
+import net.minecraft.world.item.ItemStack;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
@@ -28,8 +29,8 @@ public class AbilityBehaviorAttachment {
     private boolean canRefuelGlide;
     private int glidingTimer = -1;
     private Map<Holder<Item>, Boolean> canRefuelAbilities = new HashMap<>(Map.of(
-            AetherIIItems.BLUE_AERCLOUD_GLIDER, false,
-            AetherIIItems.PURPLE_AERCLOUD_GLIDER, false
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BLUE_AERCLOUD_GLIDER), false,
+            BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.PURPLE_AERCLOUD_GLIDER), false
     ));
 
     private boolean crossbowSpecial;
@@ -86,7 +87,7 @@ public class AbilityBehaviorAttachment {
 
     public void login(Player player) {
         this.shouldSyncAfterJoin = true;
-        player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).gravititeHoldingFloatingBlock = false;
+        player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).gravititeHoldingFloatingBlock = false;
     }
 
     public void logout(Player player) {
@@ -94,7 +95,7 @@ public class AbilityBehaviorAttachment {
 
     public void onJoinLevel(Player player) {
         if (player.level().isClientSide() && player.isLocalPlayer()) {
-            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
         }
     }
 
@@ -112,7 +113,7 @@ public class AbilityBehaviorAttachment {
 
     private void syncAfterJoin(Player player) {
         if (this.shouldSyncAfterJoin) {
-            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
             this.shouldSyncAfterJoin = false;
         }
     }
@@ -125,7 +126,7 @@ public class AbilityBehaviorAttachment {
                     PlayerList playerList = server.getPlayerList();
                     for (ServerPlayer serverPlayer : playerList.getPlayers()) {
                         if (!serverPlayer.getUUID().equals(player.getUUID())) {
-                            player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
                         }
                     }
                 }
@@ -161,7 +162,7 @@ public class AbilityBehaviorAttachment {
         if (this.getShiftingGlassBoostTime() > 0) {
             if (!player.level().isClientSide()) {
                 this.setShiftingGlassBoostTime(this.getShiftingGlassBoostTime() - 1);
-                player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
             } else {
                 if (player.tickCount % 2 == 0) {
                     Vec3 particleDirection = player.getDeltaMovement().reverse();
@@ -169,7 +170,7 @@ public class AbilityBehaviorAttachment {
                     float interval = 1 / (float) particleCount;
                     double variance = player.getRandom().nextDouble() * 0.15F;
                     for (int i = 1; i < particleCount; i++) {
-                        player.level().addParticle(AetherIIParticleTypes.GLASS_FEATHERS.get(),
+                        player.level().addParticle(AetherIIParticleTypes.GLASS_FEATHERS,
                                 player.getX() + particleDirection.x(),
                                 player.getY() + ((player.getBbHeight() - 0.25F) * i * interval) + variance,
                                 player.getZ() + particleDirection.z(),
@@ -182,11 +183,11 @@ public class AbilityBehaviorAttachment {
         }
         if (!this.isCanRefreshShiftingGlass()) {
             if (!player.getAbilities().instabuild) {
-                player.getCooldowns().addCooldown(AetherIIItems.SHIFTING_GLASS.toStack(), 25);
+                player.getCooldowns().addCooldown(new ItemStack(AetherIIItems.SHIFTING_GLASS), 25);
             }
             if (!player.level().isClientSide() && player.onGround()) {
                 this.setCanRefreshShiftingGlass(true);
-                player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
             }
         }
     }

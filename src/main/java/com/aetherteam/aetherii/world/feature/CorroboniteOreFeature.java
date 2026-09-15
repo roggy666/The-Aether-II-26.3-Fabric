@@ -186,7 +186,7 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
 
         for (Direction direction : Direction.values()) {
             blockpos$mutableblockpos.setWithOffset(mutablePos, direction);
-            BlockState newState = AetherIIBlocks.CORROBONITE_CLUSTER.get().defaultBlockState();
+            BlockState newState = AetherIIBlocks.CORROBONITE_CLUSTER.defaultBlockState();
             BlockState offsetState = adjacentStateAccessor.apply(blockpos$mutableblockpos);
             if (offsetState.isAir() || offsetState.is(newState.getBlock())) {
                 LevelChunkSection offsetsection = bulksectionaccess.getSection(blockpos$mutableblockpos);

@@ -1,9 +1,13 @@
 package com.aetherteam.aetherii.mixin.mixins.common;
 
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.world.item.Items;
+import com.aetherteam.aetherii.item.equipment.weapons.TieredCrossbowItem;
+import com.aetherteam.aetherii.event.AetherIIEvents;
 import com.aetherteam.aetherii.entity.monster.PlantMob;
 import com.aetherteam.aetherii.entity.passive.MountableAetherAnimal;
 import com.aetherteam.aetherii.item.SpecialAttackStrengthScale;
-import com.aetherteam.aetherii.item.equipment.AetherIINeoItemAbilities;
+import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.mixin.MixinHooks;
 import com.aetherteam.aetherii.mixin.mixins.common.accessor.LivingEntityAccessor;
 import com.aetherteam.aetherii.mixin.wrappers.common.ItemCooldownsWrapper;
@@ -48,17 +52,21 @@ public abstract class PlayerMixin {
         this.cooldowns = itemCooldowns;
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;)V"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
-    private void attack(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Share("canShortswordSlash") LocalBooleanRef canShortswordSlash, @Share("canHammerShock") LocalBooleanRef canHammerShock, @Share("canSpearStab") LocalBooleanRef canSpearStab) {
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;causeExtraKnockback(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/damagesource/DamageSource;FZ)V"), method = "attack(Lnet/minecraft/world/entity/Entity;)V")
+    private void attack(Entity target, CallbackInfo ci, @Local ItemStack weapon, @Local(name = "criticalAttack") boolean criticalAttack, @Share("canShortswordSlash") LocalBooleanRef canShortswordSlash, @Share("canHammerShock") LocalBooleanRef canHammerShock, @Share("canSpearStab") LocalBooleanRef canSpearStab) {
         Player player = (Player) (Object) this;
-        MixinHooks.shortswordSlashBehavior(player, target, weapon.canPerformAction(AetherIINeoItemAbilities.SHORTSWORD_SLASH));
-        MixinHooks.hammerShockBehavior(player, target, weapon.canPerformAction(AetherIINeoItemAbilities.HAMMER_SHOCK));
-        MixinHooks.pikeStabBehavior(player, target, weapon.canPerformAction(AetherIINeoItemAbilities.PIKE_STAB));
+        AetherIIEvents.CRITICAL_HIT.invoker().onCriticalHit(player, target, criticalAttack, criticalAttack ? 1.5F : 1.0F);
+        boolean canShortsword = (weapon.getItem() instanceof com.aetherteam.aetherii.item.equipment.WeaponAbilityItem abilityItem && abilityItem.canPerformAction(weapon, com.aetherteam.aetherii.item.equipment.WeaponAbility.SHORTSWORD_SLASH)) || weapon.is(AetherIITags.Items.TOOLS_SHORTSWORDS);
+        boolean canHammer = (weapon.getItem() instanceof com.aetherteam.aetherii.item.equipment.WeaponAbilityItem abilityItem && abilityItem.canPerformAction(weapon, com.aetherteam.aetherii.item.equipment.WeaponAbility.HAMMER_SHOCK)) || weapon.is(AetherIITags.Items.TOOLS_HAMMERS);
+        boolean canPike = (weapon.getItem() instanceof com.aetherteam.aetherii.item.equipment.WeaponAbilityItem abilityItem && abilityItem.canPerformAction(weapon, com.aetherteam.aetherii.item.equipment.WeaponAbility.PIKE_STAB)) || weapon.is(AetherIITags.Items.TOOLS_PIKES);
+        MixinHooks.shortswordSlashBehavior(player, target, canShortsword);
+        MixinHooks.hammerShockBehavior(player, target, canHammer);
+        MixinHooks.pikeStabBehavior(player, target, canPike);
     }
 
-    @WrapOperation(method = "doSweepAttack(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/damagesource/DamageSource;FLnet/minecraft/world/phys/AABB;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-    private static boolean wrapHurtServer(LivingEntity instance, ServerLevel serverLevel, DamageSource damageSource, float damage, Operation<Boolean> original, @Local LivingEntity livingEntity) {
-        if (livingEntity instanceof PlantMob) {
+    @WrapOperation(method = "doSweepAttack(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/damagesource/DamageSource;F)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    private boolean wrapHurtServer(LivingEntity instance, ServerLevel serverLevel, DamageSource damageSource, float damage, Operation<Boolean> original) {
+        if (instance instanceof PlantMob) {
             return false;
         }
         return original.call(instance, serverLevel, damageSource, damage);
@@ -98,5 +106,26 @@ public abstract class PlayerMixin {
             return specialAttackStrengthScale.getAttackStrengthScale(player.level(), player, itemStack, adjustTicks, ((LivingEntityAccessor) player).aether$getAttackStrengthTicker());
         }
         return original.call(adjustTicks);
+    }
+
+    @Inject(method = "tick()V", at = @At("HEAD"))
+    private void aether_ii$tickPre(CallbackInfo ci) {
+        AetherIIEvents.PLAYER_TICK_PRE.invoker().onPlayerTick((Player) (Object) this);
+    }
+
+    @Inject(method = "tick()V", at = @At("TAIL"))
+    private void aether_ii$tickPost(CallbackInfo ci) {
+        AetherIIEvents.PLAYER_TICK_POST.invoker().onPlayerTick((Player) (Object) this);
+    }
+
+    /**
+     * NeoForge's {@code ProjectileWeaponItem#getDefaultCreativeAmmo}, see {@link com.aetherteam.aetherii.item.equipment.weapons.TieredCrossbowItem}.
+     */
+    @Inject(method = "getProjectile", at = @At("RETURN"), cancellable = true)
+    private void aether_ii$defaultCreativeAmmo(ItemStack heldWeapon, CallbackInfoReturnable<ItemStack> cir) {
+        Player player = (Player) (Object) this;
+        if (heldWeapon.getItem() instanceof TieredCrossbowItem crossbow && player.hasInfiniteMaterials() && cir.getReturnValue().is(Items.ARROW)) {
+            cir.setReturnValue(crossbow.getDefaultCreativeAmmo(player, heldWeapon));
+        }
     }
 }

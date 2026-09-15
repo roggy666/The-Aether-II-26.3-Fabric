@@ -1,20 +1,24 @@
 package com.aetherteam.aetherii.advancement.predicate;
 
 import com.aetherteam.aetherii.AetherII;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.advancements.criterion.EntitySubPredicate;
+import com.mojang.serialization.Codec;
+import net.minecraft.advancements.predicates.entity.EntitySubPredicate;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.resources.Identifier;
 
 public class AetherIIEntitySubPredicates {
-    public static final DeferredRegister<MapCodec<? extends EntitySubPredicate>> ENTITY_SUB_PREDICATES = DeferredRegister.create(BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, AetherII.MODID);
+    private static <T extends EntitySubPredicate> Codec<T> register(String name, Codec<T> codec) {
+        return Registry.register(BuiltInRegistries.ENTITY_SUB_PREDICATE_TYPE, Identifier.fromNamespaceAndPath(AetherII.MODID, name), codec);
+    }
 
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<AndPredicate>> AND = ENTITY_SUB_PREDICATES.register("and", () -> AndPredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<OnGroundPredicate>> ON_GROUND = ENTITY_SUB_PREDICATES.register("on_ground", () -> OnGroundPredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<AlivePredicate>> ALIVE = ENTITY_SUB_PREDICATES.register("alive", () -> AlivePredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<ArmorSetPredicate>> ARMOR_SET = ENTITY_SUB_PREDICATES.register("armor_set", () -> ArmorSetPredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<EffectBuildupPredicate>> EFFECT_BUILDUP = ENTITY_SUB_PREDICATES.register("effect_buildup", () -> EffectBuildupPredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<KirridPredicate>> KIRRID = ENTITY_SUB_PREDICATES.register("kirrid", () -> KirridPredicate.CODEC);
-    public static final DeferredHolder<MapCodec<? extends EntitySubPredicate>, MapCodec<SheepuffPredicate>> SHEEPUFF = ENTITY_SUB_PREDICATES.register("sheepuff", () -> SheepuffPredicate.CODEC);
+    public static final Codec<OnGroundPredicate> ON_GROUND = register("on_ground", OnGroundPredicate.CODEC);
+    public static final Codec<AlivePredicate> ALIVE = register("alive", AlivePredicate.CODEC);
+    public static final Codec<ArmorSetPredicate> ARMOR_SET = register("armor_set", ArmorSetPredicate.CODEC);
+    public static final Codec<EffectBuildupPredicate> EFFECT_BUILDUP = register("effect_buildup", EffectBuildupPredicate.CODEC);
+    public static final Codec<KirridPredicate> KIRRID = register("kirrid", KirridPredicate.CODEC);
+    public static final Codec<SheepuffPredicate> SHEEPUFF = register("sheepuff", SheepuffPredicate.CODEC);
+
+    public static void init() {}
 }
+

@@ -51,7 +51,7 @@ public class CopyBlockSpecialRenderer implements SpecialModelRenderer<BlockState
     public void submit(@Nullable BlockState blockState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         if (blockState != null) {
             BlockModelRenderState copyRenderState = new BlockModelRenderState();
-            Minecraft.getInstance().getBlockModelResolver().update(copyRenderState, blockState, BlockDisplayContext.create());
+            Minecraft.getInstance().getModelManager().getBlockModelSet().get(blockState).update(copyRenderState, blockState, BlockDisplayContext.create(), 42L);
 
             List<BlockStateModelPart> newParts = new ArrayList<>();
             if (Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(this.block.value().defaultBlockState()) instanceof CopyBlockModel copyBlockModel) {
@@ -60,7 +60,7 @@ public class CopyBlockSpecialRenderer implements SpecialModelRenderer<BlockState
             }
             copyRenderState.submit(poseStack, submitNodeCollector, lightCoords, overlayCoords, outlineColor);
 
-            submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), this.submitSurfaces(-0.001F, -0.001F, 1.001F, 1.001F, -0.001F, 1.001F));
+            submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockItemSheet(), this.submitSurfaces(-0.001F, -0.001F, 1.001F, 1.001F, -0.001F, 1.001F));
         }
     }
 

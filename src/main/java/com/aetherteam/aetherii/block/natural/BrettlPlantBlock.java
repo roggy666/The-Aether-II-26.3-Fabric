@@ -28,8 +28,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+
+import java.util.function.BiConsumer;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.CommonHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -56,7 +57,7 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
 
     @Override
     protected GrowingPlantHeadBlock getHeadBlock() {
-        return (GrowingPlantHeadBlock) AetherIIBlocks.BRETTL_PLANT_TIP.get();
+        return (GrowingPlantHeadBlock) AetherIIBlocks.BRETTL_PLANT_TIP;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
 
     @Override
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(25) == 0)) {
+        if (level.getRawBrightness(pos.above(), 0) >= 9 && (random.nextInt(25) == 0)) {
             BlockPos offsetPos = pos.relative(this.growthDirection);
             BlockState offsetState = level.getBlockState(offsetPos);
             if (offsetState.is(this.getHeadBlock()) || (offsetState.is(this) && offsetState.getValue(GROWN))) {
@@ -95,15 +96,15 @@ public class BrettlPlantBlock extends GrowingPlantBodyBlock implements SimpleWat
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
         if (state.getValue(GROWN)) {
-            level.setBlock(pos, AetherIIBlocks.BRETTL_PLANT.get().defaultBlockState().setValue(GROWN, false), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.BRETTL_PLANT.defaultBlockState().setValue(GROWN, false), 1 | 2);
         }
     }
 
     @Override
-    public void onBlockExploded(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion) {
-        super.onBlockExploded(state, level, pos, explosion);
+    protected void onExplosionHit(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> onHit) {
+        super.onExplosionHit(state, level, pos, explosion, onHit);
         if (state.getValue(GROWN)) {
-            level.setBlock(pos, AetherIIBlocks.BRETTL_PLANT.get().defaultBlockState().setValue(GROWN, false), 1 | 2);
+            level.setBlock(pos, AetherIIBlocks.BRETTL_PLANT.defaultBlockState().setValue(GROWN, false), 1 | 2);
         }
     }
 

@@ -14,7 +14,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
 
@@ -36,7 +38,8 @@ public record GrassTintSyncPacket(Map<ResourceKey<Biome>, Integer> types) implem
         return new GrassTintSyncPacket(map);
     }
 
-    public static void execute(GrassTintSyncPacket packet, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(GrassTintSyncPacket packet, Player player) {
         if (Minecraft.getInstance().level != null) {
             BiomeHooks.acceptColors(Minecraft.getInstance().level.registryAccess().lookupOrThrow(Registries.BIOME), packet.types);
         }

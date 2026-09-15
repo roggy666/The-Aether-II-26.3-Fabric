@@ -16,7 +16,7 @@ public class SkyrootCrossbowItem extends TieredCrossbowItem {
 
     @Override
     public int getProjectileCount(ServerLevel level, ItemStack tool, Entity entity, int projectileCount) {
-        if (entity.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (entity.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             return 2;
         }
         return super.getProjectileCount(level, tool, entity, projectileCount);

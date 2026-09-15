@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.entity.passive;
 
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.advancement.trigger.AetherIIAdvancementTriggers;
@@ -22,7 +24,7 @@ import com.aetherteam.aetherii.item.miscellaneous.MoaFeedItem;
 import com.aetherteam.aetherii.item.miscellaneous.MoaSaddlebagItem;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentType;
@@ -71,8 +73,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ItemAbilities;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import org.jetbrains.annotations.Contract;
 
 import javax.annotation.Nullable;
@@ -286,9 +287,9 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
         //this.animateWings();
 
         /*if (this.getControllingPassenger() instanceof Player player) {
-            if (player.getData(AetherIIDataAttachments.PLAYER).isJumping() && !this.onClimbable() && this.tryToStartFallFlying()) {
+            if (player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).isJumping() && !this.onClimbable() && this.tryToStartFallFlying()) {
             }
-//            else if (player.getData(AetherIIDataAttachments.PLAYER).isJumping() && !this.tryToStartFallFlying()) {
+//            else if (player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).isJumping() && !this.tryToStartFallFlying()) {
 //                this.stopFallFlying();
 //            }
         }*/
@@ -317,7 +318,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
         } else {
             this.stopFallFlying();
         }
-        this.playSound(AetherIISoundEvents.ENTITY_MOA_FLAP.get());
+        this.playSound(AetherIISoundEvents.ENTITY_MOA_FLAP);
     }
 
     public void startFallFlying() {
@@ -389,7 +390,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
 //                MoaType moaType = this.getMoaType();
 //                if (moaType != null && this.getBrain().hasMemoryValue(MemoryModuleType.HOME) && this.getBrain().getMemory(MemoryModuleType.HOME).get().pos().distManhattan(this.blockPosition()) <= 3) {
 //                    if (this.onGround() && this.getBlockStateOn().is(AetherIITags.Blocks.MOA_HATCH_BLOCK)) {
-//                        EggLayEvent eggLayEvent = AetherIIEventDispatch.onLayEgg(this, AetherIISoundEvents.ENTITY_MOA_EGG.get(), 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F, this.getMoaType().egg());
+//                        EggLayEvent eggLayEvent = AetherIIEventDispatch.onLayEgg(this, AetherIISoundEvents.ENTITY_MOA_EGG, 1.0F, (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 0.2F + 1.0F, this.getMoaType().egg());
 //                        if (!eggLayEvent.isCanceled()) {
 //                            if (eggLayEvent.getSound() != null) {
 //                                this.playSound(eggLayEvent.getSound(), eggLayEvent.getVolume(), eggLayEvent.getPitch());
@@ -482,7 +483,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
             this.setFlapCooldown(this.getFlapCooldown() - 1);
         } else if (this.getFlapCooldown() == 0) {
             if (!this.onGround()) {
-                this.level().playSound(null, this, AetherIISoundEvents.ENTITY_MOA_FLAP.get(), SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.getRandom().nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.getRandom().nextFloat(), 0.0F, 0.3F));
+                this.level().playSound(null, this, AetherIISoundEvents.ENTITY_MOA_FLAP, SoundSource.NEUTRAL, 0.15F, Mth.clamp(this.getRandom().nextFloat(), 0.7F, 1.0F) + Mth.clamp(this.getRandom().nextFloat(), 0.0F, 0.3F));
                 this.setFlapCooldown(15);
             }
         }
@@ -515,7 +516,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
         if (p_35391_ == 13) {
             this.level().addParticle(ParticleTypes.ANGRY_VILLAGER, this.getX() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
         } else if (p_35391_ == 42) {
-            this.level().addParticle(AetherIIParticleTypes.MOA_HUNGRY.get(), this.getX() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
+            this.level().addParticle(AetherIIParticleTypes.MOA_HUNGRY, this.getX() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), this.getY() + 1, this.getZ() + (this.getRandom().nextDouble() - 0.5) * this.getBbWidth(), 0.0, 0.0, 0.0);
         } else {
             super.handleEntityEvent(p_35391_);
         }
@@ -675,9 +676,9 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
                 if (player.hasInfiniteMaterials()) {
                     MoaEggType type = itemStack.get(AetherIIDataComponents.MOA_EGG_TYPE);
                     if (type != null) {
-                        Moa moa = AetherIIEntityTypes.MOA.get().create(this.level(), EntitySpawnReason.SPAWN_ITEM_USE);
+                        Moa moa = AetherIIEntityTypes.MOA.create(this.level(), EntitySpawnReason.SPAWN_ITEM_USE);
                         if (moa != null) {
-                            Vec3 vec3 = this.blockPosition().getCenter();
+                            Vec3 vec3 = Vec3.atCenterOf(this.blockPosition());
                             moa.setBaby(false);
                             moa.setPlayerGrown(true);
                             moa.setKeratinColor(type.keratinColor());
@@ -691,9 +692,9 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
                     }
                 }
             }
-        } else if (itemStack.canPerformAction(ItemAbilities.SHEARS_HARVEST) && !this.isBaby() && this.isPlayerGrown() && this.getShearingTime() == 0) {
+        } else if ((itemStack.is(ConventionalItemTags.SHEAR_TOOLS) || itemStack.is(Items.SHEARS)) && !this.isBaby() && this.isPlayerGrown() && this.getShearingTime() == 0) {
             if (this.level() instanceof ServerLevel serverLevel) {
-                ItemStack featherStack = new ItemStack(AetherIIItems.MOA_FEATHER.get(), 4);
+                ItemStack featherStack = new ItemStack(AetherIIItems.MOA_FEATHER, 4);
                 FeatherColor featherColor = this.getFeatherColor();
                 var specialVariantOpt = this.getSpecialVariant();
                 if (specialVariantOpt.isPresent()) {
@@ -741,7 +742,6 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
                     this.setBaby(false);
                 }
                 this.setHungry(false);
-                //PacketDistributor.sendToAll(new MoaInteractPacket(player.getId(), hand == InteractionHand.MAIN_HAND)); // Packet necessary to play animation because this code segment is server-side only, so no animations.
                 return InteractionResult.CONSUME;
             } else if (this.isPlayerGrown() && !this.isBaby() && this.getHealth() < this.getMaxHealth() && itemStack.is(AetherIITags.Items.MOA_FOOD)) { // Heals a tamed Moa.
                 if (!player.getAbilities().instabuild) {
@@ -749,7 +749,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
                 }
                 this.heal(5.0F);
                 if (player instanceof ServerPlayer serverPlayer) {
-                    AetherIIAdvancementTriggers.FEED_MOA.get().trigger(serverPlayer, itemStack, this);
+                    AetherIIAdvancementTriggers.FEED_MOA.trigger(serverPlayer, itemStack, this);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -765,9 +765,9 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
     }
 
     private void openMenu(Player player) {
-        player.openMenu(new ExtraDataMenuProvider(
+        player.openMenu(new ExtraDataMenuProvider<>(
                 (id, inventory, user) -> new GuidebookEquipmentMenu(id, inventory, this),
-                (menu, buffer) -> ByteBufCodecs.INT.encode(buffer, this.getId()),
+                (serverPlayer) -> this.getId(),
                 Component.translatable("gui.aether_ii.guidebook.equipment.title")));
     }
 
@@ -788,7 +788,9 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
     public void remove(RemovalReason reason) {
         if (this.getFirstPassenger() instanceof Player player) {
             if (player.containerMenu instanceof GuidebookEquipmentMenu) {
-                player.closeContainer();
+                if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.closeContainer();
+            }
             }
         }
         super.remove(reason);
@@ -1096,22 +1098,22 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_MOA_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_MOA_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_MOA_HURT.get();
+        return AetherIISoundEvents.ENTITY_MOA_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_MOA_DEATH.get();
+        return AetherIISoundEvents.ENTITY_MOA_DEATH;
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        this.playSound(AetherIISoundEvents.ENTITY_MOA_STEP.get(), 0.15F, 1.0F);
+        this.playSound(AetherIISoundEvents.ENTITY_MOA_STEP, 0.15F, 1.0F);
     }
 
     @Override
@@ -1166,7 +1168,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
      */
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
-        return (effect.getEffect().value() != AetherIIMobEffects.TOXIN.get() || !this.isPlayerGrown()) && super.canBeAffected(effect);
+        return (effect.getEffect().value() != AetherIIMobEffects.TOXIN.value() || !this.isPlayerGrown()) && super.canBeAffected(effect);
     }
 
     @Override
@@ -1344,7 +1346,7 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
 
     @Override
     public ItemStack getPickResult() {
-        ItemStack moaEggItem = new ItemStack(AetherIIItems.MOA_EGG.get());
+        ItemStack moaEggItem = new ItemStack(AetherIIItems.MOA_EGG);
         moaEggItem.set(AetherIIDataComponents.MOA_EGG_TYPE, this.getEggType());
         return moaEggItem;
     }
@@ -1379,19 +1381,19 @@ public class Moa extends MountableAetherAnimal implements ContainerListener, Has
     @Nullable
     @Override
     public <T> T get(DataComponentType<? extends T> component) {
-        return component == AetherIIDataComponents.MOA_VARIANT.get() ? castComponentValue(component, this.getVariant()) : super.get(component);
+        return component == AetherIIDataComponents.MOA_VARIANT ? castComponentValue(component, this.getVariant()) : super.get(component);
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        this.applyImplicitComponentIfPresent(componentGetter, AetherIIDataComponents.MOA_VARIANT.get());
+        this.applyImplicitComponentIfPresent(componentGetter, AetherIIDataComponents.MOA_VARIANT);
         super.applyImplicitComponents(componentGetter);
     }
 
     @Override
     protected <T> boolean applyImplicitComponent(DataComponentType<T> component, T value) {
-        if (component == AetherIIDataComponents.MOA_VARIANT.get()) {
-            this.setVariant(castComponentValue(AetherIIDataComponents.MOA_VARIANT.get(), value));
+        if (component == AetherIIDataComponents.MOA_VARIANT) {
+            this.setVariant(castComponentValue(AetherIIDataComponents.MOA_VARIANT, value));
             return true;
         } else {
             return super.applyImplicitComponent(component, value);

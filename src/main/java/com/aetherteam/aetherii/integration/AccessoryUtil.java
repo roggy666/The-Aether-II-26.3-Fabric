@@ -2,6 +2,7 @@ package com.aetherteam.aetherii.integration;
 
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.inventory.container.AccessoryContainer;
+import com.aetherteam.aetherii.item.AttributeTooltipUtil;
 import com.aetherteam.aetherii.network.packet.clientbound.BreakItemPacket;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
@@ -18,11 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.common.util.AttributeUtil;
-import net.neoforged.neoforge.event.GatherSkippedAttributeTooltipsEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.entity.FakePlayer;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,8 @@ public class AccessoryUtil {
 
     public static List<ItemStack> get(LivingEntity livingEntity, AccessoryContainer.SlotType slot) {
         List<ItemStack> items = new ArrayList<>();
-        if ((!(livingEntity instanceof Player player) || !player.isFakePlayer())) {
-            AccessoryContainer container = livingEntity.getData(AetherIIDataAttachments.ACCESSORIES);
+        if ((!(livingEntity instanceof Player player) || !(player instanceof FakePlayer))) {
+            AccessoryContainer container = livingEntity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
             for (int i : slot.getIndex()) {
                 ItemStack itemStack = container.getItem(i);
                 if (!itemStack.isEmpty()) {
@@ -54,7 +53,7 @@ public class AccessoryUtil {
     }
 
     public static InteractionResult equip(Player player, ItemStack stack, AccessoryContainer.SlotType slot) {
-        AccessoryContainer container = player.getData(AetherIIDataAttachments.ACCESSORIES);
+        AccessoryContainer container = player.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
         int index = getValidSlot(player, stack,  slot);
         ItemStack itemstack = container.getItem(index);
         if ((!EnchantmentHelper.has(itemstack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE) || player.isCreative()) && !ItemStack.isSameItemSameComponents(stack, itemstack)) {
@@ -81,7 +80,7 @@ public class AccessoryUtil {
     }
 
     private static int getValidSlot(Player player, ItemStack stack, AccessoryContainer.SlotType slot) {
-        AccessoryContainer container = player.getData(AetherIIDataAttachments.ACCESSORIES);
+        AccessoryContainer container = player.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES);
         int firstEmptyIndex = -1;
         int firstFullIndex = -1;
         for (int i : slot.getIndex()) {
@@ -99,15 +98,7 @@ public class AccessoryUtil {
         }
     }
 
-    public static void addAttributeTooltips(ItemStack stack, Consumer<Component> tooltip, AttributeTooltipContext ctx, Multimap<Holder<Attribute>, AttributeModifier> modifiers, String group) {
-        var event = NeoForge.EVENT_BUS.post(new GatherSkippedAttributeTooltipsEvent(stack, ctx));
-        if (event.isSkippingAll()) {
-            return;
-        }
-
-        // Remove any skipped modifiers before doing any logic
-        modifiers.values().removeIf(m -> event.isSkipped(m.id()));
-
+    public static void addAttributeTooltips(ItemStack stack, Consumer<Component> tooltip, AttributeTooltipUtil.Context ctx, Multimap<Holder<Attribute>, AttributeModifier> modifiers, String group) {
         if (modifiers.isEmpty()) {
             return;
         }
@@ -116,10 +107,14 @@ public class AccessoryUtil {
         tooltip.accept(Component.empty());
         tooltip.accept(Component.translatable("aether_ii.tooltip.item.modifiers." + group).withStyle(ChatFormatting.GRAY));
 
-        AttributeUtil.applyTextFor(stack, tooltip, modifiers, ctx);
+        AttributeTooltipUtil.applyTextFor(stack, tooltip, modifiers, ctx);
     }
 
     public static void breakAccessory(Item item, ItemStack stack, ServerPlayer wearer) {
-        PacketDistributor.sendToAllPlayers(new BreakItemPacket(wearer.getId(), stack.copy()));
+        BreakItemPacket packet = new BreakItemPacket(wearer.getId(), stack.copy());
+        ServerPlayNetworking.send(wearer, packet);
+        for (ServerPlayer player : PlayerLookup.tracking(wearer)) {
+            ServerPlayNetworking.send(player, packet);
+        }
     }
 }

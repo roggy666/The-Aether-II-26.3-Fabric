@@ -48,7 +48,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
         }
 
         ItemStack copyStack = stack.copy();
-        stack.hurtAndBreak(damage / 3, serverLevel, wearer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+        stack.hurtAndBreak(damage / 3, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
     }
 
     /**
@@ -78,7 +78,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
 
             AccessoryFreezableRecipe freezableRecipe = null;
 
-            for (RecipeHolder<AccessoryFreezableRecipe> holder : serverLevel.recipeAccess().recipeMap().byType(AetherIIRecipeTypes.ACCESSORY_FREEZABLE.get())) {
+            for (RecipeHolder<AccessoryFreezableRecipe> holder : serverLevel.recipeAccess().getAllOfType(AetherIIRecipeTypes.ACCESSORY_FREEZABLE)) {
                 if (freezableRecipe == null || (freezableRecipe.getBiome().isEmpty() && holder.value().getBiome().isPresent())) {
                     if (holder.value().matches(level, pos, finalOldBlockState)) {
                         freezableRecipe = holder.value();

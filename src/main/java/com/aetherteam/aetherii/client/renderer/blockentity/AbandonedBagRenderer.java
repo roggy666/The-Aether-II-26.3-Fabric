@@ -69,7 +69,7 @@ public class AbandonedBagRenderer implements BlockEntityRenderer<AbandonedBagBlo
     public void extractRenderState(AbandonedBagBlockEntity blockEntity, AbandonedBagRenderState state, float p_446851_, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, p_446944_);
         boolean flag = blockEntity.getLevel() != null;
-        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.ABANDONED_BAG.get().defaultBlockState().setValue(AbandonedBagBlock.FACING, Direction.SOUTH);
+        BlockState blockstate = flag ? blockEntity.getBlockState() : AetherIIBlocks.ABANDONED_BAG.defaultBlockState().setValue(AbandonedBagBlock.FACING, Direction.SOUTH);
         state.angle = blockstate.getValue(AbandonedBagBlock.FACING).toYRot();
         state.open = blockEntity.getOpenNess(p_446851_);
 

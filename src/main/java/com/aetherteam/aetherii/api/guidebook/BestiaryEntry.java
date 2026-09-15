@@ -163,8 +163,16 @@ public class BestiaryEntry extends GuidebookEntry {
             return new LootDisplay(Either.left(item), chance, minCount, maxCount);
         }
 
+        public static LootDisplay item(Item item, double chance, int minCount, int maxCount) {
+            return item(BuiltInRegistries.ITEM.wrapAsHolder(item), chance, minCount, maxCount);
+        }
+
         public static LootDisplay block(Holder<Block> item, double chance, int minCount, int maxCount) {
             return new LootDisplay(Either.right(item), chance, minCount, maxCount);
+        }
+
+        public static LootDisplay block(Block item, double chance, int minCount, int maxCount) {
+            return block(BuiltInRegistries.BLOCK.wrapAsHolder(item), chance, minCount, maxCount);
         }
 
         public ItemLike getItemLike() {

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "aether_ii:golden_amber",
+    "S": "#aether_ii:crafts_skyroot_tools"
+  },
+  "pattern": [
+    "A  ",
+    " SA",
+    "  S"
+  ],
+  "result": {
+    "id": "aether_ii:dart_shooter"
+  }
+}

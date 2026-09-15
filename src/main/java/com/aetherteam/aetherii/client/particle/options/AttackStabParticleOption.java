@@ -20,6 +20,6 @@ public record AttackStabParticleOption(float shade) implements ParticleOptions {
 
     @Override
     public ParticleType<?> getType() {
-        return AetherIIParticleTypes.STAB_ATTACK.get();
+        return AetherIIParticleTypes.STAB_ATTACK;
     }
 }

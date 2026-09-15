@@ -123,6 +123,6 @@ public class MossDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return AetherIITreeDecoratorTypes.MOSS.get();
+        return AetherIITreeDecoratorTypes.MOSS;
     }
 }

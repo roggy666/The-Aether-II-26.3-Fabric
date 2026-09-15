@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.layers;
 
+import com.aetherteam.aetherii.client.AetherIIClientExtensions;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.AetherIIModelLayers;
 import com.aetherteam.aetherii.client.renderer.AetherIIRenderTypes;
@@ -15,7 +16,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public class MoaSaddleLayer extends RenderLayer<MoaRenderState, EntityModel<MoaRenderState>> {
     private static final Identifier SADDLE_TEXTURE = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/entity/mobs/moa/saddle/moa_saddle.png");
@@ -31,7 +31,7 @@ public class MoaSaddleLayer extends RenderLayer<MoaRenderState, EntityModel<MoaR
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, MoaRenderState moa, float v, float v1) {
         if (!moa.isInvisible && moa.isSaddled()) {
             ItemStack saddle = moa.saddle;
-            int colorRaw = IClientItemExtensions.of(saddle).getDefaultDyeColor(saddle);
+            int colorRaw = AetherIIClientExtensions.getDefaultDyeColor(saddle);
             float opacity = moa.opacity;
             int baseColor = ARGB.colorFromFloat(opacity, ARGB.redFloat(colorRaw), ARGB.greenFloat(colorRaw), ARGB.blueFloat(colorRaw));
             int overlayColor = ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F);

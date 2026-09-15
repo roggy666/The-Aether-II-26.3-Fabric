@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.equipment.accessories;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.integration.AccessoryUtil;
 import com.aetherteam.aetherii.inventory.container.AccessoryContainer;
@@ -26,14 +27,16 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
+import com.aetherteam.aetherii.item.AttributeTooltipUtil;
 
 import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class AccessoryItem extends Item {
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+
+public class AccessoryItem extends Item implements CustomEnchantmentItem {
     private final AccessoryContainer.SlotType slotType;
     private final Set<ConditionalAttribute> attributes;
 
@@ -55,7 +58,7 @@ public class AccessoryItem extends Item {
         for (ConditionalAttribute attribute : this.getBaseAttributes()) {
             attributesMap.put(attribute.attribute(), attribute.modifier().getModifier(stack));
         }
-        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipContext.of(null, context, tooltipDisplay, tooltipFlag), attributesMap, this.getSlotType().name().toLowerCase(Locale.ROOT));
+        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipUtil.Context.of(null, context, tooltipDisplay, tooltipFlag), attributesMap, this.getSlotType().name().toLowerCase(Locale.ROOT));
     }
 
     public void tick(ItemStack stack, LivingEntity wearer, int slot) {
@@ -111,7 +114,7 @@ public class AccessoryItem extends Item {
     }
 
     public Holder<SoundEvent> getEquipSound() {
-        return AetherIISoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC;
+        return BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.ITEM_ACCESSORY_EQUIP_GENERIC);
     }
 
     public Set<ConditionalAttribute> getBaseAttributes() {

@@ -55,7 +55,7 @@ public interface FreezingBlock extends FreezingBehavior<BlockState> {
 
             IcestoneFreezableRecipe freezableRecipe = null;
 
-            for (RecipeHolder<IcestoneFreezableRecipe> holder : serverLevel.recipeAccess().recipeMap().byType(AetherIIRecipeTypes.ICESTONE_FREEZABLE.get())) {
+            for (RecipeHolder<IcestoneFreezableRecipe> holder : serverLevel.recipeAccess().getAllOfType(AetherIIRecipeTypes.ICESTONE_FREEZABLE)) {
                 if (freezableRecipe == null || (freezableRecipe.getBiome().isEmpty() && holder.value().getBiome().isPresent())) {
                     if (holder.value().matches(level, pos, finalOldBlockState)) {
                         freezableRecipe = holder.value();

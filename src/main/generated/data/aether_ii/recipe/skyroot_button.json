@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "wooden_button",
+  "ingredients": [
+    "aether_ii:skyroot_planks"
+  ],
+  "result": {
+    "id": "aether_ii:skyroot_button"
+  }
+}

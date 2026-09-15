@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.JukeboxSong;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.attachment.AttachmentType;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class AetherIIClientProxy {
     }
 
     public static void onMusicPlayerStart(Holder<JukeboxSong> song) {
-        Minecraft.getInstance().gui.setNowPlaying(song.value().description());
+        Minecraft.getInstance().gui.hud.setNowPlaying(song.value().description());
     }
 
     public static void stopMusicPlayer(SoundEvent soundEvent, SoundSource source) {
@@ -67,7 +67,7 @@ public class AetherIIClientProxy {
         SoundInstance instance = MergedChannelSoundInstance.forSong(sound, Vec3.atCenterOf(pos));
         handler.aether_ii$getPlayingJukeboxSongs().put(pos, instance);
         Minecraft.getInstance().getSoundManager().play(instance);
-        Minecraft.getInstance().gui.setNowPlaying(song.description());
+        Minecraft.getInstance().gui.hud.setNowPlaying(song.description());
         for (LivingEntity entity : Minecraft.getInstance().level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(3.0))) {
             entity.setRecordPlayingNearby(pos, true);
         }
@@ -85,7 +85,7 @@ public class AetherIIClientProxy {
     }
 
     public static void setSectionDirty(SectionPos pos) {
-        Minecraft.getInstance().levelRenderer.setSectionDirty(pos.x(), pos.y(), pos.z());
+        Minecraft.getInstance().levelExtractor.setSectionDirty(pos.x(), pos.y(), pos.z());
     }
 
     public static Player getClientPlayer() {
@@ -93,11 +93,26 @@ public class AetherIIClientProxy {
     }
 
     @Nullable
-    public static <T> T getClientPlayerData(Supplier<AttachmentType<T>> holder) {
+    public static <T> T getClientPlayerData(AttachmentType<T> holder) {
         if (Minecraft.getInstance().player != null) {
-            return Minecraft.getInstance().player.getData(holder);
+            return Minecraft.getInstance().player.getAttachedOrCreate(holder);
         } else {
             return null;
         }
+    }
+
+    public static void progressivelyDestroyBlock(net.minecraft.world.level.Level level, BlockPos belowPos, int speed, boolean drop) {
+        int id = belowPos.hashCode();
+        net.minecraft.server.level.BlockDestructionProgress progress = ((ClientLevelAccessor) level).aether_ii$getDestroyingBlocks().get(id);
+        if (progress != null) {
+            int destroyProgress = progress.getProgress();
+            level.destroyBlockProgress(belowPos.hashCode(), belowPos, destroyProgress + speed);
+            if (destroyProgress >= 9) {
+                net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.send(new com.aetherteam.aetherii.network.packet.serverbound.AlkahestBreakBlockPacket(belowPos, drop));
+            }
+        } else {
+            level.destroyBlockProgress(belowPos.hashCode(), belowPos, speed);
+        }
+        net.minecraft.util.ParticleUtils.spawnParticlesOnBlockFace(level, belowPos.above(), net.minecraft.core.particles.ParticleTypes.WHITE_SMOKE, net.minecraft.util.valueproviders.UniformInt.of(10, 20), net.minecraft.core.Direction.DOWN, () -> new Vec3(0, 0.5, 0), 0.5);
     }
 }

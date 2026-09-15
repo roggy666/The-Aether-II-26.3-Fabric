@@ -19,7 +19,7 @@ import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 import net.minecraft.world.item.consume_effects.ConsumeEffect;
 import net.minecraft.world.item.consume_effects.RemoveStatusEffectsConsumeEffect;
-import net.neoforged.neoforge.common.util.AttributeUtil;
+import com.aetherteam.aetherii.item.AttributeTooltipUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +94,7 @@ public class AetherIITooltips {
             if (!list.isEmpty()) {
                 tooltipAdder.accept(CommonComponents.EMPTY);
                 tooltipAdder.accept(Component.translatable("potion.whenDrank").withStyle(ChatFormatting.DARK_PURPLE));
-                AttributeUtil.addPotionTooltip(list, tooltipAdder);
+                AttributeTooltipUtil.addPotionTooltip(list, tooltipAdder);
             }
         }
     };

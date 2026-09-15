@@ -145,7 +145,7 @@ public class SimpleTrunkTreeDecorator extends TreeDecorator {
 
     @Override
     protected @NotNull TreeDecoratorType<?> type() {
-        return AetherIITreeDecoratorTypes.SIMPLE_TRUNK.get();
+        return AetherIITreeDecoratorTypes.SIMPLE_TRUNK;
     }
 
     public static class TrunkMap {

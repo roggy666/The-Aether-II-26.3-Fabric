@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.miscellaneous.glider;
 
+import com.aetherteam.aetherii.item.StopUsingItem;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.player.AbilityBehaviorAttachment;
@@ -20,7 +21,7 @@ import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class AercloudGliderItem extends Item implements ToggleItem {
+public class AercloudGliderItem extends Item implements ToggleItem, StopUsingItem {
     public AercloudGliderItem(Properties properties) {
         super(properties);
     }
@@ -28,14 +29,14 @@ public class AercloudGliderItem extends Item implements ToggleItem {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() < 0) {
-            player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(this.getUseDuration(stack, player));
+        if (player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() < 0) {
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(this.getUseDuration(stack, player));
         }
-        if (!player.onGround() && player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() > 0) {
+        if (!player.onGround() && player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() > 0) {
             player.startUsingItem(hand);
             this.onParachuteOpen(level, player, hand, stack);
-            if (player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelGlide()) {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCanRefuelGlide(false);
+            if (player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelGlide()) {
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCanRefuelGlide(false);
             }
             return super.use(level, player, hand);
         } else {
@@ -46,7 +47,7 @@ public class AercloudGliderItem extends Item implements ToggleItem {
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remainingTicks) {
         if (entity instanceof Player player) {
-            int timer = player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer();
+            int timer = player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer();
 
             if (level.isClientSide()) {
                 float x = entity.xxa * 0.5F; // Side-to-side movement is slowed.
@@ -77,11 +78,11 @@ public class AercloudGliderItem extends Item implements ToggleItem {
             if (entity.onGround() || timer <= 0) {
                 entity.stopUsingItem();
             } else {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(Math.max(timer - 1, 0));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(Math.max(timer - 1, 0));
             }
 
             if (timer > this.getUseDuration(stack, entity)) {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(this.getUseDuration(stack, entity));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(this.getUseDuration(stack, entity));
             }
         }
         super.onUseTick(level, entity, stack, remainingTicks);
@@ -101,7 +102,7 @@ public class AercloudGliderItem extends Item implements ToggleItem {
         }
         if (entity instanceof Player player) {
             boolean reset = false;
-            if (player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() <= 0) {
+            if (player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer() <= 0) {
                 this.setCooldowns(player, 80);
                 reset = true;
             } else {
@@ -111,13 +112,12 @@ public class AercloudGliderItem extends Item implements ToggleItem {
                 }
             }
             if (reset) {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(-1);
-                if (player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().containsKey(stack.typeHolder()) && !player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().get(stack.typeHolder())) {
-                    player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().put(stack.typeHolder(), true);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setGlidingTimer(-1);
+                if (player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().containsKey(stack.typeHolder()) && !player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().get(stack.typeHolder())) {
+                    player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getCanRefuelAbilities().put(stack.typeHolder(), true);
                 }
             }
         }
-        super.onStopUsing(stack, entity, count);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class AercloudGliderItem extends Item implements ToggleItem {
     private boolean isGliding() {
         Player player = AetherIIClientProxy.getClientPlayer();
         if (player != null && player.getUseItem().getItem() instanceof AercloudGliderItem) {
-            int progress = player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer();
+            int progress = player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).getGlidingTimer();
             return progress > 0 && progress < this.getUseDuration(player.getUseItem(), player);
         }
         return false;

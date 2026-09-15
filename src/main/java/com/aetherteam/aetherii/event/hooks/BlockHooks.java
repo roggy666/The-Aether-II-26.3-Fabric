@@ -32,9 +32,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
-import net.neoforged.neoforge.event.level.AlterGroundEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -68,21 +65,17 @@ public class BlockHooks {
         return cancellationStatus;
     }
 
-    public static void stripMossyWisproot(LevelAccessor accessor, BlockState state, ItemStack stack, ItemAbility action, UseOnContext context) {
-        if (action == ItemAbilities.AXE_STRIP) {
-            if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG) || state.is(AetherIIBlocks.MOSSY_WISPROOT_WOOD) || state.is(AetherIIBlocks.MOSSY_WISPROOT_TRUNK)) {
-                stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT);
-            } else if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG_BASE)) {
-                stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT_BASE);
-            }
+    public static void stripMossyWisproot(LevelAccessor accessor, BlockState state, ItemStack stack, UseOnContext context) {
+        if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG) || state.is(AetherIIBlocks.MOSSY_WISPROOT_WOOD) || state.is(AetherIIBlocks.MOSSY_WISPROOT_TRUNK)) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT);
+        } else if (state.is(AetherIIBlocks.MOSSY_WISPROOT_LOG_BASE)) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_MOSSY_WISPROOT_BASE);
         }
     }
 
-    public static void stripAmberoot(LevelAccessor accessor, BlockState state, ItemStack stack, ItemAbility action, UseOnContext context) {
-        if (action == ItemAbilities.AXE_STRIP) {
-            if (state.is(AetherIIBlocks.AMBEROOT_DEPOSIT) && TierCompare.compareStack(stack, BuiltInRegistries.ITEM.getOrThrow(AetherIITags.Items.GOLDEN_AMBER_HARVESTERS))) {
-                stripLog(accessor, stack, context, AetherIILoot.STRIP_AMBEROOT_DEPOSIT);
-            }
+    public static void stripAmberoot(LevelAccessor accessor, BlockState state, ItemStack stack, UseOnContext context) {
+        if (state.is(AetherIIBlocks.AMBEROOT_DEPOSIT) && TierCompare.compareStack(stack, BuiltInRegistries.ITEM.getOrThrow(AetherIITags.Items.GOLDEN_AMBER_HARVESTERS))) {
+            stripLog(accessor, stack, context, AetherIILoot.STRIP_AMBEROOT_DEPOSIT);
         }
     }
 
@@ -102,24 +95,6 @@ public class BlockHooks {
         }
     }
 
-    public static AlterGroundEvent.StateProvider modifyPodzolAlterGroundStateProvider(TreeDecorator.Context context, AlterGroundEvent.StateProvider provider) {
-        return (level,rand, pos) -> {
-            AtomicReference<BlockState> oldState = new AtomicReference<>(); // Ground to replace.
-            BlockState attemptedState = provider.getState(level,rand, pos); // Ground to maybe replace with.
-            if (context.level().isStateAtPosition(pos, state -> {
-                if (state.is(AetherIITags.Blocks.AETHER_GROUND_BLOCKS)) {
-                    oldState.set(state);
-                    return true;
-                } else {
-                    return false;
-                }
-            })) {
-                return attemptedState.is(Blocks.PODZOL) ? oldState.get() : attemptedState; // Ground to actually replace with.
-            } else {
-                return attemptedState;
-            }
-        };
-    }
 
     public static boolean preventBlockFreezing(LevelAccessor accessor, BlockPos sourcePos, BlockPos pos, boolean cancellationStatus) {
         if (accessor.getBlockEntity(sourcePos) instanceof IcestoneBlockEntity blockEntity) {

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.guidebook.discovery;
 
+import net.minecraft.client.gui.Hud;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.guidebook.EffectsEntry;
 import com.aetherteam.aetherii.api.guidebook.GuidebookEntry;
@@ -46,7 +47,7 @@ public class EffectsSection extends DiscoverySection<EffectsEntry, EffectsEntry.
         this.getOrderedEntries().clear();
         Player player = Minecraft.getInstance().player;
         if (player != null) {
-            GuidebookDiscoveryAttachment attachment = player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            GuidebookDiscoveryAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
             attachment.getEffectsEntries().forEach((mutable) -> this.registryAccess.lookupOrThrow(this.registryKey).asHolderIdMap().forEach((entry) -> {
                 if (entry.value().getEffect().value() == mutable.getEffect().value()) {
                     this.entries.add(mutable);
@@ -104,7 +105,7 @@ public class EffectsSection extends DiscoverySection<EffectsEntry, EffectsEntry.
             int slotX = leftPos + (x * 18);
             int slotY = topPos + (y * 18);
 
-            Identifier location = Gui.getMobEffectSprite(entry.getEffect());
+            Identifier location = Hud.getMobEffectSprite(entry.getEffect());
 
             if (this.isUnlocked(entry, EffectsEntry.ICON.id())) {
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, location, slotX, slotY, 16, 16);
@@ -156,7 +157,7 @@ public class EffectsSection extends DiscoverySection<EffectsEntry, EffectsEntry.
             }
 
             if (this.isUnlocked(this.getSelectedEntry(), EffectsEntry.EFFECT.id())) {
-                Identifier location = Gui.getMobEffectSprite(entry.getEffect());
+                Identifier location = Hud.getMobEffectSprite(entry.getEffect());
 
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, location, 72, 30, 32, 32);
             }

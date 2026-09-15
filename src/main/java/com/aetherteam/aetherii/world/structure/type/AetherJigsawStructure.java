@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.structure.type;
 
+import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aetherii.AetherIITags;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -199,6 +200,6 @@ public class AetherJigsawStructure extends Structure {
 
     @Override
     public @NotNull StructureType<?> type() {
-        return AetherIIStructureTypes.AETHER_JIGSAW.get();
+        return AetherIIStructureTypes.AETHER_JIGSAW;
     }
 }

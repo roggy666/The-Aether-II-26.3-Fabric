@@ -81,7 +81,7 @@ public class CloudSkiffItem extends BoatItem {
             skiff.setInitialPos(hitPos.x, hitPos.y, hitPos.z);
             skiff.setAnimateUnfold(true);
             if (level instanceof ServerLevel serverlevel) {
-                EntityType.createDefaultStackConfig(serverlevel, stack, player).accept(skiff);
+                EntityType.createDefaultStackConfig(serverlevel, stack, player).apply(skiff);
             }
         }
         return skiff;

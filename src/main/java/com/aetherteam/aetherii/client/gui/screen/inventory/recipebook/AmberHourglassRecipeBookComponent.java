@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.inventory.recipebook;
 
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.GhostSlotsAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.inventory.menu.AmberHourglassMenu;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.RecipeBookComponentAccessor;
@@ -47,14 +48,14 @@ public class AmberHourglassRecipeBookComponent extends RecipeBookComponent<Amber
     @Override
     protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
         if (recipeDisplay instanceof AmberHourglassRecipeDisplay amberHourglassRecipeDisplay) {
-            ghostSlots.setInput(this.menu.getSlot(0), contextMap, amberHourglassRecipeDisplay.ingredient());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(this.menu.getSlot(0), contextMap, amberHourglassRecipeDisplay.ingredient());
             Slot slot = this.menu.getSlot(1);
             if (slot.getItem().isEmpty()) {
-                ghostSlots.setInput(slot, contextMap, amberHourglassRecipeDisplay.fuel());
+                ((GhostSlotsAccessor) ghostSlots).aether_ii$setInput(slot, contextMap, amberHourglassRecipeDisplay.fuel());
             }
-            ghostSlots.setResult(this.menu.getSlot(2), contextMap, amberHourglassRecipeDisplay.result1());
-            ghostSlots.setResult(this.menu.getSlot(3), contextMap, amberHourglassRecipeDisplay.result2());
-            ghostSlots.setResult(this.menu.getSlot(4), contextMap, amberHourglassRecipeDisplay.result3());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setResult(this.menu.getSlot(2), contextMap, amberHourglassRecipeDisplay.result1());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setResult(this.menu.getSlot(3), contextMap, amberHourglassRecipeDisplay.result2());
+            ((GhostSlotsAccessor) ghostSlots).aether_ii$setResult(this.menu.getSlot(4), contextMap, amberHourglassRecipeDisplay.result3());
         }
     }
 

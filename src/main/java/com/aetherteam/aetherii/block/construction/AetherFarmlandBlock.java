@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.block.construction;
 
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,8 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.CommonHooks;
-import net.neoforged.neoforge.common.FarmlandWaterManager;
 
 public class AetherFarmlandBlock extends FarmlandBlock {
     public AetherFarmlandBlock(Properties properties) {
@@ -30,7 +31,7 @@ public class AetherFarmlandBlock extends FarmlandBlock {
      */
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? AetherIIBlocks.AETHER_DIRT.get().defaultBlockState() : this.defaultBlockState();
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? AetherIIBlocks.AETHER_DIRT.defaultBlockState() : this.defaultBlockState();
     }
 
     /**
@@ -65,7 +66,7 @@ public class AetherFarmlandBlock extends FarmlandBlock {
      */
     @Override
     public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && CommonHooks.onFarmlandTrample(serverLevel, pos, AetherIIBlocks.AETHER_DIRT.get().defaultBlockState(), fallDistance, entity)) { // Forge: Move logic to Entity#canTrample
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && canTrample(serverLevel, fallDistance, entity)) { // Forge: Move logic to Entity#canTrample
             turnToDirt(state, level, pos);
         }
         entity.causeFallDamage(fallDistance, 1.0F, entity.damageSources().fall());
@@ -75,7 +76,7 @@ public class AetherFarmlandBlock extends FarmlandBlock {
      * [CODE COPY] - {@link FarmlandBlock#turnToDirt(Entity, BlockState, Level, BlockPos)}.
      */
     public static void turnToDirt(BlockState state, Level level, BlockPos pos) {
-        level.setBlockAndUpdate(pos, pushEntitiesUp(state, AetherIIBlocks.AETHER_DIRT.get().defaultBlockState(), level, pos));
+        level.setBlockAndUpdate(pos, pushEntitiesUp(state, AetherIIBlocks.AETHER_DIRT.defaultBlockState(), level, pos));
     }
 
     private static boolean shouldMaintainFarmland(BlockGetter level, BlockPos pos) {
@@ -88,14 +89,18 @@ public class AetherFarmlandBlock extends FarmlandBlock {
                 return true;
             }
         }
-        return FarmlandWaterManager.hasBlockWaterTicket(level, pos);
+        return false;
     }
 
     /**
      * [CODE COPY] - {@link net.neoforged.neoforge.common.extensions.IBlockExtension#isFertile(BlockState, BlockGetter, BlockPos)}.
      */
-    @Override
     public boolean isFertile(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getValue(FarmlandBlock.MOISTURE) > 0;
+    }
+
+    // Mirrors vanilla FarmBlock#fallOn trample check (NeoForge routed this through CommonHooks#onFarmlandTrample)
+    private static boolean canTrample(ServerLevel level, double fallDistance, Entity entity) {
+        return level.getRandom().nextFloat() < fallDistance - 0.5 && entity instanceof LivingEntity && (entity instanceof Player || level.getGameRules().get(GameRules.MOB_GRIEFING)) && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.512F;
     }
 }

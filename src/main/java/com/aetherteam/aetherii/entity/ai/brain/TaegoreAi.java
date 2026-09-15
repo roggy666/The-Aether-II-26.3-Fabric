@@ -11,6 +11,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
@@ -34,7 +35,7 @@ public class TaegoreAi {
             SensorType.NEAREST_ITEMS,
             SensorType.NEAREST_ADULT,
             SensorType.HURT_BY,
-            AetherIISensorTypes.TAEGORE_TEMPTATIONS.get()
+            AetherIISensorTypes.TAEGORE_TEMPTATIONS
     );
     public static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(
             MemoryModuleType.LOOK_TARGET,
@@ -51,10 +52,10 @@ public class TaegoreAi {
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
             MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.IS_PANICKING,
-            AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get(),
-            AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get(),
-            AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN.get(),
-            AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS.get()
+            AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET,
+            AetherIIMemoryModuleTypes.TAEGORE_DIGGING,
+            AetherIIMemoryModuleTypes.TAEGORE_SEARCH_COOLDOWN,
+            AetherIIMemoryModuleTypes.TAEGORE_EXPLORED_POSITIONS
     );
 
     public static final Brain.Provider<Taegore> BRAIN_PROVIDER = Brain.provider(
@@ -87,7 +88,7 @@ public class TaegoreAi {
                 Set.of(
                         Pair.of(MemoryModuleType.IS_PANICKING, MemoryStatus.VALUE_ABSENT),
                         Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
-                        Pair.of(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get(), MemoryStatus.VALUE_PRESENT)
+                        Pair.of(AetherIIMemoryModuleTypes.TAEGORE_DIGGING, MemoryStatus.VALUE_PRESENT)
                 )
         );
     }
@@ -98,7 +99,7 @@ public class TaegoreAi {
                 ImmutableList.of(Pair.of(0, new TaegoreSearching())),
                 Set.of(
                         Pair.of(MemoryModuleType.IS_PANICKING, MemoryStatus.VALUE_ABSENT),
-                        Pair.of(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get(), MemoryStatus.VALUE_PRESENT),
+                        Pair.of(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET, MemoryStatus.VALUE_PRESENT),
                         Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_PRESENT)
                 )
         );
@@ -107,7 +108,7 @@ public class TaegoreAi {
     private static ActivityData<Taegore> initIdleActivity(EntityType<? extends Taegore> entityType) {
         return ActivityData.create(Activity.IDLE, ImmutableList.of(
                 Pair.of(0, SetWalkTargetAwayFrom.entity(MemoryModuleType.AVOID_TARGET, 1.7F, 24, true)),
-                Pair.of(1, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
+                Pair.of(1, SetEntityLookTargetSometimes.create(EntityTypes.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(2, new AnimalMakeLove(entityType)),
                 Pair.of(3, new FollowTemptation(livingEntity -> 1.2F)),
                 Pair.of(4, BabyFollowAdult.create(ADULT_FOLLOW_RANGE, 1.1F)),
@@ -134,8 +135,8 @@ public class TaegoreAi {
     }
 
     public static void resetSearch(ServerLevel serverLevel, Taegore owner) {
-        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING.get());
-        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET.get());
+        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_DIGGING);
+        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET);
         serverLevel.broadcastEntityEvent(owner, (byte) Taegore.DIGGING_STOP_EVENT);
     }
 

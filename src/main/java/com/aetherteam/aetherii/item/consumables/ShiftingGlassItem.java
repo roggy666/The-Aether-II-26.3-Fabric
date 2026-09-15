@@ -4,7 +4,7 @@ import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.attachment.player.AetherIIPlayerAttachment;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -24,7 +24,7 @@ public class ShiftingGlassItem extends Item {
 
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (player.getData(AetherIIDataAttachments.PLAYER).isMovingHorizontally() && player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCanRefreshShiftingGlass()) {
+        if (player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).isMovingHorizontally() && player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCanRefreshShiftingGlass()) {
             ItemStack itemStack = player.getItemInHand(hand);
             float scale = 1.0F;
             if (player.onGround()) {
@@ -38,9 +38,9 @@ public class ShiftingGlassItem extends Item {
             player.resetFallDistance();
             level.playSound(null, player.getX(), player.getY(), player.getZ(), AetherIISoundEvents.ITEM_SHIFTING_GLASS_USE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!level.isClientSide()) {
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setShiftingGlassBoostTime(8);
-                player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCanRefreshShiftingGlass(false);
-                player.syncData(AetherIIDataAttachments.ABILITY_BEHAVIOR);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setShiftingGlassBoostTime(8);
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCanRefreshShiftingGlass(false);
+                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
             }
             if (!player.getAbilities().instabuild) {
                 itemStack.hurtAndBreak(1, player, hand);

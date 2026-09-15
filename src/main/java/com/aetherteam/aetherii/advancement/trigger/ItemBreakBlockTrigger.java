@@ -1,9 +1,14 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.LocationPredicate;
+import net.minecraft.world.phys.Vec3;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +35,7 @@ public class ItemBreakBlockTrigger extends SimpleCriterionTrigger<ItemBreakBlock
         ServerLevel level = player.level();
         BlockState state = level.getBlockState(pos);
         LootParams parameters = new LootParams.Builder(level)
-                .withParameter(LootContextParams.ORIGIN, pos.getCenter())
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
                 .withParameter(LootContextParams.THIS_ENTITY, player)
                 .withParameter(LootContextParams.BLOCK_STATE, state)
                 .withParameter(LootContextParams.TOOL, stack)
@@ -48,7 +53,7 @@ public class ItemBreakBlockTrigger extends SimpleCriterionTrigger<ItemBreakBlock
         public static Criterion<Instance> itemBrokeBlock(LocationPredicate.Builder location, ItemPredicate.Builder tool) {
             ContextAwarePredicate contextawarepredicate = ContextAwarePredicate.create(LocationCheck.checkLocation(location).build(), MatchTool.toolMatches(tool).build());
             Instance instance = new Instance(Optional.empty(), Optional.of(contextawarepredicate));
-            return AetherIIAdvancementTriggers.ITEM_BREAK_BLOCK.get().createCriterion(instance);
+            return AetherIIAdvancementTriggers.ITEM_BREAK_BLOCK.createCriterion(instance);
         }
 
         public boolean matches(LootContext context) {

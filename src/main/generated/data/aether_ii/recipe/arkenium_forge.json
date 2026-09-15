@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "#aether_ii:ingots/arkenium",
+    "H": "#aether_ii:stone_crafting"
+  },
+  "pattern": [
+    "AAA",
+    " A ",
+    "HHH"
+  ],
+  "result": {
+    "id": "aether_ii:arkenium_forge"
+  }
+}

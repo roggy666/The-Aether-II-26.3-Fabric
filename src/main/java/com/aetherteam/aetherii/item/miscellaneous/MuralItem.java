@@ -110,7 +110,7 @@ public class MuralItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
-        if (this.muralBlock == AetherIIBlocks.MURAL.get() && tooltipDisplay.shows(AetherIIDataComponents.MURAL.get())) {
+        if (this.muralBlock == AetherIIBlocks.MURAL && tooltipDisplay.shows(AetherIIDataComponents.MURAL)) {
             Holder<Mural> holder = stack.get(AetherIIDataComponents.MURAL);
             if (holder != null) {
                 holder.value().addToTooltip(context, tooltipAdder, flag, stack);

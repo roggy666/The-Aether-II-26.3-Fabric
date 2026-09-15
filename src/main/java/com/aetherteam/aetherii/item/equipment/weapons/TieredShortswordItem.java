@@ -2,7 +2,6 @@ package com.aetherteam.aetherii.item.equipment.weapons;
 
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
-import com.aetherteam.aetherii.item.equipment.AetherIINeoItemAbilities;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
@@ -21,11 +20,12 @@ import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.ItemAbility;
-
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+import com.aetherteam.aetherii.item.equipment.WeaponAbility;
+import com.aetherteam.aetherii.item.equipment.WeaponAbilityItem;
 import java.util.List;
 
-public class TieredShortswordItem extends Item {
+public class TieredShortswordItem extends Item implements CustomEnchantmentItem, WeaponAbilityItem {
     public static final Identifier BASE_SWEEP_RANGE_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "base_sweep_range");
 
     public TieredShortswordItem(Item.Properties properties) {
@@ -63,9 +63,10 @@ public class TieredShortswordItem extends Item {
                 .build();
     }
 
+
     @Override
-    public boolean canPerformAction(ItemInstance stack, ItemAbility itemAbility) {
-        return AetherIINeoItemAbilities.DEFAULT_SHORTSWORD_ACTIONS.contains(itemAbility);
+    public boolean canPerformAction(ItemStack stack, WeaponAbility ability) {
+        return ability == WeaponAbility.SHORTSWORD_SLASH;
     }
 
     @Override

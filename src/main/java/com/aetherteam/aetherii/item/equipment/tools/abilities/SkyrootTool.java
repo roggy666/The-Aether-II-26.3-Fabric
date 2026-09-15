@@ -1,3 +1,5 @@
 package com.aetherteam.aetherii.item.equipment.tools.abilities;
 
-public interface SkyrootTool { }
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+
+public interface SkyrootTool extends CustomEnchantmentItem { }

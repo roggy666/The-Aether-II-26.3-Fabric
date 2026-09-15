@@ -7,7 +7,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record ClientGrabItemPacket(ItemStack carryStack) implements CustomPacketPayload {
     public static final Type<ClientGrabItemPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "grab_from_inventory"));
@@ -22,7 +24,8 @@ public record ClientGrabItemPacket(ItemStack carryStack) implements CustomPacket
         return TYPE;
     }
 
-    public static void execute(ClientGrabItemPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(ClientGrabItemPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Minecraft.getInstance().player.containerMenu.setCarried(payload.carryStack());
         }

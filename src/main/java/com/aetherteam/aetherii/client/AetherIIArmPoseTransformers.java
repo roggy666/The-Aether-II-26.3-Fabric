@@ -1,19 +1,20 @@
 package com.aetherteam.aetherii.client;
 
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.model.HumanoidModel;
 import com.aetherteam.aetherii.client.renderer.AetherIIRenderers;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.neoforged.neoforge.client.IArmPoseTransformer;
 
 public class AetherIIArmPoseTransformers {
-    public static final IArmPoseTransformer DART_SHOOTER_TRANSFORMER = (humanoidModel, livingEntity, humanoidArm) -> {
+    public static void DART_SHOOTER_TRANSFORMER(HumanoidModel<?> humanoidModel, HumanoidRenderState livingEntity, HumanoidArm humanoidArm) {
         humanoidModel.rightArm.yRot = -0.1F + humanoidModel.head.yRot - 0.3F;
         humanoidModel.leftArm.yRot = 0.1F + humanoidModel.head.yRot + 0.3F;
         humanoidModel.rightArm.xRot = -Mth.HALF_PI + humanoidModel.head.xRot;
         humanoidModel.leftArm.xRot = -Mth.HALF_PI + humanoidModel.head.xRot;
-    };
-    public static final IArmPoseTransformer GLIDING_TRANSFORMER = (humanoidModel, livingEntity, humanoidArm) -> {
+    }
+    public static void GLIDING_TRANSFORMER(HumanoidModel<?> humanoidModel, HumanoidRenderState livingEntity, HumanoidArm humanoidArm) {
         humanoidModel.rightArm.z = 0.0F;
         humanoidModel.rightArm.x = -5.0F;
         humanoidModel.leftArm.z = 0.0F;
@@ -28,11 +29,11 @@ public class AetherIIArmPoseTransformers {
         AnimationUtils.bobModelPart(humanoidModel.leftArm, livingEntity.ageInTicks, 1.0F);
         humanoidModel.rightLeg.xRot = Mth.cos(livingEntity.walkAnimationPos * 0.1662F) * 0.3F * livingEntity.walkAnimationSpeed / livingEntity.speedValue;
         humanoidModel.leftLeg.xRot = Mth.cos(livingEntity.walkAnimationPos * 0.1662F + Mth.PI) * 0.3F * livingEntity.walkAnimationSpeed / livingEntity.speedValue;
-    };
-    public static final IArmPoseTransformer SKIFF_SAILING_TRANSFORMER = (humanoidModel, livingEntity, humanoidArm) -> {
-        Boolean riding = livingEntity.getRenderData(AetherIIRenderers.RIDING_SKIFF_KEY);
+    }
+    public static void SKIFF_SAILING_TRANSFORMER(HumanoidModel<?> humanoidModel, HumanoidRenderState livingEntity, HumanoidArm humanoidArm) {
+        Boolean riding = livingEntity.getData(AetherIIRenderers.RIDING_SKIFF_KEY);
         if (riding != null && riding) {
-            Float steering = livingEntity.getRenderData(AetherIIRenderers.SKIFF_STEERING_KEY);
+            Float steering = livingEntity.getData(AetherIIRenderers.SKIFF_STEERING_KEY);
             if (steering != null) {
                 HumanoidArm arm = livingEntity.mainArm;
                 if (steering > 0) {
@@ -48,5 +49,5 @@ public class AetherIIArmPoseTransformers {
                 }
             }
         }
-    };
+    }
 }

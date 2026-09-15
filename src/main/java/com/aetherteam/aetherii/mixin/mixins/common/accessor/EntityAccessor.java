@@ -30,4 +30,7 @@ public interface EntityAccessor {
 
     @Invoker
     void callAddPassenger(Entity passenger);
+
+    @Invoker("getEncodeId")
+    String aether_ii$getEncodeId();
 }

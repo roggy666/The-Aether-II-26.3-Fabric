@@ -13,30 +13,29 @@ public class BaseRangedAttribute extends RangedAttribute {
         super(descriptionId, defaultValue, min, max);
     }
 
-    @Override
     public @Nullable Identifier getBaseId() {
-        if (this == AetherIIAttributes.SLASH_DAMAGE.get()) {
+        if (this == AetherIIAttributes.SLASH_DAMAGE.value()) {
             return AetherIIItems.BASE_SLASH_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.SLASH_RANGED_DAMAGE.get()) {
+        } else if (this == AetherIIAttributes.SLASH_RANGED_DAMAGE.value()) {
             return AetherIIItems.BASE_SLASH_RANGED_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.IMPACT_DAMAGE.get()) {
+        } else if (this == AetherIIAttributes.IMPACT_DAMAGE.value()) {
             return AetherIIItems.BASE_IMPACT_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.IMPACT_RANGED_DAMAGE.get()) {
+        } else if (this == AetherIIAttributes.IMPACT_RANGED_DAMAGE.value()) {
             return AetherIIItems.BASE_IMPACT_RANGED_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.PIERCE_DAMAGE.get()) {
+        } else if (this == AetherIIAttributes.PIERCE_DAMAGE.value()) {
             return AetherIIItems.BASE_PIERCE_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.PIERCE_RANGED_DAMAGE.get()) {
+        } else if (this == AetherIIAttributes.PIERCE_RANGED_DAMAGE.value()) {
             return AetherIIItems.BASE_PIERCE_RANGED_DAMAGE_ID;
-        } else if (this == AetherIIAttributes.SWEEP_RANGE.get()) {
+        } else if (this == AetherIIAttributes.SWEEP_RANGE.value()) {
             return TieredShortswordItem.BASE_SWEEP_RANGE_ID;
-        } else if (this == AetherIIAttributes.SHOCK_RANGE.get()) {
+        } else if (this == AetherIIAttributes.SHOCK_RANGE.value()) {
             return TieredHammerItem.BASE_SHOCK_RANGE_ID;
-        } else if (this == AetherIIAttributes.STAB_RADIUS.get()) {
+        } else if (this == AetherIIAttributes.STAB_RADIUS.value()) {
             return TieredPikeItem.BASE_STAB_RADIUS_ID;
-        } else if (this == AetherIIAttributes.STAB_DISTANCE.get()) {
+        } else if (this == AetherIIAttributes.STAB_DISTANCE.value()) {
             return TieredPikeItem.BASE_STAB_DISTANCE_ID;
         } else {
-            return super.getBaseId();
+            return null;
         }
     }
 }

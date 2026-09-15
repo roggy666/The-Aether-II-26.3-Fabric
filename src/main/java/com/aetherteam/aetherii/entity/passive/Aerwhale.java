@@ -142,17 +142,17 @@ public class Aerwhale extends PathfinderMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_AERWHALE_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_AERWHALE_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return AetherIISoundEvents.ENTITY_AERWHALE_HURT.get();
+        return AetherIISoundEvents.ENTITY_AERWHALE_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_AERWHALE_DEATH.get();
+        return AetherIISoundEvents.ENTITY_AERWHALE_DEATH;
     }
 
     @Override

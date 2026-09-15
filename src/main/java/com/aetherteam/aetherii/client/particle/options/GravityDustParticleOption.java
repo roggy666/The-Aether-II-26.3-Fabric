@@ -33,7 +33,7 @@ public class GravityDustParticleOption extends ScalableParticleOptionsBase {
     }
 
     public ParticleType<GravityDustParticleOption> getType() {
-        return AetherIIParticleTypes.GRAVITY_DUST.get();
+        return AetherIIParticleTypes.GRAVITY_DUST;
     }
 
     public Vector3f getColor() {

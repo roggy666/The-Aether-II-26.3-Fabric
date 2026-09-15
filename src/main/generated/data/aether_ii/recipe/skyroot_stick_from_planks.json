@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sticks",
+  "key": {
+    "#": "#aether_ii:crafts_skyroot_sticks"
+  },
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "result": {
+    "count": 4,
+    "id": "aether_ii:skyroot_stick"
+  }
+}

@@ -31,6 +31,12 @@ import java.util.function.Function;
 
 @Mixin(EquipmentLayerRenderer.class)
 public class EquipmentLayerRendererMixin {
+    @com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation(method = "renderLayers", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/DyedItemColor;getOrDefault(Lnet/minecraft/world/item/ItemStack;I)I"))
+    private int defaultDye(ItemStack stack, int fallback, com.llamalad7.mixinextras.injector.wrapoperation.Operation<Integer> original) {
+        int color = com.aetherteam.aetherii.client.AetherIIClientExtensions.getDefaultDyeColor(stack);
+        return color == 0 ? original.call(stack, fallback) : color;
+    }
+
     @Unique
     private final Function<ArmorStyle.SpriteKey, TextureAtlasSprite> armorStyleSpriteLookup = Util.memoize((key) -> Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AetherIIAtlases.ARMOR_STYLES_ID).getSprite(key.textureId()));
 

@@ -26,9 +26,9 @@ public class AetherIIDispenseBehaviors {
             DispensibleContainerItem dispensibleContainerItem = (DispensibleContainerItem) stack.getItem();
             BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
             Level level = source.level();
-            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null, stack)) {
+            if (dispensibleContainerItem.emptyContents(null, level, blockpos, null)) {
                 dispensibleContainerItem.checkExtraContent(null, level, stack, blockpos);
-                return new ItemStack(AetherIIItems.SKYROOT_BUCKET.get());
+                return new ItemStack(AetherIIItems.SKYROOT_BUCKET);
             } else {
                 return this.defaultDispenseItemBehavior.dispense(source, stack);
             }

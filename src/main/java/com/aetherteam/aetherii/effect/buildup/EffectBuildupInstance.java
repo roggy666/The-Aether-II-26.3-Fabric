@@ -56,9 +56,9 @@ public class EffectBuildupInstance implements Comparable<EffectBuildupInstance> 
     public boolean tick(LivingEntity entity) {
         if (this.isBuildupFull()) {
             if (this.triggerEffect) {
-                if (this.instance.getEffect().value().isInstantenous()) {
+                if (this.instance.getEffect().value().isInstantaneous()) {
                     if (entity.level() instanceof ServerLevel serverLevel) {
-                        this.instance.getEffect().value().applyInstantenousEffect(serverLevel, null, null, entity, this.instance.getAmplifier(), 1.0);
+                        this.instance.getEffect().value().applyInstantaneousEffect(serverLevel, null, null, entity, this.instance.getAmplifier(), 1.0);
                     }
                 } else {
                     if (!entity.level().isClientSide()) {

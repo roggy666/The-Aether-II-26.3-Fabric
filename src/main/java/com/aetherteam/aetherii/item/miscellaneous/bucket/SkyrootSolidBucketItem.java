@@ -30,7 +30,7 @@ public class SkyrootSolidBucketItem extends SolidBucketItem {
         Player player = context.getPlayer();
         if (interactionResult.consumesAction() && player != null && !player.isCreative()) {
             InteractionHand interactionHand = context.getHand();
-            player.setItemInHand(interactionHand, new ItemStack(AetherIIItems.SKYROOT_BUCKET.get()));
+            player.setItemInHand(interactionHand, new ItemStack(AetherIIItems.SKYROOT_BUCKET));
         }
         return interactionResult;
     }

@@ -8,15 +8,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public interface ZaniteArmor {
     Identifier ZANITE_ATTACK_SPEED = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.zanite.attack_speed");
     Identifier ZANITE_MINING_SPEED = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.zanite.mining_speed");
     Identifier ZANITE_MOVEMENT_SPEED = Identifier.fromNamespaceAndPath(AetherII.MODID, "armor_set.ability.zanite.movement_speed");
 
-    static void updatePlayerAttributes(PlayerTickEvent.Pre event) {
-        Player player = event.getEntity();
+    static void updatePlayerAttributes(Player player) {
         AttributeInstance attackSpeedAttribute = player.getAttribute(Attributes.ATTACK_SPEED);
         AttributeInstance miningSpeedAttribute = player.getAttribute(Attributes.MINING_EFFICIENCY);
         AttributeInstance movementSpeedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);

@@ -8,11 +8,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SkyrootChestBlockEntity extends ChestBlockEntity {
     public SkyrootChestBlockEntity() {
-        this(AetherIIBlockEntityTypes.SKYROOT_CHEST.get(), BlockPos.ZERO, AetherIIBlocks.SKYROOT_CHEST.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.SKYROOT_CHEST, BlockPos.ZERO, AetherIIBlocks.SKYROOT_CHEST.defaultBlockState());
     }
 
     public SkyrootChestBlockEntity(BlockPos pos, BlockState state) {
-        this(AetherIIBlockEntityTypes.SKYROOT_CHEST.get(), pos, state);
+        this(AetherIIBlockEntityTypes.SKYROOT_CHEST, pos, state);
     }
 
     protected SkyrootChestBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

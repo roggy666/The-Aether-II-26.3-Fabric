@@ -1,31 +1,45 @@
 package com.aetherteam.aetherii.mixin.mixins.client;
 
 import com.aetherteam.aetherii.client.event.hooks.RenderHooks;
-import com.aetherteam.aetherii.entity.monster.dungeon.boss.AetherBossMob;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.BossHealthOverlay;
-import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraft.client.gui.components.LerpingBossEvent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.BossEvent;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.Map;
+import java.util.UUID;
 
 @Mixin(BossHealthOverlay.class)
-public class BossHealthOverlayMixin {
-    /**
-     * Cancels the {@link CustomizeGuiOverlayEvent.BossEventProgress} GUI event after the event hook has been called for it.
-     * Made as a workaround for Jade's boss bar pushdown.<br>
-     * This modifies the assignment of the {@link CustomizeGuiOverlayEvent.BossEventProgress} event variable.
-     *
-     * @param event The original {@link net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
-     * @return The modified {@link net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent.BossEventProgress} parameter value.
-     */
-    @ModifyVariable(at = @At(value = "STORE"), method = "extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V", index = 8)
-    private CustomizeGuiOverlayEvent.BossEventProgress event(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        if (Minecraft.getInstance().level != null &&
-                RenderHooks.BOSS_EVENTS.containsKey(event.getBossEvent().getId()) &&
-                Minecraft.getInstance().level.getEntity(RenderHooks.BOSS_EVENTS.get(event.getBossEvent().getId())) instanceof AetherBossMob<?>) {
-            event.setCanceled(true);
+public abstract class BossHealthOverlayMixin {
+    @Shadow @Final private Minecraft minecraft;
+    @Shadow @Final private Map<UUID, LerpingBossEvent> events;
+    @Shadow protected abstract void extractBar(GuiGraphicsExtractor graphics, int x, int y, BossEvent event);
+
+    @Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
+    private void aether_ii$bossBars(GuiGraphicsExtractor graphics, CallbackInfo ci) {
+        if (this.events.keySet().stream().noneMatch(RenderHooks::isAetherBossBar)) return;
+        graphics.nextStratum();
+        int y = 12;
+        for (LerpingBossEvent event : this.events.values()) {
+            int x = graphics.guiWidth() / 2 - 91;
+            if (RenderHooks.isAetherBossBar(event.getId())) {
+                RenderHooks.drawBossHealthBar(graphics, x, y, event);
+                y += 32;
+            } else {
+                this.extractBar(graphics, x, y, event);
+                Component name = event.getName();
+                graphics.text(this.minecraft.font, name, graphics.guiWidth() / 2 - this.minecraft.font.width(name) / 2, y - 9, -1);
+                y += 19;
+            }
+            if (y >= graphics.guiHeight() / 3) break;
         }
-        return event;
+        ci.cancel();
     }
 }

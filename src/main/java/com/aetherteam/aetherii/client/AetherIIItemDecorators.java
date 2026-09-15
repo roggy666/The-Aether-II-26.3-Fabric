@@ -1,17 +1,16 @@
 package com.aetherteam.aetherii.client;
 
+import net.fabricmc.fabric.api.client.rendering.v1.ExtractItemDecorationsCallback;
 import com.aetherteam.aetherii.item.AetherIIItems;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.client.IItemDecorator;
-import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 
 import java.util.List;
 
 public class AetherIIItemDecorators {
-    public static final List<Holder<Item>> REINFORCEABLE = List.of(
+    public static final List<Item> REINFORCEABLE = List.of(
             AetherIIItems.SKYROOT_SHORTSWORD,
             AetherIIItems.SKYROOT_HAMMER,
             AetherIIItems.SKYROOT_PIKE,
@@ -81,7 +80,7 @@ public class AetherIIItemDecorators {
             AetherIIItems.ZANITE_PENDANT,
             AetherIIItems.ICESTONE_PENDANT);
 
-    private static final IItemDecorator REINFORCED_DURABILITY = (guiGraphics, font, stack, xOffset, yOffset) -> {
+    private static final ExtractItemDecorationsCallback REINFORCED_DURABILITY = (guiGraphics, font, stack, xOffset, yOffset) -> {
         guiGraphics.pose().pushMatrix();
         if (stack.isBarVisible() && stack.has(AetherIIDataComponents.REINFORCEMENT_TIER)) {
             int l = stack.getBarWidth();
@@ -96,12 +95,13 @@ public class AetherIIItemDecorators {
             guiGraphics.fill(j, k, j + l, k + 1, i | 0xFF000000);
         }
         guiGraphics.pose().popMatrix();
-        return true;
     };
 
-    public static void registerItemDecorators(RegisterItemDecorationsEvent event) {
-        for (Holder<Item> item : REINFORCEABLE) {
-            event.register(item.value(), REINFORCED_DURABILITY);
-        }
+    public static void registerItemDecorators() {
+        ExtractItemDecorationsCallback.EVENT.register((graphics, font, stack, x, y) -> {
+            if (REINFORCEABLE.contains(stack.getItem())) {
+                REINFORCED_DURABILITY.onExtractItemDecorations(graphics, font, stack, x, y);
+            }
+        });
     }
 }

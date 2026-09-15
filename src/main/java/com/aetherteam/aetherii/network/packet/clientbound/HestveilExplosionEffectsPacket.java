@@ -12,7 +12,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record HestveilExplosionEffectsPacket(BlockPos pos) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<HestveilExplosionEffectsPacket> TYPE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "hestveil_explosion_effects"));
@@ -27,7 +29,8 @@ public record HestveilExplosionEffectsPacket(BlockPos pos) implements CustomPack
         return TYPE;
     }
 
-    public static void execute(HestveilExplosionEffectsPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(HestveilExplosionEffectsPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             for (Entity entity : Minecraft.getInstance().level.getEntities(null, AABB.encapsulatingFullBlocks(payload.pos(), payload.pos()))) {
                 if (entity instanceof LivingEntity livingEntity) {

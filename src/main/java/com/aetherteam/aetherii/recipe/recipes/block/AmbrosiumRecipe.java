@@ -27,7 +27,7 @@ public class AmbrosiumRecipe extends AbstractBlockStateRecipe implements MatchEv
     public static final RecipeSerializer<AmbrosiumRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
 
     public AmbrosiumRecipe(BlockStateIngredient ingredient, BlockPropertyPair result, Optional<Identifier> function) {
-        super(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING.get(), ingredient, result, function);
+        super(AetherIIRecipeTypes.AMBROSIUM_ENCHANTING, ingredient, result, function);
     }
 
     @Override

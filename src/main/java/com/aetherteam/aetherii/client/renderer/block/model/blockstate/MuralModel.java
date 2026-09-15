@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.DelegateBlockStateModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

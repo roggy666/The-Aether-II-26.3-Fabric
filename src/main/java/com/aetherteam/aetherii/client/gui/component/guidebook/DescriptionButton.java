@@ -16,9 +16,9 @@ public class DescriptionButton extends ImageButton {
     public DescriptionButton(Screen currentScreen, int x, int y, WidgetSprites sprites) {
         super(x, y, 8, 8, sprites, (button) -> {
             if (currentScreen instanceof GuidebookDiscoveryScreen screen && screen.getCurrentSection().getSelectedEntry() != null) {
-                Minecraft.getInstance().setScreen(new DiscoveryDescriptionScreen(screen, screen.getCurrentSection().getSelectedEntry().getEntry().value()));
+                Minecraft.getInstance().gui.setScreen(new DiscoveryDescriptionScreen(screen, screen.getCurrentSection().getSelectedEntry().getEntry().value()));
             } else if (currentScreen instanceof DiscoveryDescriptionScreen screen) {
-                Minecraft.getInstance().setScreen(screen.getLastScreen());
+                Minecraft.getInstance().gui.setScreen(screen.getLastScreen());
             }
         });
         if (currentScreen instanceof GuidebookDiscoveryScreen screen && screen.getCurrentSection().getSelectedEntry() != null) {

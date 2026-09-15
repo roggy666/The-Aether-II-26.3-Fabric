@@ -14,8 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 public record OpenGuidebookPacket(ItemStack carryStack) implements CustomPacketPayload {
     public static final Type<OpenGuidebookPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "open_guidebook"));
@@ -30,18 +29,18 @@ public record OpenGuidebookPacket(ItemStack carryStack) implements CustomPacketP
         return TYPE;
     }
 
-    public static void execute(OpenGuidebookPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(OpenGuidebookPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity instanceof ServerPlayer serverPlayer) {
             ItemStack itemStack = serverPlayer.isCreative() ? payload.carryStack() : serverPlayer.containerMenu.getCarried();
             serverPlayer.containerMenu.setCarried(ItemStack.EMPTY);
-            serverPlayer.openMenu(new ExtraDataMenuProvider(
+            serverPlayer.openMenu(new ExtraDataMenuProvider<>(
                     (id, inventory, user) -> new GuidebookEquipmentMenu(id, inventory),
-                    (menu, buffer) -> ByteBufCodecs.INT.encode(buffer, -1),
+                    (sp) -> -1,
                     Component.translatable("gui.aether_ii.guidebook.equipment.title")));
             if (!itemStack.isEmpty()) {
                 serverPlayer.containerMenu.setCarried(itemStack);
-                PacketDistributor.sendToPlayer(serverPlayer, new ClientGrabItemPacket(itemStack));
+                ServerPlayNetworking.send(serverPlayer, new ClientGrabItemPacket(itemStack));
             }
         }
     }

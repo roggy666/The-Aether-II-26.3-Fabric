@@ -4,16 +4,24 @@ import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.ai.brain.BurrukaiAi;
 import com.aetherteam.aetherii.entity.ai.brain.KirridAi;
 import com.aetherteam.aetherii.entity.ai.brain.TaegoreAi;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.sensing.TemptingSensor;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class AetherIISensorTypes {
-    public static final DeferredRegister<SensorType<?>> SENSOR_TYPES = DeferredRegister.create(BuiltInRegistries.SENSOR_TYPE, AetherII.MODID);
+    private static <T extends Sensor<?>> SensorType<T> register(String name, Supplier<T> factory) {
+        return Registry.register(BuiltInRegistries.SENSOR_TYPE, Identifier.fromNamespaceAndPath(AetherII.MODID, name), new SensorType<>(factory));
+    }
 
-    public static final DeferredHolder<SensorType<?>, SensorType<TemptingSensor>> TAEGORE_TEMPTATIONS = SENSOR_TYPES.register("taegore_temptations", () -> new SensorType<>(() -> new TemptingSensor(TaegoreAi.getTemptations())));
-    public static final DeferredHolder<SensorType<?>, SensorType<TemptingSensor>> BURRUKAI_TEMPTATIONS = SENSOR_TYPES.register("burrukai_temptations", () -> new SensorType<>(() -> new TemptingSensor(BurrukaiAi.getTemptations())));
-    public static final DeferredHolder<SensorType<?>, SensorType<TemptingSensor>> KIRRID_TEMPTATIONS = SENSOR_TYPES.register("kirrid_temptations", () -> new SensorType<>(() -> new TemptingSensor(KirridAi.getTemptations())));
+    public static final SensorType<TemptingSensor> TAEGORE_TEMPTATIONS = register("taegore_temptations", () -> new TemptingSensor(TaegoreAi.getTemptations()));
+    public static final SensorType<TemptingSensor> BURRUKAI_TEMPTATIONS = register("burrukai_temptations", () -> new TemptingSensor(BurrukaiAi.getTemptations()));
+    public static final SensorType<TemptingSensor> KIRRID_TEMPTATIONS = register("kirrid_temptations", () -> new TemptingSensor(KirridAi.getTemptations()));
+
+    public static void init() {}
 }
+

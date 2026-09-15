@@ -30,8 +30,8 @@ public class AlkahestPurifierScreen extends AbstractRecipeBookScreen<AlkahestPur
     private static final Identifier ALKAHEST_4_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "container/alkahest_purifier/alkahest_4");
     private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
             new RecipeBookComponent.TabInfo(Items.COMPASS, AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_SEARCH),
-            new RecipeBookComponent.TabInfo(AetherIIItems.IRRADIATED_CHUNK.get(), AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_ITEMS.get()),
-            new RecipeBookComponent.TabInfo(AetherIIBlocks.IRRADIATED_SKYROOT_LEAVES.asItem(), AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_BLOCKS.get()));
+            new RecipeBookComponent.TabInfo(AetherIIItems.IRRADIATED_CHUNK, AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_ITEMS),
+            new RecipeBookComponent.TabInfo(AetherIIBlocks.IRRADIATED_SKYROOT_LEAVES.asItem(), AetherIIRecipeBookCategories.ALKAHEST_PURIFIER_BLOCKS));
     private static final int[] BUBBLE_LENGTHS = new int[]{0, 3, 7, 12, 18};
 
     public AlkahestPurifierScreen(AlkahestPurifierMenu menu, Inventory inventory, Component title) {

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.attachment.player;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
 import com.aetherteam.aetherii.entity.passive.Aerbunny;
@@ -13,8 +14,7 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.util.ValueIOSerializable;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.aetherteam.aetherii.attachment.ValueIOSerializable;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -59,14 +59,14 @@ public class AerbunnyMountAttachment implements ValueIOSerializable {
         if (this.getMountedAerbunnyTag().isPresent()) {
             if (!player.level().isClientSide()) {
                 try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(player.problemPath(), AetherII.LOGGER)) {
-                    Aerbunny aerbunny = new Aerbunny(AetherIIEntityTypes.AERBUNNY.get(), player.level());
+                    Aerbunny aerbunny = new Aerbunny(AetherIIEntityTypes.AERBUNNY, player.level());
                     ValueInput valueInput = TagValueInput.create(problemreporter$scopedcollector, player.registryAccess(), this.getMountedAerbunnyTag().get());
                     aerbunny.load(valueInput);
                     player.level().addFreshEntity(aerbunny);
                     aerbunny.startRiding(player, true, false);
                     this.setMountedAerbunny(aerbunny);
                     if (player instanceof ServerPlayer serverPlayer) {
-                        PacketDistributor.sendToPlayer(serverPlayer, new RemountAerbunnyPacket(player.getId(), aerbunny.getId()));
+                        ServerPlayNetworking.send(serverPlayer, new RemountAerbunnyPacket(player.getId(), aerbunny.getId()));
                     }
                 }
             }

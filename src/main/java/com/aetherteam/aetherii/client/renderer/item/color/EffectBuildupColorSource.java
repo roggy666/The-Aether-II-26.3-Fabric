@@ -23,7 +23,7 @@ public record EffectBuildupColorSource(int defaultColor) implements ItemTintSour
     }
 
     public int calculate(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity livingEntity) {
-        BuildupContents buildupContents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS.get());
+        BuildupContents buildupContents = stack.get(AetherIIDataComponents.BUILDUP_CONTENTS);
         return buildupContents != null ? ARGB.opaque(buildupContents.getColor()) : ARGB.opaque(this.defaultColor);
     }
 

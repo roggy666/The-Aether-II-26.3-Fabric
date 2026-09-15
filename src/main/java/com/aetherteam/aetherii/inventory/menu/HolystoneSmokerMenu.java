@@ -10,10 +10,10 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 public class HolystoneSmokerMenu extends AbstractFurnaceMenu {
     public HolystoneSmokerMenu(int containerId, Inventory playerInventory) {
-        super(AetherIIMenuTypes.HOLYSTONE_SMOKER.get(), RecipeType.SMOKING, RecipePropertySet.SMOKER_INPUT, RecipeBookType.SMOKER, containerId, playerInventory);
+        super(AetherIIMenuTypes.HOLYSTONE_SMOKER, RecipePropertySet.SMOKER_INPUT, RecipeBookType.SMOKER, containerId, playerInventory);
     }
 
     public HolystoneSmokerMenu(int containerId, Inventory playerInventory, Container furnaceContainer, ContainerData data) {
-        super(AetherIIMenuTypes.HOLYSTONE_SMOKER.get(), RecipeType.SMOKING, RecipePropertySet.SMOKER_INPUT,  RecipeBookType.SMOKER, containerId, playerInventory, furnaceContainer, data);
+        super(AetherIIMenuTypes.HOLYSTONE_SMOKER, RecipePropertySet.SMOKER_INPUT, RecipeBookType.SMOKER, containerId, playerInventory, furnaceContainer, data);
     }
 }

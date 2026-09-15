@@ -6,7 +6,7 @@ import com.aetherteam.aetherii.effect.AetherIIMobEffects;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupPresets;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,7 +42,7 @@ public class HealingStoneItem extends Item {
 
             if (player != null) {
                 player.awardStat(Stats.ITEM_USED.get(this));
-                player.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(player, EffectBuildupPresets.AMBROSIUM_POISONING, 350);
+                player.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(player, EffectBuildupPresets.AMBROSIUM_POISONING, 350);
                 if (player.getHealth() + 8.0F > player.getMaxHealth()) {
                     int absorption = (int) (Mth.floor(player.getHealth()) + 8.0F - player.getMaxHealth());
                     player.addEffect(new MobEffectInstance(AetherIIMobEffects.HEALING_OVERFLOW, -1, absorption, false, false, false));

@@ -169,7 +169,7 @@ public class AetherPortalShape {
     }
 
     public void createPortalBlocks(LevelAccessor p_374419_) {
-        BlockState blockstate = AetherIIBlocks.AETHER_PORTAL.get().defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis);
+        BlockState blockstate = AetherIIBlocks.AETHER_PORTAL.defaultBlockState().setValue(AetherPortalBlock.AXIS, this.axis);
         BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1)).forEach((p_374024_) -> p_374419_.setBlock(p_374024_, blockstate, 18));
     }
 

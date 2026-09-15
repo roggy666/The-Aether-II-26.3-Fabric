@@ -6,7 +6,6 @@ import com.aetherteam.aetherii.item.miscellaneous.glider.AercloudGliderItem;
 import com.aetherteam.aetherii.network.packet.serverbound.MoaFlyModeChangePacket;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +16,7 @@ public class MultiPlayerGameModeMixin {
     @Inject(method = "releaseUsingItem(Lnet/minecraft/world/entity/player/Player;)V", at = @At(value = "HEAD"), cancellable = true)
     private void releaseUsingItem(Player player, CallbackInfo ci) {
         if (player.getUseItem().getItem() instanceof ToggleItem) {
-            if (player.getData(AetherIIDataAttachments.PLAYER).isUseToggled()) {
+            if (player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).isUseToggled()) {
                 ci.cancel();
             }
         }

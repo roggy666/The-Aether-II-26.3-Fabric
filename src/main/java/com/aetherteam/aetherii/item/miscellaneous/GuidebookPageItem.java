@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -39,7 +39,7 @@ public class GuidebookPageItem extends Item {
         RandomSource random = player.getRandom();
         ItemStack stack = player.getItemInHand(usedHand);
         if (player instanceof ServerPlayer serverPlayer) {
-            GuidebookDiscoveryAttachment attachment = serverPlayer.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            GuidebookDiscoveryAttachment attachment = serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
             List<GuidebookEntryData> dataList = stack.get(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA);
             if (dataList != null) {
                 for (GuidebookEntryData data : dataList) {
@@ -60,7 +60,7 @@ public class GuidebookPageItem extends Item {
                     icon = attachment.getIconForEntry(entry);
                 }
                 if (icon != null) {
-                    PacketDistributor.sendToPlayer(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
+                    ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
                     }
@@ -88,7 +88,7 @@ public class GuidebookPageItem extends Item {
                     }
                 }
                 if (icon != null) {
-                    PacketDistributor.sendToPlayer(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
+                    ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
                     if (!serverPlayer.getAbilities().instabuild) {
                         stack.shrink(1);
                     }

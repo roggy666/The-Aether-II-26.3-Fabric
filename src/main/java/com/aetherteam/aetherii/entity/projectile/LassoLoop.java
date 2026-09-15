@@ -30,16 +30,16 @@ public class LassoLoop extends ThrowableProjectile implements Leashable {
     }
 
     public LassoLoop(Level level) {
-        super(AetherIIEntityTypes.LASSO_LOOP.get(), level);
+        super(AetherIIEntityTypes.LASSO_LOOP, level);
     }
 
     public LassoLoop(Level level, LivingEntity owner) {
-        super(AetherIIEntityTypes.LASSO_LOOP.get(), owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), level);
+        super(AetherIIEntityTypes.LASSO_LOOP, owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), level);
         this.setOwner(owner);
     }
 
     public LassoLoop(Level level, double x, double y, double z) {
-        super(AetherIIEntityTypes.LASSO_LOOP.get(), x, y, z, level);
+        super(AetherIIEntityTypes.LASSO_LOOP, x, y, z, level);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class LassoLoop extends ThrowableProjectile implements Leashable {
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(AetherIIItems.BRETTL_LASSO.get()).getItem());
+            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(AetherIIItems.BRETTL_LASSO).getItem());
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
@@ -68,7 +68,7 @@ public class LassoLoop extends ThrowableProjectile implements Leashable {
                         }
 
                         leashable.setLeashedTo(player, true);
-                        entity.setData(AetherIIDataAttachments.LASSO_CONNECTION, true);
+                        entity.setAttached(AetherIIDataAttachments.LASSO_CONNECTION, true);
                         this.playSound(SoundEvents.LEAD_TIED);
                     }
                 }

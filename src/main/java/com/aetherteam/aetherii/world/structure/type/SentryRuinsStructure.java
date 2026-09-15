@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.structure.type;
 
+import net.minecraft.world.phys.Vec3;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.world.structure.piece.AetherTemplateStructurePiece;
@@ -220,7 +221,7 @@ public class SentryRuinsStructure extends Structure {
 
     @Override
     public StructureType<?> type() {
-        return AetherIIStructureTypes.SENTRY_RUINS.get();
+        return AetherIIStructureTypes.SENTRY_RUINS;
     }
 
     public record RuinsOriginInfo(BlockPos pos, Rotation rotation) {

@@ -68,7 +68,7 @@ public class AmberHourglassRecipeCategory extends AbstractRecipeCategory<Hourgla
     private static List<ItemStack> createFuels() {
         List<ItemStack> fuels = new ArrayList<>();
         Registry<Item> registry = Minecraft.getInstance().level.registryAccess().lookupOrThrow(Registries.ITEM);
-        registry.getDataMap(AetherIIDataMaps.AMBER_HOURGLASS_FUELS).forEach((key, fuel) -> fuels.add(new ItemStack(registry.getValue(key))));
+        AetherIIDataMaps.AMBER_HOURGLASS_FUELS.getAll(registry).forEach((key, fuel) -> fuels.add(new ItemStack(registry.getValue(key))));
         return fuels;
     }
 

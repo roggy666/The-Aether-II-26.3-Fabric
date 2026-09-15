@@ -22,22 +22,22 @@ public class SkyrootPinecone extends ThrowableItemProjectile {
     }
 
     public SkyrootPinecone(Level level, LivingEntity shooter, ItemStack stack) {
-        super(AetherIIEntityTypes.SKYROOT_PINECONE.get(), shooter, level, stack);
+        super(AetherIIEntityTypes.SKYROOT_PINECONE, shooter, level, stack);
     }
 
     public SkyrootPinecone(Level level, double x, double y, double z, ItemStack stack) {
-        super(AetherIIEntityTypes.SKYROOT_PINECONE.get(), x, y, z, level, stack);
+        super(AetherIIEntityTypes.SKYROOT_PINECONE, x, y, z, level, stack);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return AetherIIItems.SKYROOT_PINECONE.get();
+        return AetherIIItems.SKYROOT_PINECONE;
     }
 
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.SKYROOT_PINECONE.get()));
+            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.SKYROOT_PINECONE));
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }

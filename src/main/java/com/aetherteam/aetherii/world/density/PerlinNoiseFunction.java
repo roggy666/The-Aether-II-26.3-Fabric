@@ -64,6 +64,11 @@ public class PerlinNoiseFunction implements DensityFunction {
         return visitor.apply(this);
     }
 
+    @Override
+    public DensityFunction mapChildren(Visitor visitor) {
+        return visitor.apply(new PerlinNoiseFunction(this.params, this.xzScale, this.yScale, this.seed));
+    }
+
 
     @Override
     public double minValue() {

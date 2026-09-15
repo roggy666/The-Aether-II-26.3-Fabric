@@ -2,6 +2,7 @@ package com.aetherteam.aetherii.client.renderer.entity.model;// Made with Blockb
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.BladeshroomHunterRenderState;
@@ -13,13 +14,12 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class BladeshroomHunterModel<T extends BladeshroomHunterRenderState> extends EntityModel<T> {
-    public static final AnimationHolder ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/attack"));
-    public static final AnimationHolder BURRY_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/bury"));
-    public static final AnimationHolder UNBURRY_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/unbury"));
-    public static final AnimationHolder RUSTLE_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/rustle"));
+    public static final Identifier ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/attack");
+    public static final Identifier BURRY_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/bury");
+    public static final Identifier UNBURRY_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/unbury");
+    public static final Identifier RUSTLE_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "bladeshroom_hunter/rustle");
 
 
     private final ModelPart body;
@@ -41,10 +41,10 @@ public class BladeshroomHunterModel<T extends BladeshroomHunterRenderState> exte
     private final ModelPart branch_right;
     private final ModelPart leaves_right;
 
-    private final KeyframeAnimation attackAnimation;
-    private final KeyframeAnimation burryAnimation;
-    private final KeyframeAnimation unburryAnimation;
-    private final KeyframeAnimation rustleAnimation;
+    private final AetherIIAnimations.ReloadableAnimation attackAnimation;
+    private final AetherIIAnimations.ReloadableAnimation burryAnimation;
+    private final AetherIIAnimations.ReloadableAnimation unburryAnimation;
+    private final AetherIIAnimations.ReloadableAnimation rustleAnimation;
 
 
     public BladeshroomHunterModel(ModelPart root) {
@@ -67,10 +67,10 @@ public class BladeshroomHunterModel<T extends BladeshroomHunterRenderState> exte
         this.leaves_left = this.branch_left.getChild("leaves_left");
         this.branch_right = this.body.getChild("branch_right");
         this.leaves_right = this.branch_right.getChild("leaves_right");
-        this.attackAnimation = ATTACK_ANIMATION.get().bake(root);
-        this.burryAnimation = BURRY_ANIMATION.get().bake(root);
-        this.unburryAnimation = UNBURRY_ANIMATION.get().bake(root);
-        this.rustleAnimation = RUSTLE_ANIMATION.get().bake(root);
+        this.attackAnimation = AetherIIAnimations.bake(ATTACK_ANIMATION, root);
+        this.burryAnimation = AetherIIAnimations.bake(BURRY_ANIMATION, root);
+        this.unburryAnimation = AetherIIAnimations.bake(UNBURRY_ANIMATION, root);
+        this.rustleAnimation = AetherIIAnimations.bake(RUSTLE_ANIMATION, root);
     }
 
     public static LayerDefinition createBodyLayer() {

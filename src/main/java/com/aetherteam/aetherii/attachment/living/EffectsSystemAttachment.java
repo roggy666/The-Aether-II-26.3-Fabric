@@ -78,7 +78,7 @@ public class EffectsSystemAttachment {
                 int i = (EffectsSystemAttachment.BUILDUP_CAP - effect.getBuildup()) / 100;
                 if (i != 0) {
                     if (livingEntity.getRandom().nextInt(Math.max(j * i, 1)) == 0) {
-                        serverLevel.sendParticles(ColorParticleOption.create(AetherIIParticleTypes.EFFECT_BUILDUP.get(), ARGB.opaque(effect.getType().value().getColor())), livingEntity.getRandomX(0.5), livingEntity.getRandomY(), livingEntity.getRandomZ(0.5), 1, 0, 0, 0, 1.0);
+                        serverLevel.sendParticles(ColorParticleOption.create(AetherIIParticleTypes.EFFECT_BUILDUP, ARGB.opaque(effect.getType().value().getColor())), livingEntity.getRandomX(0.5), livingEntity.getRandomY(), livingEntity.getRandomZ(0.5), 1, 0, 0, 0, 1.0);
                     }
                 }
             }
@@ -86,7 +86,7 @@ public class EffectsSystemAttachment {
 
         if (this.needSync) {
             this.needSync = false;
-            livingEntity.syncData(AetherIIDataAttachments.EFFECTS_SYSTEM);
+            livingEntity.setAttached(AetherIIDataAttachments.EFFECTS_SYSTEM, livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM));
         }
 
         this.setMotionMultiplier(new Vec3(1, 1, 1));
@@ -115,9 +115,9 @@ public class EffectsSystemAttachment {
                 this.activeBuildups.get(effect).increaseBuildup((int) modifiedAmount);
             }
             if (source instanceof ServerPlayer serverPlayer) {
-                AetherIIAdvancementTriggers.EFFECT_BUILDUP.get().trigger(serverPlayer, directSource, target, buildup.type(), this.activeBuildups.get(effect).isBuildupFull());
+                AetherIIAdvancementTriggers.EFFECT_BUILDUP.trigger(serverPlayer, directSource, target, buildup.type(), this.activeBuildups.get(effect).isBuildupFull());
             } else if (target instanceof ServerPlayer serverPlayer) {
-                AetherIIAdvancementTriggers.EFFECT_BUILDUP.get().trigger(serverPlayer, directSource, target, buildup.type(), this.activeBuildups.get(effect).isBuildupFull());
+                AetherIIAdvancementTriggers.EFFECT_BUILDUP.trigger(serverPlayer, directSource, target, buildup.type(), this.activeBuildups.get(effect).isBuildupFull());
             }
             this.needSync = true;
         }

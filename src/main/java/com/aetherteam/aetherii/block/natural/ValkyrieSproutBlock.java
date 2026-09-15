@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.CommonHooks;
 
 public class ValkyrieSproutBlock extends AetherBushBlock implements BonemealableBlock {
     private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 13.0, 14.0);
@@ -33,9 +32,8 @@ public class ValkyrieSproutBlock extends AetherBushBlock implements Bonemealable
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.getRawBrightness(pos.above(), 0) >= 9 && CommonHooks.canCropGrow(level, pos, state, random.nextInt(20) == 0)) {
+        if (level.getRawBrightness(pos.above(), 0) >= 9 && (random.nextInt(20) == 0)) {
             level.setBlockAndUpdate(pos, state.setValue(AGE, Math.min(state.getValue(AGE) + 1, 2)));
-            CommonHooks.fireCropGrowPost(level, pos, state);
         }
     }
 

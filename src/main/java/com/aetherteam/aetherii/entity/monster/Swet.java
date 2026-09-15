@@ -24,7 +24,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.cubemob.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -166,7 +166,7 @@ public class Swet extends Monster {
                 && this.getFoodSaturation() <= 3
                 && !this.isWaterDamaged()
                 && this.getSwetScale() >= 0.95F
-                && player.getData(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
+                && player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).canLatchOn();
     }
 
     public boolean processSucking(Player player) {
@@ -256,16 +256,16 @@ public class Swet extends Monster {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SWET_HURT.get();
+        return AetherIISoundEvents.ENTITY_SWET_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SWET_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SWET_DEATH;
     }
 
     protected SoundEvent getSquishSound() {
-        return AetherIISoundEvents.ENTITY_SWET_SQUISH.get();
+        return AetherIISoundEvents.ENTITY_SWET_SQUISH;
     }
 
     @Override
@@ -333,7 +333,7 @@ public class Swet extends Monster {
                         }
                         this.swet.getJumpControl().jump();
                         this.swet.level().broadcastEntityEvent(this.swet, (byte) JUMP_EVENT);
-                        this.swet.playSound(AetherIISoundEvents.ENTITY_SWET_JUMP.get(), 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                        this.swet.playSound(AetherIISoundEvents.ENTITY_SWET_JUMP, 1.0F, ((this.swet.getRandom().nextFloat() - this.swet.getRandom().nextFloat()) * 0.2F + 1.0F) * 0.8F);
                     } else {
                         this.swet.xxa = 0.0F;
                         this.swet.zza = 0.0F;
@@ -430,7 +430,7 @@ public class Swet extends Monster {
                     swetMoveControl.setDirection(this.swet.getYRot(), true);
                     if (this.swet.getBoundingBox().intersects(target.getBoundingBox())) {
                         if (target instanceof Player player) {
-                            player.getData(AetherIIDataAttachments.SWET_LATCH.get()).latchSwet(this.swet);
+                            player.getAttachedOrCreate(AetherIIDataAttachments.SWET_LATCH).latchSwet(this.swet);
                         }
                     }
                 }

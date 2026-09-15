@@ -74,7 +74,7 @@ public class BedrollBlock extends HorizontalDirectionalBlock {
                 if (level.getBlockState(relativePos).is(this)) {
                     level.removeBlock(relativePos, false);
                 }
-                Vec3 center = pos.getCenter();
+                Vec3 center = Vec3.atCenterOf(pos);
                 level.explode(null, level.damageSources().badRespawnPointExplosion(center), null, center, 5.0F, true, Level.ExplosionInteraction.BLOCK);
                 return InteractionResult.SUCCESS_SERVER;
             } else if (state.getValue(OCCUPIED)) {
@@ -88,7 +88,7 @@ public class BedrollBlock extends HorizontalDirectionalBlock {
                     }
                 }).ifRight((unit) -> {
                     if (player instanceof ServerPlayer serverPlayer) {
-                        AetherIIAdvancementTriggers.SLEPT_IN_BEDROLL.get().trigger(serverPlayer);
+                        AetherIIAdvancementTriggers.SLEPT_IN_BEDROLL.trigger(serverPlayer);
                     }
                 });
             }
@@ -177,8 +177,4 @@ public class BedrollBlock extends HorizontalDirectionalBlock {
         builder.add(FACING, PART, OCCUPIED);
     }
 
-    @Override
-    public boolean isBed(BlockState state, BlockGetter level, BlockPos pos, LivingEntity sleeper) {
-        return true;
-    }
 }

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,8 +30,8 @@ public record StoreCompanionItemEntityPacket(int entityID) implements CustomPack
         return TYPE;
     }
 
-    public static void execute(StoreCompanionItemEntityPacket payload, IPayloadContext context) {
-        Player playerEntity = context.player();
+    public static void handleServer(StoreCompanionItemEntityPacket payload, ServerPlayer player) {
+        ServerPlayer playerEntity = player;
         if (playerEntity != null && playerEntity.level().getServer() != null && playerEntity.level().getEntity(payload.entityID()) instanceof LivingEntity companion) {
             List<ItemEntity> itemEntityList = playerEntity.level().getEntitiesOfClass(ItemEntity.class, playerEntity.getBoundingBox().inflate(2.0));
             for (ItemEntity itemEntity : itemEntityList) {

@@ -23,7 +23,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 public class ZephyrWebbingBall extends Fireball implements ItemSupplier {
     private int ticksInAir;
@@ -34,7 +33,7 @@ public class ZephyrWebbingBall extends Fireball implements ItemSupplier {
     }
 
     public ZephyrWebbingBall(Level level, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(AetherIIEntityTypes.ZEPHYR_WEBBING_BALL.get(), shooter, new Vec3(accelX, accelY, accelZ), level);
+        super(AetherIIEntityTypes.ZEPHYR_WEBBING_BALL, shooter, new Vec3(accelX, accelY, accelZ), level);
         this.setNoGravity(true);
     }
 
@@ -56,7 +55,7 @@ public class ZephyrWebbingBall extends Fireball implements ItemSupplier {
         }
         if (this.level().isClientSide() || (this.getOwner() == null || this.getOwner().isAlive()) && this.level().hasChunkAt(this.blockPosition())) {
             HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-            if (hitResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitResult)) {
+            if (hitResult.getType() != HitResult.Type.MISS) {
                 this.onHit(hitResult);
             }
 
@@ -100,14 +99,14 @@ public class ZephyrWebbingBall extends Fireball implements ItemSupplier {
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.isBlocking()) {
-                livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
+                livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
                 if (entity instanceof Player player && player.isBlocking()) {
                     if (!player.getUseItem().isEmpty()) {
                         player.getUseItem().hurtAndBreak(3, player, player.getUsedItemHand());
                     }
                 }
             } else {
-                livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), EffectBuildupPresets.WEBBED, 425);
+                livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), EffectBuildupPresets.WEBBED, 425);
             }
         }
     }
@@ -122,7 +121,7 @@ public class ZephyrWebbingBall extends Fireball implements ItemSupplier {
 
     @Override
     protected ParticleOptions getTrailParticle() {
-        return AetherIIParticleTypes.ZEPHYR_SNOWFLAKE.get();
+        return AetherIIParticleTypes.ZEPHYR_SNOWFLAKE;
     }
 
     @Override

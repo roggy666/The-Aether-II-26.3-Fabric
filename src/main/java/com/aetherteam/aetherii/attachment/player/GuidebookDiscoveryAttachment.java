@@ -18,7 +18,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +70,9 @@ public class GuidebookDiscoveryAttachment {
     private void setupAfterJoin(Player player) {
         if (this.shouldSetupAfterJoin) {
             if (player instanceof ServerPlayer serverPlayer) {
-                PacketDistributor.sendToPlayer(serverPlayer, new FlushGuidebookDataPacket());
+                ServerPlayNetworking.send(serverPlayer, new FlushGuidebookDataPacket());
                 this.setupEntries(serverPlayer);
-                player.syncData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+                player.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
             }
             this.shouldSetupAfterJoin = false;
         }
@@ -110,7 +110,7 @@ public class GuidebookDiscoveryAttachment {
             this.trackBestiaryEntries(registryAccess, advancement, serverPlayer);
             this.trackEffectsEntries(registryAccess, advancement, serverPlayer);
             this.trackExplorationEntries(registryAccess, advancement, serverPlayer);
-            player.syncData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+            player.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
         }
     }
 
@@ -145,12 +145,12 @@ public class GuidebookDiscoveryAttachment {
                         }
                     });
                     icon = this.getIconForEntry(entry);
-                    serverPlayer.syncData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY);
+                    serverPlayer.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
                 }
             }
         }
         if (icon != null) {
-            PacketDistributor.sendToPlayer(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
+            ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
         }
     }
 

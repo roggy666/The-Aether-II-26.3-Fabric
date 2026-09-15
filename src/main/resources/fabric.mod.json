@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "aether_ii",
+  "version": "${version}",
+  "name": "The Aether II",
+  "description": "The Iconic Dimension Mod Returns! Step into a renewed and expanded Aether Dimension with The Aether II! The sequel to the quintessential dimension mod.",
+  "authors": [
+    "bconlon",
+    "Builderdog",
+    "bagu_chan",
+    "Blodhgarm",
+    "Drullkus",
+    "Hugo Payn",
+    "Jaryt",
+    "Jasper",
+    "Katie 'Oz' Payn",
+    "Mercedes",
+    "Raptor",
+    "reetamb",
+    "RENREN",
+    "sunsette"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/aether-ii",
+    "sources": "https://github.com/The-Aether-Team/The-Aether-II",
+    "issues": "https://github.com/The-Aether-Team/The-Aether-II/issues"
+  },
+  "license": "LGPL-3.0",
+  "icon": "aether_ii.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.aetherteam.aetherii.AetherII"
+    ],
+    "client": [
+      "com.aetherteam.aetherii.client.AetherIIClient"
+    ],
+    "fabric-datagen": [
+      "com.aetherteam.aetherii.data.AetherIIData"
+    ],
+    "cumulus": [
+      "com.aetherteam.aetherii.api.AetherIIMenus"
+    ]
+  },
+  "accessWidener": "aether_ii.accesswidener",
+  "mixins": [
+    "aether_ii.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~26.2",
+    "fabric-api": "*",
+    "nitrogen_internals": "*",
+    "cumulus_menus": "*",
+    "forgeconfigapiport": "*"
+  },
+  "suggests": {
+    "jei": "*"
+  }
+}

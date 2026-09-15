@@ -7,7 +7,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record FlushGuidebookDataPacket() implements CustomPacketPayload {
     public static final Type<FlushGuidebookDataPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "flush_guidebook_data"));
@@ -25,9 +27,10 @@ public record FlushGuidebookDataPacket() implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static void execute(FlushGuidebookDataPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(FlushGuidebookDataPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
-            Minecraft.getInstance().player.getData(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).clearEntries();
+            Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).clearEntries();
         }
     }
 }

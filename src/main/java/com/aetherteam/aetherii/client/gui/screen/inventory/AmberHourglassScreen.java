@@ -27,8 +27,8 @@ public class AmberHourglassScreen extends AbstractRecipeBookScreen<AmberHourglas
     private static final Identifier PROGRESS_BAR_RIGHT_SPRITE = Identifier.fromNamespaceAndPath(AetherII.MODID, "container/amber_hourglass/progress_bar_right");
     private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
             new RecipeBookComponent.TabInfo(Items.COMPASS, AetherIIRecipeBookCategories.AMBER_HOURGLASS_SEARCH),
-            new RecipeBookComponent.TabInfo(AetherIIItems.ZANITE_GEMSTONE.get(), AetherIIRecipeBookCategories.AMBER_HOURGLASS_RESTORATION.get()),
-            new RecipeBookComponent.TabInfo(AetherIIItems.SKYROOT_PICKAXE.get(), AetherIIRecipeBookCategories.AMBER_HOURGLASS_UNCRAFTING.get()));
+            new RecipeBookComponent.TabInfo(AetherIIItems.ZANITE_GEMSTONE, AetherIIRecipeBookCategories.AMBER_HOURGLASS_RESTORATION),
+            new RecipeBookComponent.TabInfo(AetherIIItems.SKYROOT_PICKAXE, AetherIIRecipeBookCategories.AMBER_HOURGLASS_UNCRAFTING));
 
     public AmberHourglassScreen(AmberHourglassMenu menu, Inventory inventory, Component title) {
         super(menu, new AmberHourglassRecipeBookComponent(menu, TABS), inventory, title);

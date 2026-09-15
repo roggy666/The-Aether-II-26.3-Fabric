@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.monster;
 
+import net.minecraft.world.damagesource.DamageSource;
 import com.aetherteam.aetherii.entity.AetherIIDataSerializers;
 import com.aetherteam.aetherii.entity.ai.controller.CellingMoveControl;
 import com.aetherteam.aetherii.entity.ai.goal.ClosedAnimationMeleeAttackGoal;
@@ -43,7 +44,7 @@ public class BladeshroomHunter extends CellingMonster {
     private int rustleTime;
 
 
-    public static final EntityDataAccessor<State> DATA_BURY_ID = SynchedEntityData.defineId(BladeshroomHunter.class, AetherIIDataSerializers.BLADESHROOM_HUNTER_STATE.get());
+    public static final EntityDataAccessor<State> DATA_BURY_ID = SynchedEntityData.defineId(BladeshroomHunter.class, AetherIIDataSerializers.BLADESHROOM_HUNTER_STATE);
 
     public AnimationState axeAttackAnimationState = new AnimationState();
     public AnimationState buryAnimationState = new AnimationState();
@@ -157,9 +158,9 @@ public class BladeshroomHunter extends CellingMonster {
     }
 
     @Override
-    public void knockback(double strength, double x, double z) {
+    public void knockback(double strength, double x, double z, DamageSource source, float damage, boolean comesFromEffect) {
         if (this.getState() != State.HIDING && this.getState() != State.UNBURY) {
-            super.knockback(strength, x, z);
+            super.knockback(strength, x, z, source, damage, comesFromEffect);
         }
     }
 

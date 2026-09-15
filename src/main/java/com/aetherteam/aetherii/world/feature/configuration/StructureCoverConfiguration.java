@@ -12,7 +12,7 @@ public record StructureCoverConfiguration(BlockStateProvider block, BlockStatePr
             BlockStateProvider.CODEC.fieldOf("block").forGetter(StructureCoverConfiguration::block),
             BlockStateProvider.CODEC.fieldOf("secondary_block").forGetter(StructureCoverConfiguration::secondaryBlock),
             Codec.INT.fieldOf("block_transition_height").forGetter(StructureCoverConfiguration::blockTransitionHeight),
-            DensityFunction.HOLDER_HELPER_CODEC.fieldOf("noise").forGetter(StructureCoverConfiguration::noise),
+            DensityFunction.CODEC.fieldOf("noise").forGetter(StructureCoverConfiguration::noise),
             Codec.FLOAT.fieldOf("radius").forGetter(StructureCoverConfiguration::radius),
             Codec.INT.fieldOf("height").forGetter(StructureCoverConfiguration::height),
             Codec.FLOAT.fieldOf("incline_factor").forGetter(StructureCoverConfiguration::inclineFactor),

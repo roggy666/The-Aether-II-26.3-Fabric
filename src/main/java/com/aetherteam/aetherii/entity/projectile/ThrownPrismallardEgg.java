@@ -23,11 +23,11 @@ public class ThrownPrismallardEgg extends ThrowableItemProjectile {
     }
 
     public ThrownPrismallardEgg(Level level, LivingEntity mob, ItemStack itemStack) {
-        super(AetherIIEntityTypes.PRISMALLARD_EGG.get(), mob, level, itemStack);
+        super(AetherIIEntityTypes.PRISMALLARD_EGG, mob, level, itemStack);
     }
 
     public ThrownPrismallardEgg(Level level, double x, double y, double z, ItemStack itemStack) {
-        super(AetherIIEntityTypes.PRISMALLARD_EGG.get(), x, y, z, level, itemStack);
+        super(AetherIIEntityTypes.PRISMALLARD_EGG, x, y, z, level, itemStack);
     }
 
     public void handleEntityEvent(byte id) {
@@ -59,7 +59,7 @@ public class ThrownPrismallardEgg extends ThrowableItemProjectile {
                 }
 
                 for(int i = 0; i < count; ++i) {
-                    Prismallard prismallard = AetherIIEntityTypes.PRISMALLARD.get().create(this.level(), EntitySpawnReason.TRIGGERED);
+                    Prismallard prismallard = AetherIIEntityTypes.PRISMALLARD.create(this.level(), EntitySpawnReason.TRIGGERED);
                     if (prismallard != null) {
                         prismallard.setAge(-24000);
                         prismallard.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), 0.0F);
@@ -75,6 +75,6 @@ public class ThrownPrismallardEgg extends ThrowableItemProjectile {
     }
 
     protected Item getDefaultItem() {
-        return AetherIIItems.PRISMALLARD_EGG.get();
+        return AetherIIItems.PRISMALLARD_EGG;
     }
 }

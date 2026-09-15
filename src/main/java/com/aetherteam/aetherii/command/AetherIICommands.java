@@ -1,14 +1,11 @@
 package com.aetherteam.aetherii.command;
 
-import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.commands.CommandBuildContext;
-import net.minecraft.commands.CommandSourceStack;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 public class AetherIICommands {
-    public static void registerCommands(RegisterCommandsEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        CommandBuildContext context = event.getBuildContext();
-        DungeonBlockLockCommand.register(dispatcher, context);
+    public static void init() {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            DungeonBlockLockCommand.register(dispatcher, registryAccess);
+        });
     }
 }

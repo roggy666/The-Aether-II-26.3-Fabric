@@ -1,0 +1,153 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:range_dispatch",
+          "entries": [
+            {
+              "model": {
+                "type": "minecraft:select",
+                "cases": [
+                  {
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "aether_ii:item/blue_aercloud_glider_dull"
+                    },
+                    "when": "gui"
+                  },
+                  {
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "aether_ii:item/blue_aercloud_glider_dull"
+                    },
+                    "when": "ground"
+                  },
+                  {
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "aether_ii:item/blue_aercloud_glider_dull"
+                    },
+                    "when": "fixed"
+                  }
+                ],
+                "fallback": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider_open"
+                },
+                "property": "minecraft:display_context"
+              },
+              "threshold": 1.0
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:select",
+            "cases": [
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider_dull"
+                },
+                "when": "gui"
+              },
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider_dull"
+                },
+                "when": "ground"
+              },
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider_dull"
+                },
+                "when": "fixed"
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:model",
+              "model": "aether_ii:item/blue_aercloud_glider_closed"
+            },
+            "property": "minecraft:display_context"
+          },
+          "property": "aether_ii:parachuting"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:range_dispatch",
+      "entries": [
+        {
+          "model": {
+            "type": "minecraft:select",
+            "cases": [
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider"
+                },
+                "when": "gui"
+              },
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider"
+                },
+                "when": "ground"
+              },
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "aether_ii:item/blue_aercloud_glider"
+                },
+                "when": "fixed"
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:model",
+              "model": "aether_ii:item/blue_aercloud_glider_open"
+            },
+            "property": "minecraft:display_context"
+          },
+          "threshold": 1.0
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:select",
+        "cases": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "aether_ii:item/blue_aercloud_glider"
+            },
+            "when": "gui"
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "aether_ii:item/blue_aercloud_glider"
+            },
+            "when": "ground"
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "aether_ii:item/blue_aercloud_glider"
+            },
+            "when": "fixed"
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:model",
+          "model": "aether_ii:item/blue_aercloud_glider_closed"
+        },
+        "property": "minecraft:display_context"
+      },
+      "property": "aether_ii:parachuting"
+    },
+    "property": "aether_ii:dull_ability"
+  }
+}

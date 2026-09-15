@@ -1,13 +1,18 @@
 package com.aetherteam.aetherii.item.consumeeffect;
 
 import com.aetherteam.aetherii.AetherII;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.consume_effects.ConsumeEffect;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AetherIIConsumeEffectTypes {
-    public static final DeferredRegister<ConsumeEffect.Type<?>> CONSUME_EFFECT_TYPE = DeferredRegister.create(BuiltInRegistries.CONSUME_EFFECT_TYPE, AetherII.MODID);
+    private static <T extends ConsumeEffect> ConsumeEffect.Type<T> register(String name, ConsumeEffect.Type<T> type) {
+        return Registry.register(BuiltInRegistries.CONSUME_EFFECT_TYPE, Identifier.fromNamespaceAndPath(AetherII.MODID, name), type);
+    }
 
-    public static final DeferredHolder<ConsumeEffect.Type<?>, ConsumeEffect.Type<ReduceStatusEffectConsumeEffect>> REDUCE_EFFECT_BUILDUP = CONSUME_EFFECT_TYPE.register("reduce_effect_buildup", () -> new ConsumeEffect.Type<>(ReduceStatusEffectConsumeEffect.CODEC, ReduceStatusEffectConsumeEffect.STREAM_CODEC));
+    public static final ConsumeEffect.Type<ReduceStatusEffectConsumeEffect> REDUCE_EFFECT_BUILDUP = register("reduce_effect_buildup", new ConsumeEffect.Type<>(ReduceStatusEffectConsumeEffect.CODEC, ReduceStatusEffectConsumeEffect.STREAM_CODEC));
+
+    public static void init() {}
 }
+

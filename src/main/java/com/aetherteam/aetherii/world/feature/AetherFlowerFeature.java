@@ -27,7 +27,7 @@ public class AetherFlowerFeature extends Feature<SimpleBlockConfiguration> {
         BlockState atstate = level.getBlockState(blockpos);
         BlockState belowstate = level.getBlockState(blockpos.below());
         if (blockstate.getBlock() instanceof Snowable && blockstate.hasProperty(BlockStateProperties.SNOWY)
-                && (atstate.getBlock() == AetherIIBlocks.ARCTIC_SNOW.get() || (belowstate.getBlock() == AetherIIBlocks.AETHER_GRASS_BLOCK.get() && belowstate.getValue(GrassBlock.SNOWY)))) {
+                && (atstate.getBlock() == AetherIIBlocks.ARCTIC_SNOW || (belowstate.getBlock() == AetherIIBlocks.AETHER_GRASS_BLOCK && belowstate.getValue(GrassBlock.SNOWY)))) {
             blockstate = blockstate.setValue(BlockStateProperties.SNOWY, true);
         }
         if (blockstate.canSurvive(level, blockpos)) {

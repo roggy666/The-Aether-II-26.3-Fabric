@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": "#aether_ii:gems/ambrosium",
+    "L": "#minecraft:logs",
+    "S": "#aether_ii:rods/skyroot"
+  },
+  "pattern": [
+    " S ",
+    "S#S",
+    "LLL"
+  ],
+  "result": {
+    "id": "aether_ii:ambrosium_campfire"
+  }
+}

@@ -121,7 +121,7 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
 
     @Override
     public RecipeType<HourglassRestoringRecipe> getType() {
-        return AetherIIRecipeTypes.HOURGLASS_RESTORING.get();
+        return AetherIIRecipeTypes.HOURGLASS_RESTORING;
     }
 
     @Override
@@ -149,8 +149,8 @@ public class HourglassRestoringRecipe implements Recipe<SingleRecipeInputWithRan
     @Override
     public RecipeBookCategory recipeBookCategory() {
         return switch (this.category()) {
-            case RESTORATION -> AetherIIRecipeBookCategories.AMBER_HOURGLASS_RESTORATION.get();
-            case UNCRAFTING -> AetherIIRecipeBookCategories.AMBER_HOURGLASS_UNCRAFTING.get();
+            case RESTORATION -> AetherIIRecipeBookCategories.AMBER_HOURGLASS_RESTORATION;
+            case UNCRAFTING -> AetherIIRecipeBookCategories.AMBER_HOURGLASS_UNCRAFTING;
         };
     }
 

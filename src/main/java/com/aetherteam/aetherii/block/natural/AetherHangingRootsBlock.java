@@ -52,7 +52,7 @@ public class AetherHangingRootsBlock extends HangingRootsBlock {
             if (random.nextInt(8) == 0) {
                 BlockPos blockpos = pos.below();
                 if (isFree(level.getBlockState(blockpos))) {
-                    ParticleUtils.spawnParticleInBlock(level, pos, 1, new BlockParticleOption(ParticleTypes.FALLING_DUST, AetherIIBlocks.ARCTIC_SNOW_BLOCK.get().defaultBlockState()));
+                    ParticleUtils.spawnParticleInBlock(level, pos, 1, new BlockParticleOption(ParticleTypes.FALLING_DUST, AetherIIBlocks.ARCTIC_SNOW_BLOCK.defaultBlockState()));
                 }
             }
         }

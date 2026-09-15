@@ -20,8 +20,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.common.loot.LootModifier;
+import com.aetherteam.nitrogen.loot.modifiers.IGlobalLootModifier;
+import com.aetherteam.nitrogen.loot.modifiers.LootModifier;
 
 import java.util.Set;
 import java.util.stream.Collectors;

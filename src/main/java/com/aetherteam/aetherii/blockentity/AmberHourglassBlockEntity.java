@@ -50,7 +50,10 @@ import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -111,16 +114,16 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
     private final RecipeManager.CachedCheck<SingleRecipeInputWithRandom, HourglassRestoringRecipe> quickCheck;
 
     public AmberHourglassBlockEntity() {
-        this(AetherIIBlockEntityTypes.AMBER_HOURGLASS.get(), BlockPos.ZERO, AetherIIBlocks.AMBER_HOURGLASS.get().defaultBlockState());
+        this(AetherIIBlockEntityTypes.AMBER_HOURGLASS, BlockPos.ZERO, AetherIIBlocks.AMBER_HOURGLASS.defaultBlockState());
     }
 
     public AmberHourglassBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        this(AetherIIBlockEntityTypes.AMBER_HOURGLASS.get(), pPos, pBlockState);
+        this(AetherIIBlockEntityTypes.AMBER_HOURGLASS, pPos, pBlockState);
     }
 
     public AmberHourglassBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.HOURGLASS_RESTORING.get());
+        this.quickCheck = RecipeManager.createCheck(AetherIIRecipeTypes.HOURGLASS_RESTORING);
     }
 
     @Override
@@ -161,11 +164,6 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
         CompoundTag recipesUsedTag = new CompoundTag();
         this.recipesUsed.forEach((key, integer) -> recipesUsedTag.putInt(key.identifier().toString(), integer));
         output.store("RecipesUsed", CompoundTag.CODEC, recipesUsedTag);
-    }
-
-    @Override
-    public void handleUpdateTag(ValueInput input) {
-        this.loadAdditional(input);
     }
 
     @Override
@@ -225,14 +223,24 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
             if (blockEntity.isPowered() && canProcess(level.registryAccess(), recipe, input, blockEntity.items, i)) {
                 blockEntity.processingProgress++;
                 if (blockEntity.processingProgress % 2 == 0) {
-                    PacketDistributor.sendToAllPlayers(new HourglassProcessParticlesPacket(pos));
+                    if (level instanceof ServerLevel serverLevel) {
+                        HourglassProcessParticlesPacket packet = new HourglassProcessParticlesPacket(pos);
+                        for (ServerPlayer player : PlayerLookup.tracking(serverLevel, pos)) {
+                            ServerPlayNetworking.send(player, packet);
+                        }
+                    }
                 }
                 if (blockEntity.processingProgress == blockEntity.processingTotalTime) {
                     blockEntity.processingProgress = 0;
                     blockEntity.processingTotalTime = getTotalProcessingTime(level, blockEntity);
                     if (process(level.registryAccess(), recipe, input, blockEntity.items, i)) {
                         blockEntity.setRecipeUsed(recipe);
-                        PacketDistributor.sendToAllPlayers(new HourglassFinishParticlesPacket(pos));
+                        if (level instanceof ServerLevel serverLevel) {
+                            HourglassFinishParticlesPacket packet = new HourglassFinishParticlesPacket(pos);
+                            for (ServerPlayer player : PlayerLookup.tracking(serverLevel, pos)) {
+                                ServerPlayNetworking.send(player, packet);
+                            }
+                        }
                     }
 
                     changed = true;
@@ -341,7 +349,7 @@ public class AmberHourglassBlockEntity extends BaseContainerBlockEntity implemen
     }
 
     protected int getFuelDuration(ItemStack stack) {
-        AmberHourglassFuel fuel = BuiltInRegistries.ITEM.wrapAsHolder(stack.getItem()).getData(AetherIIDataMaps.AMBER_HOURGLASS_FUELS);
+        AmberHourglassFuel fuel = AetherIIDataMaps.AMBER_HOURGLASS_FUELS.get(BuiltInRegistries.ITEM.wrapAsHolder(stack.getItem()));
         if (fuel != null) {
             return fuel.powerTime();
         }

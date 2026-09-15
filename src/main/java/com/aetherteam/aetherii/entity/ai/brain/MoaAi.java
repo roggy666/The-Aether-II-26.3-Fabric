@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.ActivityData;
 import net.minecraft.world.entity.ai.Brain;
@@ -84,13 +85,13 @@ public class MoaAi {
                 StopBeingAngryIfTargetDead.create(),
                 new CountDownCooldownTicks(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
                 new CountDownCooldownTicks(MemoryModuleType.RAM_COOLDOWN_TICKS),
-                new CountDownCooldownTicks(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get())
+                new CountDownCooldownTicks(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN)
         ));
     }
 
     private static ActivityData<Moa> initIdleActivity() {
         return ActivityData.create(Activity.IDLE, ImmutableList.of(
-                Pair.of(0, SetEntityLookTargetSometimes.create(EntityType.PLAYER, 6.0F, UniformInt.of(30, 60))),
+                Pair.of(0, SetEntityLookTargetSometimes.create(EntityTypes.PLAYER, 6.0F, UniformInt.of(30, 60))),
                 Pair.of(2, BehaviorBuilder.triggerIf(Predicate.not(Moa::isPlayerGrown), BehaviorBuilder.triggerIf(Predicate.not(Moa::isSitting), BabyFollowAdult.create(ADULT_FOLLOW_RANGE, 0.12F)))),
                 Pair.of(3, StartAttacking.create(MoaAi::findNearestValidAttackTarget)),
                 Pair.of(4, new RunOne<>(ImmutableList.of(
@@ -189,7 +190,7 @@ public class MoaAi {
             owner.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             owner.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), 600L);
 
-            if (target.getType() == EntityType.PLAYER && serverLevel.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
+            if (target.getType() == EntityTypes.PLAYER && serverLevel.getGameRules().get(GameRules.UNIVERSAL_ANGER)) {
                 owner.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, 600L);
             }
         }

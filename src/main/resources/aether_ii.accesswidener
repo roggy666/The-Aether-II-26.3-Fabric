@@ -1,0 +1,84 @@
+accessWidener	v2	official
+
+# ArmorSlot
+accessible	class	net/minecraft/world/inventory/ArmorSlot
+
+# DripParticle
+accessible	class	net/minecraft/client/particle/DripParticle$DripHangParticle
+accessible	class	net/minecraft/client/particle/DripParticle$FallAndLandParticle
+accessible	class	net/minecraft/client/particle/DripParticle$DripstoneFallAndLandParticle
+accessible	method	net/minecraft/client/particle/DripParticle$DripHangParticle	<init>	(Lnet/minecraft/client/multiplayer/ClientLevel;DDDLnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+accessible	method	net/minecraft/client/particle/DripParticle$FallAndLandParticle	<init>	(Lnet/minecraft/client/multiplayer/ClientLevel;DDDLnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+accessible	method	net/minecraft/client/particle/DripParticle$DripstoneFallAndLandParticle	<init>	(Lnet/minecraft/client/multiplayer/ClientLevel;DDDLnet/minecraft/world/level/material/Fluid;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+
+# Splash & WaterDrop particles
+accessible	method	net/minecraft/client/particle/SplashParticle	<init>	(Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+accessible	method	net/minecraft/client/particle/WaterDropParticle	<init>	(Lnet/minecraft/client/multiplayer/ClientLevel;DDDLnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+
+# TextureAtlasSprite
+accessible	method	net/minecraft/client/renderer/texture/TextureAtlasSprite	<init>	(Lnet/minecraft/resources/Identifier;Lnet/minecraft/client/renderer/texture/SpriteContents;IIIII)V
+
+# WeatherEffectRenderer
+accessible	class	net/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance
+
+# SurfaceRules
+accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$Context
+accessible	field	net/minecraft/world/level/levelgen/SurfaceRules$Context	randomState	Lnet/minecraft/world/level/levelgen/RandomState;
+
+# ModelProvider
+accessible	class	net/minecraft/client/data/models/ModelProvider$ItemInfoCollector
+accessible	class	net/minecraft/client/data/models/ModelProvider$BlockStateGeneratorCollector
+accessible	class	net/minecraft/client/data/models/ModelProvider$SimpleModelCollector
+accessible	method	net/minecraft/client/data/models/ModelProvider$SimpleModelCollector	<init>	()V
+
+# LeavesBlock
+accessible	field	net/minecraft/world/level/block/LeavesBlock	leafParticleChance	F
+mutable	field	net/minecraft/world/level/block/LeavesBlock	leafParticleChance	F
+
+# Recipe Book & Screens
+accessible	class	net/minecraft/client/gui/screens/recipebook/OverlayRecipeComponent$OverlayRecipeButton
+accessible	class	net/minecraft/client/gui/screens/recipebook/GhostSlots$GhostSlot
+accessible	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageWidth	I
+mutable	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageWidth	I
+accessible	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageHeight	I
+mutable	field	net/minecraft/client/gui/screens/inventory/AbstractContainerScreen	imageHeight	I
+
+# CubeMob Goals (formerly Slime Goals)
+accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobRandomDirectionGoal
+accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobKeepOnJumpingGoal
+accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobFloatGoal
+accessible	class	net/minecraft/world/entity/monster/cubemob/AbstractCubeMob$CubeMobAttackGoal
+
+# BaseSpawner
+accessible	field	net/minecraft/world/level/BaseSpawner	spawnDelay	I
+
+# AgeableMob
+accessible	field	net/minecraft/world/entity/AgeableMob	ageLockParticleTimer	I
+accessible	method	net/minecraft/world/entity/AgeableMob	setAgeLockedData	()V
+
+# BlockEntityType
+accessible	field	net/minecraft/world/level/block/entity/BlockEntityType	validBlocks	Ljava/util/Set;
+mutable	field	net/minecraft/world/level/block/entity/BlockEntityType	validBlocks	Ljava/util/Set;
+
+# CauldronInteraction$Dispatcher
+accessible	method	net/minecraft/core/cauldron/CauldronInteraction$Dispatcher	put	(Lnet/minecraft/world/item/Item;Lnet/minecraft/core/cauldron/CauldronInteraction;)V
+
+
+# ServerPlayer.RespawnPosAngle (used by OutpostTrackerAttachment)
+accessible	class	net/minecraft/server/level/ServerPlayer$RespawnPosAngle
+accessible	method	net/minecraft/server/level/ServerPlayer$RespawnPosAngle	<init>	(Lnet/minecraft/world/phys/Vec3;FF)V
+accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+
+# Datagen: shaped recipes with a component-carrying result (NeoForge had a public ItemStackTemplate overload)
+accessible	method	net/minecraft/data/recipes/ShapedRecipeBuilder	<init>	(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/data/recipes/RecipeCategory;Lnet/minecraft/world/item/ItemStackTemplate;)V
+
+# Client particle subclasses
+accessible method net/minecraft/client/particle/AttackSweepParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDLnet/minecraft/client/particle/SpriteSet;)V
+accessible method net/minecraft/client/particle/TrackingEmitter <init> (Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/particles/ParticleOptions;ILnet/minecraft/world/phys/Vec3;)V
+accessible method net/minecraft/client/particle/CampfireSmokeParticle <init> (Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDZLnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+
+# Shield item geometry
+accessible class net/minecraft/client/resources/model/cuboid/ItemModelGenerator$ItemLayerKey
+accessible method net/minecraft/client/resources/model/cuboid/ItemModelGenerator$ItemLayerKey <init> (Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/client/renderer/block/dispatch/ModelState;I)V
+accessible method net/minecraft/client/renderer/item/CuboidItemModelWrapper <init> (Ljava/util/List;Lnet/minecraft/client/resources/model/geometry/QuadCollection;Lnet/minecraft/client/renderer/item/ModelRenderProperties;Lorg/joml/Matrix4fc;)V

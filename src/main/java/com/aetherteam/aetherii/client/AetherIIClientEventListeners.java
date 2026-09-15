@@ -1,5 +1,9 @@
 package com.aetherteam.aetherii.client;
 
+import java.util.ArrayList;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIIConfig;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
@@ -32,152 +36,90 @@ import net.minecraft.sounds.Music;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
-import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.List;
 import java.util.UUID;
 
 public class AetherIIClientEventListeners {
-    public static void listen(IEventBus bus) {
-        // Screen
-        bus.addListener(AetherIIClientEventListeners::onGuiOpen);
-        bus.addListener(AetherIIClientEventListeners::onGuiInitializePost);
-        bus.addListener(AetherIIClientEventListeners::onGuiClose);
-        bus.addListener(AetherIIClientEventListeners::onRenderBossBar);
-
-        // Tooltip
-        bus.addListener(AetherIIClientEventListeners::onGatherTooltipComponents);
-
-        // Entity
-        bus.addListener(AetherIIClientEventListeners::doRenderNameTag);
-
-        // Audio
-        bus.addListener(AetherIIClientEventListeners::onPlaySound);
-        bus.addListener(AetherIIClientEventListeners::onMusicSelected);
-
-        // Input
-        bus.addListener(AetherIIClientEventListeners::onMouseInputPost);
-        bus.addListener(AetherIIClientEventListeners::onMovementInputUpdate);
-
-        // Datapacks
-        bus.addListener(AetherIIClientEventListeners::onDatapackSync);
-        bus.addListener(AetherIIClientEventListeners::onReceiveRecipes);
+    public static void listen() {
+        ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
+            onGuiInitializePost(screen);
+            ScreenEvents.remove(screen).register(RenderHooks::storeGuidebookScreen);
+        });
     }
 
-    public static void onGuiOpen(ScreenEvent.Opening event) {
-        Screen screen = event.getScreen();
+    public static Screen onGuiOpen(Screen screen) {
 
         Screen storedScreen = RenderHooks.openStoredGuidebookScreen(screen);
         if (storedScreen != null) {
-            event.setNewScreen(storedScreen);
+            return storedScreen;
         }
 
         if (screen instanceof DialogScreen<?> dialogScreen) {
             Dialog dialog = ((DialogScreenAccessor<?>) dialogScreen).aether_ii$getDialog();
             if (dialog.common().title().equals(AetherIIPlayerAttachment.getDialog().common().title())) {
-                event.setNewScreen(new AlphaInfoScreen(null));
+                return new AlphaInfoScreen(null);
             }
         }
+        return screen;
     }
 
-    public static void onGuiInitializePost(ScreenEvent.Init.Post event) {
-        Screen screen = event.getScreen();
-        List<GuiEventListener> listeners = event.getListenersList();
+    public static void onGuiInitializePost(Screen screen) {
+        List<GuiEventListener> listeners = new ArrayList<>(screen.children());
 
         Button inventoryAccessoryButton = RenderHooks.setupAccessoryButton(screen);
         if (inventoryAccessoryButton != null) {
-            event.addListener(inventoryAccessoryButton);
+            Screens.getWidgets(screen).add(inventoryAccessoryButton);
         }
 
         Button outpostRespawnButton = RenderHooks.setupOutpostRespawnButton(screen, listeners);
         if (outpostRespawnButton != null) {
-            event.addListener(outpostRespawnButton);
+            Screens.getWidgets(screen).add(outpostRespawnButton);
         }
 
         if (screen instanceof Guidebook) {
             String spriteName = AetherIIConfig.COMMON.yellow_alpha_button.get() ? "alpha_info_yellow" : "alpha_info";
             Button button = SpriteIconButton.builder(Component.literal("Alpha Info"),  (b) -> {
-                Minecraft.getInstance().setScreen(new AlphaInfoScreen(screen));
+                Minecraft.getInstance().gui.setScreen(new AlphaInfoScreen(screen));
                 AetherIIConfig.COMMON.yellow_alpha_button.set(false);
             }, true).size(22, 22).sprite(Identifier.fromNamespaceAndPath(AetherII.MODID, "icon/" + spriteName), 14, 14).build();
             button.setPosition((screen.width / 2) + 54, (screen.height / 2) + 101);
             button.setTooltip(Tooltip.create(Component.literal("Alpha Info")));
-            event.addListener(button);
+            Screens.getWidgets(screen).add(button);
         }
     }
 
-    public static void onGuiClose(ScreenEvent.Closing event) {
-        Screen screen = event.getScreen();
 
-        RenderHooks.storeGuidebookScreen(screen);
-    }
 
-    public static void onRenderBossBar(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
-        LerpingBossEvent bossEvent = event.getBossEvent();
-        UUID bossUUID = bossEvent.getId();
-        if (RenderHooks.isAetherBossBar(bossUUID)) {
-            RenderHooks.drawBossHealthBar(guiGraphics, event.getX(), event.getY(), bossEvent);
-            event.setIncrement(event.getIncrement() + 13);
-        }
-    }
 
-    public static void onGatherTooltipComponents(RenderTooltipEvent.GatherComponents event) {
-        ItemStack itemStack = event.getItemStack();
-        List<Either<FormattedText, TooltipComponent>> tooltipElements = event.getTooltipElements();
 
-        RenderHooks.addCharmTooltip(itemStack, tooltipElements);
-    }
 
-    public static void doRenderNameTag(RenderNameTagEvent.DoRender event) {
-        EntityRenderState renderState = event.getEntityRenderState();
-        PoseStack poseStack = event.getPoseStack();
 
-        RenderHooks.offsetNameTag(renderState, poseStack);
-    }
 
-    public static void onPlaySound(PlaySoundEvent event) {
-        SoundEngine soundEngine = event.getEngine();
-        SoundInstance sound = event.getOriginalSound();
-        if (AudioHooks.preventAmbientPortalSound(soundEngine, sound) || AudioHooks.preventMusicDuringPortal(soundEngine, sound)) {
-            event.setSound(null);
-        }
+
+    public static boolean allowSound(SoundEngine soundEngine, SoundInstance sound) {
+        boolean allowed = !AudioHooks.preventAmbientPortalSound(soundEngine, sound) && !AudioHooks.preventMusicDuringPortal(soundEngine, sound);
         AudioHooks.overrideActivatedPortalSound(soundEngine, sound);
+        return allowed;
     }
 
-    public static void onMusicSelected(SelectMusicEvent event) {
-        Music music = AudioHooks.getSituationalMusic();
-        if (music != null) {
-            event.setMusic(music);
-        }
-    }
 
-    public static void onMouseInputPost(InputEvent.MouseButton.Post event) {
+
+    public static void onMouseInputPost(int button, int action) {
         Player player = Minecraft.getInstance().player;
-        int button = event.getButton();
-        int action = event.getAction();
-        boolean isUseItem = button == Minecraft.getInstance().options.keyUse.getKey().getValue();
+        boolean isUseItem = button == KeyMappingHelper.getBoundKeyOf(Minecraft.getInstance().options.keyUse).getValue();
 
         if (player != null) {
-            player.getData(AetherIIDataAttachments.PLAYER).mouseInput(player, isUseItem, action);
+            player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).mouseInput(player, isUseItem, action);
         }
     }
 
-    public static void onMovementInputUpdate(MovementInputUpdateEvent event) {
-        Player player = event.getEntity();
-        ClientInput input = event.getInput();
+    public static void onMovementInputUpdate(Player player, ClientInput input) {
 
-        player.getData(AetherIIDataAttachments.PLAYER).movementInput(player, input);
+        player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).movementInput(player, input);
     }
 
-    public static void onDatapackSync(OnDatapackSyncEvent event) {
-        AetherIIClientCaches.onDatapackSync(event);
-    }
 
-    public static void onReceiveRecipes(RecipesReceivedEvent event) {
-        AetherIIClientCaches.onReceiveRecipes(event);
-    }
+
+
 }

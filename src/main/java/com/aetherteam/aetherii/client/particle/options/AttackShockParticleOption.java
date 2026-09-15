@@ -22,6 +22,6 @@ public record AttackShockParticleOption(float rotation, float shade) implements 
 
     @Override
     public ParticleType<?> getType() {
-        return AetherIIParticleTypes.SHOCK_ATTACK.get();
+        return AetherIIParticleTypes.SHOCK_ATTACK;
     }
 }

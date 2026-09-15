@@ -43,7 +43,7 @@ public class AudioHooks {
             Holder<Biome> biome = Minecraft.getInstance().player.level().getBiome(Minecraft.getInstance().player.blockPosition());
             float volume = Minecraft.getInstance().getMusicVolume();
             if (biome.is(AetherIITags.Biomes.AETHER_MUSIC)) {
-                if (!(Minecraft.getInstance().screen instanceof WinScreen)) {
+                if (!(Minecraft.getInstance().gui.screen() instanceof WinScreen)) {
                     if (isAetherBossMusicActive()) {
                         T boss = getBossFromFight();
                         if (boss != null && boss.getHealth() > 0) {
@@ -63,7 +63,7 @@ public class AudioHooks {
                             musicInfo = AETHER_CAVES;
                         } else {
                             if (day) {
-                                Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+                                Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
                                 BackgroundMusic backgroundmusic = camera.attributeProbe().getValue(EnvironmentAttributes.BACKGROUND_MUSIC, 1.0F);
                                 boolean flag = Minecraft.getInstance().player.getAbilities().instabuild && Minecraft.getInstance().player.getAbilities().mayfly;
                                 boolean flag1 = Minecraft.getInstance().player.isUnderWater();
@@ -100,27 +100,21 @@ public class AudioHooks {
         return musicInfo;
     }
 
-    public static Music createAetherMusic(Holder<SoundEvent> event) {
-        return new Music(event, 3600, 10800, false);
+    public static Music createAetherMusic(SoundEvent event) {
+        return new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(event), 3600, 10800, false);
     }
 
     public static boolean isAetherBossMusic(Music musicInfo) {
-        if (musicInfo != null && musicInfo.sound() != null && musicInfo.sound().getKey() != null) {
-            Holder<SoundEvent> sound = BuiltInRegistries.SOUND_EVENT.get(musicInfo.sound().getKey()).orElse(null);
-            if (sound != null) {
-                return sound.is(AetherIITags.SoundEvents.BOSS_MUSIC);
-            }
-        }
-        return false;
+        return musicInfo != null && musicInfo.sound().is(AetherIITags.SoundEvents.BOSS_MUSIC);
     }
 
     public static <T extends LivingEntity & AetherBossMob<?>> boolean isAetherBossMusicActive() {
         T boss = getBossFromFight();
-        return !getAetherBossFights().isEmpty() && Minecraft.getInstance().gui.getBossOverlay().shouldPlayMusic() && boss != null && boss.getHealth() > 0;
+        return !getAetherBossFights().isEmpty() && Minecraft.getInstance().gui.hud.getBossOverlay().shouldPlayMusic() && boss != null && boss.getHealth() > 0;
     }
 
     public static Map<UUID, LerpingBossEvent> getAetherBossFights() {
-        return ((BossHealthOverlayAccessor) Minecraft.getInstance().gui.getBossOverlay()).getEvents().entrySet().stream().filter((entry) -> RenderHooks.isAetherBossBar(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return ((BossHealthOverlayAccessor) Minecraft.getInstance().gui.hud.getBossOverlay()).getEvents().entrySet().stream().filter((entry) -> RenderHooks.isAetherBossBar(entry.getKey())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static <T extends LivingEntity & AetherBossMob<?>> T getBossFromFight() {

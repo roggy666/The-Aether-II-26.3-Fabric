@@ -89,7 +89,7 @@ public class CarrionSprout extends PlantMob implements PlantCuttingMob {
             }
 
             if (!previouslyTriggered) {
-                this.playSound(AetherIISoundEvents.ENTITY_CARRION_SPROUT_TRAP.get(), 2.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+                this.playSound(AetherIISoundEvents.ENTITY_CARRION_SPROUT_TRAP, 2.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
             }
         }
     }
@@ -247,12 +247,12 @@ public class CarrionSprout extends PlantMob implements PlantCuttingMob {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_CARRION_SPROUT_HURT.get();
+        return AetherIISoundEvents.ENTITY_CARRION_SPROUT_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_CARRION_SPROUT_DEATH.get();
+        return AetherIISoundEvents.ENTITY_CARRION_SPROUT_DEATH;
     }
 
     @Override

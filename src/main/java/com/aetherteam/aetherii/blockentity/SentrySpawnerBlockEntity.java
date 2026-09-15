@@ -27,7 +27,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -38,7 +37,7 @@ public class SentrySpawnerBlockEntity extends CustomSpawnerBlockEntity {
     private float pistonScaleOld;
 
     public SentrySpawnerBlockEntity(BlockPos pos, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.SENTRY_SPAWNER.get(), pos, blockState);
+        super(AetherIIBlockEntityTypes.SENTRY_SPAWNER, pos, blockState);
     }
 
     public static void clientTick(Level level, BlockPos pos, BlockState state, SentrySpawnerBlockEntity blockEntity) {
@@ -48,7 +47,7 @@ public class SentrySpawnerBlockEntity extends CustomSpawnerBlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state, SentrySpawnerBlockEntity blockEntity) {
         if (blockEntity.firstTick) {
             BaseSpawnerAccessor accessor = (BaseSpawnerAccessor) blockEntity.getSpawner();
-            blockEntity.getSpawner().setEntityId(AetherIIEntityTypes.DETONATION_SENTRY.get(), level, level.getRandom(), pos);
+            blockEntity.getSpawner().setEntityId(AetherIIEntityTypes.DETONATION_SENTRY, level, level.getRandom(), pos);
             accessor.aether_ii$setMaxSpawnDelay(250);
             accessor.aether_ii$setMinSpawnDelay(150);
             blockEntity.firstTick = false;
@@ -125,7 +124,7 @@ public class SentrySpawnerBlockEntity extends CustomSpawnerBlockEntity {
                                 ValueInput valueInput = TagValueInput.create(reporter, serverLevel.registryAccess(), spawnData.getEntityToSpawn());
                                 Optional<EntityType<?>> optional = EntityType.by(valueInput);
                                 if (optional.isPresent()) {
-                                    Vec3 vec3 = pos.relative(Direction.Plane.HORIZONTAL.getRandomDirection(random)).getBottomCenter();
+                                    Vec3 vec3 = Vec3.atBottomCenterOf(pos.relative(Direction.Plane.HORIZONTAL.getRandomDirection(random)));
                                     if (serverLevel.noBlockCollision(null, optional.get().getSpawnAABB(vec3.x, vec3.y, vec3.z))) {
                                         BlockPos vecPos = BlockPos.containing(vec3);
                                         if (spawnData.getCustomSpawnRules().isPresent()) {
@@ -149,9 +148,11 @@ public class SentrySpawnerBlockEntity extends CustomSpawnerBlockEntity {
                                             if (nearby < accessor.aether_ii$getMaxNearbyEntities()) {
                                                 if (entity instanceof Mob mob) {
                                                     entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), random.nextFloat() * 360.0F, 0.0F);
-                                                    if (EventHooks.checkSpawnPositionSpawner(mob, serverLevel, EntitySpawnReason.SPAWNER, spawnData, this)) {
+                                                    if ((spawnData.getCustomSpawnRules().isPresent() || mob.checkSpawnRules(serverLevel, EntitySpawnReason.SPAWNER)) && mob.checkSpawnObstruction(serverLevel)) {
                                                         boolean def = spawnData.getEntityToSpawn().size() == 1 && spawnData.getEntityToSpawn().getString("id").isPresent();
-                                                        EventHooks.finalizeMobSpawnSpawner(mob, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, (SpawnGroupData) null, this, def);
+                                                        if (def) {
+                                                            mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);
+                                                        }
                                                         Optional<EquipmentTable> equipment = spawnData.getEquipment();
                                                         Objects.requireNonNull(mob);
                                                         equipment.ifPresent(mob::equip);

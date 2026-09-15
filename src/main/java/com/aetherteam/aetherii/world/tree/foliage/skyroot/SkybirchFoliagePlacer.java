@@ -123,6 +123,6 @@ public class SkybirchFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected FoliagePlacerType<?> type() {
-        return AetherIIFoliagePlacerTypes.SKYBIRCH_FOLIAGE_PLACER.get();
+        return AetherIIFoliagePlacerTypes.SKYBIRCH_FOLIAGE_PLACER;
     }
 }

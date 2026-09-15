@@ -38,7 +38,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
         super(ImmutableMap.of(
                 MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryStatus.VALUE_PRESENT, 
                 MemoryModuleType.RAM_COOLDOWN_TICKS, MemoryStatus.VALUE_ABSENT, 
-                AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get(), MemoryStatus.REGISTERED
+                AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET, MemoryStatus.REGISTERED
         ), 600);
         this.speed = speed;
     }
@@ -50,7 +50,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
 
     @Override
     protected boolean canStillUse(ServerLevel level, Kirrid owner, long gameTime) {
-        if (owner.hasPlate() && owner.getBrain().hasMemoryValue(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get())) {
+        if (owner.hasPlate() && owner.getBrain().hasMemoryValue(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET)) {
             Kirrid ramTarget = this.getTarget(owner);
             return ramTarget != null && ramTarget.isAlive() && owner.distanceToSqr(ramTarget) < 128;
         }
@@ -65,14 +65,14 @@ public class KirridRamOther extends Behavior<Kirrid> {
     }
 
     private Kirrid getTarget(Kirrid owner) {
-        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get()).orElse(null);
+        return owner.getBrain().getMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET).orElse(null);
     }
 
     @Override
     protected void start(ServerLevel serverLevel, Kirrid owner, long gameTime) {
         Kirrid ramTarget = this.findValidTarget(serverLevel, owner).get();
-        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get(), ramTarget);
-        ramTarget.getBrain().setMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get(), owner);
+        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET, ramTarget);
+        ramTarget.getBrain().setMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET, owner);
 
         this.ramTick = 0;
         serverLevel.broadcastEntityEvent(owner, (byte) Kirrid.RAM_START_EVENT);
@@ -92,7 +92,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
     @Override
     protected void tick(ServerLevel serverLevel, Kirrid owner, long gameTime) {
         Brain<?> brain = owner.getBrain();
-        Optional<Kirrid> target = brain.getMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get());
+        Optional<Kirrid> target = brain.getMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET);
 
         if (++this.ramTick >= 80) {
             if (target.isPresent() && target.get().isAlive()) {
@@ -102,7 +102,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
                         this.finishRam(serverLevel, owner);
                     }
                     if (--this.soundTick <= 0) {
-                        serverLevel.playSound(null, owner, AetherIISoundEvents.ENTITY_KIRRID_RAM_IMPACT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F);
+                        serverLevel.playSound(null, owner, AetherIISoundEvents.ENTITY_KIRRID_RAM_IMPACT, SoundSource.NEUTRAL, 1.0F, 1.0F);
                         this.soundTick = 10;
                     }
                 } else {
@@ -119,7 +119,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
     protected void finishRam(ServerLevel serverLevel, Kirrid owner) {
         serverLevel.broadcastEntityEvent(owner, (byte) Kirrid.RAM_STOP_EVENT);
         owner.getBrain().setMemory(MemoryModuleType.RAM_COOLDOWN_TICKS, KirridAi.TIME_BETWEEN_RAMS.sample(serverLevel.getRandom()));
-        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET.get());
+        owner.getBrain().eraseMemory(AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET);
 //        if (owner.hasPlate()) {
 //            this.dropPlate(owner); // TODO WIP ALPHA THINGS
 //        }
@@ -127,7 +127,7 @@ public class KirridRamOther extends Behavior<Kirrid> {
 
     protected void dropPlate(Kirrid owner) {
         Vec3 vec3 = owner.position();
-        ItemStack itemStack = new ItemStack(AetherIIItems.KIRRID_PLATE.get());
+        ItemStack itemStack = new ItemStack(AetherIIItems.KIRRID_PLATE);
         double dX = Mth.randomBetween(owner.getRandom(), -0.2F, 0.2F);
         double dY = Mth.randomBetween(owner.getRandom(), 0.3F, 0.7F);
         double dZ = Mth.randomBetween(owner.getRandom(), -0.2F, 0.2F);

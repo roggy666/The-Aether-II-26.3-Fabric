@@ -1,21 +1,25 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
 import com.aetherteam.aetherii.AetherII;
-import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.advancements.triggers.CriterionTrigger;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 
 public class AetherIIAdvancementTriggers {
-    public static final DeferredRegister<CriterionTrigger<?>> TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, AetherII.MODID);
+    private static <T extends CriterionTrigger<?>> T register(String name, T trigger) {
+        return Registry.register(BuiltInRegistries.TRIGGER_TYPES, Identifier.fromNamespaceAndPath(AetherII.MODID, name), trigger);
+    }
 
-    public static final DeferredHolder<CriterionTrigger<?>, ItemBreakBlockTrigger> ITEM_BREAK_BLOCK = TRIGGERS.register("item_break_block", ItemBreakBlockTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, FallOnGroundTrigger> FALL_ON_GROUND = TRIGGERS.register("fall_on_ground", FallOnGroundTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, OutpostCampfireTrigger> OUTPOST_CAMPFIRE = TRIGGERS.register("outpost_campfire", OutpostCampfireTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, CurrencyTrigger> CURRENCY = TRIGGERS.register("currency", CurrencyTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, SleptInBedrollTrigger> SLEPT_IN_BEDROLL = TRIGGERS.register("slept_in_bedroll", SleptInBedrollTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, IncubationTrigger> INCUBATION = TRIGGERS.register("incubation", IncubationTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, FeedMoaTrigger> FEED_MOA = TRIGGERS.register("feed_moa", FeedMoaTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, EffectBuildupTrigger> EFFECT_BUILDUP = TRIGGERS.register("effect_buildup", EffectBuildupTrigger::new);
-    public static final DeferredHolder<CriterionTrigger<?>, ForgingCharmTrigger> FORGING_CHARM = TRIGGERS.register("forging_charm", ForgingCharmTrigger::new);
-}
+    public static final ItemBreakBlockTrigger ITEM_BREAK_BLOCK = register("item_break_block", new ItemBreakBlockTrigger());
+    public static final FallOnGroundTrigger FALL_ON_GROUND = register("fall_on_ground", new FallOnGroundTrigger());
+    public static final OutpostCampfireTrigger OUTPOST_CAMPFIRE = register("outpost_campfire", new OutpostCampfireTrigger());
+    public static final CurrencyTrigger CURRENCY = register("currency", new CurrencyTrigger());
+    public static final SleptInBedrollTrigger SLEPT_IN_BEDROLL = register("slept_in_bedroll", new SleptInBedrollTrigger());
+    public static final IncubationTrigger INCUBATION = register("incubation", new IncubationTrigger());
+    public static final FeedMoaTrigger FEED_MOA = register("feed_moa", new FeedMoaTrigger());
+    public static final EffectBuildupTrigger EFFECT_BUILDUP = register("effect_buildup", new EffectBuildupTrigger());
+    public static final ForgingCharmTrigger FORGING_CHARM = register("forging_charm", new ForgingCharmTrigger());
+
+    public static void init() {}
+}

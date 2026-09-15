@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 
 public interface MimicOption {
     static void spawnMimic(BlockState state, ServerLevel level, BlockPos pos) {
-        Mimic mimic = AetherIIEntityTypes.MIMIC.get().create(level, EntitySpawnReason.TRIGGERED);
+        Mimic mimic = AetherIIEntityTypes.MIMIC.create(level, EntitySpawnReason.TRIGGERED);
         if (mimic != null) {
             Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             float angle = direction.toYRot();

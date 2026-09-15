@@ -26,8 +26,8 @@ public class BrettlPlantFeature extends Feature<NoneFeatureConfiguration> {
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
         RandomSource random = context.random();
-        BlockState plant = AetherIIBlocks.BRETTL_PLANT.get().defaultBlockState();
-        BlockState tip = AetherIIBlocks.BRETTL_PLANT_TIP.get().defaultBlockState();
+        BlockState plant = AetherIIBlocks.BRETTL_PLANT.defaultBlockState();
+        BlockState tip = AetherIIBlocks.BRETTL_PLANT_TIP.defaultBlockState();
 
         if (plant.canSurvive(level, pos) && level.isEmptyBlock(pos.above()) && level.isEmptyBlock(pos.above(2))) {
             if (random.nextInt(5) != 1) {

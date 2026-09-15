@@ -27,9 +27,11 @@ public abstract class GroundTrapBlock extends BaseEntityBlock {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(LOCKED, false).setValue(TRAP_STATE, AetherIIBlockStateProperties.TrapState.LOADED));
     }
-    @Override
+    /**
+     * NeoForge's {@code canEntityDestroy}: a locked trap can't be broken by mobs (see {@link com.aetherteam.aetherii.entity.ai.goal.boss.CrushGoal}).
+     */
     public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
-        return !state.getValue(LOCKED) && super.canEntityDestroy(state, level, pos, entity);
+        return !state.getValue(LOCKED);
     }
 
     @Override
@@ -47,16 +49,12 @@ public abstract class GroundTrapBlock extends BaseEntityBlock {
             if (entity instanceof Player && state.getValue(TRAP_STATE) == AetherIIBlockStateProperties.TrapState.LOADED) {
                 level.setBlock(pos, level.getBlockState(pos).setValue(TRAP_STATE, AetherIIBlockStateProperties.TrapState.TRIGGERED), 1 | 2);
                 if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.playSound(null, pos, AetherIISoundEvents.BLOCK_GROUND_TRAP_TRIGGER.get(), SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+                    serverLevel.playSound(null, pos, AetherIISoundEvents.BLOCK_GROUND_TRAP_TRIGGER, SoundSource.BLOCKS, 0.5F, level.getRandom().nextFloat() * 0.1F + 0.9F);
                 }
             }
         }
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(TRAP_STATE) == AetherIIBlockStateProperties.TrapState.SPAWNED ? super.getLightEmission(state, level, pos) : 0;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

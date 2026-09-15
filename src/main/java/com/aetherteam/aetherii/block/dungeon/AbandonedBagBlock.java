@@ -51,7 +51,7 @@ public class AbandonedBagBlock extends AbstractChestBlock<AbandonedBagBlockEntit
     }
 
     public AbandonedBagBlock(BlockBehaviour.Properties properties) {
-        super(properties, AetherIIBlockEntityTypes.ABANDONED_BAG::get);
+        super(properties, () -> AetherIIBlockEntityTypes.ABANDONED_BAG);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
@@ -94,7 +94,7 @@ public class AbandonedBagBlock extends AbstractChestBlock<AbandonedBagBlockEntit
 
     @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return level.isClientSide() ? createTickerHelper(type, AetherIIBlockEntityTypes.ABANDONED_BAG.get(), AbandonedBagBlockEntity::lidAnimateTick) : null;
+        return level.isClientSide() ? createTickerHelper(type, AetherIIBlockEntityTypes.ABANDONED_BAG, AbandonedBagBlockEntity::lidAnimateTick) : null;
     }
 
     @Override

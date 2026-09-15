@@ -8,7 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public record SkiffParticlesPacket(int entityID) implements CustomPacketPayload {
     public static final Type<SkiffParticlesPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "skiff_particles"));
@@ -23,8 +23,8 @@ public record SkiffParticlesPacket(int entityID) implements CustomPacketPayload 
         return TYPE;
     }
 
-    public static void execute(SkiffParticlesPacket payload, IPayloadContext context) {
-        Player sender = context.player();
+    public static void handleServer(SkiffParticlesPacket payload, ServerPlayer player) {
+        ServerPlayer sender = player;
         if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof CloudSkiff skiff) {
             skiff.level().broadcastEntityEvent(skiff, (byte) CloudSkiff.PARTICLE_EVENT);
         }

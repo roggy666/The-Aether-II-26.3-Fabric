@@ -22,9 +22,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -40,17 +42,20 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.neoforged.neoforge.common.ItemAbilities;
 
 public class AetherLeavesBlock extends LeavesBlock {
-    public static final MapCodec<AetherLeavesBlock> CODEC = RecordCodecBuilder.mapCodec((p_399854_) -> p_399854_.group(propertiesCodec(), ParticleTypes.CODEC.fieldOf("leaf_particle").forGetter((p_399817_) -> p_399817_.leavesParticle), BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("leaves_pile").forGetter(aetherLeavesBlock -> aetherLeavesBlock.leavesPile)).apply(p_399854_, AetherLeavesBlock::new));
+    public static final MapCodec<AetherLeavesBlock> CODEC = RecordCodecBuilder.mapCodec((p_399854_) -> p_399854_.group(
+            propertiesCodec(),
+            ParticleTypes.CODEC.fieldOf("leaf_particle").forGetter((p_399817_) -> p_399817_.leavesParticle),
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("leaves_pile").forGetter(aetherLeavesBlock -> aetherLeavesBlock.leavesPile.get())
+    ).apply(p_399854_, (properties, particle, pile) -> new AetherLeavesBlock(properties, particle, () -> pile)));
 
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
     public static final EnumProperty<AetherIIBlockStateProperties.Mossy> MOSSY = AetherIIBlockStateProperties.MOSSY;
     private final ParticleOptions leavesParticle;
-    private final Holder<Block> leavesPile;
+    private final java.util.function.Supplier<Block> leavesPile;
 
-    public AetherLeavesBlock(Properties properties, ParticleOptions leavesParticle, Holder<Block> leavesPile) {
+    public AetherLeavesBlock(Properties properties, ParticleOptions leavesParticle, java.util.function.Supplier<Block> leavesPile) {
         super(0.0F, properties);
         this.leavesParticle = leavesParticle;
         this.leavesPile = leavesPile;
@@ -69,7 +74,7 @@ public class AetherLeavesBlock extends LeavesBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.canPerformAction(ItemAbilities.SHEARS_HARVEST) && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE) {
+        if ((stack.is(ConventionalItemTags.SHEAR_TOOLS) || stack.getItem() instanceof ShearsItem) && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE) {
             level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.SHEARS_SNIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             level.setBlock(pos, state.setValue(MOSSY, AetherIIBlockStateProperties.Mossy.NONE), 3);
             stack.hurtAndBreak(1, player, hand);
@@ -90,7 +95,7 @@ public class AetherLeavesBlock extends LeavesBlock {
                 BlockState mutableState = level.getBlockState(mutablePos);
                 BlockPos abovePos = mutablePos.above();
                 BlockState aboveState = level.getBlockState(abovePos);
-                BlockState pileState = this.leavesPile.value().defaultBlockState();
+                BlockState pileState = this.leavesPile.get().defaultBlockState();
                 if (Block.canSupportCenter(level, mutablePos, Direction.UP) && aboveState.isAir() && pileState.canSurvive(level, abovePos)) {
                     level.setBlock(mutablePos.above(), pileState, 2);
                     break;
@@ -144,7 +149,7 @@ public class AetherLeavesBlock extends LeavesBlock {
 
     private static void makeAetherDrippingWaterParticles(Level level, BlockPos pos, RandomSource random, BlockState blockBelow, BlockPos belowPos) {
         if (level.isRainingAt(pos.above()) && random.nextInt(15) == 1 && (!blockBelow.canOcclude() || !blockBelow.isFaceSturdy(level, belowPos, Direction.UP))) {
-            ParticleUtils.spawnParticleBelow(level, pos, random, AetherIIParticleTypes.DRIPPING_WATER.get());
+            ParticleUtils.spawnParticleBelow(level, pos, random, AetherIIParticleTypes.DRIPPING_WATER);
         }
    }
 
@@ -164,13 +169,12 @@ public class AetherLeavesBlock extends LeavesBlock {
         }
     }
 
-    @Override
-    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
-        if (state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plant.is(AetherIITags.Blocks.GROWS_ON_MOSSY_LEAVES)) {
-            return TriState.TRUE;
-        } else {
-            return super.canSustainPlant(state, level, soilPosition, facing, plant);
-        }
+    /**
+     * NeoForge's {@code canSustainPlant}: plants in {@link AetherIITags.Blocks#GROWS_ON_MOSSY_LEAVES} may be placed on mossy leaves.
+     * Checked from {@link com.aetherteam.aetherii.mixin.mixins.common.BushBlockMixin}.
+     */
+    public static boolean canSustainPlant(BlockState state, BlockState plant) {
+        return state.getBlock() instanceof AetherLeavesBlock && state.getValue(MOSSY) != AetherIIBlockStateProperties.Mossy.NONE && plant.is(AetherIITags.Blocks.GROWS_ON_MOSSY_LEAVES);
     }
 
     @Override

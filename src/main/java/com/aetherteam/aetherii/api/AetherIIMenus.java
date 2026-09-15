@@ -19,10 +19,17 @@ public class AetherIIMenus implements MenuInitializer {
     public static final Identifier AETHER_II_PANORAMA = Identifier.fromNamespaceAndPath(AetherII.MODID, "textures/gui/title/panorama/panorama"); // Registered in AetherIIClient
 
     // Menus
-    public static final Menu AETHER_II = new Menu(AETHER_II_ICON, AETHER_II_NAME, new AetherIITitleScreen(), new Menu.Properties().music(AetherIITitleScreen.MENU).panorama(() -> new CubeMap(AETHER_II_PANORAMA)));
+    public static Menu AETHER_II;
+
+    public static Menu getMenu() {
+        if (AETHER_II == null) {
+            AETHER_II = new Menu(AETHER_II_ICON, AETHER_II_NAME, new AetherIITitleScreen(), new Menu.Properties().music(AetherIITitleScreen.MENU).panorama(() -> new CubeMap(AETHER_II_PANORAMA)));
+        }
+        return AETHER_II;
+    }
 
     @Override
     public void registerMenus(MenuRegisterCallback menuRegisterCallback) {
-        menuRegisterCallback.registerMenu(Identifier.fromNamespaceAndPath(AetherII.MODID, "the_aether_ii"), AETHER_II);
+        menuRegisterCallback.registerMenu(Identifier.fromNamespaceAndPath(AetherII.MODID, "the_aether_ii"), getMenu());
     }
 }

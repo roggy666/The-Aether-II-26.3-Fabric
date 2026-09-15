@@ -17,11 +17,11 @@ public class DemolitionProjectile extends ThrowableProjectile {
     }
 
     public DemolitionProjectile(double x, double y, double z, Level pLevel) {
-        super(AetherIIEntityTypes.DEMOLITION_PROJECTILE.get(), x, y, z, pLevel);
+        super(AetherIIEntityTypes.DEMOLITION_PROJECTILE, x, y, z, pLevel);
     }
 
     public DemolitionProjectile(LivingEntity shooter, Level level) {
-        super(AetherIIEntityTypes.DEMOLITION_PROJECTILE.get(), shooter.getX(), shooter.getEyeY() - 0.1F, shooter.getZ(), level);
+        super(AetherIIEntityTypes.DEMOLITION_PROJECTILE, shooter.getX(), shooter.getEyeY() - 0.1F, shooter.getZ(), level);
         this.setOwner(shooter);
     }
 

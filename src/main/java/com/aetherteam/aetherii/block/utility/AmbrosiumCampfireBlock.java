@@ -35,10 +35,10 @@ public class AmbrosiumCampfireBlock extends CampfireBlock {
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (!(level instanceof ServerLevel serverlevel)) {
-            return state.getValue(LIT) ? createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE.get(), AmbrosiumCampfireBlockEntity::particleTick) : null;
+            return state.getValue(LIT) ? createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE, AmbrosiumCampfireBlockEntity::particleTick) : null;
         } else {
             RecipeManager.CachedCheck<SingleRecipeInput, CampfireCookingRecipe> cache = RecipeManager.createCheck(RecipeType.CAMPFIRE_COOKING);
-            return state.getValue(LIT) ? createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE.get(), (entityLevel, entityPos, entityState, blockEntity) -> AmbrosiumCampfireBlockEntity.cookTick(serverlevel, entityPos, entityState, blockEntity, cache)) : createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE.get(), AmbrosiumCampfireBlockEntity::cooldownTick);
+            return state.getValue(LIT) ? createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE, (entityLevel, entityPos, entityState, blockEntity) -> AmbrosiumCampfireBlockEntity.cookTick(serverlevel, entityPos, entityState, blockEntity, cache)) : createTickerHelper(blockEntityType, AetherIIBlockEntityTypes.AMBROSIUM_CAMPFIRE, AmbrosiumCampfireBlockEntity::cooldownTick);
         }
     }
 

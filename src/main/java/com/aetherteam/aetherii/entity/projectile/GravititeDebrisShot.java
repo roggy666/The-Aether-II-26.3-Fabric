@@ -15,7 +15,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 public class GravititeDebrisShot extends AbstractHurtingProjectile {
     private int ticksInAir;
@@ -26,7 +25,7 @@ public class GravititeDebrisShot extends AbstractHurtingProjectile {
     }
 
     public GravititeDebrisShot(LivingEntity owner, Level level) {
-        this(AetherIIEntityTypes.GRAVITITE_DEBRIS_SHOT.get(), level);
+        this(AetherIIEntityTypes.GRAVITITE_DEBRIS_SHOT, level);
         this.setOwner(owner);
         this.setPos(owner.getX(), owner.getEyeY() - 0.1F, owner.getZ());
         this.setNoGravity(true);
@@ -62,7 +61,7 @@ public class GravititeDebrisShot extends AbstractHurtingProjectile {
         this.applyInertia();
         if (this.level().isClientSide() || (entity == null || !entity.isRemoved()) && this.level().hasChunkAt(this.blockPosition())) {
             HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity, this.getClipType());
-            boolean impacted = hitresult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitresult);
+            boolean impacted = hitresult.getType() != HitResult.Type.MISS;
             Vec3 vec3;
             if (impacted) {
                 vec3 = hitresult.getLocation();

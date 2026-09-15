@@ -22,6 +22,6 @@ public class MossyPredicate extends StateTestingPredicate {
 
     @Override
     public BlockPredicateType<?> type() {
-        return AetherIIBlockPredicateTypes.MOSSY.get();
+        return AetherIIBlockPredicateTypes.MOSSY;
     }
 }

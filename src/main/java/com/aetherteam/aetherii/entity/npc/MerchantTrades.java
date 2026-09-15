@@ -24,10 +24,10 @@ public final class MerchantTrades {
             ImmutableMap.of(
                     1,
                     new ItemListing[] {
-                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE.get()), 5, 1, 5),
-                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA.get(), List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.PHYG))).build()), 20, 1, 5),
-                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA.get(), List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.SHEEPUFF))).build()), 20, 1, 5),
-                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE, 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA.get(), List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.FLYING_COW))).build()), 20, 1, 5)
+                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE), 5, 1, 5),
+                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE.builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA, List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.PHYG))).build()), 20, 1, 5),
+                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE.builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA, List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.SHEEPUFF))).build()), 20, 1, 5),
+                            new ItemsForGlint(new ItemStack(AetherIIItems.GUIDEBOOK_PAGE.builtInRegistryHolder(), 1, DataComponentPatch.builder().set(AetherIIDataComponents.GUIDEBOOK_ENTRY_DATA, List.of(GuidebookEntryData.bestiary(AetherIIBestiaryEntries.FLYING_COW))).build()), 20, 1, 5)
                     }
             )
     );
@@ -82,7 +82,7 @@ public final class MerchantTrades {
         @Override
         public MerchantOffer getOffer(Entity trader, RandomSource random) {
             ItemStack itemstack = this.itemStack.copy();
-            return new MerchantOffer(new ItemCost(AetherIIItems.GLINT_COIN.get(), this.cost), itemstack, this.maxUses, 0, this.priceMultiplier);
+            return new MerchantOffer(new ItemCost(AetherIIItems.GLINT_COIN, this.cost), itemstack, this.maxUses, 0, this.priceMultiplier);
         }
     }
 }

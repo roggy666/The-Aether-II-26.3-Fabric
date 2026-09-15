@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.attachment.living;
 
+import net.minecraft.core.component.DataComponents;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
@@ -34,9 +36,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.util.ValueIOSerializable;
-import net.neoforged.neoforge.network.PacketDistributor;
+import com.aetherteam.aetherii.attachment.ValueIOSerializable;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 
 public class DamageSystemAttachment implements ValueIOSerializable {
     private float criticalDamageModifier = 1.0F;
@@ -54,11 +56,11 @@ public class DamageSystemAttachment implements ValueIOSerializable {
     public DamageSystemAttachment() { }
 
     public void onJoinLevel(Player player) {
-        DamageSystemAttachment attachment = player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+        DamageSystemAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM);
         double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
         if (attachment.shieldEndurance == 0) {
             attachment.setShieldEndurance(maxEndurance);
-            player.syncData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+            player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
         }
     }
 
@@ -71,18 +73,18 @@ public class DamageSystemAttachment implements ValueIOSerializable {
 
     public void restoreShieldEndurance(Player player) {
         if (!player.level().isClientSide()) {
-            DamageSystemAttachment attachment = player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+            DamageSystemAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM);
             double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
             double recovery = player.getAttributeValue(AetherIIAttributes.ENDURANCE_RECOVERY);
             if (attachment.getShieldEndurance() < maxEndurance && attachment.getShieldEndurance() > 0 && !player.isBlocking()) {
                 attachment.setShieldEndurance(Math.min(maxEndurance, attachment.getShieldEndurance() + recovery));
-                player.syncData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+                player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
             }
         }
     }
 
     public void buildUpShieldStun(LivingEntity entity, Entity source, double damage) {
-        if (entity instanceof Player player && player.getUseItem().is(Tags.Items.TOOLS_SHIELD)) {
+        if (entity instanceof Player player && player.getUseItem().is(ConventionalItemTags.SHIELD_TOOLS)) {
             if (source != null && source.typeHolder().is(AetherIITags.EntityTypes.AETHER_MOBS)) {
                 double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
                 double endurance = player.getAttributeValue(AetherIIAttributes.BLOCKING_STRENGTH);
@@ -96,16 +98,16 @@ public class DamageSystemAttachment implements ValueIOSerializable {
 
                 if (!player.level().isClientSide()) {
                     this.setShieldEndurance(Math.max(0, this.getShieldEndurance() - endurance));
-                    player.syncData(AetherIIDataAttachments.DAMAGE_SYSTEM);
+                    player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
                 }
                 if (this.getShieldEndurance() <= 0) {
-                    player.level().registryAccess().lookupOrThrow(Registries.ITEM).getTagOrEmpty(Tags.Items.TOOLS_SHIELD).forEach((item) -> player.getCooldowns().addCooldown(item.value().getDefaultInstance(), 300));
+                    player.level().registryAccess().lookupOrThrow(Registries.ITEM).getTagOrEmpty(ConventionalItemTags.SHIELD_TOOLS).forEach((item) -> player.getCooldowns().addCooldown(item.value().getDefaultInstance(), 300));
                     player.stopUsingItem();
                 }
                 if (player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
                     AccessoryUtil.getFirst(player, AccessoryContainer.SlotType.HANDWEAR).ifPresent((stack) -> {
                         ItemStack copyStack = stack.copy();
-                        stack.hurtAndBreak(1, serverLevel, player, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+                        stack.hurtAndBreak(1, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
                     });
                 }
             }
@@ -140,24 +142,24 @@ public class DamageSystemAttachment implements ValueIOSerializable {
                     pierceDamage.set(livingEntity.getAttributes().hasAttribute(AetherIIAttributes.PIERCE_DAMAGE) ? livingEntity.getAttributeValue(AetherIIAttributes.PIERCE_DAMAGE) : 0.0);
                 } else if (source.getDirectEntity() instanceof AbstractArrow abstractArrow && source.getEntity() instanceof LivingEntity && abstractArrow.getWeaponItem() != null && !abstractArrow.getWeaponItem().isEmpty()) {
                     ItemStack weapon = abstractArrow.getWeaponItem();
-                    ItemAttributeModifiers modifiers = weapon.getAttributeModifiers();
+                    ItemAttributeModifiers modifiers = weapon.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
                     baseDamage = ((AbstractArrowAccessor) abstractArrow).aether$getBaseDamage();
                     modifiers.forEach(EquipmentSlotGroup.HAND, (attribute, modifier) -> {
-                        if (attribute.getKey() != null) {
-                            if (AetherIIAttributes.SLASH_RANGED_DAMAGE.is(attribute.getKey())) {
+                        if (attribute.unwrapKey().isPresent()) {
+                            if (attribute.is(AetherIIAttributes.SLASH_RANGED_DAMAGE)) {
                                 slashDamage.set(modifier.amount());
-                            } else if (AetherIIAttributes.IMPACT_RANGED_DAMAGE.is(attribute.getKey())) {
+                            } else if (attribute.is(AetherIIAttributes.IMPACT_RANGED_DAMAGE)) {
                                 impactDamage.set(modifier.amount());
-                            } else if (AetherIIAttributes.PIERCE_RANGED_DAMAGE.is(attribute.getKey())) {
+                            } else if (attribute.is(AetherIIAttributes.PIERCE_RANGED_DAMAGE)) {
                                 pierceDamage.set(modifier.amount());
                             }
                         }
                     });
                 }
                 if (slashDamage.get() != 0 || impactDamage.get() != 0 || pierceDamage.get() != 0) {
-                    this.createFeedback(directEntity, target, slashDamage.get(), slashDefense, AetherIIParticleTypes.SLASH_DAMAGE.get(), AetherIISoundEvents.PLAYER_SLASH_DAMAGE_CORRECT.get(), AetherIISoundEvents.PLAYER_SLASH_DAMAGE_INCORRECT.get());
-                    this.createFeedback(directEntity, target, impactDamage.get(), impactDefense, AetherIIParticleTypes.IMPACT_DAMAGE.get(), AetherIISoundEvents.PLAYER_IMPACT_DAMAGE_CORRECT.get(), AetherIISoundEvents.PLAYER_IMPACT_DAMAGE_INCORRECT.get());
-                    this.createFeedback(directEntity, target, pierceDamage.get(), pierceDefense, AetherIIParticleTypes.PIERCE_DAMAGE.get(), AetherIISoundEvents.PLAYER_PIERCE_DAMAGE_CORRECT.get(), AetherIISoundEvents.PLAYER_PIERCE_DAMAGE_INCORRECT.get());
+                    this.createFeedback(directEntity, target, slashDamage.get(), slashDefense, AetherIIParticleTypes.SLASH_DAMAGE, AetherIISoundEvents.PLAYER_SLASH_DAMAGE_CORRECT, AetherIISoundEvents.PLAYER_SLASH_DAMAGE_INCORRECT);
+                    this.createFeedback(directEntity, target, impactDamage.get(), impactDefense, AetherIIParticleTypes.IMPACT_DAMAGE, AetherIISoundEvents.PLAYER_IMPACT_DAMAGE_CORRECT, AetherIISoundEvents.PLAYER_IMPACT_DAMAGE_INCORRECT);
+                    this.createFeedback(directEntity, target, pierceDamage.get(), pierceDefense, AetherIIParticleTypes.PIERCE_DAMAGE, AetherIISoundEvents.PLAYER_PIERCE_DAMAGE_CORRECT, AetherIISoundEvents.PLAYER_PIERCE_DAMAGE_INCORRECT);
 
                     double slashCalculation = slashDamage.get() > 0.0 ? Math.max(slashDamage.get() - slashDefense, 0.0) : 0.0;
                     double impactCalculation = impactDamage.get() > 0.0 ? Math.max(impactDamage.get() - impactDefense, 0.0) : 0.0;
@@ -166,10 +168,10 @@ public class DamageSystemAttachment implements ValueIOSerializable {
                     damage = Math.max(baseDamage + slashCalculation + impactCalculation + pierceCalculation, baseDamage);
 
                     if (directEntity instanceof Player player) {
-                        damage *= player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).getCriticalDamageModifier();
+                        damage *= player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).getCriticalDamageModifier();
                         damage *= player.getAttackStrengthScale(0.5F);
 
-                        player.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).setCriticalDamageModifier(1.0F);
+                        player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).setCriticalDamageModifier(1.0F);
                     }
                 } else {
                     double defense = Math.max(slashDefense, Math.max(impactDefense, pierceDefense));
@@ -185,13 +187,15 @@ public class DamageSystemAttachment implements ValueIOSerializable {
             if (defense > 0) {
                 this.resistantEntity = target.getId();
                 if (source instanceof ServerPlayer serverPlayer) {
-                    PacketDistributor.sendToPlayer(serverPlayer, new ResistanceKnockbackPacket(serverPlayer.getId(), target.getId()));
+                    ServerPlayNetworking.send(serverPlayer, new ResistanceKnockbackPacket(serverPlayer.getId(), target.getId()));
                 }
                 source.level().playSound(null, source.getX(), source.getY(), source.getZ(), incorrect, source.getSoundSource(), 1.0F, 1.0F);
             } else if (defense < 0) {
                 this.resistantEntity = -1;
                 if (source.level() instanceof ServerLevel serverLevel) {
-                    PacketDistributor.sendToPlayersNear(serverLevel, null, source.getX(), source.getY(), source.getZ(), 15,  new DamageTypeParticlePacket(target.getId(), particleType));
+                    for (ServerPlayer player : PlayerLookup.around(serverLevel, source.position(), 15.0)) {
+                        ServerPlayNetworking.send(player, new DamageTypeParticlePacket(target.getId(), particleType));
+                    }
                 }
                 source.level().playSound(null, source.getX(), source.getY(), source.getZ(), correct, source.getSoundSource(), 1.0F, 1.0F);
             }

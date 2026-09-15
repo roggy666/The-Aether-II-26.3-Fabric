@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.ZephyrRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -9,15 +10,14 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class ZephyrModel extends EntityModel<ZephyrRenderState> {
-    public static final AnimationHolder FLY_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/fly"));
-    public static final AnimationHolder BLOW_ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/blow_attack"));
-    public static final AnimationHolder WEB_ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/web_attack"));
-    private final KeyframeAnimation flyAnimation;
-    private final KeyframeAnimation blowAttackAnimation;
-    private final KeyframeAnimation webAttackAnimation;
+    public static final Identifier FLY_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/fly");
+    public static final Identifier BLOW_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/blow_attack");
+    public static final Identifier WEB_ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "zephyr/web_attack");
+    private final AetherIIAnimations.ReloadableAnimation flyAnimation;
+    private final AetherIIAnimations.ReloadableAnimation blowAttackAnimation;
+    private final AetherIIAnimations.ReloadableAnimation webAttackAnimation;
     public final ModelPart body;
     public final ModelPart mouth;
     public final ModelPart bottom;
@@ -33,9 +33,9 @@ public class ZephyrModel extends EntityModel<ZephyrRenderState> {
 
     public ZephyrModel(ModelPart root) {
         super(root);
-        this.flyAnimation = FLY_ANIMATION.get().bake(root);
-        this.blowAttackAnimation = BLOW_ATTACK_ANIMATION.get().bake(root);
-        this.webAttackAnimation = WEB_ATTACK_ANIMATION.get().bake(root);
+        this.flyAnimation = AetherIIAnimations.bake(FLY_ANIMATION, root);
+        this.blowAttackAnimation = AetherIIAnimations.bake(BLOW_ATTACK_ANIMATION, root);
+        this.webAttackAnimation = AetherIIAnimations.bake(WEB_ATTACK_ANIMATION, root);
         this.body = root.getChild("body");
         this.mouth = this.body.getChild("mouth");
         this.bottom = this.body.getChild("bottom");

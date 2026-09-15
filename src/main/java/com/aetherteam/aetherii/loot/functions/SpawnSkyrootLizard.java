@@ -46,7 +46,7 @@ public class SpawnSkyrootLizard extends LootItemConditionalFunction {
         Vec3 originVec = context.getOptionalParameter(LootContextParams.ORIGIN);
         if (originVec != null) {
             if (serverLevel.getRandom().nextInt(10) == 0) {
-                SkyrootLizard lizard = AetherIIEntityTypes.SKYROOT_LIZARD.get().create(serverLevel.getLevel(), EntitySpawnReason.TRIGGERED);
+                SkyrootLizard lizard = AetherIIEntityTypes.SKYROOT_LIZARD.create(serverLevel.getLevel(), EntitySpawnReason.TRIGGERED);
                 if (lizard != null) {
                     lizard.setPos(originVec.x + 0.5, originVec.y + 0.5, originVec.z + 0.5);
                     Holder<SkyrootLizardVariant> variant = AetherIISkyrootLizardVariants.getVariantForLeaves(serverLevel.registryAccess(), this.leafBlock);

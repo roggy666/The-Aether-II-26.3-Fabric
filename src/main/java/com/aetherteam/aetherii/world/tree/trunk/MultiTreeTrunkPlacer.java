@@ -77,7 +77,7 @@ public class MultiTreeTrunkPlacer extends TrunkPlacer {
 
     @Override
     protected TrunkPlacerType<?> type() {
-        return AetherIITrunkPlacerTypes.MULTI_TREE_TRUNK_PLACER.get();
+        return AetherIITrunkPlacerTypes.MULTI_TREE_TRUNK_PLACER;
     }
 }
 

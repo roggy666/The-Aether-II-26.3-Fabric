@@ -55,12 +55,12 @@ public class MuralBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+    protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
         if (level.getBlockEntity(pos) instanceof MuralBlockEntity muralBlockEntity) {
             var mural = muralBlockEntity.getMural();
             return MuralBlockEntity.createMuralItem(mural.orElse(null), state.getValue(X_OFFSET), state.getValue(Y_OFFSET));
         } else {
-            return super.getCloneItemStack(level, pos, state, includeData, player);
+            return super.getCloneItemStack(level, pos, state, includeData);
         }
     }
 

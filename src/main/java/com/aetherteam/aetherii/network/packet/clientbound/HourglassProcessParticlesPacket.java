@@ -12,7 +12,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record HourglassProcessParticlesPacket(BlockPos pos) implements CustomPacketPayload {
     public static final Type<HourglassProcessParticlesPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "hourglass_process_particles"));
@@ -26,7 +28,8 @@ public record HourglassProcessParticlesPacket(BlockPos pos) implements CustomPac
         return TYPE;
     }
 
-    public static void execute(HourglassProcessParticlesPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(HourglassProcessParticlesPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             RandomSource random = Minecraft.getInstance().level.getRandom();
             for (Direction direction : Direction.Plane.HORIZONTAL) {

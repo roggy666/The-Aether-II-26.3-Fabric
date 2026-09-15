@@ -22,12 +22,12 @@ public class SkephidWebbingBall extends ThrowableProjectile implements ItemSuppl
     }
 
     public SkephidWebbingBall(double x, double y, double z, Level level) {
-        super(AetherIIEntityTypes.SKEPHID_WEBBING_BALL.get(), level);
+        super(AetherIIEntityTypes.SKEPHID_WEBBING_BALL, level);
         this.setPos(x, y, z);
     }
 
     public SkephidWebbingBall(LivingEntity shooter, Level level) {
-        super(AetherIIEntityTypes.SKEPHID_WEBBING_BALL.get(), shooter.getX(), shooter.getEyeY() - 0.1F, shooter.getZ(), level);
+        super(AetherIIEntityTypes.SKEPHID_WEBBING_BALL, shooter.getX(), shooter.getEyeY() - 0.1F, shooter.getZ(), level);
         this.setOwner(shooter);
     }
 
@@ -54,14 +54,14 @@ public class SkephidWebbingBall extends ThrowableProjectile implements ItemSuppl
         Entity entity = result.getEntity();
         if (entity instanceof LivingEntity livingEntity) {
             if (livingEntity.isBlocking()) {
-                livingEntity.getData(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
+                livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).buildUpShieldStun(livingEntity, this.getOwner(), 1);
                 if (entity instanceof Player player && player.isBlocking()) {
                     if (!player.getUseItem().isEmpty()) {
                         player.getUseItem().hurtAndBreak(3, player, player.getUsedItemHand());
                     }
                 }
             } else {
-                livingEntity.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), EffectBuildupPresets.WEBBED, 475);
+                livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(livingEntity, this, this.getOwner(), EffectBuildupPresets.WEBBED, 475);
             }
         }
     }

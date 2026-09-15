@@ -23,22 +23,22 @@ public class ArcticSnowball extends ThrowableItemProjectile {
     }
 
     public ArcticSnowball(Level level, LivingEntity shooter, ItemStack stack) {
-        super(AetherIIEntityTypes.ARCTIC_SNOWBALL.get(), shooter, level, stack);
+        super(AetherIIEntityTypes.ARCTIC_SNOWBALL, shooter, level, stack);
     }
 
     public ArcticSnowball(Level level, double x, double y, double z, ItemStack stack) {
-        super(AetherIIEntityTypes.ARCTIC_SNOWBALL.get(), x, y, z, level, stack);
+        super(AetherIIEntityTypes.ARCTIC_SNOWBALL, x, y, z, level, stack);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return AetherIIItems.ARCTIC_SNOWBALL.get();
+        return AetherIIItems.ARCTIC_SNOWBALL;
     }
 
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 3) {
-            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.ARCTIC_SNOWBALL.get()));
+            ParticleOptions particleoptions = new ItemParticleOption(ParticleTypes.ITEM, new ItemStackTemplate(AetherIIItems.ARCTIC_SNOWBALL));
             for (int i = 0; i < 8; ++i) {
                 this.level().addParticle(particleoptions, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }

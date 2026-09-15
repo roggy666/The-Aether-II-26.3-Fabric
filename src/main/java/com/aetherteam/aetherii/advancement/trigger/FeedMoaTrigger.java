@@ -2,8 +2,11 @@ package com.aetherteam.aetherii.advancement.trigger;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.advancements.predicates.ContextAwarePredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +36,7 @@ public class FeedMoaTrigger extends SimpleCriterionTrigger<FeedMoaTrigger.Instan
         ).apply(instance, Instance::new));
 
         public static Criterion<Instance> itemUsedOnEntity(Optional<ContextAwarePredicate> player, ItemPredicate.Builder item, Optional<ContextAwarePredicate> entity) {
-            return AetherIIAdvancementTriggers.FEED_MOA.get().createCriterion(new Instance(player, Optional.of(item.build()), entity));
+            return AetherIIAdvancementTriggers.FEED_MOA.createCriterion(new Instance(player, Optional.of(item.build()), entity));
         }
 
         public static Criterion<Instance> itemUsedOnEntity(ItemPredicate.Builder item, Optional<ContextAwarePredicate> entity) {

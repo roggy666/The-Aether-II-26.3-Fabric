@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MoaEggItem extends BlockItem {
     public MoaEggItem(Properties properties) {
-        this(AetherIIBlocks.MOA_EGG.get(), properties);
+        this(AetherIIBlocks.MOA_EGG, properties);
     }
 
     protected MoaEggItem(Block block, Properties properties) {

@@ -1,5 +1,10 @@
 package com.aetherteam.aetherii.client;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
+import net.minecraft.client.gui.screens.MenuScreens;
+import com.aetherteam.aetherii.client.gui.screen.guidebook.GuidebookEquipmentScreen;
+import com.aetherteam.aetherii.client.gui.screen.inventory.*;
 import com.aetherteam.aetherii.api.AetherIIMenus;
 import com.aetherteam.aetherii.client.event.listeners.DimensionClientListener;
 import com.aetherteam.aetherii.client.gui.screen.HolyIslesReceivingLevelScreen;
@@ -24,76 +29,58 @@ import net.minecraft.client.renderer.texture.CubeMapTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionTransitionScreenEvent;
-import net.neoforged.neoforge.common.NeoForge;
+import com.aetherteam.aetherii.client.network.AetherIIClientPackets;
+import net.fabricmc.api.ClientModInitializer;
 
-public class AetherIIClient {
-    public static void clientInit(IEventBus bus) {
-        bus.addListener(AetherIIClient::clientSetup);
-        bus.addListener(AetherIIClient::registerDimensionTransitionScreens);
-
-        AetherIIClient.eventSetup(bus);
+public class AetherIIClient implements ClientModInitializer {
+    @Override
+    public void onInitializeClient() {
+        com.aetherteam.aetherii.client.animation.AetherIIAnimations.register();
+        com.aetherteam.aetherii.client.renderer.block.model.AetherIIModelLoaders.register();
+        AetherIIClientPackets.init();
+        AetherIIClientEventListeners.listen();
+        registerMenuScreens();
+        registerTooltipOverrides();
+        if (Minecraft.getInstance().getTextureManager() != null) {
+            Minecraft.getInstance().getTextureManager().register(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
+        }
+        AetherIIColorResolvers.registerColorResolvers();
+        AetherIIColorResolvers.registerBlockColor();
+        AetherIIParticleFactories.registerParticleFactories();
+        AetherIIOverlays.registerOverlays();
+        AetherIIRenderers.registerAddLayer();
+        AetherIIRenderers.registerEntityRenderers();
+        AetherIIRenderers.registerLayerDefinition();
+        AetherIIRenderers.registerItemModels();
+        AetherIIRenderers.registerBlockStateModels();
+        AetherIIRenderers.registerFluidModels();
+        AetherIIRenderers.registerBakedModels();
+        AetherIIRenderers.registerSpecialModelRenderers();
+        AetherIIDimensionRenderers.registerDimensionEffect();
+        AetherIIRenderPipelines.registerShaders();
+        AetherIIItemDecorators.registerItemDecorators();
+        AetherIIClientTooltips.registerClientTooltipComponents();
+        AetherIIItemModelProperties.registerConditionalProperties();
+        AetherIIItemModelProperties.registerSelectProperties();
+        AetherIIItemModelProperties.registerRangeSelectProperties();
+        AetherIIAtlases.registerAtlases();
+        AetherIISpriteSourceTypes.registerSpriteSourceTypes();
+        AetherIIItemTintSources.registerTintSources();
+        AetherIIClientCaches.registerReloadListeners();
+        AetherIIKeyMappings.registerKeyMappings();
+        LevelRenderEvents.COLLECT_SUBMITS.register(AetherIIRenderers::submitCustomGeometryRendering);
     }
 
-    public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            registerTooltipOverrides();
-        });
-    }
-
-    public static void eventSetup(IEventBus neoBus) {
-        IEventBus bus = NeoForge.EVENT_BUS;
-
-        AetherIIClientEventListeners.listen(bus);
-
-        bus.addListener(AetherIIRenderers::submitCustomGeometryRendering);
-        bus.addListener(DimensionClientListener::onRenderFog);
-        bus.addListener(DimensionClientListener::onFogColorComputed);
-        //bus.addListener(LevelClientListener::onKeyPress);
-        bus.addListener(AetherIIDimensionRenderers::extractDimensionEffect);
-
-        neoBus.addListener(AetherIIClient::registerMenuTextures);
-        neoBus.addListener(AetherIIMenuTypes::registerMenuScreens);
-        neoBus.addListener(AetherIIColorResolvers::registerColorResolvers);
-        neoBus.addListener(AetherIIColorResolvers::registerBlockColor);
-        neoBus.addListener(AetherIIParticleFactories::registerParticleFactories);
-        neoBus.addListener(AetherIIOverlays::registerOverlays);
-        neoBus.addListener(AetherIIRenderers::registerAddLayer);
-        neoBus.addListener(AetherIIRenderers::registerEntityRenderers);
-        neoBus.addListener(AetherIIRenderers::registerLayerDefinition);
-        neoBus.addListener(AetherIIRenderers::registerItemModels);
-        neoBus.addListener(AetherIIRenderers::registerBlockStateModels);
-        neoBus.addListener(AetherIIRenderers::registerFluidModels);
-        neoBus.addListener(AetherIIRenderers::registerBakedModels);
-        neoBus.addListener(AetherIIRenderers::registerRenderStateModifier);
-        neoBus.addListener(AetherIIRenderers::registerSpecialModelRenderers);
-        neoBus.addListener(AetherIIDimensionRenderers::registerDimensionEffect);
-        neoBus.addListener(AetherIIRenderPipelines::registerShaders);
-        neoBus.addListener(AetherIIItemDecorators::registerItemDecorators);
-        neoBus.addListener(AetherIIClientTooltips::registerClientTooltipComponents);
-        neoBus.addListener(AetherIIClientExtensions::registerClientItemExtensions);
-        neoBus.addListener(AetherIIRenderTypes::registerRenderBuffers);
-        neoBus.addListener(AetherIIRecipeBookCategories::registerRecipeBookSearchCategories);
-        neoBus.addListener(AetherIIItemModelProperties::registerConditionalProperties);
-        neoBus.addListener(AetherIIItemModelProperties::registerSelectProperties);
-        neoBus.addListener(AetherIIItemModelProperties::registerRangeSelectProperties);
-        neoBus.addListener(AetherIIAtlases::registerAtlases);
-        neoBus.addListener(AetherIISpriteSourceTypes::registerSpriteSourceTypes);
-        neoBus.addListener(AetherIIItemTintSources::registerTintSources);
-        neoBus.addListener(AetherIIClientCaches::registerReloadListeners);
-        neoBus.addListener(AetherIIKeyMappings::registerKeyMappings);
-    }
-
-    public static void registerMenuTextures(AddClientReloadListenersEvent event) {
-        Minecraft.getInstance().getTextureManager().register(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
-    }
-
-    public static void registerDimensionTransitionScreens(RegisterDimensionTransitionScreenEvent event) {
-        event.registerIncomingEffect(AetherIIDimensions.AETHER_HOLY_ISLES_LEVEL, HolyIslesReceivingLevelScreen::new);
-        event.registerOutgoingEffect(AetherIIDimensions.AETHER_HOLY_ISLES_LEVEL, HolyIslesReceivingLevelScreen::new);
+    private static void registerMenuScreens() {
+        MenuScreens.register(AetherIIMenuTypes.GUIDEBOOK, GuidebookEquipmentScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.SKYROOT_CRAFTING_TABLE, SkyrootCraftingScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.HOLYSTONE_FURNACE, HolystoneFurnaceScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.HOLYSTONE_SMOKER, HolystoneSmokerScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.AMBER_HOURGLASS, AmberHourglassScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.ALTAR, AltarScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.ARTISANS_BENCH, ArtisansBenchScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.ARKENIUM_FORGE, ArkeniumForgeScreen::new);
+        MenuScreens.register(AetherIIMenuTypes.ALKAHEST_PURIFIER, AlkahestPurifierScreen::new);
     }
 
     public static void registerTooltipOverrides() {
@@ -114,35 +101,35 @@ public class AetherIIClient {
             return component;
         };
 
-        TooltipListeners.PREDICATES.put(AetherIIItems.BEAST_PELT_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BEAST_PELT_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BEAST_PELT_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BEAST_PELT_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BEAST_PELT_GLOVES, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BURRUKAI_PLATE_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BURRUKAI_PLATE_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BURRUKAI_PLATE_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BURRUKAI_PLATE_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.BURRUKAI_PLATE_GLOVES, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ZANITE_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ZANITE_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ZANITE_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ZANITE_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ZANITE_GLOVES, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ARKENIUM_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ARKENIUM_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ARKENIUM_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ARKENIUM_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.ARKENIUM_GLOVES, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.GRAVITITE_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.GRAVITITE_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.GRAVITITE_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.GRAVITITE_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.GRAVITITE_GLOVES, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.NEPTUNE_HELMET, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.NEPTUNE_CHESTPLATE, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.NEPTUNE_LEGGINGS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.NEPTUNE_BOOTS, setBonusPredicate);
-        TooltipListeners.PREDICATES.put(AetherIIItems.NEPTUNE_GLOVES, setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BEAST_PELT_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BEAST_PELT_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BEAST_PELT_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BEAST_PELT_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BEAST_PELT_GLOVES), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BURRUKAI_PLATE_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BURRUKAI_PLATE_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BURRUKAI_PLATE_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BURRUKAI_PLATE_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.BURRUKAI_PLATE_GLOVES), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ZANITE_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ZANITE_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ZANITE_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ZANITE_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ZANITE_GLOVES), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ARKENIUM_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ARKENIUM_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ARKENIUM_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ARKENIUM_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.ARKENIUM_GLOVES), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.GRAVITITE_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.GRAVITITE_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.GRAVITITE_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.GRAVITITE_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.GRAVITITE_GLOVES), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.NEPTUNE_HELMET), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.NEPTUNE_CHESTPLATE), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.NEPTUNE_LEGGINGS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.NEPTUNE_BOOTS), setBonusPredicate);
+        TooltipListeners.PREDICATES.put(BuiltInRegistries.ITEM.wrapAsHolder(AetherIIItems.NEPTUNE_GLOVES), setBonusPredicate);
     }
 }

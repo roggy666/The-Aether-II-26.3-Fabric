@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.entity.model;
 
+import com.aetherteam.aetherii.client.animation.AetherIIAnimations;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.renderer.entity.state.AechorPlantRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
@@ -9,13 +10,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.entity.animation.json.AnimationHolder;
 
 public class AechorPlantModel extends EntityModel<AechorPlantRenderState> {
-    public static final AnimationHolder PASSIVE_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "aechor_plant/passive"));
-    public static final AnimationHolder ATTACK_ANIMATION = Model.getAnimation(Identifier.fromNamespaceAndPath(AetherII.MODID, "aechor_plant/attack"));
-    private final KeyframeAnimation passiveAnimation;
-    private final KeyframeAnimation attackAnimation;
+    public static final Identifier PASSIVE_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "aechor_plant/passive");
+    public static final Identifier ATTACK_ANIMATION = Identifier.fromNamespaceAndPath(AetherII.MODID, "aechor_plant/attack");
+    private final AetherIIAnimations.ReloadableAnimation passiveAnimation;
+    private final AetherIIAnimations.ReloadableAnimation attackAnimation;
 
     private final ModelPart main;
     private final ModelPart body;
@@ -42,8 +42,8 @@ public class AechorPlantModel extends EntityModel<AechorPlantRenderState> {
         this.underPetal = this.main.getChild("under_petal");
         this.dart = this.main.getChild("dart");
         this.outerDart = this.main.getChild("outer_dart");
-        this.passiveAnimation = PASSIVE_ANIMATION.get().bake(root);
-        this.attackAnimation = ATTACK_ANIMATION.get().bake(root);
+        this.passiveAnimation = AetherIIAnimations.bake(PASSIVE_ANIMATION, root);
+        this.attackAnimation = AetherIIAnimations.bake(ATTACK_ANIMATION, root);
     }
 
     public static LayerDefinition createBodyLayer() {

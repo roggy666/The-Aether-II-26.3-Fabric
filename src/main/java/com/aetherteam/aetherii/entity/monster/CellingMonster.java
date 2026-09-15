@@ -23,7 +23,6 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 
-import static net.neoforged.neoforge.common.util.TransformationHelper.quatFromXYZ;
 
 public class CellingMonster extends Monster {
     public static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(CellingMonster.class, EntityDataSerializers.DIRECTION);
@@ -229,5 +228,11 @@ public class CellingMonster extends Monster {
 
     public Quaternionfc getCellRotation() {
         return this.entityData.get(CELL_ROTATION);
+    }
+
+    // Mirrors NeoForge's TransformationHelper#quatFromXYZ
+    private static Quaternionf quatFromXYZ(float x, float y, float z, boolean degrees) {
+        float conversionFactor = degrees ? (float) Math.PI / 180 : 1;
+        return new Quaternionf().rotationXYZ(x * conversionFactor, y * conversionFactor, z * conversionFactor);
     }
 }

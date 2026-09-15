@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.construction;
 
+import com.aetherteam.aetherii.block.EntityFrictionBlock;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.FrictionCapped;
 import net.minecraft.core.BlockPos;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class QuicksoilGlassBlock extends TransparentBlock implements FrictionCapped {
+public class QuicksoilGlassBlock extends TransparentBlock implements FrictionCapped, EntityFrictionBlock {
     public QuicksoilGlassBlock(Properties properties) {
         super(properties);
     }

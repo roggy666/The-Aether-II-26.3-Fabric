@@ -52,7 +52,7 @@ public class HestveilFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
             if (level.getBlockState(storedPos).isAir()) {
-                level.setBlock(storedPos, AetherIIBlocks.HESTVEIL.get().defaultBlockState(), 3);
+                level.setBlock(storedPos, AetherIIBlocks.HESTVEIL.defaultBlockState(), 3);
             }
             visited.add(storedPos);
         }

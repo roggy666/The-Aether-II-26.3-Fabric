@@ -68,7 +68,7 @@ public class AlkahestPurifierBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.ALKAHEST_PURIFIER.get());
+        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.ALKAHEST_PURIFIER);
     }
 
     @Nullable

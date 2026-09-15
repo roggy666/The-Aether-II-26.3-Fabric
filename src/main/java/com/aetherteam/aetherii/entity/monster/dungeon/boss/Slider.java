@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.entity.monster.dungeon.boss;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import com.aetherteam.aetherii.entity.ExtraSpawnData;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
@@ -57,8 +59,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -68,13 +69,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, IEntityWithComplexSpawn {
+public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enemy, ExtraSpawnData {
     private static final EntityDataAccessor<Boolean> DATA_AWAKE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Component> DATA_BOSS_NAME_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_X_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> DATA_HURT_ANGLE_Z_ID = SynchedEntityData.defineId(Slider.class, EntityDataSerializers.FLOAT);
-    private static final Music SLIDER_MUSIC = new Music(AetherIISoundEvents.MUSIC_BOSS_SLIDER, 0, 0, true);
+    private static final Music SLIDER_MUSIC = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(AetherIISoundEvents.MUSIC_BOSS_SLIDER), 0, 0, true);
 
     /**
      * Goal for targeting in groups of entities
@@ -296,7 +297,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             if (source.getDirectEntity() instanceof LivingEntity attacker) {
                 if (this.getDungeon() == null || this.getDungeon().isPlayerWithinRoomInterior(this, attacker)) { // Only allow damage within the boss room.
                     if (attacker.getMainHandItem().is(AetherIITags.Items.SLIDER_DAMAGING_ITEMS)
-                            || attacker.getMainHandItem().isCorrectToolForDrops(AetherIIBlocks.UNDERSHALE_BRICKS.get().defaultBlockState())) { // Check for correct tool.
+                            || attacker.getMainHandItem().isCorrectToolForDrops(AetherIIBlocks.UNDERSHALE_BRICKS.defaultBlockState())) { // Check for correct tool.
                         return Optional.of(attacker);
                     } else {
                         return this.sendInvalidToolMessage(attacker);
@@ -472,7 +473,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
             float yMove = (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 10;
             float zMove = (this.getRandom().nextFloat() - this.getRandom().nextFloat()) * 10;
 
-            this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.SENTRY_BASE_BRICKS.get().defaultBlockState()), x, y, z, xMove, yMove, zMove);
+            this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, AetherIIBlocks.SENTRY_BASE_BRICKS.defaultBlockState()), x, y, z, xMove, yMove, zMove);
         }
     }
 
@@ -496,7 +497,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
      * @param z        The {@link Double} for knockback z-direction.
      */
     @Override
-    public void knockback(double strength, double x, double z) {
+    public void knockback(double strength, double x, double z, DamageSource source, float damage, boolean comesFromEffect) {
     }
 
     /**
@@ -552,7 +553,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()));
+        ServerPlayNetworking.send(player, new BossInfoPacket.Display(this.bossFight.getId(), this.getId()));
         if (this.getDungeon() == null || this.getDungeon().isPlayerTracked(this, player)) {
             this.bossFight.addPlayer(player);
         }
@@ -566,7 +567,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        PacketDistributor.sendToPlayer(player, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()));
+        ServerPlayNetworking.send(player, new BossInfoPacket.Remove(this.bossFight.getId(), this.getId()));
         this.bossFight.removePlayer(player);
     }
 
@@ -895,31 +896,31 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
     }
 
     protected SoundEvent getAwakenSound() {
-        return AetherIISoundEvents.ENTITY_SLIDER_AWAKEN.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_AWAKEN;
     }
 
     public SoundEvent getCollideSound() {
-        return AetherIISoundEvents.ENTITY_SLIDER_COLLIDE.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_COLLIDE;
     }
 
     public SoundEvent getMoveSound() {
-        return AetherIISoundEvents.ENTITY_SLIDER_MOVE.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_MOVE;
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AetherIISoundEvents.ENTITY_SLIDER_AMBIENT.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return AetherIISoundEvents.ENTITY_SLIDER_HURT.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AetherIISoundEvents.ENTITY_SLIDER_DEATH.get();
+        return AetherIISoundEvents.ENTITY_SLIDER_DEATH;
     }
 
     @Override

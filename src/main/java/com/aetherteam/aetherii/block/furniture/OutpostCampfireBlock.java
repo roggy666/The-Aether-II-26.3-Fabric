@@ -68,7 +68,7 @@ public class OutpostCampfireBlock extends MultiBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return blockEntityType == AetherIIBlockEntityTypes.OUTPOST_CAMPFIRE.get() ? OutpostCampfireBlockEntity::tick : null;
+        return blockEntityType == AetherIIBlockEntityTypes.OUTPOST_CAMPFIRE ? OutpostCampfireBlockEntity::tick : null;
     }
 
     @Nullable
@@ -115,12 +115,12 @@ public class OutpostCampfireBlock extends MultiBlock {
                         this.activationParticles(level, new Vec3(originVec.x() + (xDir.getStepX() / 2.0), originVec.y(), originVec.z() + (zDir.getStepZ() / 2.0)), level.getRandom());
                     }
 
-                    var data = player.getData(AetherIIDataAttachments.OUTPOST_TRACKER);
+                    var data = player.getAttachedOrCreate(AetherIIDataAttachments.OUTPOST_TRACKER);
                     if (!data.getCampfirePositions().stream().map(OutpostTrackerAttachment.CampfirePosition::pos).collect(Collectors.toSet()).contains(origin)) {
                         data.addCampfirePosition(new OutpostTrackerAttachment.CampfirePosition(level.dimension(), origin));
                         if (player instanceof ServerPlayer serverPlayer) {
                             serverPlayer.sendOverlayMessage(Component.translatable("aether_ii.message.campfire_added"));
-                            AetherIIAdvancementTriggers.OUTPOST_CAMPFIRE.get().trigger(serverPlayer);
+                            AetherIIAdvancementTriggers.OUTPOST_CAMPFIRE.trigger(serverPlayer);
                         }
                         return InteractionResult.SUCCESS;
                     }
@@ -198,10 +198,6 @@ public class OutpostCampfireBlock extends MultiBlock {
         }
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(LIT) ? 15 : 0;
-    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

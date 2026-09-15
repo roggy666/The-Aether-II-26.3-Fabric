@@ -38,11 +38,11 @@ public class CurrencyItem extends Item {
     @Override
     public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
-        CurrencyAttachment attachment = player.getData(AetherIIDataAttachments.CURRENCY);
+        CurrencyAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY);
         attachment.setAmount(attachment.getAmount() + this.currencyAmount);
-        player.syncData(AetherIIDataAttachments.CURRENCY);
+        player.setAttached(AetherIIDataAttachments.CURRENCY, player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY));
         if (player instanceof ServerPlayer serverPlayer) {
-            AetherIIAdvancementTriggers.CURRENCY.get().trigger(serverPlayer, attachment.getAmount());
+            AetherIIAdvancementTriggers.CURRENCY.trigger(serverPlayer, attachment.getAmount());
         }
         player.awardStat(Stats.ITEM_USED.get(this));
         stack.consume(1, player);

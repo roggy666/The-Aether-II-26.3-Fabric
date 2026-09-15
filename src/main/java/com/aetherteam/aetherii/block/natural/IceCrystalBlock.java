@@ -58,9 +58,9 @@ public class IceCrystalBlock extends Block implements SimpleWaterloggedBlock {
             if (attachedState.is(AetherIIBlocks.ARCTIC_ICE) || attachedState.is(AetherIIBlocks.ARCTIC_PACKED_ICE) || attachedState.is(AetherIIBlocks.ICESTONE)) {
                 Block block = null;
                 if (state.is(AetherIIBlocks.SMALL_ARCTIC_ICE_CRYSTAL)) {
-                    block = AetherIIBlocks.MEDIUM_ARCTIC_ICE_CRYSTAL.get();
+                    block = AetherIIBlocks.MEDIUM_ARCTIC_ICE_CRYSTAL;
                 } else if (state.is(AetherIIBlocks.MEDIUM_ARCTIC_ICE_CRYSTAL)) {
-                    block = AetherIIBlocks.LARGE_ARCTIC_ICE_CRYSTAL.get();
+                    block = AetherIIBlocks.LARGE_ARCTIC_ICE_CRYSTAL;
                 }
                 if (block != null) {
                     BlockState newState = block.withPropertiesOf(state);

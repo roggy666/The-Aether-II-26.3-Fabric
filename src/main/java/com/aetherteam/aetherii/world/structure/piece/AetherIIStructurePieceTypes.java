@@ -4,21 +4,21 @@ import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.world.structure.piece.sentry.SentryRuinsBossRoom;
 import com.aetherteam.aetherii.world.structure.piece.sentry.SentryRuinsRoom;
 import com.aetherteam.aetherii.world.structure.piece.sentry.SentryRuinsTunnel;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.Locale;
 
 public class AetherIIStructurePieceTypes {
-    public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECE_TYPES = DeferredRegister.create(Registries.STRUCTURE_PIECE, AetherII.MODID);
-    
-    public static final DeferredHolder<StructurePieceType, StructurePieceType> SENTRY_RUINS_BOSS_ROOM = register("SRBossRoom", SentryRuinsBossRoom::new);
-    public static final DeferredHolder<StructurePieceType, StructurePieceType> SENTRY_RUINS_ROOM = register("SRDungeonRoom", SentryRuinsRoom::new);
-    public static final DeferredHolder<StructurePieceType, StructurePieceType> SENTRY_RUINS_TUNNEL = register("SRTunnel", SentryRuinsTunnel::new);
+    public static final StructurePieceType SENTRY_RUINS_BOSS_ROOM = register("srbossroom", SentryRuinsBossRoom::new);
+    public static final StructurePieceType SENTRY_RUINS_ROOM = register("srdungeonroom", SentryRuinsRoom::new);
+    public static final StructurePieceType SENTRY_RUINS_TUNNEL = register("srtunnel", SentryRuinsTunnel::new);
 
-    private static DeferredHolder<StructurePieceType, StructurePieceType> register(String name, StructurePieceType structurePieceType) {
-        return STRUCTURE_PIECE_TYPES.register(name.toLowerCase(Locale.ROOT), () -> structurePieceType);
+    private static StructurePieceType register(String name, StructurePieceType structurePieceType) {
+        return Registry.register(BuiltInRegistries.STRUCTURE_PIECE, Identifier.fromNamespaceAndPath(AetherII.MODID, name.toLowerCase(Locale.ROOT)), structurePieceType);
     }
+
+    public static void init() {}
 }

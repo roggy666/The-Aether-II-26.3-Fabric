@@ -43,9 +43,9 @@ public class IrradiatedDustItem extends Item implements ItemUseConversion<Irradi
                 return InteractionResult.PASS;
             }
         } else {
-            InteractionResult result = this.convertBlock(AetherIIRecipePropertySets.DUST_IRRADIATION_STATES, AetherIIRecipeTypes.DUST_IRRADIATION.get(), context);
+            InteractionResult result = this.convertBlock(AetherIIRecipePropertySets.DUST_IRRADIATION_STATES, AetherIIRecipeTypes.DUST_IRRADIATION, context);
             if (level.isClientSide() && result == InteractionResult.SUCCESS) {
-                ParticleUtils.spawnParticlesOnBlockFaces(level, pos, AetherIIParticleTypes.IRRADIATION.get(), ConstantInt.of(25));
+                ParticleUtils.spawnParticlesOnBlockFaces(level, pos, AetherIIParticleTypes.IRRADIATION, ConstantInt.of(25));
             } else if (result == InteractionResult.PASS) {
                 return super.useOn(context);
             }

@@ -73,7 +73,7 @@ public class ArkeniumForgeBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.ARKENIUM_FORGE.get());
+        return createTicker(level, blockEntityType, AetherIIBlockEntityTypes.ARKENIUM_FORGE);
     }
 
     @Nullable
@@ -142,8 +142,4 @@ public class ArkeniumForgeBlock extends BaseEntityBlock {
         return false;
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(CHARGED) ? 8 : 0;
-    }
 }

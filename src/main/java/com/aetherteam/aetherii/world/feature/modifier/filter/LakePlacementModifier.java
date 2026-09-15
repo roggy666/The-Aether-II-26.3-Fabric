@@ -97,6 +97,6 @@ public class LakePlacementModifier extends PlacementModifier {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.LAKE_PLACEMENT.get();
+        return AetherIIPlacementModifierTypes.LAKE_PLACEMENT;
     }
 }

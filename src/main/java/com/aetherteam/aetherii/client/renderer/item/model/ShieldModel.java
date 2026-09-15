@@ -19,7 +19,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.model.ComposedModelState;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Quaternionf;
@@ -62,13 +61,22 @@ public class ShieldModel implements ItemModel {
 
         List<BakedQuad> quads = this.bakingContext.blockModelBaker().compute(new ItemModelGenerator.ItemLayerKey(
                 this.sprite(this.unbakedModel.textures().handle()),
-                new ComposedModelState(BlockModelRotation.get(Quadrant.fromXYAngles(Quadrant.R180, Quadrant.R90)), new Transformation(new Vector3f(0, px(0.5F), px(3.0F)), new Quaternionf(), new Vector3f(1, 1, 2), new Quaternionf())),
+                compose(BlockModelRotation.get(Quadrant.fromXYAngles(Quadrant.R180, Quadrant.R90)), new Transformation(new Vector3f(0, px(0.5F), px(3.0F)), new Quaternionf(), new Vector3f(1, 1, 2), new Quaternionf())),
                 0
         )).getAll();
         combinedQuads.addAll(quads);
         combinedQuads.forEach(builder::addUnculledFace);
 
         return new CompositeModel(List.of(new CuboidItemModelWrapper(List.of(), builder.build(), new ModelRenderProperties(false, this.sprite(this.unbakedModel.textures().particle()), this.itemTransforms), new Matrix4f())));
+    }
+
+    private static net.minecraft.client.renderer.block.dispatch.ModelState compose(net.minecraft.client.renderer.block.dispatch.ModelState base, Transformation transform) {
+        return new net.minecraft.client.renderer.block.dispatch.ModelState() {
+            @Override
+            public Transformation transformation() {
+                return base.transformation().compose(transform);
+            }
+        };
     }
 
     public Material.Baked sprite(Material material) {
@@ -81,7 +89,7 @@ public class ShieldModel implements ItemModel {
 
         List<BakedQuad> quads = new ArrayList<>(this.bakingContext.blockModelBaker().compute(new ItemModelGenerator.ItemLayerKey(
                 sprite,
-                new ComposedModelState(BlockModelRotation.IDENTITY, new Transformation(new Vector3f(px(xOffset) + px(3.0F), px(yOffset) - px(0.5F), (0.0001F * (front ? 1.0F : -1.0F)) + px(3.5F)), new Quaternionf(), scale, new Quaternionf())),
+                compose(BlockModelRotation.IDENTITY, new Transformation(new Vector3f(px(xOffset) + px(3.0F), px(yOffset) - px(0.5F), (0.0001F * (front ? 1.0F : -1.0F)) + px(3.5F)), new Quaternionf(), scale, new Quaternionf())),
                 0
         )).getAll());
 

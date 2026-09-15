@@ -53,6 +53,6 @@ public class StructureBlacklistFilter extends PlacementFilter {
 
     @Override
     public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.STRUCTURE_BLACKLIST_FILTER.get();
+        return AetherIIPlacementModifierTypes.STRUCTURE_BLACKLIST_FILTER;
     }
 }

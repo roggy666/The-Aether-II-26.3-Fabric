@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.component.menu;
 
+import com.aetherteam.aetherii.mixin.mixins.client.accessor.AbstractWidgetAccessor;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.gui.screen.menu.AetherIITitleScreen;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.ButtonAccessor;
@@ -25,14 +26,16 @@ public class AetherIIMenuButton extends Button {
     public boolean makeshipButton;
 
     public AetherIIMenuButton(AetherIITitleScreen screen, Builder builder) {
-        super(builder);
-        this.originalX = this.getX();
-        this.originalY = this.getY();
-        this.hoverOffset = 0;
+        this(screen, builder.build());
     }
 
     public AetherIIMenuButton(AetherIITitleScreen screen, Button oldButton) {
-        this(screen, new Builder(oldButton.getMessage(), ((ButtonAccessor) oldButton).aether_ii$getOnPress()).bounds(oldButton.getX(), oldButton.getY(), oldButton.getWidth(), oldButton.getHeight()).createNarration((button) -> ((ButtonAccessor) oldButton).callCreateNarrationMessage()));
+        super(oldButton.getX(), oldButton.getY(), oldButton.getWidth(), oldButton.getHeight(), oldButton.getMessage(),
+                ((ButtonAccessor) oldButton).aether_ii$getOnPress(), ignored -> ((ButtonAccessor) oldButton).callCreateNarrationMessage());
+        this.setTooltip(((AbstractWidgetAccessor) oldButton).aether_ii$getTooltipHolder().get());
+        this.originalX = this.getX();
+        this.originalY = this.getY();
+        this.hoverOffset = 0;
         oldButton.visible = false;
         oldButton.active = false;
     }

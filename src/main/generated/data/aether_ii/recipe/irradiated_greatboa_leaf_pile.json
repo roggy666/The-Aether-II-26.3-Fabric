@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "leaf_pile",
+  "key": {
+    "#": "aether_ii:irradiated_greatboa_leaves"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "count": 8,
+    "id": "aether_ii:irradiated_greatboa_leaf_pile"
+  }
+}

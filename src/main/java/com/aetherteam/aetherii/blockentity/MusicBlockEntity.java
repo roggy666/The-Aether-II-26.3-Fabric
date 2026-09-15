@@ -24,26 +24,20 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.ContainerSingleItem;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.transfer.transaction.RootCommitJournal;
-import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
 
 public class MusicBlockEntity extends BlockEntity implements ContainerSingleItem.BlockContainerSingleItem {
     private ItemStack item;
     private final SongPlayer songPlayer;
-    private final RootCommitJournal itemChangedJournal;
 
     public MusicBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(AetherIIBlockEntityTypes.MUSIC_BLOCK.get(), worldPosition, blockState);
+        super(AetherIIBlockEntityTypes.MUSIC_BLOCK, worldPosition, blockState);
         this.item = ItemStack.EMPTY;
         this.songPlayer = new SongPlayer(this::onSongChanged, this.getBlockPos());
-        this.itemChangedJournal = new RootCommitJournal(() -> {
-            if (!this.isRemoved()) {
-                this.itemChanged();
-            }
-        });
     }
 
     public static void tick(Level level, BlockPos blockPos, BlockState blockState, MusicBlockEntity blockEntity) {
@@ -88,11 +82,6 @@ public class MusicBlockEntity extends BlockEntity implements ContainerSingleItem
     }
 
     @Override
-    public void onTransfer(int slot, int amountChange, TransactionContext transaction) {
-        this.itemChangedJournal.updateSnapshots(transaction);
-    }
-
-    @Override
     public ItemStack getTheItem() {
         return this.item;
     }
@@ -105,13 +94,9 @@ public class MusicBlockEntity extends BlockEntity implements ContainerSingleItem
     }
 
     @Override
-    public void setItem(int slot, ItemStack stack, boolean insideTransaction) {
+    public void setItem(int slot, ItemStack stack) {
         if (slot == 0) {
-            if (insideTransaction) {
-                this.item = stack;
-            } else {
-                this.setTheItem(stack);
-            }
+            this.setTheItem(stack);
         }
     }
 
@@ -201,7 +186,9 @@ public class MusicBlockEntity extends BlockEntity implements ContainerSingleItem
             accessor.aether_ii$setSong(song);
             accessor.aether_ii$setTicksSinceSongStarted(0L);
             if (level instanceof ServerLevel serverLevel) {
-                PacketDistributor.sendToPlayersInDimension(serverLevel, new MusicBlockPlayPacket(song, this.blockPos));
+                for (ServerPlayer player : PlayerLookup.level(serverLevel)) {
+                    ServerPlayNetworking.send(player, new MusicBlockPlayPacket(song, this.blockPos));
+                }
             }
             this.onSongChanged.notifyChange();
         }

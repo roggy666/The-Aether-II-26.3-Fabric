@@ -17,7 +17,7 @@ public class KirridEatGrass extends Behavior<Kirrid> {
     public KirridEatGrass() {
         super(ImmutableMap.of(
                 MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
-                AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get(), MemoryStatus.VALUE_ABSENT
+                AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN, MemoryStatus.VALUE_ABSENT
         ), 60);
     }
 
@@ -48,13 +48,13 @@ public class KirridEatGrass extends Behavior<Kirrid> {
     }
 
     private boolean isValidTarget(ServerLevel serverLevel, Kirrid owner) {
-        return serverLevel.getBlockState(owner.blockPosition().below()).is(AetherIIBlocks.AETHER_GRASS_BLOCK.get());
+        return serverLevel.getBlockState(owner.blockPosition().below()).is(AetherIIBlocks.AETHER_GRASS_BLOCK);
     }
 
     protected void finishEat(ServerLevel serverLevel, Kirrid owner) {
-        serverLevel.levelEvent(2001, owner.blockPosition().below(), Block.getId(AetherIIBlocks.AETHER_GRASS_BLOCK.get().defaultBlockState()));
-        serverLevel.setBlock(owner.blockPosition().below(), AetherIIBlocks.AETHER_DIRT.get().defaultBlockState(), 3);
-        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN.get(), KirridAi.TIME_BETWEEN_EAT.sample(serverLevel.getRandom()));
+        serverLevel.levelEvent(2001, owner.blockPosition().below(), Block.getId(AetherIIBlocks.AETHER_GRASS_BLOCK.defaultBlockState()));
+        serverLevel.setBlock(owner.blockPosition().below(), AetherIIBlocks.AETHER_DIRT.defaultBlockState(), 3);
+        owner.getBrain().setMemory(AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN, KirridAi.TIME_BETWEEN_EAT.sample(serverLevel.getRandom()));
         owner.ate();
     }
 }

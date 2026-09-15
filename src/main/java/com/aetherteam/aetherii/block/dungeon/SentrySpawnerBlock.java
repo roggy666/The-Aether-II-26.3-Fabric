@@ -50,7 +50,7 @@ public class SentrySpawnerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, AetherIIBlockEntityTypes.SENTRY_SPAWNER.get(), level.isClientSide() ? SentrySpawnerBlockEntity::clientTick : SentrySpawnerBlockEntity::serverTick);
+        return createTickerHelper(type, AetherIIBlockEntityTypes.SENTRY_SPAWNER, level.isClientSide() ? SentrySpawnerBlockEntity::clientTick : SentrySpawnerBlockEntity::serverTick);
     }
 
     @Override
@@ -70,10 +70,6 @@ public class SentrySpawnerBlock extends BaseEntityBlock {
         return SHAPE;
     }
 
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.getValue(SENTRY_SPAWNER_STATE) != AetherIIBlockStateProperties.SentrySpawnerState.INACTIVE ? super.getLightEmission(state, level, pos) : 0;
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

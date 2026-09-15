@@ -12,18 +12,18 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
 public class ScatterglassBolt extends AbstractArrow {
-    private static final ItemStack SCATTERGLASS_BOLT = new ItemStack(AetherIIItems.SCATTERGLASS_BOLT.get());
+    private static final ItemStack SCATTERGLASS_BOLT = new ItemStack(AetherIIItems.SCATTERGLASS_BOLT);
 
     public ScatterglassBolt(EntityType<? extends ScatterglassBolt> entityType, Level level) {
         super(entityType, level);
     }
 
     public ScatterglassBolt(Level level, double x, double y, double z, ItemStack pickupStack, ItemStack weaponStack) {
-        super(AetherIIEntityTypes.SCATTERGLASS_BOLT.get(), x, y, z, level, pickupStack, weaponStack);
+        super(AetherIIEntityTypes.SCATTERGLASS_BOLT, x, y, z, level, pickupStack, weaponStack);
     }
 
     public ScatterglassBolt(Level level, LivingEntity owner, ItemStack pickupStack, ItemStack weaponStack) {
-        super(AetherIIEntityTypes.SCATTERGLASS_BOLT.get(), owner, level, pickupStack, weaponStack);
+        super(AetherIIEntityTypes.SCATTERGLASS_BOLT, owner, level, pickupStack, weaponStack);
     }
 
     @Override

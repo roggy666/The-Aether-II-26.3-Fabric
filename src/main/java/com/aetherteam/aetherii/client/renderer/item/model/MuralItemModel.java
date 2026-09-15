@@ -24,7 +24,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.model.NeoForgeModelProperties;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4fc;
 

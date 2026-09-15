@@ -1,8 +1,10 @@
 package com.aetherteam.aetherii.item.equipment.weapons;
 
+import net.minecraft.world.entity.Entity;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.entity.attributes.AetherIIAttributes;
 import com.aetherteam.aetherii.integration.AccessoryUtil;
+import com.aetherteam.aetherii.item.AttributeTooltipUtil;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import net.minecraft.core.Holder;
@@ -23,15 +25,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.BlocksAttacks;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class TieredShieldItem extends ShieldItem {
+import com.aetherteam.aetherii.item.CustomEnchantmentItem;
+
+public class TieredShieldItem extends ShieldItem implements CustomEnchantmentItem {
     public static final Identifier BASE_SHIELD_BLOCKING_STRENGTH_ID = Identifier.fromNamespaceAndPath(AetherII.MODID, "base_shield_blocking_strength");
 
     private final double strength;
@@ -59,7 +61,7 @@ public class TieredShieldItem extends ShieldItem {
         Multimap<Holder<Attribute>, AttributeModifier> modifiers = Multimaps.forMap(Map.of(
                 AetherIIAttributes.BLOCKING_STRENGTH, new AttributeModifier(BASE_SHIELD_BLOCKING_STRENGTH_ID, this.getStrength(), AttributeModifier.Operation.ADD_VALUE)
         ));
-        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipContext.of(null, context, tooltipDisplay, tooltipFlag), modifiers, "blocking");
+        AccessoryUtil.addAttributeTooltips(stack, tooltipComponents, AttributeTooltipUtil.Context.of(null, context, tooltipDisplay, tooltipFlag), modifiers, "blocking");
         super.appendHoverText(stack, context, tooltipDisplay, tooltipComponents, tooltipFlag);
     }
 
@@ -72,8 +74,8 @@ public class TieredShieldItem extends ShieldItem {
         return false;
     }
 
-    public static void updatePlayerAttributes(EntityTickEvent.Pre event) {
-        if (event.getEntity() instanceof LivingEntity livingEntity) {
+    public static void updatePlayerAttributes(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
             AttributeInstance blockingStrength = livingEntity.getAttribute(AetherIIAttributes.BLOCKING_STRENGTH);
 
             ItemStack useItem = livingEntity.getUseItem();

@@ -19,7 +19,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -57,7 +56,7 @@ public abstract class GroundTrapBlockEntity extends CustomSpawnerBlockEntity {
                     ValueInput valueInput = TagValueInput.create(reporter, serverLevel.registryAccess(), spawnData.getEntityToSpawn());
                     Optional<EntityType<?>> optional = EntityType.by(valueInput);
                     if (optional.isPresent()) {
-                        Vec3 vec3 = pos.above().getBottomCenter();
+                        Vec3 vec3 = Vec3.atBottomCenterOf(pos.above());
                         if (serverLevel.noBlockCollision(null, optional.get().getSpawnAABB(vec3.x, vec3.y, vec3.z))) {
                             BlockPos vecPos = BlockPos.containing(vec3);
                             Entity entity = EntityType.loadEntityRecursive(valueInput, serverLevel, EntitySpawnReason.SPAWNER, (loadedEntity) -> {
@@ -68,7 +67,9 @@ public abstract class GroundTrapBlockEntity extends CustomSpawnerBlockEntity {
                                 mob.setTarget(serverLevel.getNearestPlayer(mob, 20));
                                 entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), random.nextFloat() * 360.0F, 0.0F);
                                 boolean def = spawnData.getEntityToSpawn().size() == 1 && spawnData.getEntityToSpawn().getString("id").isPresent();
-                                EventHooks.finalizeMobSpawnSpawner(mob, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null, this, def);
+                                if (def) {
+                                    mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null);
+                                }
                                 Optional<EquipmentTable> equipment = spawnData.getEquipment();
                                 Objects.requireNonNull(mob);
                                 equipment.ifPresent(mob::equip);

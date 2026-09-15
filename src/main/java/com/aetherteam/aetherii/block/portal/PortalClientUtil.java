@@ -22,19 +22,19 @@ import net.minecraft.world.entity.player.Player;
 public final class PortalClientUtil {
     public static void handleAetherPortal(Player player, AetherIIPlayerAttachment attachment) {
         if (player instanceof LocalPlayer localPlayer) {
-            if (!(Minecraft.getInstance().screen instanceof LevelLoadingScreen)) {
+            if (!(Minecraft.getInstance().gui.screen() instanceof LevelLoadingScreen)) {
                 attachment.oPortalIntensity = attachment.portalIntensity;
                 float f = 0.0F;
-                if (localPlayer.portalProcess != null && localPlayer.portalProcess.isInsidePortalThisTick() && localPlayer.portalProcess.isSamePortal(AetherIIBlocks.AETHER_PORTAL.get())) {
-                    if (Minecraft.getInstance().screen != null
-                            && !Minecraft.getInstance().screen.isPauseScreen()
-                            && !(Minecraft.getInstance().screen instanceof DeathScreen)
-                            && !(Minecraft.getInstance().screen instanceof WinScreen)) {
-                        if (Minecraft.getInstance().screen instanceof AbstractContainerScreen) {
+                if (localPlayer.portalProcess != null && localPlayer.portalProcess.isInsidePortalThisTick() && localPlayer.portalProcess.isSamePortal(AetherIIBlocks.AETHER_PORTAL)) {
+                    if (Minecraft.getInstance().gui.screen() != null
+                            && !Minecraft.getInstance().gui.screen().isPauseScreen()
+                            && !(Minecraft.getInstance().gui.screen() instanceof DeathScreen)
+                            && !(Minecraft.getInstance().gui.screen() instanceof WinScreen)) {
+                        if (Minecraft.getInstance().gui.screen() instanceof AbstractContainerScreen) {
                             localPlayer.closeContainer();
                         }
 
-                        Minecraft.getInstance().setScreen(null);
+                        Minecraft.getInstance().gui.setScreen(null);
                     }
 
                     if (attachment.portalIntensity == 0.0F) {
@@ -53,14 +53,14 @@ public final class PortalClientUtil {
     }
 
     public static void playAmbientSound(BlockPos pos) {
-        Minecraft.getInstance().getSoundManager().play(new FadeOutSoundInstance(AetherIISoundEvents.BLOCK_AETHER_PORTAL_AMBIENT.get(), SoundSource.BLOCKS, 0.5F, Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, RandomSource.create(Minecraft.getInstance().level.getRandom().nextLong()), false, 0, SoundInstance.Attenuation.LINEAR, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, false));
+        Minecraft.getInstance().getSoundManager().play(new FadeOutSoundInstance(AetherIISoundEvents.BLOCK_AETHER_PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, RandomSource.create(Minecraft.getInstance().level.getRandom().nextLong()), false, 0, SoundInstance.Attenuation.LINEAR, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, false));
     }
     
     public static void playTriggerSound() {
-        Minecraft.getInstance().getSoundManager().play(PortalTriggerSoundInstance.forLocalAmbience(Minecraft.getInstance().player, AetherIISoundEvents.BLOCK_AETHER_PORTAL_TRIGGER.get(), Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
+        Minecraft.getInstance().getSoundManager().play(PortalTriggerSoundInstance.forLocalAmbience(Minecraft.getInstance().player, AetherIISoundEvents.BLOCK_AETHER_PORTAL_TRIGGER, Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
     }
 
     public static void playTravelSound() {
-        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherIISoundEvents.BLOCK_AETHER_PORTAL_TRAVEL.get(), Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forLocalAmbience(AetherIISoundEvents.BLOCK_AETHER_PORTAL_TRAVEL, Minecraft.getInstance().level.getRandom().nextFloat() * 0.4F + 0.8F, 0.25F));
     }
 }

@@ -18,7 +18,7 @@ import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import com.aetherteam.aetherii.item.equipment.weapons.TieredCrossbowItem;
 import com.aetherteam.aetherii.item.miscellaneous.bucket.SkyrootBucketItem;
 import com.aetherteam.aetherii.world.LevelUtil;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -36,11 +36,11 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Bucketable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -65,7 +65,7 @@ import java.util.Optional;
 public class PlayerHooks {
     public static void forceSpecialLoadingCrouch(Player player) {
         ItemStack useStack = player.getUseItem();
-        if (useStack.getItem() instanceof TieredCrossbowItem && player.getData(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
+        if (useStack.getItem() instanceof TieredCrossbowItem && player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).isCrossbowSpecial()) {
             if (!player.getAbilities().flying && !player.isSwimming() && !player.isPassenger()) {
                 player.setPose(Pose.CROUCHING);
             }
@@ -111,7 +111,7 @@ public class PlayerHooks {
                         ParticleUtils.spawnParticleOnFace(level, pos, Direction.UP, ParticleTypes.POOF, Vec3.ZERO, 0.5F);
                     }
                 }
-                level.playSound(null, pos, state.getSoundType(level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 return true;
             }
         }
@@ -125,11 +125,11 @@ public class PlayerHooks {
             Block blockInHand = blockItem.getBlock();
             if (stateInLevel.is(AetherIIBlocks.ARCTIC_SNOW) && blockInHand instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(blockInHand.defaultBlockState()), 1 | 2);
-                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
-            } else if (blockInHand == AetherIIBlocks.ARCTIC_SNOW.get() && AetherGrassBlock.plantNotSnowed(stateInLevel) && stateInLevel.getBlock() instanceof Snowable snowable) {
+            } else if (blockInHand == AetherIIBlocks.ARCTIC_SNOW && AetherGrassBlock.plantNotSnowed(stateInLevel) && stateInLevel.getBlock() instanceof Snowable snowable) {
                 level.setBlock(pos, snowable.setSnowy(stateInLevel), 1 | 2);
-                level.playSound(null, pos, blockInHand.getSoundType(blockInHand.defaultBlockState(), level, pos, player).getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, blockInHand.defaultBlockState().getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
                 success = true;
             }
             if (success) {
@@ -146,9 +146,9 @@ public class PlayerHooks {
     public static boolean ferrositeMudBottleConversion(Player player, Level level, BlockPos pos, ItemStack itemStack, InteractionHand hand, Direction face, boolean cancellationStatus) {
         PotionContents potionContents = itemStack.get(DataComponents.POTION_CONTENTS);
         if ((face != Direction.DOWN && potionContents != null && potionContents.is(Potions.WATER))) {
-            if (level.getBlockState(pos).getBlock() == AetherIIBlocks.FERROSITE_SAND.get()) {
+            if (level.getBlockState(pos).getBlock() == AetherIIBlocks.FERROSITE_SAND) {
 
-                level.setBlockAndUpdate(pos, AetherIIBlocks.FERROSITE_MUD.get().defaultBlockState());
+                level.setBlockAndUpdate(pos, AetherIIBlocks.FERROSITE_MUD.defaultBlockState());
                 player.awardStat(Stats.ITEM_USED.get(itemStack.getItem()));
                 if (!player.getAbilities().instabuild) {
                     itemStack.shrink(1);
@@ -204,13 +204,13 @@ public class PlayerHooks {
     public static void milkWithSkyrootBucket(Entity target, Player player, InteractionHand hand) {
         if ((target instanceof Cow || target instanceof FlyingCow) && !((Animal) target).isBaby()) {
             ItemStack heldStack = player.getItemInHand(hand);
-            if (heldStack.is(AetherIIItems.SKYROOT_BUCKET.get())) {
+            if (heldStack.is(AetherIIItems.SKYROOT_BUCKET)) {
                 if (target instanceof FlyingCow) {
-                    player.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_MILK.get(), 1.0F, 1.0F);
+                    player.playSound(AetherIISoundEvents.ENTITY_FLYING_COW_MILK, 1.0F, 1.0F);
                 } else {
                     player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 }
-                ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherIIItems.SKYROOT_MILK_BUCKET.get().getDefaultInstance());
+                ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherIIItems.SKYROOT_MILK_BUCKET.getDefaultInstance());
                 player.swing(hand);
                 player.setItemInHand(hand, filledBucket);
             }
@@ -221,9 +221,9 @@ public class PlayerHooks {
         ItemStack itemInHand = player.getItemInHand(hand);
         if (target instanceof CarrionSprout) {
             ItemStack heldStack = player.getItemInHand(hand);
-            if (itemInHand.getItem() == AetherIIItems.GOLDEN_AMBER.get()) {
+            if (itemInHand.getItem() == AetherIIItems.GOLDEN_AMBER) {
                 heldStack.consume(1, player);
-                ItemEntity itemEntity = new ItemEntity(level, target.getX(), target.getY(), target.getZ(), AetherIIItems.GOLDEN_WYNDBERRY.toStack());
+                ItemEntity itemEntity = new ItemEntity(level, target.getX(), target.getY(), target.getZ(), AetherIIItems.GOLDEN_WYNDBERRY.getDefaultInstance());
                 itemEntity.setDefaultPickUpDelay();
                 level.addFreshEntity(itemEntity);
                 player.swing(hand);
@@ -239,7 +239,7 @@ public class PlayerHooks {
     public static void useGoldenWyndberry(Entity target, Player player, InteractionHand hand) {
         ItemStack itemInHand = player.getItemInHand(hand);
         if (target instanceof AgeableMob ageableMob) {
-            if (itemInHand.getItem() == AetherIIItems.GOLDEN_WYNDBERRY.get() && ageableMob.isBaby() && ageableMob.ageLockParticleTimer == 0 && !target.is(EntityTypeTags.CANNOT_BE_AGE_LOCKED)) {
+            if (itemInHand.getItem() == AetherIIItems.GOLDEN_WYNDBERRY && ageableMob.isBaby() && ageableMob.ageLockParticleTimer == 0 && !target.is(EntityTypeTags.CANNOT_BE_AGE_LOCKED)) {
                 AgeableMob.setAgeLocked(ageableMob, ageableMob::isAgeLocked, player, itemInHand, mob -> ageableMob.setAgeLockedData());
                 player.swing(hand);
             }
@@ -248,7 +248,7 @@ public class PlayerHooks {
 
     public static Optional<InteractionResult> pickupBucketableTarget(Entity target, Player player, InteractionHand hand, Optional<InteractionResult> interactionResult) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (heldStack.is(AetherIIItems.SKYROOT_WATER_BUCKET.get())) { // Checks if the player is interacting with an entity with a Skyroot Water Bucket.
+        if (heldStack.is(AetherIIItems.SKYROOT_WATER_BUCKET)) { // Checks if the player is interacting with an entity with a Skyroot Water Bucket.
             if (target instanceof Bucketable bucketable && target instanceof LivingEntity livingEntity && livingEntity.isAlive()) {
                 ItemStack bucketStack = bucketable.getBucketItemStack();
                 bucketStack = SkyrootBucketItem.swapBucketType(bucketStack); // Swaps the bucket stack that contains an entity with a Skyroot equivalent.

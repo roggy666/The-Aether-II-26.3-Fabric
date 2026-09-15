@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
@@ -29,17 +30,25 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.world.AuxiliaryLightManager;
 
 import javax.annotation.Nullable;
 
 public abstract class CopyBlock extends BaseEntityBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty EMPTY = AetherIIBlockStateProperties.EMPTY;
+    /**
+     * Light of the copied block. NeoForge served it per position through {@code AuxiliaryLightManager}; here it is a
+     * state property kept in sync by {@link CopyBlockEntity}.
+     */
+    public static final IntegerProperty LIGHT = IntegerProperty.create("light", 0, 15);
 
     public CopyBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(EMPTY, true));
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false).setValue(EMPTY, true).setValue(LIGHT, 0));
+    }
+
+    public static int lightEmission(BlockState state) {
+        return state.getValue(LIGHT);
     }
 
     @Override
@@ -116,16 +125,6 @@ public abstract class CopyBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
-        if (!state.getValue(EMPTY)) {
-            if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                return blockEntity.getCopyState().hidesNeighborFace(level, pos, neighborState, dir);
-            }
-        }
-        return super.hidesNeighborFace(level, pos, state, neighborState, dir);
-    }
-
-    @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (!state.getValue(EMPTY)) {
             if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
@@ -151,21 +150,6 @@ public abstract class CopyBlock extends BaseEntityBlock {
         return RenderShape.INVISIBLE;
     }
 
-    @Override
-    public boolean hasDynamicLightEmission(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        if (!state.getValue(EMPTY)) {
-            AuxiliaryLightManager lightManager = level.getAuxLightManager(pos);
-            if (lightManager != null) {
-                return lightManager.getLightAt(pos);
-            }
-        }
-        return 0;
-    }
 
     @Override
     protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
@@ -185,23 +169,15 @@ public abstract class CopyBlock extends BaseEntityBlock {
         return true;
     }
 
-    @Override
-    public MapColor getMapColor(BlockState state, BlockGetter level, BlockPos pos, MapColor defaultColor) {
-        if (!state.getValue(EMPTY)) {
-            if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                return blockEntity.getCopyState().getMapColor(level, pos);
-            }
-        }
-        return defaultColor;
-    }
-
-    @Override
+    /**
+     * NeoForge's positional {@code getSoundType}; applied through {@link com.aetherteam.aetherii.mixin.mixins.common.EntityMixin} for step sounds.
+     */
     public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity) {
         if (!state.getValue(EMPTY)) {
             if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                return blockEntity.getCopyState().getSoundType(level, pos, entity);
+                return blockEntity.getCopyState().getSoundType();
             }
         }
-        return super.getSoundType(state, level, pos, entity);
+        return state.getSoundType();
     }
 }

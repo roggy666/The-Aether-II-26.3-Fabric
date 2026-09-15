@@ -128,7 +128,7 @@ public class AetherLakeFeature extends Feature<AetherLakeConfiguration> {
                     for (int k3 = 0; k3 < 16; ++k3) {
                         BlockPos offsetPos = blockPos.offset(k2, 4, k3);
                         if (level.getBiome(offsetPos).value().shouldFreeze(level, offsetPos, false) && this.canReplaceBlock(level.getBlockState(offsetPos))) {
-                            level.setBlock(offsetPos, AetherIIBlocks.ARCTIC_ICE.get().defaultBlockState(), 2);
+                            level.setBlock(offsetPos, AetherIIBlocks.ARCTIC_ICE.defaultBlockState(), 2);
                         }
                     }
                 }

@@ -35,7 +35,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
                     this.onNameChanged(this.name.getValue());
                     this.onItemUpgraded();
                     this.onCharmSlotted();
-                    ClientPacketDistributor.sendToServer(new ForgeTriggerSoundPacket());
+                    ClientPlayNetworking.send(new ForgeTriggerSoundPacket());
                 }
             }));
             forgeButton.setTooltip(Tooltip.create(Component.translatable("gui.aether_ii.arkenium_forge.forge_button.tooltip")));
@@ -310,13 +310,13 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
 
     private void onItemUpgraded() {
         if (Minecraft.getInstance().level != null && this.menu.upgradeItem(Minecraft.getInstance().level.registryAccess(), this.selectedTier)) {
-            ClientPacketDistributor.sendToServer(new ForgeUpgradePacket(this.selectedTier));
+            ClientPlayNetworking.send(new ForgeUpgradePacket(this.selectedTier));
         }
     }
 
     private void onCharmSlotted() {
         if (this.menu.slotCharms(Minecraft.getInstance().player)) {
-            ClientPacketDistributor.sendToServer(new ForgeSlotCharmsPacket());
+            ClientPlayNetworking.send(new ForgeSlotCharmsPacket());
         }
     }
 
@@ -328,7 +328,7 @@ public class ArkeniumForgeScreen extends AbstractContainerScreen<ArkeniumForgeMe
                 s = "";
             }
             if (this.menu.setItemName(s)) {
-                ClientPacketDistributor.sendToServer(new ForgeRenamePacket(s));
+                ClientPlayNetworking.send(new ForgeRenamePacket(s));
             }
         }
     }

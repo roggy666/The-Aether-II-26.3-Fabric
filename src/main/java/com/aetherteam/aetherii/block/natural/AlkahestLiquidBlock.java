@@ -3,6 +3,14 @@ package com.aetherteam.aetherii.block.natural;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.fluid.AlkahestFluid;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.redstone.Orientation;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -27,21 +35,52 @@ public class AlkahestLiquidBlock extends VolatileLiquidBlock {
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         super.randomTick(state, level, pos, random);
         FluidState fluidState = level.getFluidState(pos);
-        if (level.getBlockState(pos.above()).isEmpty() && fluidState.isSource()) {
+        if (level.getBlockState(pos.above()).isAir() && fluidState.isSource()) {
             level.scheduleTick(pos, state.getBlock(), 25);
         }
     }
 
     public void createHestveil(Level level, BlockPos pos) {
         BlockPos above = pos.above();
-        if (level.getBlockState(above).isEmpty()) {
-            level.setBlock(above, AetherIIBlocks.HESTVEIL.get().defaultBlockState(), 3);
+        if (level.getBlockState(above).isAir()) {
+            level.setBlock(above, AetherIIBlocks.HESTVEIL.defaultBlockState(), 3);
         }
+    }
+
+    /**
+     * Alkahest touching water turns into a gel block (NeoForge's {@code FluidInteractionRegistry} entry for alkahest/water),
+     * checked like lava's {@code shouldSpreadLiquid}: when placed/flowing and when a neighbor changes.
+     */
+    private boolean gelify(Level level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            if (level.getFluidState(pos.relative(direction)).is(FluidTags.WATER)) {
+                level.setBlockAndUpdate(pos, AetherIIBlocks.GEL_BLOCK.defaultBlockState());
+                level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.8F);
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.WHITE_SMOKE,
+                            pos.getX() + level.getRandom().nextDouble(),
+                            pos.getY() + 1.2,
+                            pos.getZ() + level.getRandom().nextDouble(),
+                            8, 0.0, 0.0, 0.0, 0.0
+                    );
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
+        this.gelify(level, pos);
     }
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        level.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(level));
+        if (!this.gelify(level, pos)) {
+            level.scheduleTick(pos, state.getFluidState().getType(), this.fluid.getTickDelay(level));
+        }
     }
 
     @Override

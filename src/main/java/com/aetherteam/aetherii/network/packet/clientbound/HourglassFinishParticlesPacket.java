@@ -9,7 +9,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record HourglassFinishParticlesPacket(BlockPos pos) implements CustomPacketPayload {
     public static final Type<HourglassFinishParticlesPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "hourglass_finish_particles"));
@@ -23,7 +25,8 @@ public record HourglassFinishParticlesPacket(BlockPos pos) implements CustomPack
         return TYPE;
     }
 
-    public static void execute(HourglassFinishParticlesPacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(HourglassFinishParticlesPacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             for (int i = 0; i < 20; i++) {
                 float radius = 0.2F;

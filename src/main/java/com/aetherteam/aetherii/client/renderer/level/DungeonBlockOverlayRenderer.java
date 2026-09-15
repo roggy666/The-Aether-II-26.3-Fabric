@@ -34,7 +34,6 @@ public class DungeonBlockOverlayRenderer {
         if (minecraft.level != null) {
             LocalPlayer player = minecraft.player;
             ClientLevel level = minecraft.level;
-            RenderBuffers renderBuffers = minecraft.renderBuffers();
             int range = 32; // Range for how far the overlays can be rendered at.
             if (player != null && player.isCreative()) {
                 BlockPos playerPos = player.blockPosition();
@@ -87,7 +86,7 @@ public class DungeonBlockOverlayRenderer {
     private static void submitOverlays(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ClientLevel level, Vec3 cameraPos, Frustum frustum, int type) {
         for (BlockPos blockPos : positionsForTypes.get(type)) {
             if (frustum.isVisible(new AABB(blockPos)) && level.getBlockState(blockPos).getRenderShape() != RenderShape.INVISIBLE) {
-                submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockSheet(), submitSurfaces(cameraPos, blockPos,
+                submitNodeCollector.submitCustomGeometry(poseStack, Sheets.cutoutBlockItemSheet(), submitSurfaces(cameraPos, blockPos,
                         (float) (blockPos.getX() - cameraPos.x()) - 0.001F,
                         (float) (blockPos.getZ() - cameraPos.z()) - 0.001F,
                         (float) (blockPos.getX() - cameraPos.x()) + 1.001F,

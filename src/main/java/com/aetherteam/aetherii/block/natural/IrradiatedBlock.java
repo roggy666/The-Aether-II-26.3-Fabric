@@ -20,14 +20,14 @@ public class IrradiatedBlock extends Block {
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level.isClientSide()) {
-            ParticleUtils.spawnParticlesOnBlockFaces(level, pos, AetherIIParticleTypes.IRRADIATION.get(), UniformInt.of(50, 100));
+            ParticleUtils.spawnParticlesOnBlockFaces(level, pos, AetherIIParticleTypes.IRRADIATION, UniformInt.of(50, 100));
         }
         if (!player.isCreative()) {
             double dist = Math.sqrt(player.distanceToSqr(Vec3.atCenterOf(pos)));
-            player.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(player, EffectBuildupPresets.AMBROSIUM_POISONING, (int) (350 / dist));
+            player.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(player, EffectBuildupPresets.AMBROSIUM_POISONING, (int) (350 / dist));
         }
-        return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 }

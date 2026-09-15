@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public interface LeashableMixin {
     @WrapOperation(method = "dropLeash(Lnet/minecraft/world/entity/Entity;ZZ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/world/entity/item/ItemEntity;"))
     private static ItemEntity dropLeash(Entity instance, ServerLevel level, ItemLike item, Operation<ItemEntity> original) {
-        if (instance.getData(AetherIIDataAttachments.LASSO_CONNECTION.get())) {
-            instance.setData(AetherIIDataAttachments.LASSO_CONNECTION, false);
+        if (instance.getAttachedOrCreate(AetherIIDataAttachments.LASSO_CONNECTION)) {
+            instance.setAttached(AetherIIDataAttachments.LASSO_CONNECTION, false);
             return null;
         } else {
             return original.call(instance, level, item);

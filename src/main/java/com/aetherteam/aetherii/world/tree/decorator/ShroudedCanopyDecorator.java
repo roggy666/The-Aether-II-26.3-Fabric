@@ -242,7 +242,7 @@ public class ShroudedCanopyDecorator extends TreeDecorator {
 
     @Override
     protected TreeDecoratorType<?> type() {
-        return AetherIITreeDecoratorTypes.SHROUDED_CANOPY.get();
+        return AetherIITreeDecoratorTypes.SHROUDED_CANOPY;
     }
 
     private record Coordinate(int x, int z) { }

@@ -5,23 +5,28 @@ import com.aetherteam.aetherii.api.AdvancementSoundOverride;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.client.AetherIIClientProxy;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.Nullable;
 
 public class AetherIIAdvancementSoundOverrides {
-    public static final DeferredRegister<AdvancementSoundOverride> ADVANCEMENT_SOUND_OVERRIDES = DeferredRegister.create(AetherIIRegistries.ADVANCEMENT_SOUND_OVERRIDE, AetherII.MODID);
-    public static final Registry<AdvancementSoundOverride> ADVANCEMENT_SOUND_OVERRIDE_REGISTRY = ADVANCEMENT_SOUND_OVERRIDES.makeRegistry((builder) -> builder.sync(true).defaultKey(AetherIIRegistries.ADVANCEMENT_SOUND_OVERRIDE.identifier()));
+    public static final Registry<AdvancementSoundOverride> ADVANCEMENT_SOUND_OVERRIDE_REGISTRY = FabricRegistryBuilder.create(AetherIIRegistries.ADVANCEMENT_SOUND_OVERRIDE).attribute(RegistryAttribute.SYNCED).buildAndRegister();
 
-    public static final DeferredHolder<AdvancementSoundOverride, AdvancementSoundOverride> GENERAL = ADVANCEMENT_SOUND_OVERRIDES.register("general", () -> new AdvancementSoundOverride(0, (advancement) -> checkRoot(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "the_holy_isles")), AetherIISoundEvents.UI_TOAST_AETHER_GENERAL));
-    public static final DeferredHolder<AdvancementSoundOverride, AdvancementSoundOverride> SLIDER = ADVANCEMENT_SOUND_OVERRIDES.register("slider", () -> new AdvancementSoundOverride(1, (advancement) -> checkAdvancement(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "slider")), AetherIISoundEvents.UI_TOAST_AETHER_SLIDER));
-    public static final DeferredHolder<AdvancementSoundOverride, AdvancementSoundOverride> EMPTY = ADVANCEMENT_SOUND_OVERRIDES.register("empty", () -> new AdvancementSoundOverride(10, advancement -> checkAdvancement(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "enter_holy_isles")), () -> SoundEvents.EMPTY));
+    public static final AdvancementSoundOverride GENERAL = register("general", new AdvancementSoundOverride(0, (advancement) -> checkRoot(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "the_holy_isles")), () -> AetherIISoundEvents.UI_TOAST_AETHER_GENERAL));
+    public static final AdvancementSoundOverride SLIDER = register("slider", new AdvancementSoundOverride(1, (advancement) -> checkAdvancement(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "slider")), () -> AetherIISoundEvents.UI_TOAST_AETHER_SLIDER));
+    public static final AdvancementSoundOverride EMPTY = register("empty", new AdvancementSoundOverride(10, advancement -> checkAdvancement(advancement, Identifier.fromNamespaceAndPath(AetherII.MODID, "enter_holy_isles")), () -> SoundEvents.EMPTY));
+
+    private static AdvancementSoundOverride register(String name, AdvancementSoundOverride override) {
+        return Registry.register(ADVANCEMENT_SOUND_OVERRIDE_REGISTRY, Identifier.fromNamespaceAndPath(AetherII.MODID, name), override);
+    }
+
+    public static void init() {}
 
     @Nullable
     public static AdvancementSoundOverride get(Identifier location) {

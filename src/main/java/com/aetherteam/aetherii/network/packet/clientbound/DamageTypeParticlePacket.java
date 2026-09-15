@@ -11,7 +11,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.world.entity.player.Player;
 
 public record DamageTypeParticlePacket(int entityID, SimpleParticleType particleType) implements CustomPacketPayload {
     public static final Type<DamageTypeParticlePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "spawn_damage_type_particle"));
@@ -36,7 +38,8 @@ public record DamageTypeParticlePacket(int entityID, SimpleParticleType particle
         return TYPE;
     }
 
-    public static void execute(DamageTypeParticlePacket payload, IPayloadContext context) {
+    @Environment(EnvType.CLIENT)
+    public static void handleClient(DamageTypeParticlePacket payload, Player player) {
         if (Minecraft.getInstance().player != null && Minecraft.getInstance().level != null) {
             Entity entity = Minecraft.getInstance().player.level().getEntity(payload.entityID());
             if (entity != null) {

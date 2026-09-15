@@ -23,12 +23,12 @@ public class ToxicDart extends AbstractArrow {
     }
 
     public ToxicDart(double x, double y, double z, Level level) {
-        super(AetherIIEntityTypes.TOXIC_DART.get(), x, y, z, level, new ItemStack(Items.ARROW), null);
+        super(AetherIIEntityTypes.TOXIC_DART, x, y, z, level, new ItemStack(Items.ARROW), null);
         this.pickup = Pickup.DISALLOWED;
     }
 
     public ToxicDart(LivingEntity owner, Level level) {
-        super(AetherIIEntityTypes.TOXIC_DART.get(), owner, level, new ItemStack(Items.ARROW), null);
+        super(AetherIIEntityTypes.TOXIC_DART, owner, level, new ItemStack(Items.ARROW), null);
         this.pickup = Pickup.DISALLOWED;
     }
 
@@ -58,7 +58,7 @@ public class ToxicDart extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
         super.doPostHurtEffects(living);
-        living.getData(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(living, this, this.getOwner(), EffectBuildupPresets.TOXIN, 350);
+        living.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).addBuildup(living, this, this.getOwner(), EffectBuildupPresets.TOXIN, 350);
         living.setArrowCount(living.getArrowCount() - 1);
     }
 
