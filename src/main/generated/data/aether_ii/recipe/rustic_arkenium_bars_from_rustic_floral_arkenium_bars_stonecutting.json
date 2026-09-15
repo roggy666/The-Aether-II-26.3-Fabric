@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:rustic_floral_arkenium_bars",
-  "result": {
-    "id": "aether_ii:rustic_arkenium_bars"
-  }
-}

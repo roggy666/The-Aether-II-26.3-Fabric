@@ -1,7 +1,6 @@
 {
   "type": "minecraft:smoking",
   "category": "food",
-  "cookingtime": 100,
   "experience": 0.35,
   "ingredient": "aether_ii:skyroot_lizard_on_a_stick",
   "result": {

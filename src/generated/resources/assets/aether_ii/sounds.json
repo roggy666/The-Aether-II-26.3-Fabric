@@ -21,21 +21,21 @@
   },
   "block.alkahest_purifier.close": {
     "sounds": [
-      "block/chest/close1",
-      "block/chest/close2",
-      "block/chest/close3"
+      "minecraft:block/chest/close1",
+      "minecraft:block/chest/close2",
+      "minecraft:block/chest/close3"
     ],
     "subtitle": "subtitles.aether_ii.block.alkahest_purifier.close"
   },
   "block.alkahest_purifier.open": {
     "sounds": [
-      "block/chest/open"
+      "minecraft:block/chest/open"
     ],
     "subtitle": "subtitles.aether_ii.block.alkahest_purifier.open"
   },
   "block.arkenium_forge.use": {
     "sounds": [
-      "random/anvil_use"
+      "minecraft:random/anvil_use"
     ],
     "subtitle": "subtitles.aether_ii.block.arkenium_forge.use"
   },
@@ -47,11 +47,11 @@
   },
   "block.bush.rustle": {
     "sounds": [
-      "block/vine/climb1",
-      "block/vine/climb2",
-      "block/vine/climb3",
-      "block/vine/climb4",
-      "block/vine/climb5"
+      "minecraft:block/vine/climb1",
+      "minecraft:block/vine/climb2",
+      "minecraft:block/vine/climb3",
+      "minecraft:block/vine/climb4",
+      "minecraft:block/vine/climb5"
     ],
     "subtitle": "subtitles.aether_ii.block.bush.rustle"
   },
@@ -106,38 +106,38 @@
   "block.gel.slide": {
     "sounds": [
       {
-        "name": "block/honeyblock/slide1",
+        "name": "minecraft:block/honeyblock/slide1",
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide1",
+        "name": "minecraft:block/honeyblock/slide1",
         "pitch": 0.9,
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide2",
+        "name": "minecraft:block/honeyblock/slide2",
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide2",
+        "name": "minecraft:block/honeyblock/slide2",
         "pitch": 0.8,
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide3",
+        "name": "minecraft:block/honeyblock/slide3",
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide3",
+        "name": "minecraft:block/honeyblock/slide3",
         "pitch": 0.8,
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide4",
+        "name": "minecraft:block/honeyblock/slide4",
         "volume": 0.8
       },
       {
-        "name": "block/honeyblock/slide4",
+        "name": "minecraft:block/honeyblock/slide4",
         "pitch": 0.8,
         "volume": 0.8
       }
@@ -158,23 +158,23 @@
   "block.guardian_donation_box.inser_fail": {
     "sounds": [
       {
-        "name": "block/decorated_pot/insert_fail1",
+        "name": "minecraft:block/decorated_pot/insert_fail1",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert_fail2",
+        "name": "minecraft:block/decorated_pot/insert_fail2",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert_fail3",
+        "name": "minecraft:block/decorated_pot/insert_fail3",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert_fail4",
+        "name": "minecraft:block/decorated_pot/insert_fail4",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert_fail5",
+        "name": "minecraft:block/decorated_pot/insert_fail5",
         "volume": 0.9
       }
     ],
@@ -183,19 +183,19 @@
   "block.guardian_donation_box.insert": {
     "sounds": [
       {
-        "name": "block/decorated_pot/insert1",
+        "name": "minecraft:block/decorated_pot/insert1",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert2",
+        "name": "minecraft:block/decorated_pot/insert2",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert3",
+        "name": "minecraft:block/decorated_pot/insert3",
         "volume": 0.9
       },
       {
-        "name": "block/decorated_pot/insert4",
+        "name": "minecraft:block/decorated_pot/insert4",
         "volume": 0.9
       }
     ],
@@ -203,50 +203,50 @@
   },
   "block.hestveil.ignite": {
     "sounds": [
-      "mob/ghast/fireball4"
+      "minecraft:mob/ghast/fireball4"
     ],
     "subtitle": "subtitles.aether_ii.block.hestveil.ignite"
   },
   "block.holystone_furnace.crackle": {
     "sounds": [
-      "block/furnace/fire_crackle1",
-      "block/furnace/fire_crackle2",
-      "block/furnace/fire_crackle3",
-      "block/furnace/fire_crackle4",
-      "block/furnace/fire_crackle5"
+      "minecraft:block/furnace/fire_crackle1",
+      "minecraft:block/furnace/fire_crackle2",
+      "minecraft:block/furnace/fire_crackle3",
+      "minecraft:block/furnace/fire_crackle4",
+      "minecraft:block/furnace/fire_crackle5"
     ],
     "subtitle": "subtitles.aether_ii.block.holystone_furnace.fire_crackle"
   },
   "block.holystone_smoker.smoke": {
     "sounds": [
-      "block/smoker/smoker1",
-      "block/smoker/smoker2",
-      "block/smoker/smoker3",
-      "block/smoker/smoker4",
-      "block/smoker/smoker5"
+      "minecraft:block/smoker/smoker1",
+      "minecraft:block/smoker/smoker2",
+      "minecraft:block/smoker/smoker3",
+      "minecraft:block/smoker/smoker4",
+      "minecraft:block/smoker/smoker5"
     ],
     "subtitle": "subtitles.aether_ii.block.holystone_smoker.smoke"
   },
   "block.moa_egg.crack": {
     "sounds": [
       {
-        "name": "mob/turtle/egg/egg_crack1",
+        "name": "minecraft:mob/turtle/egg/egg_crack1",
         "pitch": 0.8
       },
       {
-        "name": "mob/turtle/egg/egg_crack2",
+        "name": "minecraft:mob/turtle/egg/egg_crack2",
         "pitch": 0.8
       },
       {
-        "name": "mob/turtle/egg/egg_crack3",
+        "name": "minecraft:mob/turtle/egg/egg_crack3",
         "pitch": 0.8
       },
       {
-        "name": "mob/turtle/egg/egg_crack4",
+        "name": "minecraft:mob/turtle/egg/egg_crack4",
         "pitch": 0.8
       },
       {
-        "name": "mob/turtle/egg/egg_crack5",
+        "name": "minecraft:mob/turtle/egg/egg_crack5",
         "pitch": 0.8
       }
     ],
@@ -255,11 +255,11 @@
   "block.moa_egg.hatch": {
     "sounds": [
       {
-        "name": "mob/turtle/egg/egg_break1",
+        "name": "minecraft:mob/turtle/egg/egg_break1",
         "pitch": 0.8
       },
       {
-        "name": "mob/turtle/egg/egg_break2",
+        "name": "minecraft:mob/turtle/egg/egg_break2",
         "pitch": 0.8
       }
     ],
@@ -267,27 +267,27 @@
   },
   "block.water.evaporate": {
     "sounds": [
-      "random/fizz"
+      "minecraft:random/fizz"
     ],
     "subtitle": "subtitles.aether_ii.block.water.evaporate"
   },
   "entity.aechor_plant.death": {
     "sounds": [
-      "damage/fallbig"
+      "minecraft:damage/fallbig"
     ],
     "subtitle": "subtitles.aether_ii.entity.aechor_plant.death"
   },
   "entity.aechor_plant.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "minecraft:damage/hit1",
+      "minecraft:damage/hit2",
+      "minecraft:damage/hit3"
     ],
     "subtitle": "subtitles.aether_ii.entity.aechor_plant.hurt"
   },
   "entity.aechor_plant.shoot": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.aechor_plant.shoot"
   },
@@ -349,19 +349,19 @@
   },
   "entity.arctic_snowball.throw": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.arctic_snowball.throw"
   },
   "entity.arkenium_taluton.ambient": {
     "sounds": [
       {
-        "name": "ui/stonecutter/cut1",
+        "name": "minecraft:ui/stonecutter/cut1",
         "pitch": 0.1,
         "volume": 0.5
       },
       {
-        "name": "ui/stonecutter/cut2",
+        "name": "minecraft:ui/stonecutter/cut2",
         "pitch": 0.18,
         "volume": 0.5
       }
@@ -370,44 +370,44 @@
   },
   "entity.arkenium_taluton.attack": {
     "sounds": [
-      "mob/irongolem/throw"
+      "minecraft:mob/irongolem/throw"
     ],
     "subtitle": "subtitles.aether_ii.entity.arkenium_taluton.attack"
   },
   "entity.arkenium_taluton.death": {
     "sounds": [
-      "dig/stone1",
-      "dig/stone2",
-      "dig/stone3",
-      "dig/stone4"
+      "minecraft:dig/stone1",
+      "minecraft:dig/stone2",
+      "minecraft:dig/stone3",
+      "minecraft:dig/stone4"
     ],
     "subtitle": "subtitles.aether_ii.entity.arkenium_taluton.death"
   },
   "entity.arkenium_taluton.hurt": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.arkenium_taluton.hurt"
   },
   "entity.arkenium_taluton.step": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.blighted.burn": {
     "sounds": [
-      "random/fizz"
+      "minecraft:random/fizz"
     ],
     "subtitle": "subtitles.aether_ii.entity.blighted.burn"
   },
@@ -434,15 +434,15 @@
   "entity.burrukai.ram_impact": {
     "sounds": [
       {
-        "name": "mob/goat/impact1",
+        "name": "minecraft:mob/goat/impact1",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/impact2",
+        "name": "minecraft:mob/goat/impact2",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/impact2",
+        "name": "minecraft:mob/goat/impact2",
         "volume": 0.8
       }
     ],
@@ -450,30 +450,30 @@
   },
   "entity.burrukai.step": {
     "sounds": [
-      "mob/cow/step1",
-      "mob/cow/step2",
-      "mob/cow/step3",
-      "mob/cow/step4"
+      "minecraft:mob/cow/step1",
+      "minecraft:mob/cow/step2",
+      "minecraft:mob/cow/step3",
+      "minecraft:mob/cow/step4"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.carrion_sprout.death": {
     "sounds": [
-      "damage/fallbig"
+      "minecraft:damage/fallbig"
     ],
     "subtitle": "subtitles.aether_ii.entity.carrion_sprout.death"
   },
   "entity.carrion_sprout.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "minecraft:damage/hit1",
+      "minecraft:damage/hit2",
+      "minecraft:damage/hit3"
     ],
     "subtitle": "subtitles.aether_ii.entity.carrion_sprout.hurt"
   },
   "entity.carrion_sprout.trap": {
     "sounds": [
-      "damage/hit1"
+      "minecraft:damage/hit1"
     ],
     "subtitle": "subtitles.aether_ii.entity.carrion_sprout.trap"
   },
@@ -497,82 +497,82 @@
   },
   "entity.cockatrice.shoot": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.cockatrice.shoot"
   },
   "entity.cockatrice.step": {
     "sounds": [
-      "mob/pig/step1",
-      "mob/pig/step2",
-      "mob/pig/step3",
-      "mob/pig/step4",
-      "mob/pig/step5"
+      "minecraft:mob/pig/step1",
+      "minecraft:mob/pig/step2",
+      "minecraft:mob/pig/step3",
+      "minecraft:mob/pig/step4",
+      "minecraft:mob/pig/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.detonation_sentry.beep": {
     "sounds": [
-      "note/bit"
+      "minecraft:note/bit"
     ],
     "subtitle": "subtitles.aether_ii.entity.detonation_sentry.beep"
   },
   "entity.detonation_sentry.death": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.detonation_sentry.death"
   },
   "entity.detonation_sentry.hurt": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.detonation_sentry.hurt"
   },
   "entity.detonation_sentry.jump": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.detonation_sentry.jump"
   },
   "entity.detonation_sentry.squish": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.detonation_sentry.squish"
   },
   "entity.electric_field.ambient": {
     "sounds": [
       {
-        "name": "ambient/weather/thunder1",
+        "name": "minecraft:ambient/weather/thunder1",
         "volume": 0.5
       },
       {
-        "name": "ambient/weather/thunder2",
+        "name": "minecraft:ambient/weather/thunder2",
         "volume": 0.5
       },
       {
-        "name": "ambient/weather/thunder3",
+        "name": "minecraft:ambient/weather/thunder3",
         "volume": 0.5
       }
     ],
@@ -601,30 +601,30 @@
   },
   "entity.flying_cow.milk": {
     "sounds": [
-      "entity/cow/milk1",
-      "entity/cow/milk2",
-      "entity/cow/milk3"
+      "minecraft:entity/cow/milk1",
+      "minecraft:entity/cow/milk2",
+      "minecraft:entity/cow/milk3"
     ],
     "subtitle": "subtitles.aether_ii.entity.flying_cow.milk"
   },
   "entity.flying_cow.step": {
     "sounds": [
-      "mob/cow/step1",
-      "mob/cow/step2",
-      "mob/cow/step3",
-      "mob/cow/step4"
+      "minecraft:mob/cow/step1",
+      "minecraft:mob/cow/step2",
+      "minecraft:mob/cow/step3",
+      "minecraft:mob/cow/step4"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.gravitite_taluton.ambient": {
     "sounds": [
       {
-        "name": "ui/stonecutter/cut1",
+        "name": "minecraft:ui/stonecutter/cut1",
         "pitch": 0.6,
         "volume": 0.35
       },
       {
-        "name": "ui/stonecutter/cut2",
+        "name": "minecraft:ui/stonecutter/cut2",
         "pitch": 0.68,
         "volume": 0.35
       }
@@ -633,38 +633,38 @@
   },
   "entity.gravitite_taluton.death": {
     "sounds": [
-      "dig/stone1",
-      "dig/stone2",
-      "dig/stone3",
-      "dig/stone4"
+      "minecraft:dig/stone1",
+      "minecraft:dig/stone2",
+      "minecraft:dig/stone3",
+      "minecraft:dig/stone4"
     ],
     "subtitle": "subtitles.aether_ii.entity.gravitite_taluton.death"
   },
   "entity.gravitite_taluton.hurt": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.gravitite_taluton.hurt"
   },
   "entity.gravitite_taluton.shoot": {
     "sounds": [
       {
-        "name": "item/mace/smash_air1",
+        "name": "minecraft:item/mace/smash_air1",
         "pitch": 1.85,
         "volume": 0.5
       },
       {
-        "name": "item/mace/smash_air2",
+        "name": "minecraft:item/mace/smash_air2",
         "pitch": 1.85,
         "volume": 0.5
       },
       {
-        "name": "item/mace/smash_air3",
+        "name": "minecraft:item/mace/smash_air3",
         "pitch": 1.85,
         "volume": 0.5
       }
@@ -673,12 +673,12 @@
   },
   "entity.gravitite_taluton.step": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
@@ -705,20 +705,20 @@
   "entity.kirrid.jump": {
     "sounds": [
       {
-        "name": "mob/goat/jump1",
+        "name": "minecraft:mob/goat/jump1",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/jump1",
+        "name": "minecraft:mob/goat/jump1",
         "pitch": 0.8,
         "volume": 0.8
       },
       {
-        "name": "mob/goat/jump2",
+        "name": "minecraft:mob/goat/jump2",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/jump2",
+        "name": "minecraft:mob/goat/jump2",
         "pitch": 0.8,
         "volume": 0.8
       }
@@ -728,15 +728,15 @@
   "entity.kirrid.ram_impact": {
     "sounds": [
       {
-        "name": "mob/goat/impact1",
+        "name": "minecraft:mob/goat/impact1",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/impact2",
+        "name": "minecraft:mob/goat/impact2",
         "volume": 0.8
       },
       {
-        "name": "mob/goat/impact2",
+        "name": "minecraft:mob/goat/impact2",
         "volume": 0.8
       }
     ],
@@ -744,31 +744,31 @@
   },
   "entity.kirrid.step": {
     "sounds": [
-      "mob/cow/step1",
-      "mob/cow/step2",
-      "mob/cow/step3",
-      "mob/cow/step4"
+      "minecraft:mob/cow/step1",
+      "minecraft:mob/cow/step2",
+      "minecraft:mob/cow/step3",
+      "minecraft:mob/cow/step4"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.lasso.throw": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.lasso.throw"
   },
   "entity.mimic.attack": {
     "sounds": [
       {
-        "name": "random/eat1",
+        "name": "minecraft:random/eat1",
         "pitch": 0.6
       },
       {
-        "name": "random/eat2",
+        "name": "minecraft:random/eat2",
         "pitch": 0.6
       },
       {
-        "name": "random/eat3",
+        "name": "minecraft:random/eat3",
         "pitch": 0.6
       }
     ],
@@ -777,19 +777,19 @@
   "entity.mimic.death": {
     "sounds": [
       {
-        "name": "entity/shulker/death1",
+        "name": "minecraft:entity/shulker/death1",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/death2",
+        "name": "minecraft:entity/shulker/death2",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/death3",
+        "name": "minecraft:entity/shulker/death3",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/death4",
+        "name": "minecraft:entity/shulker/death4",
         "pitch": 0.55
       }
     ],
@@ -798,23 +798,23 @@
   "entity.mimic.hurt": {
     "sounds": [
       {
-        "name": "entity/shulker/ambient1",
+        "name": "minecraft:entity/shulker/ambient1",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/ambient2",
+        "name": "minecraft:entity/shulker/ambient2",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/ambient3",
+        "name": "minecraft:entity/shulker/ambient3",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/ambient4",
+        "name": "minecraft:entity/shulker/ambient4",
         "pitch": 0.55
       },
       {
-        "name": "entity/shulker/ambient5",
+        "name": "minecraft:entity/shulker/ambient5",
         "pitch": 0.55
       }
     ],
@@ -822,7 +822,7 @@
   },
   "entity.mimic.kill": {
     "sounds": [
-      "random/burp"
+      "minecraft:random/burp"
     ],
     "subtitle": "subtitles.aether_ii.entity.mimic.kill"
   },
@@ -841,7 +841,7 @@
   "entity.moa.egg": {
     "sounds": [
       {
-        "name": "mob/chicken/plop",
+        "name": "minecraft:mob/chicken/plop",
         "pitch": 0.7
       }
     ],
@@ -850,7 +850,7 @@
   "entity.moa.flap": {
     "sounds": [
       {
-        "name": "mob/bat/takeoff",
+        "name": "minecraft:mob/bat/takeoff",
         "pitch": 0.8,
         "volume": 0.5
       }
@@ -865,17 +865,17 @@
   },
   "entity.moa.saddle": {
     "sounds": [
-      "mob/horse/leather"
+      "minecraft:mob/horse/leather"
     ],
     "subtitle": "subtitles.aether_ii.entity.moa.saddle"
   },
   "entity.moa.step": {
     "sounds": [
-      "mob/pig/step1",
-      "mob/pig/step2",
-      "mob/pig/step3",
-      "mob/pig/step4",
-      "mob/pig/step5"
+      "minecraft:mob/pig/step1",
+      "minecraft:mob/pig/step2",
+      "minecraft:mob/pig/step3",
+      "minecraft:mob/pig/step4",
+      "minecraft:mob/pig/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
@@ -903,30 +903,30 @@
   },
   "entity.phyg.step": {
     "sounds": [
-      "mob/pig/step1",
-      "mob/pig/step2",
-      "mob/pig/step3",
-      "mob/pig/step4",
-      "mob/pig/step5"
+      "minecraft:mob/pig/step1",
+      "minecraft:mob/pig/step2",
+      "minecraft:mob/pig/step3",
+      "minecraft:mob/pig/step4",
+      "minecraft:mob/pig/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.player.attack.shock": {
     "sounds": [
       {
-        "name": "item/mace/smash_ground1",
+        "name": "minecraft:item/mace/smash_ground1",
         "volume": 0.9
       },
       {
-        "name": "item/mace/smash_ground2",
+        "name": "minecraft:item/mace/smash_ground2",
         "volume": 0.9
       },
       {
-        "name": "item/mace/smash_ground3",
+        "name": "minecraft:item/mace/smash_ground3",
         "volume": 0.9
       },
       {
-        "name": "item/mace/smash_ground4",
+        "name": "minecraft:item/mace/smash_ground4",
         "volume": 0.9
       }
     ],
@@ -934,40 +934,40 @@
   },
   "entity.player.attack.stab": {
     "sounds": [
-      "item/trident/pierce1",
-      "item/trident/pierce2",
-      "item/trident/pierce3"
+      "minecraft:item/trident/pierce1",
+      "minecraft:item/trident/pierce2",
+      "minecraft:item/trident/pierce3"
     ],
     "subtitle": "subtitles.aether_ii.entity.player.attack.stab"
   },
   "entity.player.attack.sweep": {
     "sounds": [
       {
-        "name": "entity/player/attack/sweep1",
+        "name": "minecraft:entity/player/attack/sweep1",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep2",
+        "name": "minecraft:entity/player/attack/sweep2",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep3",
+        "name": "minecraft:entity/player/attack/sweep3",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep4",
+        "name": "minecraft:entity/player/attack/sweep4",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep5",
+        "name": "minecraft:entity/player/attack/sweep5",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep6",
+        "name": "minecraft:entity/player/attack/sweep6",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/sweep7",
+        "name": "minecraft:entity/player/attack/sweep7",
         "volume": 0.7
       }
     ],
@@ -976,15 +976,15 @@
   "entity.player.damage.impact.correct": {
     "sounds": [
       {
-        "name": "entity/player/attack/crit1",
+        "name": "minecraft:entity/player/attack/crit1",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit2",
+        "name": "minecraft:entity/player/attack/crit2",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit3",
+        "name": "minecraft:entity/player/attack/crit3",
         "volume": 0.7
       }
     ],
@@ -992,26 +992,26 @@
   },
   "entity.player.damage.impact.incorrect": {
     "sounds": [
-      "item/shield/block1",
-      "item/shield/block2",
-      "item/shield/block3",
-      "item/shield/block4",
-      "item/shield/block5"
+      "minecraft:item/shield/block1",
+      "minecraft:item/shield/block2",
+      "minecraft:item/shield/block3",
+      "minecraft:item/shield/block4",
+      "minecraft:item/shield/block5"
     ],
     "subtitle": "subtitles.aether_ii.entity.player.damage.impact.incorrect"
   },
   "entity.player.damage.pierce.correct": {
     "sounds": [
       {
-        "name": "entity/player/attack/crit1",
+        "name": "minecraft:entity/player/attack/crit1",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit2",
+        "name": "minecraft:entity/player/attack/crit2",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit3",
+        "name": "minecraft:entity/player/attack/crit3",
         "volume": 0.7
       }
     ],
@@ -1019,26 +1019,26 @@
   },
   "entity.player.damage.pierce.incorrect": {
     "sounds": [
-      "item/shield/block1",
-      "item/shield/block2",
-      "item/shield/block3",
-      "item/shield/block4",
-      "item/shield/block5"
+      "minecraft:item/shield/block1",
+      "minecraft:item/shield/block2",
+      "minecraft:item/shield/block3",
+      "minecraft:item/shield/block4",
+      "minecraft:item/shield/block5"
     ],
     "subtitle": "subtitles.aether_ii.entity.player.damage.pierce.incorrect"
   },
   "entity.player.damage.slash.correct": {
     "sounds": [
       {
-        "name": "entity/player/attack/crit1",
+        "name": "minecraft:entity/player/attack/crit1",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit2",
+        "name": "minecraft:entity/player/attack/crit2",
         "volume": 0.7
       },
       {
-        "name": "entity/player/attack/crit3",
+        "name": "minecraft:entity/player/attack/crit3",
         "volume": 0.7
       }
     ],
@@ -1046,38 +1046,38 @@
   },
   "entity.player.damage.slash.incorrect": {
     "sounds": [
-      "item/shield/block1",
-      "item/shield/block2",
-      "item/shield/block3",
-      "item/shield/block4",
-      "item/shield/block5"
+      "minecraft:item/shield/block1",
+      "minecraft:item/shield/block2",
+      "minecraft:item/shield/block3",
+      "minecraft:item/shield/block4",
+      "minecraft:item/shield/block5"
     ],
     "subtitle": "subtitles.aether_ii.entity.player.damage.slash.incorrect"
   },
   "entity.prismallard.ambient": {
     "sounds": [
       {
-        "name": "mob/parrot/idle1",
+        "name": "minecraft:mob/parrot/idle1",
         "volume": 0.7
       },
       {
-        "name": "mob/parrot/idle2",
+        "name": "minecraft:mob/parrot/idle2",
         "volume": 0.7
       },
       {
-        "name": "mob/parrot/idle3",
+        "name": "minecraft:mob/parrot/idle3",
         "volume": 0.7
       },
       {
-        "name": "mob/parrot/idle4",
+        "name": "minecraft:mob/parrot/idle4",
         "volume": 0.7
       },
       {
-        "name": "mob/parrot/idle5",
+        "name": "minecraft:mob/parrot/idle5",
         "volume": 0.7
       },
       {
-        "name": "mob/parrot/idle6",
+        "name": "minecraft:mob/parrot/idle6",
         "volume": 0.7
       }
     ],
@@ -1086,19 +1086,19 @@
   "entity.prismallard.death": {
     "sounds": [
       {
-        "name": "mob/parrot/death1",
+        "name": "minecraft:mob/parrot/death1",
         "volume": 0.8
       },
       {
-        "name": "mob/parrot/death2",
+        "name": "minecraft:mob/parrot/death2",
         "volume": 0.9
       },
       {
-        "name": "mob/parrot/death3",
+        "name": "minecraft:mob/parrot/death3",
         "volume": 0.9
       },
       {
-        "name": "mob/parrot/death4",
+        "name": "minecraft:mob/parrot/death4",
         "volume": 0.7
       }
     ],
@@ -1107,7 +1107,7 @@
   "entity.prismallard.egg": {
     "sounds": [
       {
-        "name": "mob/chicken/plop",
+        "name": "minecraft:mob/chicken/plop",
         "pitch": 0.7
       }
     ],
@@ -1115,29 +1115,29 @@
   },
   "entity.prismallard.flap": {
     "sounds": [
-      "mob/parrot/fly1",
-      "mob/parrot/fly2",
-      "mob/parrot/fly3",
-      "mob/parrot/fly4",
-      "mob/parrot/fly5",
-      "mob/parrot/fly6",
-      "mob/parrot/fly7",
-      "mob/parrot/fly8"
+      "minecraft:mob/parrot/fly1",
+      "minecraft:mob/parrot/fly2",
+      "minecraft:mob/parrot/fly3",
+      "minecraft:mob/parrot/fly4",
+      "minecraft:mob/parrot/fly5",
+      "minecraft:mob/parrot/fly6",
+      "minecraft:mob/parrot/fly7",
+      "minecraft:mob/parrot/fly8"
     ],
     "subtitle": "subtitles.aether_ii.entity.prismallard.flap"
   },
   "entity.prismallard.hurt": {
     "sounds": [
       {
-        "name": "mob/parrot/hurt1",
+        "name": "minecraft:mob/parrot/hurt1",
         "volume": 0.8
       },
       {
-        "name": "mob/parrot/hurt1",
+        "name": "minecraft:mob/parrot/hurt1",
         "volume": 0.9
       },
       {
-        "name": "mob/parrot/hurt2",
+        "name": "minecraft:mob/parrot/hurt2",
         "volume": 0.9
       }
     ],
@@ -1145,47 +1145,47 @@
   },
   "entity.prismallard.step": {
     "sounds": [
-      "mob/parrot/step1",
-      "mob/parrot/step2",
-      "mob/parrot/step3",
-      "mob/parrot/step4",
-      "mob/parrot/step5"
+      "minecraft:mob/parrot/step1",
+      "minecraft:mob/parrot/step2",
+      "minecraft:mob/parrot/step3",
+      "minecraft:mob/parrot/step4",
+      "minecraft:mob/parrot/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.prismallard_egg.throw": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.prismallard_egg.throw"
   },
   "entity.rock.throw": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.rock.throw"
   },
   "entity.sentry_golem.death": {
     "sounds": [
-      "mob/irongolem/death"
+      "minecraft:mob/irongolem/death"
     ],
     "subtitle": "subtitles.aether_ii.entity.sentry_golem.death"
   },
   "entity.sentry_golem.hurt": {
     "sounds": [
-      "mob/irongolem/hit1"
+      "minecraft:mob/irongolem/hit1"
     ],
     "subtitle": "subtitles.aether_ii.entity.sentry_golem.hurt"
   },
   "entity.sentry_golem.say": {
     "sounds": [
-      "mob/irongolem/walk1"
+      "minecraft:mob/irongolem/walk1"
     ],
     "subtitle": "subtitles.aether_ii.entity.sentry_golem.say"
   },
   "entity.sentry_golem.throw_bomb": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.sentry_golem.throw_bomb"
   },
@@ -1215,39 +1215,39 @@
   },
   "entity.sheepuff.shear": {
     "sounds": [
-      "mob/sheep/shear"
+      "minecraft:mob/sheep/shear"
     ],
     "subtitle": "subtitles.item.shears.shear"
   },
   "entity.sheepuff.step": {
     "sounds": [
-      "mob/sheep/step1",
-      "mob/sheep/step2",
-      "mob/sheep/step3",
-      "mob/sheep/step4",
-      "mob/sheep/step5"
+      "minecraft:mob/sheep/step1",
+      "minecraft:mob/sheep/step2",
+      "minecraft:mob/sheep/step3",
+      "minecraft:mob/sheep/step4",
+      "minecraft:mob/sheep/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.skephid.ambient": {
     "sounds": [
       {
-        "name": "mob/spider/say1",
+        "name": "minecraft:mob/spider/say1",
         "pitch": 1.3,
         "volume": 0.8
       },
       {
-        "name": "mob/spider/say2",
+        "name": "minecraft:mob/spider/say2",
         "pitch": 1.3,
         "volume": 0.8
       },
       {
-        "name": "mob/spider/say3",
+        "name": "minecraft:mob/spider/say3",
         "pitch": 1.3,
         "volume": 0.8
       },
       {
-        "name": "mob/spider/say4",
+        "name": "minecraft:mob/spider/say4",
         "pitch": 1.3,
         "volume": 0.8
       }
@@ -1257,7 +1257,7 @@
   "entity.skephid.death": {
     "sounds": [
       {
-        "name": "mob/spider/death",
+        "name": "minecraft:mob/spider/death",
         "pitch": 1.3
       }
     ],
@@ -1266,19 +1266,19 @@
   "entity.skephid.hurt": {
     "sounds": [
       {
-        "name": "mob/spider/say1",
+        "name": "minecraft:mob/spider/say1",
         "pitch": 1.3
       },
       {
-        "name": "mob/spider/say2",
+        "name": "minecraft:mob/spider/say2",
         "pitch": 1.3
       },
       {
-        "name": "mob/spider/say3",
+        "name": "minecraft:mob/spider/say3",
         "pitch": 1.3
       },
       {
-        "name": "mob/spider/say4",
+        "name": "minecraft:mob/spider/say4",
         "pitch": 1.3
       }
     ],
@@ -1296,22 +1296,22 @@
   },
   "entity.skephid.step": {
     "sounds": [
-      "mob/spider/step1",
-      "mob/spider/step2",
-      "mob/spider/step3",
-      "mob/spider/step4"
+      "minecraft:mob/spider/step1",
+      "minecraft:mob/spider/step2",
+      "minecraft:mob/spider/step3",
+      "minecraft:mob/spider/step4"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.skyroot_lizard.ambient": {
     "sounds": [
       {
-        "name": "mob/silverfish/say1",
+        "name": "minecraft:mob/silverfish/say1",
         "pitch": 0.8,
         "volume": 0.8
       },
       {
-        "name": "mob/silverfish/say3",
+        "name": "minecraft:mob/silverfish/say3",
         "pitch": 0.8,
         "volume": 0.8
       }
@@ -1320,54 +1320,54 @@
   },
   "entity.skyroot_lizard.death": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "minecraft:damage/hit1",
+      "minecraft:damage/hit2",
+      "minecraft:damage/hit3"
     ],
     "subtitle": "subtitles.aether_ii.entity.skyroot_lizard.death"
   },
   "entity.skyroot_lizard.hurt": {
     "sounds": [
-      "damage/hit1",
-      "damage/hit2",
-      "damage/hit3"
+      "minecraft:damage/hit1",
+      "minecraft:damage/hit2",
+      "minecraft:damage/hit3"
     ],
     "subtitle": "subtitles.aether_ii.entity.skyroot_lizard.hurt"
   },
   "entity.skyroot_lizard.step": {
     "sounds": [
-      "mob/chicken/step1",
-      "mob/chicken/step2"
+      "minecraft:mob/chicken/step1",
+      "minecraft:mob/chicken/step2"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.skyroot_pinecone.throw": {
     "sounds": [
-      "random/bow"
+      "minecraft:random/bow"
     ],
     "subtitle": "subtitles.aether_ii.entity.skyroot_pinecone.throw"
   },
   "entity.slider.ambient": {
     "sounds": [
-      "ambient/cave/cave1",
-      "ambient/cave/cave2",
-      "ambient/cave/cave3",
-      "ambient/cave/cave4",
-      "ambient/cave/cave5",
-      "ambient/cave/cave6",
-      "ambient/cave/cave7",
-      "ambient/cave/cave8",
-      "ambient/cave/cave9",
-      "ambient/cave/cave10",
-      "ambient/cave/cave11",
-      "ambient/cave/cave12",
-      "ambient/cave/cave13",
-      "ambient/cave/cave14",
-      "ambient/cave/cave15",
-      "ambient/cave/cave16",
-      "ambient/cave/cave17",
-      "ambient/cave/cave18",
-      "ambient/cave/cave19"
+      "minecraft:ambient/cave/cave1",
+      "minecraft:ambient/cave/cave2",
+      "minecraft:ambient/cave/cave3",
+      "minecraft:ambient/cave/cave4",
+      "minecraft:ambient/cave/cave5",
+      "minecraft:ambient/cave/cave6",
+      "minecraft:ambient/cave/cave7",
+      "minecraft:ambient/cave/cave8",
+      "minecraft:ambient/cave/cave9",
+      "minecraft:ambient/cave/cave10",
+      "minecraft:ambient/cave/cave11",
+      "minecraft:ambient/cave/cave12",
+      "minecraft:ambient/cave/cave13",
+      "minecraft:ambient/cave/cave14",
+      "minecraft:ambient/cave/cave15",
+      "minecraft:ambient/cave/cave16",
+      "minecraft:ambient/cave/cave17",
+      "minecraft:ambient/cave/cave18",
+      "minecraft:ambient/cave/cave19"
     ],
     "subtitle": "subtitles.aether_ii.entity.slider.ambient"
   },
@@ -1391,12 +1391,12 @@
   },
   "entity.slider.hurt": {
     "sounds": [
-      "step/stone1",
-      "step/stone2",
-      "step/stone3",
-      "step/stone4",
-      "step/stone5",
-      "step/stone6"
+      "minecraft:step/stone1",
+      "minecraft:step/stone2",
+      "minecraft:step/stone3",
+      "minecraft:step/stone4",
+      "minecraft:step/stone5",
+      "minecraft:step/stone6"
     ],
     "subtitle": "subtitles.aether_ii.entity.slider.hurt"
   },
@@ -1408,53 +1408,53 @@
   },
   "entity.swet.attack": {
     "sounds": [
-      "mob/slime/attack1",
-      "mob/slime/attack2"
+      "minecraft:mob/slime/attack1",
+      "minecraft:mob/slime/attack2"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.attack"
   },
   "entity.swet.death": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.death"
   },
   "entity.swet.hurt": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.hurt"
   },
   "entity.swet.jump": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.squish"
   },
   "entity.swet.leech": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.leech"
   },
   "entity.swet.squish": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.entity.swet.squish"
   },
@@ -1490,32 +1490,32 @@
   },
   "entity.taegore.digging": {
     "sounds": [
-      "mob/sniffer/longdig1",
-      "mob/sniffer/longdig2"
+      "minecraft:mob/sniffer/longdig1",
+      "minecraft:mob/sniffer/longdig2"
     ],
     "subtitle": "subtitles.aether_ii.entity.taegore.digging"
   },
   "entity.taegore.digging_stop": {
     "sounds": [
-      "mob/sniffer/digging_stop1",
-      "mob/sniffer/digging_stop2"
+      "minecraft:mob/sniffer/digging_stop1",
+      "minecraft:mob/sniffer/digging_stop2"
     ],
     "subtitle": "subtitles.aether_ii.entity.taegore.digging_stop"
   },
   "entity.taegore.drop_seed": {
     "sounds": [
       {
-        "name": "random/pop",
+        "name": "minecraft:random/pop",
         "pitch": 0.6,
         "volume": 0.8
       },
       {
-        "name": "random/pop",
+        "name": "minecraft:random/pop",
         "pitch": 0.7,
         "volume": 0.8
       },
       {
-        "name": "random/pop",
+        "name": "minecraft:random/pop",
         "pitch": 0.8,
         "volume": 0.8
       }
@@ -1542,27 +1542,27 @@
   "entity.taegore.searching": {
     "sounds": [
       {
-        "name": "mob/sniffer/searching1",
+        "name": "minecraft:mob/sniffer/searching1",
         "volume": 0.8
       },
       {
-        "name": "mob/sniffer/searching2",
+        "name": "minecraft:mob/sniffer/searching2",
         "volume": 0.8
       },
       {
-        "name": "mob/sniffer/searching3",
+        "name": "minecraft:mob/sniffer/searching3",
         "volume": 0.8
       },
       {
-        "name": "mob/sniffer/searching4",
+        "name": "minecraft:mob/sniffer/searching4",
         "volume": 0.8
       },
       {
-        "name": "mob/sniffer/searching5",
+        "name": "minecraft:mob/sniffer/searching5",
         "volume": 0.8
       },
       {
-        "name": "mob/sniffer/searching6",
+        "name": "minecraft:mob/sniffer/searching6",
         "volume": 0.8
       }
     ],
@@ -1570,11 +1570,11 @@
   },
   "entity.taegore.step": {
     "sounds": [
-      "mob/pig/step1",
-      "mob/pig/step2",
-      "mob/pig/step3",
-      "mob/pig/step4",
-      "mob/pig/step5"
+      "minecraft:mob/pig/step1",
+      "minecraft:mob/pig/step2",
+      "minecraft:mob/pig/step3",
+      "minecraft:mob/pig/step4",
+      "minecraft:mob/pig/step5"
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
@@ -1646,19 +1646,19 @@
   },
   "item.accessory.equip_generic": {
     "sounds": [
-      "item/armor/equip_chain1",
-      "item/armor/equip_chain2",
-      "item/armor/equip_chain3",
-      "item/armor/equip_chain4",
-      "item/armor/equip_chain5",
-      "item/armor/equip_chain6"
+      "minecraft:item/armor/equip_chain1",
+      "minecraft:item/armor/equip_chain2",
+      "minecraft:item/armor/equip_chain3",
+      "minecraft:item/armor/equip_chain4",
+      "minecraft:item/armor/equip_chain5",
+      "minecraft:item/armor/equip_chain6"
     ],
     "subtitle": "subtitles.aether_ii.item.accessory.equip_generic"
   },
   "item.aerbunny_bell.ring": {
     "sounds": [
       {
-        "name": "block/bell/bell_use01",
+        "name": "minecraft:block/bell/bell_use01",
         "pitch": 20.0
       }
     ],
@@ -1666,139 +1666,139 @@
   },
   "item.ambrosium_shard.use": {
     "sounds": [
-      "block/amethyst/shimmer"
+      "minecraft:block/amethyst/shimmer"
     ],
     "subtitle": "subtitles.aether_ii.item.ambrosium_shard.use"
   },
   "item.arkenium_canister.empty": {
     "sounds": [
       {
-        "name": "item/bucket/empty1",
+        "name": "minecraft:item/bucket/empty1",
         "pitch": 0.9
       },
-      "item/bucket/empty2",
-      "item/bucket/empty3"
+      "minecraft:item/bucket/empty2",
+      "minecraft:item/bucket/empty3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.empty"
   },
   "item.arkenium_canister.empty_alkahest": {
     "sounds": [
       {
-        "name": "item/bucket/empty1",
+        "name": "minecraft:item/bucket/empty1",
         "pitch": 0.9
       },
-      "item/bucket/empty2",
-      "item/bucket/empty3"
+      "minecraft:item/bucket/empty2",
+      "minecraft:item/bucket/empty3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.empty"
   },
   "item.arkenium_canister.empty_hestveil": {
     "sounds": [
       {
-        "name": "item/bucket/empty1",
+        "name": "minecraft:item/bucket/empty1",
         "pitch": 0.9
       },
-      "item/bucket/empty2",
-      "item/bucket/empty3"
+      "minecraft:item/bucket/empty2",
+      "minecraft:item/bucket/empty3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.empty"
   },
   "item.arkenium_canister.fill": {
     "sounds": [
-      "item/bucket/fill1",
-      "item/bucket/fill2",
-      "item/bucket/fill3"
+      "minecraft:item/bucket/fill1",
+      "minecraft:item/bucket/fill2",
+      "minecraft:item/bucket/fill3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.fill"
   },
   "item.arkenium_canister.fill_alkahest": {
     "sounds": [
-      "item/bucket/fill1",
-      "item/bucket/fill2",
-      "item/bucket/fill3"
+      "minecraft:item/bucket/fill1",
+      "minecraft:item/bucket/fill2",
+      "minecraft:item/bucket/fill3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.fill"
   },
   "item.arkenium_canister.fill_hestveil": {
     "sounds": [
-      "item/bucket/fill1",
-      "item/bucket/fill2",
-      "item/bucket/fill3"
+      "minecraft:item/bucket/fill1",
+      "minecraft:item/bucket/fill2",
+      "minecraft:item/bucket/fill3"
     ],
     "subtitle": "subtitles.aether_ii.item.arkenium_canister.fill"
   },
   "item.armor.arkenium": {
     "sounds": [
-      "item/armor/equip_iron1",
-      "item/armor/equip_iron2",
-      "item/armor/equip_iron3",
-      "item/armor/equip_iron4",
-      "item/armor/equip_iron5",
-      "item/armor/equip_iron6"
+      "minecraft:item/armor/equip_iron1",
+      "minecraft:item/armor/equip_iron2",
+      "minecraft:item/armor/equip_iron3",
+      "minecraft:item/armor/equip_iron4",
+      "minecraft:item/armor/equip_iron5",
+      "minecraft:item/armor/equip_iron6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_arkenium"
   },
   "item.armor.equip_beast_pelt": {
     "sounds": [
-      "item/armor/equip_leather1",
-      "item/armor/equip_leather2",
-      "item/armor/equip_leather3",
-      "item/armor/equip_leather4",
-      "item/armor/equip_leather5",
-      "item/armor/equip_leather6"
+      "minecraft:item/armor/equip_leather1",
+      "minecraft:item/armor/equip_leather2",
+      "minecraft:item/armor/equip_leather3",
+      "minecraft:item/armor/equip_leather4",
+      "minecraft:item/armor/equip_leather5",
+      "minecraft:item/armor/equip_leather6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_beast_pelt"
   },
   "item.armor.equip_burrukai_plate": {
     "sounds": [
-      "item/armor/equip_leather1",
-      "item/armor/equip_leather2",
-      "item/armor/equip_leather3",
-      "item/armor/equip_leather4",
-      "item/armor/equip_leather5",
-      "item/armor/equip_leather6"
+      "minecraft:item/armor/equip_leather1",
+      "minecraft:item/armor/equip_leather2",
+      "minecraft:item/armor/equip_leather3",
+      "minecraft:item/armor/equip_leather4",
+      "minecraft:item/armor/equip_leather5",
+      "minecraft:item/armor/equip_leather6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_burrukai_plate"
   },
   "item.armor.gravitite": {
     "sounds": [
-      "item/armor/equip_gold1",
-      "item/armor/equip_gold2",
-      "item/armor/equip_gold3",
-      "item/armor/equip_gold4",
-      "item/armor/equip_gold5",
-      "item/armor/equip_gold6"
+      "minecraft:item/armor/equip_gold1",
+      "minecraft:item/armor/equip_gold2",
+      "minecraft:item/armor/equip_gold3",
+      "minecraft:item/armor/equip_gold4",
+      "minecraft:item/armor/equip_gold5",
+      "minecraft:item/armor/equip_gold6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_gravitite"
   },
   "item.armor.neptune": {
     "sounds": [
-      "item/armor/equip_gold1",
-      "item/armor/equip_gold2",
-      "item/armor/equip_gold3",
-      "item/armor/equip_gold4",
-      "item/armor/equip_gold5",
-      "item/armor/equip_gold6"
+      "minecraft:item/armor/equip_gold1",
+      "minecraft:item/armor/equip_gold2",
+      "minecraft:item/armor/equip_gold3",
+      "minecraft:item/armor/equip_gold4",
+      "minecraft:item/armor/equip_gold5",
+      "minecraft:item/armor/equip_gold6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_neptune"
   },
   "item.armor.sentry": {
     "sounds": [
-      "item/armor/equip_netherite1",
-      "item/armor/equip_netherite2",
-      "item/armor/equip_netherite3",
-      "item/armor/equip_netherite4"
+      "minecraft:item/armor/equip_netherite1",
+      "minecraft:item/armor/equip_netherite2",
+      "minecraft:item/armor/equip_netherite3",
+      "minecraft:item/armor/equip_netherite4"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_sentry"
   },
   "item.armor.zanite": {
     "sounds": [
-      "item/armor/equip_diamond1",
-      "item/armor/equip_diamond2",
-      "item/armor/equip_diamond3",
-      "item/armor/equip_diamond4",
-      "item/armor/equip_diamond5",
-      "item/armor/equip_diamond6"
+      "minecraft:item/armor/equip_diamond1",
+      "minecraft:item/armor/equip_diamond2",
+      "minecraft:item/armor/equip_diamond3",
+      "minecraft:item/armor/equip_diamond4",
+      "minecraft:item/armor/equip_diamond5",
+      "minecraft:item/armor/equip_diamond6"
     ],
     "subtitle": "subtitles.aether_ii.item.armor.equip_zanite"
   },
@@ -1860,23 +1860,23 @@
   },
   "item.hammer_of_demolition.shoot": {
     "sounds": [
-      "mob/ghast/fireball4"
+      "minecraft:mob/ghast/fireball4"
     ],
     "subtitle": "subtitles.aether_ii.item.hammer_of_demolition.shoot"
   },
   "item.scatterglass_vial.empty": {
     "sounds": [
-      "item/bottle/empty1",
-      "item/bottle/empty2"
+      "minecraft:item/bottle/empty1",
+      "minecraft:item/bottle/empty2"
     ],
     "subtitle": "subtitles.aether_ii.item.scatterglass_vial.empty"
   },
   "item.scatterglass_vial.fill": {
     "sounds": [
-      "item/bottle/fill1",
-      "item/bottle/fill2",
-      "item/bottle/fill3",
-      "item/bottle/fill4"
+      "minecraft:item/bottle/fill1",
+      "minecraft:item/bottle/fill2",
+      "minecraft:item/bottle/fill3",
+      "minecraft:item/bottle/fill4"
     ],
     "subtitle": "subtitles.aether_ii.item.scatterglass_vial.fill"
   },
@@ -1884,17 +1884,17 @@
     "sounds": [
       {
         "attenuation_distance": 8,
-        "name": "entity/wind_charge/wind_burst1",
+        "name": "minecraft:entity/wind_charge/wind_burst1",
         "pitch": 2.0
       },
       {
         "attenuation_distance": 8,
-        "name": "entity/wind_charge/wind_burst2",
+        "name": "minecraft:entity/wind_charge/wind_burst2",
         "pitch": 2.0
       },
       {
         "attenuation_distance": 8,
-        "name": "entity/wind_charge/wind_burst3",
+        "name": "minecraft:entity/wind_charge/wind_burst3",
         "pitch": 2.0
       }
     ],
@@ -1902,10 +1902,10 @@
   },
   "item.swet_ball.use": {
     "sounds": [
-      "mob/slime/big1",
-      "mob/slime/big2",
-      "mob/slime/big3",
-      "mob/slime/big4"
+      "minecraft:mob/slime/big1",
+      "minecraft:mob/slime/big2",
+      "minecraft:mob/slime/big3",
+      "minecraft:mob/slime/big4"
     ],
     "subtitle": "subtitles.aether_ii.item.swet_gel.use"
   },
@@ -2125,17 +2125,17 @@
   },
   "ui.artisans_bench.select_recipe": {
     "sounds": [
-      "random/click"
+      "minecraft:random/click"
     ]
   },
   "ui.artisans_bench.take_result": {
     "sounds": [
       {
-        "name": "ui/stonecutter/cut1",
+        "name": "minecraft:ui/stonecutter/cut1",
         "pitch": 0.92
       },
       {
-        "name": "ui/stonecutter/cut2",
+        "name": "minecraft:ui/stonecutter/cut2",
         "pitch": 0.92
       }
     ],

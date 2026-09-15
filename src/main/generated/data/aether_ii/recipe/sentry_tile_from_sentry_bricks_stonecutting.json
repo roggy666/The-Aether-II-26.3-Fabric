@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:sentry_bricks",
-  "result": {
-    "id": "aether_ii:sentry_tile"
-  }
-}

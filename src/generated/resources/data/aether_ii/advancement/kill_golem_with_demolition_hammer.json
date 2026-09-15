@@ -8,13 +8,13 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "aether_ii:sentry_golem"
+              "minecraft:entity_type": "aether_ii:sentry_golem"
             }
           }
         ],
         "killing_blow": {
           "direct_entity": {
-            "type": "aether_ii:detonation_projectile"
+            "minecraft:entity_type": "aether_ii:detonation_projectile"
           }
         }
       },

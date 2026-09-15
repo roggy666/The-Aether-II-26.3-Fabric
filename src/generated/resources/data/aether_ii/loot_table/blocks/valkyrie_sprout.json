@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "block": "aether_ii:valkyrie_sprout",
@@ -20,7 +19,6 @@
               "function": "minecraft:explosion_decay"
             },
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -36,7 +34,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",

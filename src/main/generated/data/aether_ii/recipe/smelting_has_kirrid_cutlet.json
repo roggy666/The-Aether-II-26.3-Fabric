@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "category": "food",
-  "experience": 0.35,
-  "ingredient": "aether_ii:kirrid_loin",
-  "result": {
-    "id": "aether_ii:kirrid_cutlet"
-  }
-}

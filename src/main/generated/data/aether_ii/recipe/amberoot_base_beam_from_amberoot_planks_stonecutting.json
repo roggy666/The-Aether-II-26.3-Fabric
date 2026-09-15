@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:amberoot_planks",
-  "result": {
-    "id": "aether_ii:amberoot_base_beam"
-  }
-}

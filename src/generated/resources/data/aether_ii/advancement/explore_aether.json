@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:battleground_wastes"
               }
             }
@@ -24,7 +24,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:contaminated_jungle"
               }
             }
@@ -40,7 +40,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:enduring_woodland"
               }
             }
@@ -56,7 +56,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:flourishing_field"
               }
             }
@@ -72,7 +72,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:frigid_sierra"
               }
             }
@@ -88,7 +88,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:frozen_lakes"
               }
             }
@@ -104,7 +104,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:glistening_swamp"
               }
             }
@@ -120,7 +120,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:hestveil_caverns"
               }
             }
@@ -136,7 +136,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:magnetic_scar"
               }
             }
@@ -152,7 +152,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:sheer_tundra"
               }
             }
@@ -168,7 +168,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:shimmering_basin"
               }
             }
@@ -184,7 +184,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:shrouded_forest"
               }
             }
@@ -200,7 +200,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:turquoise_forest"
               }
             }
@@ -216,7 +216,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:verdant_woods"
               }
             }
@@ -232,7 +232,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "biomes": "aether_ii:violet_highwoods"
               }
             }

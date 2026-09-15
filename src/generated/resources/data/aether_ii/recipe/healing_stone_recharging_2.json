@@ -1,15 +1,14 @@
 {
   "type": "aether_ii:altar_enchanting",
-  "category": "misc",
   "experience": 0.0,
   "fuel_count": 3,
   "group": "healing_stone",
   "ingredient": {
-    "neoforge:ingredient_type": "neoforge:components",
+    "fabric:type": "fabric:components",
+    "base": "aether_ii:healing_stone",
     "components": {
       "aether_ii:healing_stone_charges": 2
-    },
-    "items": "aether_ii:healing_stone"
+    }
   },
   "processing_time": 200,
   "result": {

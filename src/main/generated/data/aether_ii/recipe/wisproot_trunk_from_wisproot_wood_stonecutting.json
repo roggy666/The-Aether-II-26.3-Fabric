@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:wisproot_wood",
-  "result": {
-    "id": "aether_ii:wisproot_trunk"
-  }
-}

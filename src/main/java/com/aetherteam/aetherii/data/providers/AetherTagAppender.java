@@ -98,4 +98,20 @@ public class AetherTagAppender<T> {
             };
         }
     }
+
+    public static <T> void setExternalTagLookup(net.minecraft.data.tags.TagsProvider<T> provider) {
+        try {
+            java.lang.reflect.Field f = net.minecraft.data.tags.TagsProvider.class.getDeclaredField("parentProvider");
+            f.setAccessible(true);
+            net.minecraft.data.tags.TagsProvider.TagLookup<T> lookup = tagKey -> {
+                String ns = tagKey.location().getNamespace();
+                if (!ns.equals(com.aetherteam.aetherii.AetherII.MODID)) {
+                    return java.util.Optional.of(net.minecraft.tags.TagBuilder.create());
+                }
+                return java.util.Optional.empty();
+            };
+            f.set(provider, java.util.concurrent.CompletableFuture.completedFuture(lookup));
+        } catch (Throwable ignored) {
+        }
+    }
 }

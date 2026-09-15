@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "category": "food",
-  "experience": 0.35,
-  "ingredient": "aether_ii:prismallard_egg",
-  "result": {
-    "id": "aether_ii:fried_prismallard_egg"
-  }
-}

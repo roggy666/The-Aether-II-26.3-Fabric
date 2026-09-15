@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 public class AetherIIBlockTagData extends FabricTagsProvider.BlockTagsProvider {
     public AetherIIBlockTagData(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
+        AetherTagAppender.setExternalTagLookup(this);
     }
 
     protected AetherTagAppender<Block> tagOf(TagKey<Block> key) {
@@ -70,8 +71,7 @@ public class AetherIIBlockTagData extends FabricTagsProvider.BlockTagsProvider {
                 Blocks.COARSE_DIRT,
                 Blocks.SNOW_BLOCK
         ).addTags(
-                BlockItemTags.FLOWERS.block()
-        ).addOptionalTag(
+                BlockItemTags.FLOWERS.block(),
                 BlockTags.TERRACOTTA
         );
         this.tagOf(AetherIITags.Blocks.ALKAHEST_RESISTANT).add(
@@ -467,6 +467,16 @@ public class AetherIIBlockTagData extends FabricTagsProvider.BlockTagsProvider {
                 AetherIITags.Blocks.WISPROOT_LOGS,
                 AetherIITags.Blocks.AMBEROOT_LOGS
         );
+        this.tagOf(BlockItemTags.LOGS.block()).addTag(
+                BlockItemTags.LOGS_THAT_BURN.block()
+        );
+        this.tagOf(BlockItemTags.PLANKS.block()).add(
+                AetherIIBlocks.SKYROOT_PLANKS,
+                AetherIIBlocks.GREATROOT_PLANKS,
+                AetherIIBlocks.WISPROOT_PLANKS,
+                AetherIIBlocks.AMBEROOT_PLANKS
+        );
+        this.tagOf(BlockItemTags.TERRACOTTA.block());
         this.tagOf(BlockTags.LEAVES).addTags(
                 AetherIITags.Blocks.LEAVES
         );

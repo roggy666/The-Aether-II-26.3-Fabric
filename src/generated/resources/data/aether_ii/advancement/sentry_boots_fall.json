@@ -11,7 +11,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "equipment": {
+              "minecraft:equipment": {
                 "feet": {
                   "items": "aether_ii:sentry_boots"
                 }

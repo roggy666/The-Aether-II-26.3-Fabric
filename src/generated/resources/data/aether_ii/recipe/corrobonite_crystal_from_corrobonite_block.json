@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "corrobonite_crystal",
   "ingredients": [
     "aether_ii:corrobonite_block"

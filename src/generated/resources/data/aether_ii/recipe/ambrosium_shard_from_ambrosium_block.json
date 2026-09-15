@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "ambrosium_shard",
   "ingredients": [
     "aether_ii:ambrosium_block"

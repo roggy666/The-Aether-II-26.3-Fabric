@@ -1,7 +1,0 @@
-{
-  "parent": "aether_ii:block/flower_pot_bush_block",
-  "textures": {
-    "bush": "aether_ii:block/potted_aether_bush",
-    "stem": "aether_ii:block/potted_aether_bush_stem"
-  }
-}

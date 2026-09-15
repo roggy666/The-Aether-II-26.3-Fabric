@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "aether_ii:block/agiosite_keystone",
-    "side": "aether_ii:block/agiosite_base_pillar"
-  }
-}

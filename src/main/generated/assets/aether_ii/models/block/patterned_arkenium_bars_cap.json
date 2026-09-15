@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_bars_cap",
-  "textures": {
-    "bars": "aether_ii:block/patterned_arkenium_bars",
-    "edge": "aether_ii:block/arkenium_bars_edge"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:ichorite_bricks",
-  "result": {
-    "id": "aether_ii:ichorite_capstone_bricks"
-  }
-}

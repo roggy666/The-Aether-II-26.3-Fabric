@@ -48,9 +48,6 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-}
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -70,6 +67,7 @@ dependencies {
 fabricApi {
     configureDataGeneration {
         client = true
+        outputDirectory = file("src/generated/resources")
     }
 }
 
@@ -79,7 +77,6 @@ loom {
 
 processResources {
     exclude '.cache/'
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "shelf",
   "key": {
     "#": "aether_ii:stripped_skyroot_log"

@@ -1,8 +1,0 @@
-{
-  "parent": "aether_ii:block/door_bottom_left_open",
-  "textures": {
-    "end": "aether_ii:block/skyroot_door_end",
-    "front": "aether_ii:block/skyroot_door_bottom",
-    "side": "aether_ii:block/skyroot_door_side"
-  }
-}

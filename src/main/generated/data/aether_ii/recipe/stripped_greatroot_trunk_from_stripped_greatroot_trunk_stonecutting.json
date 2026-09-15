@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:stripped_greatroot_trunk",
-  "result": {
-    "id": "aether_ii:stripped_greatroot_trunk"
-  }
-}

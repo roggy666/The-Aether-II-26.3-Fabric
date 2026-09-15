@@ -8,8 +8,8 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "passenger": {
-                "type": "aether_ii:aerbunny"
+              "minecraft:passenger": {
+                "minecraft:entity_type": "aether_ii:aerbunny"
               }
             }
           }

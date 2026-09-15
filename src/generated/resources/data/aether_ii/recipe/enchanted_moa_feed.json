@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "aether_ii:moa_feed",
     "aether_ii:enchanted_blueberry"

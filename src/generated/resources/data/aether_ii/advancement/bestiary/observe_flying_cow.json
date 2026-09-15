@@ -7,7 +7,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "aether_ii:flying_cow"
+              "minecraft:entity_type": "aether_ii:flying_cow"
             }
           }
         ],
@@ -24,7 +24,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "aether_ii:flying_cow"
+              "minecraft:entity_type": "aether_ii:flying_cow"
             }
           }
         ]
@@ -38,10 +38,9 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "looking_at": {
-                  "type": "aether_ii:flying_cow"
+                  "minecraft:entity_type": "aether_ii:flying_cow"
                 }
               }
             }

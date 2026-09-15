@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_dye",
-  "dye": "#minecraft:dyes",
-  "group": "dyed_beast_pelt_armor",
-  "result": {
-    "id": "aether_ii:beast_pelt_helmet"
-  },
-  "target": "aether_ii:beast_pelt_helmet"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:greatroot_floorboards",
-  "result": {
-    "id": "aether_ii:greatroot_planks"
-  }
-}

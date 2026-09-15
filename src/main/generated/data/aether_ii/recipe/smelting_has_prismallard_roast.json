@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "category": "food",
-  "experience": 0.35,
-  "ingredient": "aether_ii:prismallard_leg",
-  "result": {
-    "id": "aether_ii:prismallard_roast"
-  }
-}

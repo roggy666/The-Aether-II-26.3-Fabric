@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "inert_gravitite",
   "ingredients": [
     "aether_ii:inert_gravitite_block"

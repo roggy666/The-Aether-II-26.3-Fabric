@@ -2,11 +2,23 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
-          "ability": "shears_dig",
-          "condition": "neoforge:can_item_perform_ability"
+          "condition": "minecraft:any_of",
+          "terms": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "#c:tools/shear"
+              }
+            },
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "minecraft:shears"
+              }
+            }
+          ]
         },
         {
           "condition": "minecraft:entity_properties",
@@ -31,7 +43,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 1.0,
                   "function": "minecraft:set_count"
                 }
@@ -51,7 +62,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 2.0,
                   "function": "minecraft:set_count"
                 }
@@ -71,7 +81,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 3.0,
                   "function": "minecraft:set_count"
                 }
@@ -91,7 +100,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 4.0,
                   "function": "minecraft:set_count"
                 }
@@ -111,7 +119,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 5.0,
                   "function": "minecraft:set_count"
                 }
@@ -131,7 +138,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 6.0,
                   "function": "minecraft:set_count"
                 }
@@ -151,7 +157,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 7.0,
                   "function": "minecraft:set_count"
                 }
@@ -171,7 +176,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 8.0,
                   "function": "minecraft:set_count"
                 }
@@ -191,7 +195,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 9.0,
                   "function": "minecraft:set_count"
                 }
@@ -211,7 +214,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 10.0,
                   "function": "minecraft:set_count"
                 }
@@ -231,7 +233,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 11.0,
                   "function": "minecraft:set_count"
                 }
@@ -251,7 +252,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 12.0,
                   "function": "minecraft:set_count"
                 }
@@ -271,7 +271,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 13.0,
                   "function": "minecraft:set_count"
                 }
@@ -291,7 +290,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 14.0,
                   "function": "minecraft:set_count"
                 }
@@ -311,7 +309,6 @@
               ],
               "functions": [
                 {
-                  "add": false,
                   "count": 15.0,
                   "function": "minecraft:set_count"
                 }

@@ -8,8 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "aether_ii:armor_set",
+              "aether_ii:armor_set": {
                 "armor": "aether_ii:armor/gravitite"
               }
             }

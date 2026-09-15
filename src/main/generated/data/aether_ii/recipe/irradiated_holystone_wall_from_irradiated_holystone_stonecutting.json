@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:irradiated_holystone",
-  "result": {
-    "id": "aether_ii:irradiated_holystone_wall"
-  }
-}

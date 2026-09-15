@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:icestone_keystone",
-  "result": {
-    "id": "aether_ii:icestone_bricks"
-  }
-}

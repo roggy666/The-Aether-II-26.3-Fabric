@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "sticks",
   "key": {
     "#": "#aether_ii:crafts_skyroot_sticks"

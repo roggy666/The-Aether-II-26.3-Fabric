@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:marbled_base_pillar",
-  "result": {
-    "id": "aether_ii:marbled_bricks"
-  }
-}

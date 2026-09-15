@@ -1,6 +1,0 @@
-{
-  "parent": "aether_ii:item/template_fungal_cache",
-  "textures": {
-    "particle": "aether_ii:block/rotshroom_block"
-  }
-}

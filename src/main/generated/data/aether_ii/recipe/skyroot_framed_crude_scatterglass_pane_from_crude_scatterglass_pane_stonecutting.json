@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:crude_scatterglass_pane",
-  "result": {
-    "id": "aether_ii:skyroot_framed_crude_scatterglass_pane"
-  }
-}

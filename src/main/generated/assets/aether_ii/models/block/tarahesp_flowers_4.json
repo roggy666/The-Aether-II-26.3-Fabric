@@ -1,8 +1,0 @@
-{
-  "parent": "aether_ii:block/template_tarahesp_flowers_4",
-  "textures": {
-    "particle": "aether_ii:block/tarahesp_flowers_purple",
-    "tarahesp_flowers_purple": "aether_ii:block/tarahesp_flowers_purple",
-    "tarahesp_flowers_white": "aether_ii:block/tarahesp_flowers_white"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_dye",
-  "dye": "#minecraft:dyes",
-  "group": "dyed_burrukai_plate_armor",
-  "result": {
-    "id": "aether_ii:burrukai_plate_helmet"
-  },
-  "target": "aether_ii:burrukai_plate_helmet"
-}

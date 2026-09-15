@@ -44,9 +44,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:frigid_sierra"
-          ]
+          "biome_is": "aether_ii:frigid_sierra"
         },
         "then_run": {
           "type": "minecraft:condition",
@@ -78,9 +76,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:frigid_sierra"
-          ]
+          "biome_is": "aether_ii:frigid_sierra"
         },
         "then_run": {
           "type": "minecraft:condition",
@@ -202,9 +198,7 @@
                 "type": "minecraft:condition",
                 "if_true": {
                   "type": "minecraft:biome",
-                  "biome_is": [
-                    "aether_ii:battleground_wastes"
-                  ]
+                  "biome_is": "aether_ii:battleground_wastes"
                 },
                 "then_run": {
                   "type": "minecraft:block",
@@ -220,9 +214,7 @@
                 "type": "minecraft:condition",
                 "if_true": {
                   "type": "minecraft:biome",
-                  "biome_is": [
-                    "aether_ii:contaminated_jungle"
-                  ]
+                  "biome_is": "aether_ii:contaminated_jungle"
                 },
                 "then_run": {
                   "type": "minecraft:block",
@@ -298,9 +290,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:hestveil_caverns"
-          ]
+          "biome_is": "aether_ii:hestveil_caverns"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -335,9 +325,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:flourishing_field"
-          ]
+          "biome_is": "aether_ii:flourishing_field"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -353,9 +341,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:verdant_woods"
-          ]
+          "biome_is": "aether_ii:verdant_woods"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -371,9 +357,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:shrouded_forest"
-          ]
+          "biome_is": "aether_ii:shrouded_forest"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -389,9 +373,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:shimmering_basin"
-          ]
+          "biome_is": "aether_ii:shimmering_basin"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -407,9 +389,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:frigid_sierra"
-          ]
+          "biome_is": "aether_ii:frigid_sierra"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -425,9 +405,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:enduring_woodland"
-          ]
+          "biome_is": "aether_ii:enduring_woodland"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -443,9 +421,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:frozen_lakes"
-          ]
+          "biome_is": "aether_ii:frozen_lakes"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -461,9 +437,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:sheer_tundra"
-          ]
+          "biome_is": "aether_ii:sheer_tundra"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -479,9 +453,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:magnetic_scar"
-          ]
+          "biome_is": "aether_ii:magnetic_scar"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -497,9 +469,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:turquoise_forest"
-          ]
+          "biome_is": "aether_ii:turquoise_forest"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -515,9 +485,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:glistening_swamp"
-          ]
+          "biome_is": "aether_ii:glistening_swamp"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -533,9 +501,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:violet_highwoods"
-          ]
+          "biome_is": "aether_ii:violet_highwoods"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -551,9 +517,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:contaminated_jungle"
-          ]
+          "biome_is": "aether_ii:contaminated_jungle"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",
@@ -569,9 +533,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "aether_ii:battleground_wastes"
-          ]
+          "biome_is": "aether_ii:battleground_wastes"
         },
         "then_run": {
           "type": "aether_ii:noise_palette_3d",

@@ -1,11 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "load_dart_shooter",
   "ingredients": [
     "aether_ii:dart_shooter",
     {
-      "neoforge:ingredient_type": "neoforge:components",
+      "fabric:type": "fabric:components",
+      "base": "aether_ii:amber_darts",
       "components": {
         "aether_ii:buildup_contents": {
           "amount": 55,
@@ -19,8 +19,7 @@
             "visible": true
           }
         }
-      },
-      "items": "aether_ii:amber_darts"
+      }
     }
   ],
   "result": {

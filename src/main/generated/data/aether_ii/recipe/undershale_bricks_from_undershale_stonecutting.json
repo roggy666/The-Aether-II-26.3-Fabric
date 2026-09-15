@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:undershale",
-  "result": {
-    "id": "aether_ii:undershale_bricks"
-  }
-}

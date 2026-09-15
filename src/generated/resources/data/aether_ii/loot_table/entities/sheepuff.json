@@ -2,13 +2,11 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
@@ -22,7 +20,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "flags": {
+                    "minecraft:flags": {
                       "is_on_fire": true
                     }
                   }
@@ -46,7 +44,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -58,8 +55,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "WHITE",
                       "sheared": false
                     }
@@ -75,8 +71,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "ORANGE",
                       "sheared": false
                     }
@@ -92,8 +87,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "MAGENTA",
                       "sheared": false
                     }
@@ -109,8 +103,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "LIGHT_BLUE",
                       "sheared": false
                     }
@@ -126,8 +119,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "YELLOW",
                       "sheared": false
                     }
@@ -143,8 +135,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "LIME",
                       "sheared": false
                     }
@@ -160,8 +151,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "PINK",
                       "sheared": false
                     }
@@ -177,8 +167,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "GRAY",
                       "sheared": false
                     }
@@ -194,8 +183,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "LIGHT_GRAY",
                       "sheared": false
                     }
@@ -211,8 +199,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "CYAN",
                       "sheared": false
                     }
@@ -228,8 +215,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "PURPLE",
                       "sheared": false
                     }
@@ -245,8 +231,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "BLUE",
                       "sheared": false
                     }
@@ -262,8 +247,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "BROWN",
                       "sheared": false
                     }
@@ -279,8 +263,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "GREEN",
                       "sheared": false
                     }
@@ -296,8 +279,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "RED",
                       "sheared": false
                     }
@@ -313,8 +295,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:sheepuff",
+                    "aether_ii:sheepuff": {
                       "color": "BLACK",
                       "sheared": false
                     }

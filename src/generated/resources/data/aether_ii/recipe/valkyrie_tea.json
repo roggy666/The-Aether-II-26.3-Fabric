@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "aether_ii:water_vial",
     "aether_ii:valkyrie_wings",

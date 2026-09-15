@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "A": "#aether_ii:gems/amber",
     "P": "#aether_ii:planks_crafting",

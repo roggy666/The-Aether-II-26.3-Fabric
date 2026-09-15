@@ -1,7 +1,64 @@
 {
   "variants": {
-    "": {
-      "model": "aether_ii:block/skyroot_sign"
+    "rotation=0": {
+      "model": "aether_ii:block/skyroot_sign_rot_0"
+    },
+    "rotation=1": {
+      "model": "aether_ii:block/skyroot_sign_rot_1"
+    },
+    "rotation=10": {
+      "model": "aether_ii:block/skyroot_sign_rot_2",
+      "y": 180
+    },
+    "rotation=11": {
+      "model": "aether_ii:block/skyroot_sign_rot_3",
+      "y": 180
+    },
+    "rotation=12": {
+      "model": "aether_ii:block/skyroot_sign_rot_0",
+      "y": 270
+    },
+    "rotation=13": {
+      "model": "aether_ii:block/skyroot_sign_rot_1",
+      "y": 270
+    },
+    "rotation=14": {
+      "model": "aether_ii:block/skyroot_sign_rot_2",
+      "y": 270
+    },
+    "rotation=15": {
+      "model": "aether_ii:block/skyroot_sign_rot_3",
+      "y": 270
+    },
+    "rotation=2": {
+      "model": "aether_ii:block/skyroot_sign_rot_2"
+    },
+    "rotation=3": {
+      "model": "aether_ii:block/skyroot_sign_rot_3"
+    },
+    "rotation=4": {
+      "model": "aether_ii:block/skyroot_sign_rot_0",
+      "y": 90
+    },
+    "rotation=5": {
+      "model": "aether_ii:block/skyroot_sign_rot_1",
+      "y": 90
+    },
+    "rotation=6": {
+      "model": "aether_ii:block/skyroot_sign_rot_2",
+      "y": 90
+    },
+    "rotation=7": {
+      "model": "aether_ii:block/skyroot_sign_rot_3",
+      "y": 90
+    },
+    "rotation=8": {
+      "model": "aether_ii:block/skyroot_sign_rot_0",
+      "y": 180
+    },
+    "rotation=9": {
+      "model": "aether_ii:block/skyroot_sign_rot_1",
+      "y": 180
     }
   }
 }

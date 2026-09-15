@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:marbled_ichorite",
-  "result": {
-    "id": "aether_ii:marbled_ichorite_wall"
-  }
-}

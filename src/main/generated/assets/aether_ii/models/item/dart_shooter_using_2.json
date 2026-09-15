@@ -1,7 +1,0 @@
-{
-  "parent": "aether_ii:item/using_dart_shooter",
-  "textures": {
-    "layer0": "aether_ii:item/dart_shooter_tip_2",
-    "layer1": "aether_ii:item/dart_shooter_base"
-  }
-}

@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -65,7 +64,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -73,8 +71,16 @@
             "condition": "minecraft:any_of",
             "terms": [
               {
-                "ability": "shears_dig",
-                "condition": "neoforge:can_item_perform_ability"
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "items": "#c:tools/shear"
+                }
+              },
+              {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "items": "minecraft:shears"
+                }
               },
               {
                 "condition": "minecraft:match_tool",
@@ -113,7 +119,6 @@
           ],
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
@@ -135,7 +140,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -143,8 +147,16 @@
             "condition": "minecraft:any_of",
             "terms": [
               {
-                "ability": "shears_dig",
-                "condition": "neoforge:can_item_perform_ability"
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "items": "#c:tools/shear"
+                }
+              },
+              {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "items": "minecraft:shears"
+                }
               },
               {
                 "condition": "minecraft:match_tool",

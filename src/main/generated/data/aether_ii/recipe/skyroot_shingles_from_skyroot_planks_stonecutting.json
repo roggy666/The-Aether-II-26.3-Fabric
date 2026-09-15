@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "aether_ii:skyroot_planks",
-  "result": {
-    "id": "aether_ii:skyroot_shingles"
-  }
-}

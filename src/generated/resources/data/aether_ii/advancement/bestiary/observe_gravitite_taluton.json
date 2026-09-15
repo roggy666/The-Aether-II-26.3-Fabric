@@ -7,7 +7,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "aether_ii:gravitite_taluton"
+              "minecraft:entity_type": "aether_ii:gravitite_taluton"
             }
           }
         ]
@@ -21,10 +21,9 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type_specific": {
-                "type": "minecraft:player",
+              "minecraft:type_specific/player": {
                 "looking_at": {
-                  "type": "aether_ii:gravitite_taluton"
+                  "minecraft:entity_type": "aether_ii:gravitite_taluton"
                 }
               }
             }

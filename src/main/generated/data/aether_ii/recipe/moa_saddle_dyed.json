@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_dye",
-  "dye": "#minecraft:dyes",
-  "group": "dyed_moa_saddle",
-  "result": {
-    "id": "aether_ii:moa_saddle"
-  },
-  "target": "aether_ii:moa_saddle"
-}

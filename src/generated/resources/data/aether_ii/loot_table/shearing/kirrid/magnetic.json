@@ -2,7 +2,6 @@
   "type": "minecraft:shearing",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -14,8 +13,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "WHITE",
                       "sheared": false
                     }
@@ -31,8 +29,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "ORANGE",
                       "sheared": false
                     }
@@ -48,8 +45,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "MAGENTA",
                       "sheared": false
                     }
@@ -65,8 +61,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "LIGHT_BLUE",
                       "sheared": false
                     }
@@ -82,8 +77,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "YELLOW",
                       "sheared": false
                     }
@@ -99,8 +93,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "LIME",
                       "sheared": false
                     }
@@ -116,8 +109,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "PINK",
                       "sheared": false
                     }
@@ -133,8 +125,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "GRAY",
                       "sheared": false
                     }
@@ -150,8 +141,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "LIGHT_GRAY",
                       "sheared": false
                     }
@@ -167,8 +157,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "CYAN",
                       "sheared": false
                     }
@@ -184,8 +173,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "PURPLE",
                       "sheared": false
                     }
@@ -201,8 +189,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "BLUE",
                       "sheared": false
                     }
@@ -218,8 +205,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "BROWN",
                       "sheared": false
                     }
@@ -235,8 +221,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "GREEN",
                       "sheared": false
                     }
@@ -252,8 +237,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "RED",
                       "sheared": false
                     }
@@ -269,8 +253,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "color": "BLACK",
                       "sheared": false
                     }
@@ -286,8 +269,7 @@
                   "condition": "minecraft:entity_properties",
                   "entity": "this",
                   "predicate": {
-                    "type_specific": {
-                      "type": "aether_ii:kirrid",
+                    "aether_ii:kirrid": {
                       "sheared": false
                     }
                   }

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "C": "aether_ii:cloudtwine",
     "W": "#minecraft:wool"

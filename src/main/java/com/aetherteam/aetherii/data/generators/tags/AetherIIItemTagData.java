@@ -25,6 +25,7 @@ import java.util.concurrent.CompletableFuture;
 public class AetherIIItemTagData extends FabricTagsProvider.ItemTagsProvider {
     public AetherIIItemTagData(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
+        AetherTagAppender.setExternalTagLookup(this);
     }
 
     protected AetherTagAppender<Item> tagOf(TagKey<Item> key) {
