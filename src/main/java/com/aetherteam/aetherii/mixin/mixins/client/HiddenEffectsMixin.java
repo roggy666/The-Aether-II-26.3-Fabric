@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Mixin({Hud.class, EffectsInInventory.class})
 public class HiddenEffectsMixin {
-    @ModifyExpressionValue(method = {"extractEffects", "extract"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getActiveEffects()Ljava/util/Collection;"), require = 1)
+    @ModifyExpressionValue(method = {"extractEffects", "extractRenderState"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getActiveEffects()Ljava/util/Collection;"), require = 1)
     private Collection<MobEffectInstance> visibleEffects(Collection<MobEffectInstance> effects) {
         return effects.stream().filter(effect -> !com.aetherteam.aetherii.client.AetherIIClientExtensions.hideEffect(effect)).toList();
     }
