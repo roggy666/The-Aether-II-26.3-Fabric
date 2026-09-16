@@ -40,6 +40,9 @@
     ],
     "cumulus": [
       "com.aetherteam.aetherii.api.AetherIIMenus"
+    ],
+    "cumulus:menu_initializers": [
+      "com.aetherteam.aetherii.api.AetherIIMenus"
     ]
   },
   "accessWidener": "aether_ii.accesswidener",
