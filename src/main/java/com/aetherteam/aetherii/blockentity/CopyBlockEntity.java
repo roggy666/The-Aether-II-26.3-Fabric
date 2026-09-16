@@ -72,13 +72,7 @@ public abstract class CopyBlockEntity extends BlockEntity {
 
     @Override
     public void setLevel(Level level) {
-        boolean added = this.level == null && level != null;
         super.setLevel(level);
-        if (added) { // NeoForge's onLoad
-            this.setChanged();
-            level.blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 1, 0);
-            this.syncLight();
-        }
     }
 
     @Override

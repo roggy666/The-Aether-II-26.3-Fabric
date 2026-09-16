@@ -5,6 +5,7 @@ import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
 import com.aetherteam.aetherii.world.feature.configuration.CoastConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -71,11 +72,14 @@ public class CoastFeature extends Feature<CoastConfiguration> {
 
     @SuppressWarnings({"UnusedReturnValue", "deprecation"})
     public static boolean placeCoastBlock(WorldGenLevel level, BlockStateProvider provider, BlockPos pos, RandomSource random, int distance, Set<BlockPos> set) {
+        if (!level.ensureCanWrite(pos)) {
+            return false;
+        }
         if (level.getBlockState(pos).canBeReplaced() && !level.getBlockState(pos).liquid()
-                && (level.getBlockState(pos.north(distance)).is(AetherIITags.Blocks.SHAPES_COASTS)
-                || level.getBlockState(pos.east(distance)).is(AetherIITags.Blocks.SHAPES_COASTS)
-                || level.getBlockState(pos.south(distance)).is(AetherIITags.Blocks.SHAPES_COASTS)
-                || level.getBlockState(pos.west(distance)).is(AetherIITags.Blocks.SHAPES_COASTS)
+                && (canReadAndShapesCoasts(level, pos.north(distance))
+                || canReadAndShapesCoasts(level, pos.east(distance))
+                || canReadAndShapesCoasts(level, pos.south(distance))
+                || canReadAndShapesCoasts(level, pos.west(distance))
         )) {
             BlockState state = provider.getState(level, random, pos);
             if (level.setBlock(pos, state, 2)) {
@@ -86,10 +90,21 @@ public class CoastFeature extends Feature<CoastConfiguration> {
         return false;
     }
 
+    private static boolean canReadAndShapesCoasts(WorldGenLevel level, BlockPos pos) {
+        int cx = SectionPos.blockToSectionCoord(pos.getX());
+        int cz = SectionPos.blockToSectionCoord(pos.getZ());
+        if (!level.hasChunk(cx, cz)) {
+            return false;
+        }
+        return level.getBlockState(pos).is(AetherIITags.Blocks.SHAPES_COASTS);
+    }
+
     protected void distributeVegetation(FeaturePlaceContext<CoastConfiguration> context, WorldGenLevel level, CoastConfiguration config, RandomSource random, Set<BlockPos> set) {
         for (BlockPos blockPos : set) {
             if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
-                config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, blockPos));
+                if (level.ensureCanWrite(blockPos)) {
+                    config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, blockPos));
+                }
             }
         }
     }
