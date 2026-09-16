@@ -4,6 +4,7 @@
   "plugin": "com.aetherteam.aetherii.mixin.AetherIIMixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "common.WorldGenRegionMixin",
     "common.AlterGroundDecoratorMixin",
     "common.MobCategoryMixin",
     "common.RarityMixin",

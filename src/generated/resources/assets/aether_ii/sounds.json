@@ -511,6 +511,15 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "entity.detonation_sentry.ambient": {
+    "sounds": [
+      {
+        "name": "minecraft:note/bit",
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.aether_ii.entity.detonation_sentry.ambient"
+  },
   "entity.detonation_sentry.beep": {
     "sounds": [
       "minecraft:note/bit"

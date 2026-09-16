@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.DensityFunction;
@@ -104,7 +105,11 @@ public class CoastFeature extends Feature<CoastConfiguration> {
     }
 
     protected void distributeVegetation(FeaturePlaceContext<CoastConfiguration> context, WorldGenLevel level, CoastConfiguration config, RandomSource random, Set<BlockPos> set) {
+        ChunkPos centerPos = level instanceof WorldGenRegion region ? region.getCenter() : ChunkPos.containing(context.origin());
         for (BlockPos blockPos : set) {
+            if (SectionPos.blockToSectionCoord(blockPos.getX()) != centerPos.x() || SectionPos.blockToSectionCoord(blockPos.getZ()) != centerPos.z()) {
+                continue;
+            }
             if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
                 if (level.ensureCanWrite(blockPos)) {
                     config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, blockPos));

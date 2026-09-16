@@ -1184,6 +1184,11 @@ public class AetherIISoundData extends AetherIISoundDefinitionsProvider {
                         sound("minecraft:note/bit")
                 ).subtitle("subtitles.aether_ii.entity.detonation_sentry.beep")
         );
+        this.add(AetherIISoundEvents.ENTITY_DETONATION_SENTRY_AMBIENT,
+                definition().with(
+                        sound("minecraft:note/bit").volume(0.5F)
+                ).subtitle("subtitles.aether_ii.entity.detonation_sentry.ambient")
+        );
 
         this.add(AetherIISoundEvents.ENTITY_SENTRY_GOLEM_DEATH,
                 definition().with(sound("minecraft:mob/irongolem/death"))
