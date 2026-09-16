@@ -6,6 +6,7 @@ import com.aetherteam.aetherii.world.feature.configuration.CoastConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,6 +92,9 @@ public class CoastFeature extends Feature<CoastConfiguration> {
     }
 
     private static boolean canReadAndShapesCoasts(WorldGenLevel level, BlockPos pos) {
+        if (level instanceof WorldGenRegion region && !region.isWithinWriteZone(pos)) {
+            return false;
+        }
         int cx = SectionPos.blockToSectionCoord(pos.getX());
         int cz = SectionPos.blockToSectionCoord(pos.getZ());
         if (!level.hasChunk(cx, cz)) {

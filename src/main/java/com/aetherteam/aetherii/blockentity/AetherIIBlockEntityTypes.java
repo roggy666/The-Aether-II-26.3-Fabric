@@ -117,6 +117,8 @@ public class AetherIIBlockEntityTypes {
                 AetherIIBlocks.AMBEROOT_SHELF);
         addBlocksToType(BlockEntityTypes.BARREL,
                 AetherIIBlocks.SKYROOT_BARREL);
+        addBlocksToType(BlockEntityTypes.CAMPFIRE,
+                AetherIIBlocks.AMBROSIUM_CAMPFIRE);
     }
 
     public static void init() {}

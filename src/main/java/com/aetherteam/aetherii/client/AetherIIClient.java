@@ -41,9 +41,6 @@ public class AetherIIClient implements ClientModInitializer {
         AetherIIClientEventListeners.listen();
         registerMenuScreens();
         registerTooltipOverrides();
-        if (Minecraft.getInstance().getTextureManager() != null) {
-            Minecraft.getInstance().getTextureManager().register(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
-        }
         AetherIIColorResolvers.registerColorResolvers();
         AetherIIColorResolvers.registerBlockColor();
         AetherIIParticleFactories.registerParticleFactories();

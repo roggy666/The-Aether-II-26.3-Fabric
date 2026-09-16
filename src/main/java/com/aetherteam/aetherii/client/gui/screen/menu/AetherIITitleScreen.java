@@ -3,11 +3,16 @@ package com.aetherteam.aetherii.client.gui.screen.menu;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.AetherII;
+import com.aetherteam.aetherii.api.AetherIIMenus;
 import com.aetherteam.aetherii.client.gui.component.menu.AetherIIMenuButton;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.mixin.mixins.client.accessor.TitleScreenAccessor;
 import com.aetherteam.cumulus.CumulusConfig;
 import com.aetherteam.cumulus.client.gui.screen.DynamicMenuButton;
+import com.aetherteam.cumulus.mixin.mixins.client.accessor.GameRendererAccessor;
+import com.aetherteam.cumulus.mixin.mixins.client.accessor.GuiRendererAccessor;
+import net.minecraft.client.renderer.CubeMap;
+import net.minecraft.client.renderer.texture.CubeMapTexture;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -49,6 +54,11 @@ public class AetherIITitleScreen extends TitleScreen implements TitleScreenBehav
         super.init();
         if (this.minecraft != null) {
             accessor.aetherII$setSplash(null);
+            if (this.minecraft.getTextureManager() != null) {
+                this.minecraft.getTextureManager().registerAndLoad(AetherIIMenus.AETHER_II_PANORAMA, new CubeMapTexture(AetherIIMenus.AETHER_II_PANORAMA));
+                CubeMap cubeMap = new CubeMap(AetherIIMenus.AETHER_II_PANORAMA);
+                ((GuiRendererAccessor) ((GameRendererAccessor) this.minecraft.gameRenderer).cumulus$getGuiRenderer()).cumulus$setCubeMap(cubeMap);
+            }
         }
         this.setupButtons();
         this.widgetsByName = this.children().stream().filter(e -> e instanceof AbstractWidget).map(e -> (AbstractWidget) e)
