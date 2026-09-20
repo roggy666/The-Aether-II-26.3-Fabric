@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:quartz_from_aether_quartz"
+        "recipes": "aether_ii:quartz_from_aether_quartz"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

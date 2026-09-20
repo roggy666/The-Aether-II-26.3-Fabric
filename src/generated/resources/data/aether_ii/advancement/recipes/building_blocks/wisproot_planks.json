@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:wisproot_planks"
+        "recipes": "aether_ii:wisproot_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,0 +1,19 @@
+{
+  "type": "aether_ii:aether_grass",
+  "to_place": {
+    "type": "minecraft:noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": 0
+    },
+    "scale": 0.02,
+    "seed": 2345,
+    "states": [
+      "aether_ii:tall_aether_grass",
+      "aether_ii:medium_aether_grass",
+      "aether_ii:short_aether_grass",
+      "aether_ii:medium_aether_grass",
+      "aether_ii:tall_aether_grass"
+    ]
+  }
+}

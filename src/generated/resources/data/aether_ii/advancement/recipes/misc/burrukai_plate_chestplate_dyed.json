@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:burrukai_plate_chestplate_dyed"
+        "recipes": "aether_ii:burrukai_plate_chestplate_dyed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

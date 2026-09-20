@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:bandage"
+        "recipes": "aether_ii:bandage"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

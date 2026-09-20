@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:ore",
+  "discard_chance_on_air_exposure": 0.0,
+  "size": 15,
+  "targets": [
+    {
+      "state": "aether_ii:holystone_quartz_ore",
+      "target": {
+        "predicate_type": "minecraft:tag_match",
+        "tag": "aether_ii:holystone"
+      }
+    }
+  ]
+}

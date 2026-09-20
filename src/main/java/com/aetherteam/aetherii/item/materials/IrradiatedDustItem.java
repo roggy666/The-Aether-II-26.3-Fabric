@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.materials;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.client.particle.AetherIIParticleTypes;
 import com.aetherteam.aetherii.item.miscellaneous.ItemUseConversion;
 import com.aetherteam.aetherii.item.miscellaneous.UsableItem;
@@ -57,10 +58,10 @@ public class IrradiatedDustItem extends Item implements ItemUseConversion<Irradi
         BlockState blockState = level.getBlockState(pos);
         Block block = blockState.getBlock();
         if (block instanceof BonemealableBlock bonemealableblock) {
-            if (bonemealableblock.isValidBonemealTarget(level, pos, blockState)) {
+            if (bonemealableblock.isValidBonemealTarget(level, pos, blockState, BonemealSource.INTERACTION)) {
                 if (level instanceof ServerLevel serverLevel) {
                     if (block instanceof SaplingBlock saplingBlock) {
-                        if (bonemealableblock.isBonemealSuccess(level, level.getRandom(), pos, blockState)) {
+                        if (bonemealableblock.isBonemealSuccess(level, level.getRandom(), pos, blockState, BonemealSource.INTERACTION)) {
                             if (blockState.getValue(SaplingBlock.STAGE) == 0) {
                                 level.setBlock(pos, blockState.cycle(SaplingBlock.STAGE), 4);
                             } else {

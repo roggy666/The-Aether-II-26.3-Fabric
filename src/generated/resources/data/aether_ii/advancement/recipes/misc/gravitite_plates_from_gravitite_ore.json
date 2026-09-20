@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:gravitite_plates_from_gravitite_ore"
+        "recipes": "aether_ii:gravitite_plates_from_gravitite_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

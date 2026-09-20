@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:icestone_capstone_bricks_from_icestone_stonecutting"
+        "recipes": "aether_ii:icestone_capstone_bricks_from_icestone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:wisproot_bookshelf"
+        "recipes": "aether_ii:wisproot_bookshelf"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

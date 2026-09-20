@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
   "experience": 0.5,
   "group": "quartz",
   "ingredient": "aether_ii:holystone_quartz_ore",

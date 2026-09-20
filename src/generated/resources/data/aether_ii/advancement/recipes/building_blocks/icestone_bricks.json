@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:icestone_bricks"
+        "recipes": "aether_ii:icestone_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

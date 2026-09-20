@@ -39,17 +39,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class MusicBlock extends BaseEntityBlock {
-    public static final MapCodec<MusicBlock> CODEC = simpleCodec(MusicBlock::new);
     public static final BooleanProperty HAS_RECORD = BlockStateProperties.HAS_RECORD;
 
     public MusicBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HAS_RECORD, false));
-    }
-
-    @Override
-    protected MapCodec<MusicBlock> codec() {
-        return CODEC;
     }
 
     @Override

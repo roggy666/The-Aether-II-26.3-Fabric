@@ -2,47 +2,42 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:sheepuff": {
-              "puffed": false,
-              "sheared": false
-            }
+      "condition": {
+        "type": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "aether_ii:sheepuff": {
+            "puffed": false,
+            "sheared": false
           }
         }
-      ],
+      },
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:orange_cloudwool"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:sheepuff": {
-              "puffed": true,
-              "sheared": false
-            }
+      "condition": {
+        "type": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "aether_ii:sheepuff": {
+            "puffed": true,
+            "sheared": false
           }
         }
-      ],
+      },
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:orange_cloudwool"
         }
       ],
-      "rolls": 2.0
+      "rolls": 2
     }
-  ],
-  "random_sequence": "aether_ii:entities/sheepuff/orange"
+  ]
 }

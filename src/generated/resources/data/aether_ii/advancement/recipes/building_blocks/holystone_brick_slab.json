@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:holystone_brick_slab"
+        "recipes": "aether_ii:holystone_brick_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

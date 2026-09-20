@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:tree",
+  "below_trunk_provider": {
+    "id": "aether_ii:aether_dirt"
+  },
+  "decorators": [
+    {
+      "type": "aether_ii:ground_feature",
+      "block_provider": {
+        "id": "aether_ii:greatoak_leaf_pile",
+        "properties": {
+          "persistent": "true",
+          "piles": "1"
+        }
+      },
+      "chance": 3
+    }
+  ],
+  "foliage_placer": {
+    "type": "aether_ii:greatoak_foliage_placer",
+    "offset": 0,
+    "radius": 3
+  },
+  "foliage_provider": {
+    "id": "aether_ii:greatoak_leaves",
+    "properties": {
+      "distance": "7",
+      "mossy_overlay": "none",
+      "persistent": "false",
+      "snowy": "false",
+      "waterlogged": "false"
+    }
+  },
+  "ignore_vines": true,
+  "minimum_size": {
+    "type": "minecraft:two_layers_feature_size",
+    "lower_size": 1,
+    "upper_size": 2
+  },
+  "trunk_placer": {
+    "type": "minecraft:giant_trunk_placer",
+    "base_height": 20,
+    "height_rand_a": 15,
+    "height_rand_b": 4
+  },
+  "trunk_provider": {
+    "id": "aether_ii:greatroot_log",
+    "properties": {
+      "axis": "y"
+    }
+  }
+}

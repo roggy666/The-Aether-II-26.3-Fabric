@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.structure.piece.sentry;
 
+import net.minecraft.world.level.levelgen.feature.Feature;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -62,7 +62,7 @@ public class SentryRuinsRoom extends SentryRuinsPiece {
                 }
                 else Objects.requireNonNull(level.registryAccess().get(HolyIslesConfiguredFeatures.BRYALINN_MOSS_STRUCTURE).orElse(null)).value().place((WorldGenLevel) level, level.getLevel().getChunkSource().getGenerator(), random, pos);
             } else {
-                ConfiguredFeature<?, ?> feature = Objects.requireNonNull(level.registryAccess().get(ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.parse(name))).orElse(null)).value();
+                Feature feature = Objects.requireNonNull(level.registryAccess().get(ResourceKey.create(Registries.FEATURE, Identifier.parse(name))).orElse(null)).value();
                 feature.place((WorldGenLevel) level, level.getLevel().getChunkSource().getGenerator(), random, pos);
             }
         }

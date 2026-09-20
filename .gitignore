@@ -25,13 +25,21 @@ __pycache__
 logs
 src/generated/resources/.cache
 .vscode/
-geminimistakes.md
-forgemini.md
-forgemini-report.md
-forgemini-fix.md
-fixedaftergemini.md
-foropus.md
-forgeminiagents.md
+# Notes, reports, and temporary markdown files
+*.md
+!README.md
+docs/*.md
+!docs/README.md
+!docs/AGREEMENT.md
+!docs/CHANGELOG.md
+!docs/CONTRIBUTING.md
+!docs/UPDATES.md
+docs/FABRIC_RUNTIME_AUDIT.md
 analysis/
 compile_errors.log
 neoforged_files.txt
+
+# Local scripts
+run_client.bat
+run_*.bat
+

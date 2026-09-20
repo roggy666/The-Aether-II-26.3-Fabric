@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.miscellaneous;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -22,7 +23,7 @@ public interface ThrowableItem {
             level.addFreshEntity(projectile);
         }
         if (level.isClientSide()) {
-            livingEntity.swing(livingEntity.getUsedItemHand());
+            livingEntity.swing(livingEntity.getUsedItemHand(), SwingAnimation.DEFAULT, false);
         }
         if (livingEntity instanceof Player player) {
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));

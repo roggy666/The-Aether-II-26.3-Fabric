@@ -1,5 +1,9 @@
 package com.aetherteam.aetherii.data.resources.builders.worldgen.holyisles;
 
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunctions;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
+import java.util.Optional;
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.data.resources.builders.worldgen.AetherIIDensityFunctionBuilders;
@@ -15,17 +19,17 @@ public class HolyIslesNoiseBuilders extends AetherIIDensityFunctionBuilders {
     public static NoiseGeneratorSettings holyIslesNoiseSettings(HolderGetter<DensityFunction> function, HolderGetter<Biome> biomes) {
         BlockState holystone = AetherIIBlocks.HOLYSTONE.defaultBlockState();
         return new NoiseGeneratorSettings(
-                new NoiseSettings(0, 384, 2, 1), // noiseSettings
+                new NoiseSettings(0, 384), // noiseSettings
                 holystone, // defaultBlock
                 Blocks.WATER.defaultBlockState(), // defaultFluid
                 makeNoiseRouter(function), // noiseRouter
-                HolyIslesSurfaceBuilders.surfaceRules(biomes), // surfaceRule
+                Holder.direct(HolyIslesSurfaceBuilders.surfaceRules(biomes)), // materialRule
                 List.of(), // spawnTarget
                 -64, // seaLevel
                 false, // disableMobGeneration
-                false, // aquifersEnabled
-                false, // oreVeinsEnabled
-                false  // useLegacyRandomSource
+                Optional.empty(), // aquifers (disabled)
+                false, // useLegacyRandomSource
+                NoiseGeneratorSettings.DebugFunctions.EMPTY
         );
     }
 
@@ -40,21 +44,16 @@ public class HolyIslesNoiseBuilders extends AetherIIDensityFunctionBuilders {
         DensityFunction erosion = getFunction(function, AetherIIDensityFunctions.EROSION);
         DensityFunction depth = getFunction(function, AetherIIDensityFunctions.CAVE_BIOMES_RARITY_MAPPER);
         DensityFunction ridges = getFunction(function, AetherIIDensityFunctions.LAKES_NOISE);
+        // The preliminary surface level of the islands (top of the base island density), sampled per chunk column like vanilla does.
+        DensityFunction chunkSurfaceLevel = DensityFunctions.interpolated(getFunction(function, AetherIIDensityFunctions.CONTINENTS_HEIGHTMAP), 16, 1);
         return new NoiseRouter(
-                DensityFunctions.zero(), // barrier
-                DensityFunctions.zero(), // fluid level floodedness
-                DensityFunctions.zero(), // fluid level spread
-                DensityFunctions.zero(), // lava
                 temperature, // temperature
                 vegetation, // vegetation
-                continentalness , // continentalness
+                continentalness, // continents
                 erosion, // erosion
                 depth, // depth
                 ridges, // ridges
-                DensityFunctions.zero(), // initial density without jaggedness
-                finalDensity, // final density
-                DensityFunctions.zero(), // vein toggle
-                DensityFunctions.zero(), // vein ridged
-                DensityFunctions.zero()); // vein gap
+                chunkSurfaceLevel, // chunk surface level
+                finalDensity); // final density
     }
 }

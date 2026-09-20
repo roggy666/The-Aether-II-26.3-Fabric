@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.world;
 
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -58,6 +60,11 @@ public final class BlockPlacementUtil {
      * @param value    The {@link Float} used for the intensity of the variation.
      * @return A {@link Float} used as a factor to the radius.
      */
+    /** The pre-26.3 {@code Feature#isAir} helper. */
+    public static boolean isAir(LevelSimulatedReader level, BlockPos pos) {
+        return level.isStateAtPosition(pos, BlockBehaviour.BlockStateBase::isAir);
+    }
+
     public static float shapeVariator(RandomSource random, float value) {
         if (random.nextInt(16) == 5) {
             return value * 1.5F;

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:lime_dye_from_lime_moa_feather"
+        "recipes": "aether_ii:lime_dye_from_lime_moa_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

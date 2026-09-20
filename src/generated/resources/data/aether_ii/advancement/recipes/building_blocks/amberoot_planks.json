@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:amberoot_planks"
+        "recipes": "aether_ii:amberoot_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

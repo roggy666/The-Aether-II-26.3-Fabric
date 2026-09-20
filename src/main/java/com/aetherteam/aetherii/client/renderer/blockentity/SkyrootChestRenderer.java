@@ -32,7 +32,12 @@ public class SkyrootChestRenderer<T extends BlockEntity & LidBlockEntity> extend
         poseStack.mulPose(modelTransformation(state.facing));
         float open = 1.0F - state.open;
         open = 1.0F - open * open * open;
-        collector.submitModel(this.models.select(state.type), open, poseStack, state.lightCoords, OverlayTexture.NO_OVERLAY, -1, getCustomSprite(null, state), this.sprites, 0, state.breakProgress);
+        var model = this.models.select(state.type);
+        SpriteId spriteId = getCustomSprite(null, state);
+        collector.submitModel(model, open, poseStack, state.lightCoords, OverlayTexture.NO_OVERLAY, -1, spriteId, this.sprites, 0);
+        if (state.breakProgress != null) {
+            collector.order(1).submitCrumblingOverlay(model, open, poseStack, spriteId.renderType(model::renderType), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
+        }
         poseStack.popPose();
     }
 

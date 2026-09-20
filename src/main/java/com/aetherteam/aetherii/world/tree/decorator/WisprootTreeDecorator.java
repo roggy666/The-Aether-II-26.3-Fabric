@@ -16,8 +16,8 @@ import java.util.List;
 public class WisprootTreeDecorator extends TreeDecorator {
     public static final MapCodec<WisprootTreeDecorator> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    BlockStateProvider.CODEC.fieldOf("mossy_full_block_provider").forGetter(decorator -> decorator.mossyFullState),
-                    BlockStateProvider.CODEC.fieldOf("mossy_transition_block_provider").forGetter(decorator -> decorator.mossyTransitionState)
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("mossy_full_block_provider").forGetter(decorator -> decorator.mossyFullState),
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("mossy_transition_block_provider").forGetter(decorator -> decorator.mossyTransitionState)
             ).apply(instance, WisprootTreeDecorator::new));
 
     private final BlockStateProvider mossyFullState;

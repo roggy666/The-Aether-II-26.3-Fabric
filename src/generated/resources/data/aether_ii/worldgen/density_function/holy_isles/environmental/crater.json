@@ -1,6 +1,6 @@
 {
   "type": "minecraft:square",
-  "argument": {
+  "input": {
     "type": "aether_ii:perlin_noise",
     "noise": {
       "amplitudes": [

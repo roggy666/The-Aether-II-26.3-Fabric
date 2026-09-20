@@ -33,7 +33,7 @@ public class ItemCooldownsMixin implements ItemCooldownsWrapper {
             if (!this.player.level().isClientSide()) {
                 DamageSystemAttachment attachment = this.player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM);
                 attachment.setShieldEndurance(AetherIIAttributes.getMaxEndurance(this.player));
-                this.player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, this.player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
+                this.player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).markDirty();
             }
         }
     }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether_ii:arctic_ice_spike",
+    "placement": []
+  },
+  "features": [
+    {
+      "chance": 0.1,
+      "feature": {
+        "feature": "aether_ii:mega_arctic_ice_spike",
+        "placement": []
+      }
+    }
+  ]
+}

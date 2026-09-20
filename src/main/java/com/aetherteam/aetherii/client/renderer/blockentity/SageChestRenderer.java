@@ -83,14 +83,17 @@ public class SageChestRenderer implements BlockEntityRenderer<SageChestBlockEnti
     public void submit(SageChestRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        poseStack.mulPose(Axis.YP.rotationDegrees(state.facing.toYRot()));
+        poseStack.rotateDegrees(Axis.XP, 180);
+        poseStack.rotateDegrees(Axis.YP, state.facing.toYRot());
         float open = state.open;
         open = 1.0F - open;
         open = 1.0F - open * open * open;
         SpriteId spriteId = AetherIIAtlases.SAGE_CHEST_RESOURCES_SPRITE.select(state.type);
         SageChestModel model = this.models.select(state.type);
-        submitNodeCollector.submitModel(model, open, poseStack, state.lightCoords, OverlayTexture.NO_OVERLAY, -1, spriteId, this.sprites, 0, state.breakProgress);
+        submitNodeCollector.submitModel(model, open, poseStack, state.lightCoords, OverlayTexture.NO_OVERLAY, -1, spriteId, this.sprites, 0);
+        if (state.breakProgress != null) {
+            submitNodeCollector.order(1).submitCrumblingOverlay(model, open, poseStack, spriteId.renderType(model::renderType), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
+        }
         poseStack.popPose();
     }
 

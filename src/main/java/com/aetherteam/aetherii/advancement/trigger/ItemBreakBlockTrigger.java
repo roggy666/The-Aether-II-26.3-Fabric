@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.core.Holder;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.world.phys.Vec3;
@@ -7,7 +9,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -44,26 +45,26 @@ public class ItemBreakBlockTrigger extends SimpleCriterionTrigger<ItemBreakBlock
         this.trigger(player, (instance) -> instance.matches(context));
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player, Optional<ContextAwarePredicate> location) implements SimpleCriterionTrigger.SimpleInstance {
+    public record Instance(Optional<Holder<LootItemCondition>> player, Optional<Holder<LootItemCondition>> location) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Instance> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(Instance::player),
-                ContextAwarePredicate.CODEC.optionalFieldOf("location").forGetter(Instance::location)
+                LootItemCondition.CODEC.optionalFieldOf("player").forGetter(Instance::player),
+                LootItemCondition.CODEC.optionalFieldOf("location").forGetter(Instance::location)
         ).apply(instance, Instance::new));
 
         public static Criterion<Instance> itemBrokeBlock(LocationPredicate.Builder location, ItemPredicate.Builder tool) {
-            ContextAwarePredicate contextawarepredicate = ContextAwarePredicate.create(LocationCheck.checkLocation(location).build(), MatchTool.toolMatches(tool).build());
+            Holder<LootItemCondition> contextawarepredicate = Holder.direct(LocationCheck.checkLocation(location).and(MatchTool.toolMatches(tool)).build());
             Instance instance = new Instance(Optional.empty(), Optional.of(contextawarepredicate));
             return AetherIIAdvancementTriggers.ITEM_BREAK_BLOCK.createCriterion(instance);
         }
 
         public boolean matches(LootContext context) {
-            return this.location.isEmpty() || this.location.get().matches(context);
+            return this.location.isEmpty() || this.location.get().value().test(context);
         }
 
         @Override
         public void validate(ValidationContextSource validator) {
             SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
-            Validatable.validate(validator.context(LootContextParamSets.ADVANCEMENT_LOCATION), "location", this.location);
+            Validatable.validateHolder(validator.context(LootContextParamSets.ADVANCEMENT_LOCATION), "location", this.location);
         }
     }
 }

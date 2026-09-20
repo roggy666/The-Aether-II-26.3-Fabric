@@ -1,0 +1,12 @@
+{
+  "type": "aether_ii:moa_nest",
+  "additional_radius": 2,
+  "base_radius": 1.5,
+  "nest_block": {
+    "id": "aether_ii:woven_skyroot_sticks",
+    "properties": {
+      "mossy_overlay": "none"
+    }
+  },
+  "spawn_moas": true
+}

@@ -86,8 +86,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                         OverlayTexture.NO_OVERLAY,
                         -1,
                         null,
-                        s.outlineColor,
-                        null
+                        s.outlineColor
                 );
 
                 int color = AetherIIClientExtensions.getDefaultDyeColor(stack);
@@ -101,8 +100,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             OverlayTexture.NO_OVERLAY,
                             ARGB.opaque(color),
                             null,
-                            s.outlineColor,
-                            null
+                            s.outlineColor
                     );
                 }
 
@@ -118,8 +116,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             OverlayTexture.NO_OVERLAY,
                             -1,
                             sprite,
-                            s.outlineColor,
-                            null
+                            s.outlineColor
                     );
                 }
             }
@@ -174,7 +171,7 @@ public class GlovesLayer<S extends LivingEntityRenderState, M extends EntityMode
                             OverlayTexture.NO_OVERLAY,
                             null,
                             ARGB.opaque(color),
-                            null
+                            0
                     );
         }
 

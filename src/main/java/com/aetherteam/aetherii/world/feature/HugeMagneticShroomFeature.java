@@ -1,26 +1,31 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.BigMagneticShroomConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 public class HugeMagneticShroomFeature extends AbstractMagneticShroomFeature {
-    public HugeMagneticShroomFeature(Codec<BigMagneticShroomConfiguration> codec) {
-        super(codec);
+    public static final MapCodec<HugeMagneticShroomFeature> CODEC = BigMagneticShroomConfiguration.CODEC.xmap(HugeMagneticShroomFeature::new, HugeMagneticShroomFeature::config);
+
+    public HugeMagneticShroomFeature(BigMagneticShroomConfiguration config) {
+        super(config);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<BigMagneticShroomConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        RandomSource random = context.random();
-        BigMagneticShroomConfiguration config = context.config();
+    public MapCodec<HugeMagneticShroomFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        BigMagneticShroomConfiguration config = this.config;
 
         config.groundProvider().ifPresent(provider -> this.placeGround(level, random, pos.below(), provider));
         if (this.canPlace(level, random, pos, config)) {

@@ -28,7 +28,7 @@ public abstract class SwetGelLayer extends RenderLayer<SwetRenderState, SwetMode
             RenderType renderType = flag
                     ? RenderTypes.outline(this.getTextureLocation(swetRenderState))
                     : RenderTypes.entityTranslucent(this.getTextureLocation(swetRenderState));
-            submitNodeCollector.submitModel(this.model, swetRenderState, poseStack, renderType, swetRenderState.lightCoords, OverlayTexture.NO_OVERLAY, swetRenderState.outlineColor, null);
+            submitNodeCollector.submitModel(this.model, swetRenderState, poseStack, renderType, swetRenderState.lightCoords, OverlayTexture.NO_OVERLAY, swetRenderState.outlineColor);
         }
     }
 

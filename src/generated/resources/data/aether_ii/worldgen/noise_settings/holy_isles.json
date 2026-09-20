@@ -1,43 +1,9 @@
 {
-  "aquifers_enabled": false,
-  "default_block": {
-    "Name": "aether_ii:holystone"
-  },
-  "default_fluid": {
-    "Name": "minecraft:water",
-    "Properties": {
-      "level": "0"
-    }
-  },
+  "default_block": "aether_ii:holystone",
+  "default_fluid": "minecraft:water",
   "disable_mob_generation": false,
   "legacy_random_source": false,
-  "noise": {
-    "height": 384,
-    "min_y": 0,
-    "size_horizontal": 2,
-    "size_vertical": 1
-  },
-  "noise_router": {
-    "barrier": 0.0,
-    "continents": "aether_ii:holy_isles/continents",
-    "depth": "aether_ii:holy_isles/cave_biomes_rarity_mapper",
-    "erosion": "aether_ii:holy_isles/erosion",
-    "final_density": "aether_ii:holy_isles/terrain/final_islands",
-    "fluid_level_floodedness": 0.0,
-    "fluid_level_spread": 0.0,
-    "lava": 0.0,
-    "preliminary_surface_level": 0.0,
-    "ridges": "aether_ii:holy_isles/lakes/noise",
-    "temperature": "aether_ii:holy_isles/temperature",
-    "vegetation": "aether_ii:holy_isles/vegetation_rarity_mapper",
-    "vein_gap": 0.0,
-    "vein_ridged": 0.0,
-    "vein_toggle": 0.0
-  },
-  "ore_veins_enabled": false,
-  "sea_level": -64,
-  "spawn_target": [],
-  "surface_rule": {
+  "material_rule": {
     "type": "minecraft:sequence",
     "sequence": [
       {
@@ -65,9 +31,7 @@
             },
             "then_run": {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "aether_ii:arctic_snow_block"
-              }
+              "result_state": "aether_ii:arctic_snow_block"
             }
           }
         }
@@ -97,9 +61,7 @@
             },
             "then_run": {
               "type": "minecraft:block",
-              "result_state": {
-                "Name": "aether_ii:arctic_snow_block"
-              }
+              "result_state": "aether_ii:arctic_snow_block"
             }
           }
         }
@@ -158,9 +120,7 @@
                 },
                 "then_run": {
                   "type": "minecraft:block",
-                  "result_state": {
-                    "Name": "aether_ii:quicksoil"
-                  }
+                  "result_state": "aether_ii:quicksoil"
                 }
               }
             }
@@ -202,12 +162,7 @@
                 },
                 "then_run": {
                   "type": "minecraft:block",
-                  "result_state": {
-                    "Name": "aether_ii:enchanted_aether_grass_block",
-                    "Properties": {
-                      "snowy": "false"
-                    }
-                  }
+                  "result_state": "aether_ii:enchanted_aether_grass_block"
                 }
               },
               {
@@ -218,12 +173,7 @@
                 },
                 "then_run": {
                   "type": "minecraft:block",
-                  "result_state": {
-                    "Name": "aether_ii:enchanted_aether_grass_block",
-                    "Properties": {
-                      "snowy": "false"
-                    }
-                  }
+                  "result_state": "aether_ii:enchanted_aether_grass_block"
                 }
               },
               {
@@ -236,19 +186,12 @@
                 },
                 "then_run": {
                   "type": "minecraft:block",
-                  "result_state": {
-                    "Name": "aether_ii:aether_grass_block",
-                    "Properties": {
-                      "snowy": "false"
-                    }
-                  }
+                  "result_state": "aether_ii:aether_grass_block"
                 }
               },
               {
                 "type": "minecraft:block",
-                "result_state": {
-                  "Name": "aether_ii:aether_dirt"
-                }
+                "result_state": "aether_ii:aether_dirt"
               }
             ]
           }
@@ -280,9 +223,7 @@
           },
           "then_run": {
             "type": "minecraft:block",
-            "result_state": {
-              "Name": "aether_ii:aether_dirt"
-            }
+            "result_state": "aether_ii:aether_dirt"
           }
         }
       },
@@ -296,9 +237,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 12,
           "noise_frequency": 0.075,
-          "spot_blockstate": {
-            "Name": "aether_ii:ichorite"
-          },
+          "spot_blockstate": "aether_ii:ichorite",
           "spot_ratio": 16
         }
       },
@@ -316,9 +255,7 @@
         },
         "then_run": {
           "type": "minecraft:block",
-          "result_state": {
-            "Name": "aether_ii:undershale"
-          }
+          "result_state": "aether_ii:undershale"
         }
       },
       {
@@ -331,9 +268,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:mossy_holystone"
-          },
+          "spot_blockstate": "aether_ii:mossy_holystone",
           "spot_ratio": 3
         }
       },
@@ -347,9 +282,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:mossy_holystone"
-          },
+          "spot_blockstate": "aether_ii:mossy_holystone",
           "spot_ratio": 3
         }
       },
@@ -363,9 +296,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:mossy_holystone"
-          },
+          "spot_blockstate": "aether_ii:mossy_holystone",
           "spot_ratio": 3
         }
       },
@@ -379,9 +310,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:mossy_holystone"
-          },
+          "spot_blockstate": "aether_ii:mossy_holystone",
           "spot_ratio": 3
         }
       },
@@ -395,9 +324,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.075,
-          "spot_blockstate": {
-            "Name": "aether_ii:arctic_packed_ice"
-          },
+          "spot_blockstate": "aether_ii:arctic_packed_ice",
           "spot_ratio": 3
         }
       },
@@ -411,9 +338,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.075,
-          "spot_blockstate": {
-            "Name": "aether_ii:arctic_packed_ice"
-          },
+          "spot_blockstate": "aether_ii:arctic_packed_ice",
           "spot_ratio": 3
         }
       },
@@ -427,9 +352,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.075,
-          "spot_blockstate": {
-            "Name": "aether_ii:arctic_packed_ice"
-          },
+          "spot_blockstate": "aether_ii:arctic_packed_ice",
           "spot_ratio": 3
         }
       },
@@ -443,9 +366,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.075,
-          "spot_blockstate": {
-            "Name": "aether_ii:arctic_packed_ice"
-          },
+          "spot_blockstate": "aether_ii:arctic_packed_ice",
           "spot_ratio": 3
         }
       },
@@ -459,9 +380,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 20,
           "noise_frequency": 0.05,
-          "spot_blockstate": {
-            "Name": "aether_ii:ferrosite"
-          },
+          "spot_blockstate": "aether_ii:ferrosite",
           "spot_ratio": 9
         }
       },
@@ -475,9 +394,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 20,
           "noise_frequency": 0.05,
-          "spot_blockstate": {
-            "Name": "aether_ii:ferrosite"
-          },
+          "spot_blockstate": "aether_ii:ferrosite",
           "spot_ratio": 9
         }
       },
@@ -491,9 +408,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 20,
           "noise_frequency": 0.05,
-          "spot_blockstate": {
-            "Name": "aether_ii:ferrosite"
-          },
+          "spot_blockstate": "aether_ii:ferrosite",
           "spot_ratio": 9
         }
       },
@@ -507,9 +422,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 20,
           "noise_frequency": 0.05,
-          "spot_blockstate": {
-            "Name": "aether_ii:ferrosite"
-          },
+          "spot_blockstate": "aether_ii:ferrosite",
           "spot_ratio": 9
         }
       },
@@ -523,9 +436,7 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:irradiated_holystone"
-          },
+          "spot_blockstate": "aether_ii:irradiated_holystone",
           "spot_ratio": 3
         }
       },
@@ -539,12 +450,31 @@
           "type": "aether_ii:noise_palette_3d",
           "empty_ratio": 10,
           "noise_frequency": 0.045,
-          "spot_blockstate": {
-            "Name": "aether_ii:irradiated_holystone"
-          },
+          "spot_blockstate": "aether_ii:irradiated_holystone",
           "spot_ratio": 3
         }
       }
     ]
-  }
+  },
+  "noise": {
+    "height": 384,
+    "min_y": 0
+  },
+  "noise_router": {
+    "chunk_surface_level": {
+      "type": "minecraft:interpolated",
+      "cell_size_xz": 16,
+      "cell_size_y": 1,
+      "input": "aether_ii:holy_isles/continents_heightmap"
+    },
+    "continents": "aether_ii:holy_isles/continents",
+    "depth": "aether_ii:holy_isles/cave_biomes_rarity_mapper",
+    "erosion": "aether_ii:holy_isles/erosion",
+    "final_density": "aether_ii:holy_isles/terrain/final_islands",
+    "ridges": "aether_ii:holy_isles/lakes/noise",
+    "temperature": "aether_ii:holy_isles/temperature",
+    "vegetation": "aether_ii:holy_isles/vegetation_rarity_mapper"
+  },
+  "sea_level": -64,
+  "spawn_target": []
 }

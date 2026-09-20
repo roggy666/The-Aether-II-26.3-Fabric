@@ -54,7 +54,7 @@ public class SentryCrateRenderer implements BlockEntityRenderer<SentryCrateBlock
         poseStack.pushPose();
         float yRot = sentryCrateRenderState.facing.toYRot();
             poseStack.translate(0.5F, 0.5F, 0.5F);
-            poseStack.mulPose(Axis.YP.rotationDegrees(-yRot));
+            poseStack.rotateDegrees(Axis.YP, -yRot);
             poseStack.translate(-0.5F, -0.5F, -0.5F);
 
         int frame = Math.max(0, (int) Math.ceil(sentryCrateRenderState.open * 4) - 1);
@@ -79,18 +79,13 @@ public class SentryCrateRenderer implements BlockEntityRenderer<SentryCrateBlock
         RenderType emissiveRenderType = emissiveId.renderType(RenderTypes::entityCutout);
 
 
-        submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, renderType, i, OverlayTexture.NO_OVERLAY,
-                -1,
-                sprites.get(spriteId),
-                0,
-                state.breakProgress);
+        submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, renderType, i, OverlayTexture.NO_OVERLAY, -1, sprites.get(spriteId), 0);
+        if (state.breakProgress != null) {
+            submitNodeCollector.order(1).submitCrumblingOverlay(model, Unit.INSTANCE, poseStack, renderType, i, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
+        }
 
         if (state.open > 0) {
-            submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, emissiveRenderType, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
-                    -1,
-                    sprites.get(emissiveId),
-                    0,
-                    state.breakProgress);
+            submitNodeCollector.submitModel(model, Unit.INSTANCE, poseStack, emissiveRenderType, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, -1, sprites.get(emissiveId), 0);
         }
     }
 

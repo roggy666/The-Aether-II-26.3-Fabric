@@ -123,7 +123,7 @@ public class OverlaidLeavesModel extends BreakingFixModel {
                 oldQuad.packedUV2(),
                 oldQuad.packedUV3(),
                 oldQuad.direction(),
-                new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), layer, oldQuad.materialInfo().itemRenderType(), oldQuad.materialInfo().tintIndex(), oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission())
+                new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), layer, oldQuad.materialInfo().itemRenderType(), oldQuad.materialInfo().itemGlintRenderType(), oldQuad.materialInfo().itemGlintSpecialRenderType(), oldQuad.materialInfo().tintIndex(), oldQuad.materialInfo().shadeDirectionOverride(), oldQuad.materialInfo().lightEmission())
         );
     }
 }

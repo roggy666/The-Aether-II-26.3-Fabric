@@ -2,15 +2,13 @@
   "criteria": {
     "feed_sheepuff": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:sheepuff"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:sheepuff"
           }
-        ],
+        },
         "item": {
           "items": "#aether_ii:sheepuff_food"
         }
@@ -19,33 +17,29 @@
     },
     "kill_sheepuff": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:sheepuff"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:sheepuff"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_sheepuff": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "looking_at": {
-                  "minecraft:entity_type": "aether_ii:sheepuff"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:sheepuff"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

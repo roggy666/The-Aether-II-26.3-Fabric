@@ -26,7 +26,8 @@ public record SkiffSteeringPacket(int entityID, CloudSkiff.SteeringState steerin
 
     public static void handleServer(SkiffSteeringPacket payload, ServerPlayer player) {
         ServerPlayer sender = player;
-        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof CloudSkiff skiff) {
+        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof CloudSkiff skiff
+                && skiff.getControllingPassenger() == sender) {
             skiff.setSteeringState(payload.steeringState());
         }
     }

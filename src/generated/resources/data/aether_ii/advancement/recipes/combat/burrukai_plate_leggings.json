@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:burrukai_plate_leggings"
+        "recipes": "aether_ii:burrukai_plate_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

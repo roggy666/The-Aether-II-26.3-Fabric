@@ -1,94 +1,150 @@
 package com.aetherteam.aetherii.item;
 
+import com.aetherteam.aetherii.data.resources.registries.AetherIIContextIntProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ResolvableFloat;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.component.CookingFuel;
+import net.minecraft.world.item.component.Compostable;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.component.DataComponents;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
-import net.fabricmc.fabric.api.registry.CompostableRegistry;
-import net.fabricmc.fabric.api.registry.FuelValueEvents;
 
 /**
- * Compostable chances and furnace fuel values. NeoForge shipped these as the {@code compostables} and
- * {@code furnace_fuels} data maps; on Fabric they are registered in code through the content registries.
+ * Compostable chances and furnace fuel values. Since 26.3 both are item data components
+ * ({@code minecraft:compostable} / {@code minecraft:cooking_fuel}), applied here to the mod's default item components.
  */
 public class AetherIIFuelsAndCompostables {
     public static void register() {
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYROOT_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPLANE_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYBIRCH_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPINE_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPROOT_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPTOP_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATROOT_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATOAK_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATBOA_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AMBEROOT_LEAF_PILE, 0.018F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYROOT_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPLANE_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYBIRCH_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPINE_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPROOT_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPTOP_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATROOT_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATOAK_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATBOA_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AMBEROOT_LEAVES, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYROOT_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPLANE_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYBIRCH_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SKYPINE_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPROOT_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.WISPTOP_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATROOT_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATOAK_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.GREATBOA_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AMBEROOT_SAPLING, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SHORT_AETHER_GRASS, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.MEDIUM_AETHER_GRASS, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.TALL_AETHER_GRASS, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.BRETTL_FLOWER, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AETHER_FERN, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SHIELD_FERN, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.HESPEROSE, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.TARABLOOM, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.POASPROUT, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.SATIVAL_SHOOT, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.LILICHIME, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.BLADE_POA, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AECHOR_CUTTING, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.CARRION_CUTTING, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.AETHER_BUSH, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.BLUEBERRY_BUSH, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.BLUEBERRY_BUSH_STEM, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.ORANGE_TREE, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIBlocks.BRETTL_GRASS_BUNDLE, 0.85F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.BLUEBERRY, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.ENCHANTED_BLUEBERRY, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.ORANGE, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.ENCHANTED_ORANGE, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.WYNDBERRY, 0.3F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.ENCHANTED_WYNDBERRY, 0.5F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.GOLDEN_WYNDBERRY, 0.65F);
-        CompostableRegistry.INSTANCE.add(AetherIIItems.SATIVAL_BULB, 0.3F);
+        DefaultItemComponentEvents.MODIFY.register(AetherIIFuelsAndCompostables::modifyComponents);
+    }
 
-        FuelValueEvents.BUILD.register((builder, context) -> {
-            builder.add(AetherIIItems.ARKENIUM_HESTVEIL_CANISTER, 5000);
-            builder.add(AetherIIBlocks.AMBROSIUM_BLOCK, 16000);
-            builder.add(AetherIIItems.IRRADIATED_DUST, 3500);
-            builder.add(AetherIIItems.AMBROSIUM_SHARD, 1600);
-            builder.add(AetherIIItems.SKYROOT_PINECONE, 400);
-            builder.add(AetherIIBlocks.AETHER_BUSH, 100);
-            builder.add(AetherIIBlocks.SKYROOT_PLANKS, 300);
-            builder.add(AetherIITags.Items.SKYROOT_DECORATIVE_BLOCKS, 300);
-            builder.add(AetherIIBlocks.GREATROOT_PLANKS, 300);
-            builder.add(AetherIITags.Items.GREATROOT_DECORATIVE_BLOCKS, 300);
-            builder.add(AetherIIBlocks.WISPROOT_PLANKS, 300);
-            builder.add(AetherIITags.Items.WISPROOT_DECORATIVE_BLOCKS, 300);
-            builder.add(AetherIIBlocks.AMBEROOT_PLANKS, 300);
-            builder.add(AetherIITags.Items.AMBEROOT_DECORATIVE_BLOCKS, 300);
-            builder.add(AetherIIBlocks.SKYROOT_BOOKSHELF, 300);
-            builder.add(AetherIIBlocks.GREATROOT_BOOKSHELF, 300);
-            builder.add(AetherIIBlocks.WISPROOT_BOOKSHELF, 300);
-            builder.add(AetherIIBlocks.AMBEROOT_BOOKSHELF, 300);
-            builder.add(AetherIIItems.SKYROOT_SHORTSWORD, 200);
-        });
+    private static void modifyComponents(DefaultItemComponentEvents.ModifyContext context) {
+        compostable(context, AetherIIBlocks.SKYROOT_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.SKYPLANE_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.SKYBIRCH_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.SKYPINE_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.WISPROOT_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.WISPTOP_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.GREATROOT_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.GREATOAK_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.GREATBOA_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.AMBEROOT_LEAF_PILE, AetherIIContextIntProviders.COMPOSTABLE_VERY_LOW);
+        compostable(context, AetherIIBlocks.SKYROOT_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYPLANE_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYBIRCH_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYPINE_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.WISPROOT_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.WISPTOP_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATROOT_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATOAK_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATBOA_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.AMBEROOT_LEAVES, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYROOT_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYPLANE_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYBIRCH_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SKYPINE_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.WISPROOT_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.WISPTOP_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATROOT_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATOAK_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.GREATBOA_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.AMBEROOT_SAPLING, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.SHORT_AETHER_GRASS, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.MEDIUM_AETHER_GRASS, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.TALL_AETHER_GRASS, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.BRETTL_FLOWER, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIBlocks.AETHER_FERN, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.SHIELD_FERN, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.HESPEROSE, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.TARABLOOM, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.POASPROUT, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.SATIVAL_SHOOT, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.LILICHIME, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.BLADE_POA, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.AECHOR_CUTTING, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.CARRION_CUTTING, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIBlocks.AETHER_BUSH, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIBlocks.BLUEBERRY_BUSH, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIBlocks.BLUEBERRY_BUSH_STEM, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIBlocks.ORANGE_TREE, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIBlocks.BRETTL_GRASS_BUNDLE, ContextIntProviders.COMPOSTABLE_MEDIUM_HIGH);
+        compostable(context, AetherIIItems.BLUEBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIItems.ENCHANTED_BLUEBERRY, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIItems.ORANGE, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIItems.ENCHANTED_ORANGE, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIItems.WYNDBERRY, ContextIntProviders.COMPOSTABLE_LOW);
+        compostable(context, AetherIIItems.ENCHANTED_WYNDBERRY, ContextIntProviders.COMPOSTABLE_LOW_MEDIUM);
+        compostable(context, AetherIIItems.GOLDEN_WYNDBERRY, ContextIntProviders.COMPOSTABLE_MEDIUM);
+        compostable(context, AetherIIItems.SATIVAL_BULB, ContextIntProviders.COMPOSTABLE_LOW);
+        fuel(context, AetherIIItems.ARKENIUM_HESTVEIL_CANISTER, 5000);
+        fuel(context, AetherIIBlocks.AMBROSIUM_BLOCK, 16000);
+        fuel(context, AetherIIItems.IRRADIATED_DUST, 3500);
+        fuel(context, AetherIIItems.AMBROSIUM_SHARD, 1600);
+        fuel(context, AetherIIItems.SKYROOT_PINECONE, 400);
+        fuel(context, AetherIIBlocks.AETHER_BUSH, 100);
+        fuel(context, AetherIIBlocks.SKYROOT_PLANKS, 300);
+        // members of AetherIITags.Items.SKYROOT_DECORATIVE_BLOCKS (tags are not loaded yet when default components are built)
+        fuel(context, AetherIIBlocks.SKYROOT_FLOORBOARDS, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_HIGHLIGHT, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_SMALL_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_BASE_PLANKS, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_TOP_PLANKS, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_BASE_BEAM, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_TOP_BEAM, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_BEAM, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_PLANKS, 300);
+        // members of AetherIITags.Items.GREATROOT_DECORATIVE_BLOCKS (tags are not loaded yet when default components are built)
+        fuel(context, AetherIIBlocks.GREATROOT_FLOORBOARDS, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_HIGHLIGHT, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_SMALL_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_BASE_PLANKS, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_TOP_PLANKS, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_BASE_BEAM, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_TOP_BEAM, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_BEAM, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_PLANKS, 300);
+        // members of AetherIITags.Items.WISPROOT_DECORATIVE_BLOCKS (tags are not loaded yet when default components are built)
+        fuel(context, AetherIIBlocks.WISPROOT_FLOORBOARDS, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_HIGHLIGHT, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_SMALL_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_BASE_PLANKS, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_TOP_PLANKS, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_BASE_BEAM, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_TOP_BEAM, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_BEAM, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_PLANKS, 300);
+        // members of AetherIITags.Items.AMBEROOT_DECORATIVE_BLOCKS (tags are not loaded yet when default components are built)
+        fuel(context, AetherIIBlocks.AMBEROOT_FLOORBOARDS, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_HIGHLIGHT, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_SMALL_SHINGLES, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_BASE_PLANKS, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_TOP_PLANKS, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_BASE_BEAM, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_TOP_BEAM, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_BEAM, 300);
+        fuel(context, AetherIIBlocks.SKYROOT_BOOKSHELF, 300);
+        fuel(context, AetherIIBlocks.GREATROOT_BOOKSHELF, 300);
+        fuel(context, AetherIIBlocks.WISPROOT_BOOKSHELF, 300);
+        fuel(context, AetherIIBlocks.AMBEROOT_BOOKSHELF, 300);
+        fuel(context, AetherIIItems.SKYROOT_SHORTSWORD, 200);
+    }
+
+    private static void compostable(DefaultItemComponentEvents.ModifyContext context, ItemLike item, ResourceKey<ContextIntProvider> layers) {
+        context.modify(item.asItem(), builder -> builder.set(DataComponents.COMPOSTABLE, new Compostable(layers)));
+    }
+
+    private static void fuel(DefaultItemComponentEvents.ModifyContext context, ItemLike item, int burnTime) {
+        context.modify(item.asItem(), builder -> builder.set(DataComponents.COOKING_FUEL,
+                new CookingFuel(new ResolvableInt.Constant(burnTime), ResolvableFloat.fromKey(ContextFloatProviders.COOKING_DEFAULT_SPEED_MULTIPLIER))));
     }
 }

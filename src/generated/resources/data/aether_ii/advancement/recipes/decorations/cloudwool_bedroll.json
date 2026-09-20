@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:cloudwool_bedroll"
+        "recipes": "aether_ii:cloudwool_bedroll"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

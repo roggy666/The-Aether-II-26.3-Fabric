@@ -50,6 +50,7 @@ import com.aetherteam.aetherii.recipe.set.AetherIIRecipePropertySets;
 import com.aetherteam.aetherii.world.AetherIIPoi;
 import com.aetherteam.aetherii.world.density.AetherIIDensityFunctionTypes;
 import com.aetherteam.aetherii.world.feature.AetherIIFeatures;
+import com.aetherteam.aetherii.loot.AetherIILootContexts;
 import com.aetherteam.aetherii.world.feature.modifier.filter.AetherIIPlacementModifierTypes;
 import com.aetherteam.aetherii.world.feature.modifier.predicate.AetherIIBlockPredicateTypes;
 import com.aetherteam.aetherii.world.structure.piece.AetherIIStructurePieceTypes;
@@ -121,6 +122,7 @@ public class AetherII implements ModInitializer {
         AetherIIPoi.init();
         AetherIIDensityFunctionTypes.init();
         AetherIIFeatures.init();
+        AetherIILootContexts.init();
         AetherIIPlacementModifierTypes.init();
         AetherIIBlockPredicateTypes.init();
         AetherIITreeDecoratorTypes.init();

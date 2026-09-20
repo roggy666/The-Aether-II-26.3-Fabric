@@ -86,9 +86,9 @@ public class AltarRenderer implements BlockEntityRenderer<AltarBlockEntity, Alta
 
         if (!inputStack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+            poseStack.rotateDegrees(Axis.XP, 90.0F);
             poseStack.translate(0.5F, 0.5F, -1.01725F);
-            poseStack.mulPose(Axis.ZP.rotationDegrees(alterRenderState.facing.toYRot() - 180));
+            poseStack.rotateDegrees(Axis.ZP, alterRenderState.facing.toYRot() - 180);
 
             if (!inputStack.isEmpty()) {
                 poseStack.scale(0.5F, 0.5F, 0.5F);
@@ -105,7 +105,7 @@ public class AltarRenderer implements BlockEntityRenderer<AltarBlockEntity, Alta
             float f1 = Mth.sin(alterRenderState.inputItemRotation / 10.0F + alterRenderState.bobOff) * 0.05F + 0.05F;
             poseStack.translate(0.0F, f1 + f, 0.0F);
             float f2 = ItemEntity.getSpin(alterRenderState.inputItemRotation, alterRenderState.bobOff);
-            poseStack.mulPose(Axis.YP.rotation(f2));
+            poseStack.rotate(Axis.YP, f2);
             ItemEntityRenderer.renderMultipleFromCount(poseStack, submitNodeCollector, alterRenderState.lightCoords, alterRenderState.displayItem, this.random);
 
             poseStack.popPose();
@@ -125,7 +125,7 @@ public class AltarRenderer implements BlockEntityRenderer<AltarBlockEntity, Alta
             poseStack.translate(0.5, 1.25, 0.5);
             poseStack.scale(0.3F, 0.3F, 0.3F);
             poseStack.translate(deltaX, y, deltaZ);
-            poseStack.mulPose(Axis.YN.rotationDegrees(this.blockEntityRenderDispatcher.camera.yRot()));
+            poseStack.rotateDegrees(Axis.YN, this.blockEntityRenderDispatcher.camera.yRot());
             fuelStack.submit(poseStack, submitNodeCollector, alterRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
             poseStack.popPose();

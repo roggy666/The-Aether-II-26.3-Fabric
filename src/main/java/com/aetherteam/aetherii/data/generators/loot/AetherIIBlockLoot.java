@@ -1,5 +1,9 @@
 package com.aetherteam.aetherii.data.generators.loot;
 
+import java.util.concurrent.CompletableFuture;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ContextFloatProviders;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import java.util.function.BiConsumer;
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -27,8 +31,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.Set;
 
@@ -36,13 +38,13 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
     protected static final float[] AMBEROOT_LEAVES_SAPLING_CHANCES = new float[]{0.0375F, 0.042F, 0.048F, 0.0615F, 0.1F};
     private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
 
-    public AetherIIBlockLoot(HolderLookup.Provider registries) {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), registries);
+    public AetherIIBlockLoot(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries);
     }
 
     @Override
     public void generate() {
-        HolderGetter<Item> getter = this.registries.lookupOrThrow(Registries.ITEM);
+        HolderGetter<Item> getter = this.items;
 
         // Dirt
         this.add(AetherIIBlocks.AETHER_GRASS_BLOCK, block -> this.createSingleItemTableWithSilkTouch(block, AetherIIBlocks.AETHER_DIRT));
@@ -60,7 +62,7 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
         this.dropSelf(AetherIIBlocks.UNDERSHALE);
         this.dropWhenSilkTouch(AetherIIBlocks.UNSTABLE_UNDERSHALE);
         this.dropSelf(AetherIIBlocks.AGIOSITE);
-        this.add(AetherIIBlocks.CRUDE_SCATTERGLASS, block -> this.createSingleItemTableWithSilkTouch(block, AetherIIItems.SCATTERGLASS_SHARD, UniformGenerator.between(1.0F, 2.0F)));
+        this.add(AetherIIBlocks.CRUDE_SCATTERGLASS, block -> this.createSingleItemTableWithSilkTouch(block, AetherIIItems.SCATTERGLASS_SHARD, ContextIntProviders.between(1, 2)));
         this.add(AetherIIBlocks.SKY_ROOTS, this::createSkyRootsDrops);
         this.dropSelf(AetherIIBlocks.POINTED_HOLYSTONE);
         this.dropSelf(AetherIIBlocks.POINTED_ICHORITE);
@@ -85,7 +87,7 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
         this.add(AetherIIBlocks.MAGNETIC_SHROOM_STEM, block -> this.createMushroomBlockDrop(block, AetherIIBlocks.MAGNETIC_SHROOM));
 
         // Arctic
-        this.add(AetherIIBlocks.ARCTIC_SNOW_BLOCK, block -> this.createSingleItemTableWithSilkTouch(block, AetherIIItems.ARCTIC_SNOWBALL, ConstantValue.exactly(4.0F)));
+        this.add(AetherIIBlocks.ARCTIC_SNOW_BLOCK, block -> this.createSingleItemTableWithSilkTouch(block, AetherIIItems.ARCTIC_SNOWBALL, ContextIntProviders.exactly(4)));
         this.add(AetherIIBlocks.ARCTIC_SNOW, this::droppingSnowLayer);
         this.dropWhenSilkTouch(AetherIIBlocks.ARCTIC_ICE);
         this.dropWhenSilkTouch(AetherIIBlocks.FRAGILE_ARCTIC_ICE);
@@ -703,7 +705,7 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
         this.dropSelf(AetherIIBlocks.ARTISANS_BENCH);
         this.dropSelf(AetherIIBlocks.ALKAHEST_PURIFIER);
         this.dropSelf(AetherIIBlocks.MUSIC_BLOCK);
-        this.add(AetherIIBlocks.AMBROSIUM_CAMPFIRE, (block) -> this.createSilkTouchDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.AMBROSIUM_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))));
+        this.add(AetherIIBlocks.AMBROSIUM_CAMPFIRE, (block) -> this.createSilkTouchDispatchTable(block, this.applyExplosionCondition(block, LootItem.lootTableItem(AetherIIItems.AMBROSIUM_SHARD).apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1))))));
         this.dropSelf(AetherIIBlocks.SKYROOT_CHEST);
         this.dropSelf(AetherIIBlocks.SKYROOT_BARREL);
         this.dropSelf(AetherIIBlocks.SKYROOT_LADDER);
@@ -762,17 +764,17 @@ public class AetherIIBlockLoot extends AetherIIBlockLootSubProvider {
         this.dropSelf(AetherIIBlocks.HOLYSTONE_LEVER);
 
         // Bookshelves
-        this.add(AetherIIBlocks.SKYROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
-        this.add(AetherIIBlocks.GREATROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
-        this.add(AetherIIBlocks.WISPROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
-        this.add(AetherIIBlocks.AMBEROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
-        this.add(AetherIIBlocks.HOLYSTONE_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ConstantValue.exactly(3)));
+        this.add(AetherIIBlocks.SKYROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ContextIntProviders.exactly(3)));
+        this.add(AetherIIBlocks.GREATROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ContextIntProviders.exactly(3)));
+        this.add(AetherIIBlocks.WISPROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ContextIntProviders.exactly(3)));
+        this.add(AetherIIBlocks.AMBEROOT_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ContextIntProviders.exactly(3)));
+        this.add(AetherIIBlocks.HOLYSTONE_BOOKSHELF, (bookshelf) -> this.createSingleItemTableWithSilkTouch(bookshelf, Items.BOOK, ContextIntProviders.exactly(3)));
 
         // Furniture
         this.dropNone(AetherIIBlocks.OUTPOST_CAMPFIRE);
         this.add(AetherIIBlocks.MURAL, (mural) -> LootTable.lootTable()
             .withPool(this.applyExplosionCondition(mural, LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1.0F))
+                    .setRolls(ContextIntProviders.exactly(1))
                     .add(LootItem.lootTableItem(mural)))
                 .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
                     .include(AetherIIDataComponents.MURAL_SECTION)))

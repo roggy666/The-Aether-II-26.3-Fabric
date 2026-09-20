@@ -1,32 +1,39 @@
 package com.aetherteam.aetherii.world.feature;
 
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import com.aetherteam.aetherii.world.BlockPlacementUtil;
 import com.aetherteam.aetherii.world.feature.configuration.FerrositePillarConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-import java.util.Objects;
 
-public class FerrositePillarFeature extends Feature<FerrositePillarConfiguration> {
+public class FerrositePillarFeature implements Feature {
 
-    public FerrositePillarFeature(Codec<FerrositePillarConfiguration> codec) {
-        super(codec);
+    public static final MapCodec<FerrositePillarFeature> CODEC = FerrositePillarConfiguration.CODEC.xmap(FerrositePillarFeature::new, FerrositePillarFeature::config);
+    private final FerrositePillarConfiguration config;
+
+    public FerrositePillarFeature(FerrositePillarConfiguration config) {
+        this.config = config;
+    }
+
+    public FerrositePillarConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FerrositePillarConfiguration> context) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        BlockPos pos = context.origin();
-        FerrositePillarConfiguration config = context.config();
+    public MapCodec<FerrositePillarFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        FerrositePillarConfiguration config = this.config;
         ChunkGenerator chunk = level.getLevel().getChunkSource().getGenerator();
 
         float radius = random.nextInt(config.additionalRadius()) + config.baseRadius();
@@ -63,19 +70,17 @@ public class FerrositePillarFeature extends Feature<FerrositePillarConfiguration
                 random,
                 true);
 
-        ConfiguredFeature<?, ?> turf = Objects.requireNonNull(level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(HolyIslesConfiguredFeatures.FERROSITE_PILLAR_TURF).orElse(null)).value();
+        Feature turf = level.registryAccess().lookupOrThrow(Registries.FEATURE).getOrThrow(HolyIslesConfiguredFeatures.FERROSITE_PILLAR_TURF).value();
         turf.place(level, chunk, random, new BlockPos(pos.getX(), pos.getY() + height + (int) radius, pos.getZ()));
 
-        distributeSidePillars(context, pos, random, radius, baseHeight, additionalHeight, 1);
-        distributeSidePillars(context, pos, random, radius, baseHeight, additionalHeight, -1);
+        distributeSidePillars(level, pos, random, radius, baseHeight, additionalHeight, 1);
+        distributeSidePillars(level, pos, random, radius, baseHeight, additionalHeight, -1);
 
         return true;
     }
 
-    public void placeSidePillar(FeaturePlaceContext<FerrositePillarConfiguration> context, BlockPos pos) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        FerrositePillarConfiguration config = context.config();
+    public void placeSidePillar(WorldGenLevel level, RandomSource random, BlockPos pos) {
+        FerrositePillarConfiguration config = this.config;
         ChunkGenerator chunk = level.getLevel().getChunkSource().getGenerator();
 
         float radius = random.nextInt(3) + 2.5F;
@@ -109,18 +114,18 @@ public class FerrositePillarFeature extends Feature<FerrositePillarConfiguration
                 random,
                 true);
 
-        ConfiguredFeature<?, ?> turf = Objects.requireNonNull(level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(HolyIslesConfiguredFeatures.FERROSITE_PILLAR_TURF).orElse(null)).value();
+        Feature turf = level.registryAccess().lookupOrThrow(Registries.FEATURE).getOrThrow(HolyIslesConfiguredFeatures.FERROSITE_PILLAR_TURF).value();
         turf.place(level, chunk, random, new BlockPos(pos.getX(), pos.getY() + (int) radius, pos.getZ()));
     }
 
-    public void distributeSidePillars(FeaturePlaceContext<FerrositePillarConfiguration> context, BlockPos pos, RandomSource random, float radius, int baseHeight, int additionalHeight, int offsetMultiplier) {
-        placeSidePillar(context, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
-        placeSidePillar(context, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
+    public void distributeSidePillars(WorldGenLevel level, BlockPos pos, RandomSource random, float radius, int baseHeight, int additionalHeight, int offsetMultiplier) {
+        placeSidePillar(level, random, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
+        placeSidePillar(level, random, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
         if (random.nextBoolean()) {
-            placeSidePillar(context, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
+            placeSidePillar(level, random, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
         }
         if (random.nextBoolean()) {
-            placeSidePillar(context, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
+            placeSidePillar(level, random, new BlockPos(pos.getX() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier, pos.getY() + random.nextInt(additionalHeight + 2) + baseHeight, pos.getZ() + random.nextInt((int) (radius * 1.25F)) * offsetMultiplier));
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.BoulderConfiguration;
-import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,22 +10,31 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 
-public class BoulderFeature extends Feature<BoulderConfiguration> {
-    public BoulderFeature(Codec<BoulderConfiguration> codec) {
-        super(codec);
+public class BoulderFeature implements Feature {
+    public static final MapCodec<BoulderFeature> CODEC = BoulderConfiguration.CODEC.xmap(BoulderFeature::new, BoulderFeature::config);
+    private final BoulderConfiguration config;
+
+    public BoulderFeature(BoulderConfiguration config) {
+        this.config = config;
+    }
+
+    public BoulderConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<BoulderConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        RandomSource random = context.random();
-        BoulderConfiguration config = context.config();
+    public MapCodec<BoulderFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        BoulderConfiguration config = this.config;
         float radius = config.radius() + config.variation().sample(random);
 
         this.placeBoulder(level, pos, random, config, radius);
@@ -41,7 +51,7 @@ public class BoulderFeature extends Feature<BoulderConfiguration> {
         for (int i = 0; i < Math.round(radius); i++) {
             if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
                 int y = i;
-                config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, pos.above(y)));
+                config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, chunkGenerator, random, pos.above(y)));
             }
         }
 

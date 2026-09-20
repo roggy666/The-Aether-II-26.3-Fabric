@@ -1,9 +1,11 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.levelgen.densityfunction.DensitySampler;
+import com.aetherteam.aetherii.world.density.DensitySampling;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.AetherIITags;
-import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
 import com.aetherteam.aetherii.world.feature.configuration.CoastConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.WorldGenRegion;
@@ -11,35 +13,42 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class CoastFeature extends Feature<CoastConfiguration> {
-    public CoastFeature(Codec<CoastConfiguration> codec) {
-        super(codec);
+public class CoastFeature implements Feature {
+    public static final MapCodec<CoastFeature> CODEC = CoastConfiguration.CODEC.xmap(CoastFeature::new, CoastFeature::config);
+    private final CoastConfiguration config;
+
+    public CoastFeature(CoastConfiguration config) {
+        this.config = config;
+    }
+
+    public CoastConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<CoastConfiguration> context) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        BlockPos pos = context.origin();
-        CoastConfiguration config = context.config();
+    public MapCodec<CoastFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        CoastConfiguration config = this.config;
         Set<BlockPos> set = new HashSet<>();
 
-        DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(level.getSeed());
-        config.distanceNoise().mapAll(visitor);
+        DensitySampler.Bound distanceNoise = DensitySampling.sampler(level, config.distanceNoise());
 
         for (int x = pos.getX(); x < pos.getX() + 16; ++x) {
             for (int z = pos.getZ(); z < pos.getZ() + 16; ++z) {
                 for (int y = config.yRange().minInclusive(); y < config.yRange().maxInclusive(); ++y) {
                     BlockPos placementPos = new BlockPos(x, y, z);
-                    int distance = (int) config.distanceNoise().compute(new DensityFunction.SinglePointContext(x, y, z));
+                    int distance = (int) distanceNoise.sampleValue(x, y, z);
 
                         if (level.getBlockState(placementPos).isAir()
                                 && level.getBlockState(placementPos.below(2)).isAir()
@@ -54,7 +63,7 @@ public class CoastFeature extends Feature<CoastConfiguration> {
                 }
             }
         }
-        this.distributeVegetation(context, level, config, random, set);
+        this.distributeVegetation(level, chunkGenerator, config, random, origin, set);
         return true;
     }
 
@@ -104,15 +113,15 @@ public class CoastFeature extends Feature<CoastConfiguration> {
         return level.getBlockState(pos).is(AetherIITags.Blocks.SHAPES_COASTS);
     }
 
-    protected void distributeVegetation(FeaturePlaceContext<CoastConfiguration> context, WorldGenLevel level, CoastConfiguration config, RandomSource random, Set<BlockPos> set) {
-        ChunkPos centerPos = level instanceof WorldGenRegion region ? region.getCenter() : ChunkPos.containing(context.origin());
+    protected void distributeVegetation(WorldGenLevel level, ChunkGenerator chunkGenerator, CoastConfiguration config, RandomSource random, BlockPos origin, Set<BlockPos> set) {
+        ChunkPos centerPos = level instanceof WorldGenRegion region ? region.getCenter() : ChunkPos.containing(origin);
         for (BlockPos blockPos : set) {
             if (SectionPos.blockToSectionCoord(blockPos.getX()) != centerPos.x() || SectionPos.blockToSectionCoord(blockPos.getZ()) != centerPos.z()) {
                 continue;
             }
             if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
                 if (level.ensureCanWrite(blockPos)) {
-                    config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, blockPos));
+                    config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, chunkGenerator, random, blockPos));
                 }
             }
         }

@@ -25,7 +25,7 @@ public class SliderGlowLayer extends EyesLayer<SliderRenderState, SliderModel> {
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int p_434650_, SliderRenderState sliderRenderState, float p_433542_, float p_435619_) {
         if (sliderRenderState.awake) {
-            submitNodeCollector.order(1).submitModel(this.getParentModel(), sliderRenderState, poseStack, this.renderType(sliderRenderState), 15728640, OverlayTexture.NO_OVERLAY, -1, (TextureAtlasSprite) null, sliderRenderState.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+            submitNodeCollector.order(1).submitModel(this.getParentModel(), sliderRenderState, poseStack, this.renderType(sliderRenderState), 15728640, OverlayTexture.NO_OVERLAY, -1, (TextureAtlasSprite) null, sliderRenderState.outlineColor);
         }
     }
 

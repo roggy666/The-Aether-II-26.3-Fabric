@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:light_blue_dye_from_carrion_cutting"
+        "recipes": "aether_ii:light_blue_dye_from_carrion_cutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

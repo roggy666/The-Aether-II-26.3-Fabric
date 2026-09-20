@@ -39,7 +39,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.Collectors;
 
 public class OutpostCampfireBlock extends MultiBlock {
-    public static final MapCodec<OutpostCampfireBlock> CODEC = simpleCodec(OutpostCampfireBlock::new);
     public static final EnumProperty<Direction> PART_FACING = EnumProperty.create("part_facing", Direction.class, Direction.Plane.HORIZONTAL);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 5.0, 16.0);
@@ -47,11 +46,6 @@ public class OutpostCampfireBlock extends MultiBlock {
     public OutpostCampfireBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(PART_FACING, Direction.SOUTH).setValue(LIT, false));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

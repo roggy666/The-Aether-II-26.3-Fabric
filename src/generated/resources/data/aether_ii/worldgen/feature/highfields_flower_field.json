@@ -1,0 +1,19 @@
+{
+  "type": "aether_ii:aether_grass",
+  "to_place": {
+    "type": "minecraft:noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": 0
+    },
+    "scale": 0.1,
+    "seed": 5432,
+    "states": [
+      "minecraft:air",
+      "aether_ii:hesperose",
+      "minecraft:air",
+      "aether_ii:tarabloom",
+      "minecraft:air"
+    ]
+  }
+}

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:blue_dye_from_brettl_flower"
+        "recipes": "aether_ii:blue_dye_from_brettl_flower"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

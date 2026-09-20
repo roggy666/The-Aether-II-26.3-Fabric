@@ -1,15 +1,15 @@
 package com.aetherteam.aetherii.world.feature.configuration;
 
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public record CloudbedConfiguration(BlockStateProvider block, BlockPredicate predicate, int yLevel, DensityFunction cloudNoise, double cloudRadius, DensityFunction yOffset, double maxYOffset) implements FeatureConfiguration {
-    public static final Codec<CloudbedConfiguration> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            BlockStateProvider.CODEC.fieldOf("block").forGetter(CloudbedConfiguration::block),
+public record CloudbedConfiguration(BlockStateProvider block, BlockPredicate predicate, int yLevel, DensityFunction cloudNoise, double cloudRadius, DensityFunction yOffset, double maxYOffset) {
+    public static final MapCodec<CloudbedConfiguration> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+            BlockStateProvider.DIRECT_CODEC.fieldOf("block").forGetter(CloudbedConfiguration::block),
             BlockPredicate.CODEC.fieldOf("predicate").forGetter(CloudbedConfiguration::predicate),
             Codec.INT.fieldOf("y_level").forGetter(CloudbedConfiguration::yLevel),
             DensityFunction.CODEC.fieldOf("cloud_noise").forGetter(CloudbedConfiguration::cloudNoise),

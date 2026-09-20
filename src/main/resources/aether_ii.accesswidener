@@ -21,10 +21,6 @@ accessible	method	net/minecraft/client/renderer/texture/TextureAtlasSprite	<init
 # WeatherEffectRenderer
 accessible	class	net/minecraft/client/renderer/WeatherEffectRenderer$ColumnInstance
 
-# SurfaceRules
-accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
-accessible	class	net/minecraft/world/level/levelgen/SurfaceRules$Context
-accessible	field	net/minecraft/world/level/levelgen/SurfaceRules$Context	randomState	Lnet/minecraft/world/level/levelgen/RandomState;
 
 # ModelProvider
 accessible	class	net/minecraft/client/data/models/ModelProvider$ItemInfoCollector
@@ -33,8 +29,6 @@ accessible	class	net/minecraft/client/data/models/ModelProvider$SimpleModelColle
 accessible	method	net/minecraft/client/data/models/ModelProvider$SimpleModelCollector	<init>	()V
 
 # LeavesBlock
-accessible	field	net/minecraft/world/level/block/LeavesBlock	leafParticleChance	F
-mutable	field	net/minecraft/world/level/block/LeavesBlock	leafParticleChance	F
 
 # Recipe Book & Screens
 accessible	class	net/minecraft/client/gui/screens/recipebook/OverlayRecipeComponent$OverlayRecipeButton

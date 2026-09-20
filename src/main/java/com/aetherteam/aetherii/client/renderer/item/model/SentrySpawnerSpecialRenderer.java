@@ -34,15 +34,15 @@ public class SentrySpawnerSpecialRenderer implements NoDataSpecialModelRenderer 
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0).renderType(RenderTypes::entitySolid), i, i1, -1, this.sprites.get(AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0)), i2, null);
+        poseStack.rotateDegrees(Axis.XP, 180);
+        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0).renderType(RenderTypes::entitySolid), i, i1, -1, this.sprites.get(AetherIIAtlases.SENTRY_SPAWNER_MATERIALS.get(0)), i2);
 
         poseStack.popPose();
 
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
-        submitNodeCollector.submitModel(this.pistonModel, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(SentrySpawnerRenderer.PISTON_OFF), i, i1, i2, null);
+        poseStack.rotateDegrees(Axis.XP, 180);
+        submitNodeCollector.submitModel(this.pistonModel, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(SentrySpawnerRenderer.PISTON_OFF), i, i1, i2);
         poseStack.popPose();
 
     }
@@ -51,7 +51,7 @@ public class SentrySpawnerSpecialRenderer implements NoDataSpecialModelRenderer 
     public void getExtents(Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.root().getExtentsForGui(poseStack, consumer);
         this.pistonModel.root().getExtentsForGui(poseStack, consumer);
     }

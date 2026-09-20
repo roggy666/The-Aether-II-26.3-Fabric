@@ -51,8 +51,7 @@ public class AccessoryLayer<S extends HumanoidRenderState, M extends HumanoidMod
                         OverlayTexture.NO_OVERLAY,
                         -1,
                         null,
-                        s.outlineColor,
-                        null
+                        s.outlineColor
                 );
             }
         }

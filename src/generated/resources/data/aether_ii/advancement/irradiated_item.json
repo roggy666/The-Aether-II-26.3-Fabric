@@ -3,25 +3,25 @@
   "criteria": {
     "irradiated_armor": {
       "conditions": {
-        "recipe_id": "aether_ii:purify_irradiated_armor"
+        "recipes": "aether_ii:purify_irradiated_armor"
       },
       "trigger": "minecraft:recipe_crafted"
     },
     "irradiated_chunk": {
       "conditions": {
-        "recipe_id": "aether_ii:purify_irradiated_chunk"
+        "recipes": "aether_ii:purify_irradiated_chunk"
       },
       "trigger": "minecraft:recipe_crafted"
     },
     "irradiated_tool": {
       "conditions": {
-        "recipe_id": "aether_ii:purify_irradiated_tool"
+        "recipes": "aether_ii:purify_irradiated_tool"
       },
       "trigger": "minecraft:recipe_crafted"
     },
     "irradiated_weapon": {
       "conditions": {
-        "recipe_id": "aether_ii:purify_irradiated_weapon"
+        "recipes": "aether_ii:purify_irradiated_weapon"
       },
       "trigger": "minecraft:recipe_crafted"
     }

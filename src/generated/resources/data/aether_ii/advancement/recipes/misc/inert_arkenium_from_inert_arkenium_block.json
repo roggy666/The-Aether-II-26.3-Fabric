@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:inert_arkenium_from_inert_arkenium_block"
+        "recipes": "aether_ii:inert_arkenium_from_inert_arkenium_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:amber_darts_aether_ii_ambrosium_poisoning"
+        "recipes": "aether_ii:amber_darts_aether_ii_ambrosium_poisoning"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

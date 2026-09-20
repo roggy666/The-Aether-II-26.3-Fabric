@@ -28,7 +28,7 @@ public class AerbunnyCollarLayer extends RenderLayer<AerbunnyRenderState, Aerbun
         int color = getColor(renderState);
         if (!renderState.isInvisible && renderState.tame) {
             this.model.setupAnim(renderState);
-            collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, AetherIIRenderTypes.entityDitherNoCull(COLLAR_LOCATION), lightCoords, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, AetherIIRenderTypes.entityDitherNoCull(COLLAR_LOCATION), lightCoords, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor);
         }
 
     }

@@ -1,7 +1,6 @@
 {
   "type": "minecraft:add",
-  "argument1": 0.15,
-  "argument2": {
+  "left": {
     "type": "aether_ii:perlin_noise",
     "noise": {
       "amplitudes": [
@@ -16,5 +15,6 @@
     "seed": 2000,
     "xz_scale": 1.0,
     "y_scale": 1.0
-  }
+  },
+  "right": 0.15
 }

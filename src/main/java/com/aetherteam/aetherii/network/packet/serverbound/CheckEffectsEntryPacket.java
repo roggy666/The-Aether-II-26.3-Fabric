@@ -39,6 +39,7 @@ public record CheckEffectsEntryPacket(MobEffect effect) implements CustomPacketP
                     });
                 }
             });
+            attachment.syncTo(serverPlayer);
         }
     }
 }

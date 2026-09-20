@@ -15,12 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class SentryTrapBlock extends GroundTrapBlock {
-    public static final MapCodec<SentryTrapBlock> CODEC = simpleCodec(SentryTrapBlock::new);
-
-    @Override
-    public MapCodec<SentryTrapBlock> codec() {
-        return CODEC;
-    }
 
     public SentryTrapBlock(BlockBehaviour.Properties properties) {
         super(properties);

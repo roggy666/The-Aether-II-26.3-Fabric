@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:lucent_guardian_roots"
+        "recipes": "aether_ii:lucent_guardian_roots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

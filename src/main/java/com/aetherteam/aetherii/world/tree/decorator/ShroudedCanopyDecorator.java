@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.tree.decorator;
 
+import net.minecraft.world.level.levelgen.feature.Feature;
 import com.aetherteam.aetherii.block.natural.BottomedVineBlock;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConfiguredFeatures;
 import com.google.common.collect.HashMultimap;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
@@ -27,10 +27,10 @@ import java.util.*;
 
 public class ShroudedCanopyDecorator extends TreeDecorator {
     public static final MapCodec<ShroudedCanopyDecorator> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            BlockStateProvider.CODEC.fieldOf("canopy_top_state").forGetter((decorator) -> decorator.canopyTopState),
-            BlockStateProvider.CODEC.fieldOf("canopy_branch_state").forGetter((decorator) -> decorator.canopyBranchState),
-            BlockStateProvider.CODEC.fieldOf("moss_carpet_state").forGetter((decorator) -> decorator.mossCarpetState),
-            BlockStateProvider.CODEC.fieldOf("moss_vine_state").forGetter((decorator) -> decorator.mossVineState),
+            BlockStateProvider.DIRECT_CODEC.fieldOf("canopy_top_state").forGetter((decorator) -> decorator.canopyTopState),
+            BlockStateProvider.DIRECT_CODEC.fieldOf("canopy_branch_state").forGetter((decorator) -> decorator.canopyBranchState),
+            BlockStateProvider.DIRECT_CODEC.fieldOf("moss_carpet_state").forGetter((decorator) -> decorator.mossCarpetState),
+            BlockStateProvider.DIRECT_CODEC.fieldOf("moss_vine_state").forGetter((decorator) -> decorator.mossVineState),
             IntProviders.CODEC.fieldOf("canopy_radius").forGetter((decorator) -> decorator.canopyRadius),
             IntProviders.CODEC.fieldOf("branch_amount").forGetter((decorator) -> decorator.branchAmount),
             IntProviders.CODEC.fieldOf("branch_height").forGetter((decorator) -> decorator.branchHeight),
@@ -98,7 +98,7 @@ public class ShroudedCanopyDecorator extends TreeDecorator {
 
             if (context.level() instanceof WorldGenLevel worldGenLevel && context.random().nextDouble() <= this.nestChance) {
                 ChunkGenerator chunk = worldGenLevel.getLevel().getChunkSource().getGenerator();
-                ConfiguredFeature<?, ?> nest = Objects.requireNonNull(worldGenLevel.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(HolyIslesConfiguredFeatures.MOA_NEST).orElse(null)).value();
+                Feature nest = Objects.requireNonNull(worldGenLevel.registryAccess().lookupOrThrow(Registries.FEATURE).get(HolyIslesConfiguredFeatures.MOA_NEST).orElse(null)).value();
                 nest.place(worldGenLevel, chunk, context.random(), center.above(2));
             }
         }

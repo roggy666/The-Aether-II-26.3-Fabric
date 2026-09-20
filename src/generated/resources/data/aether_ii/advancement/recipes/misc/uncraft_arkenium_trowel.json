@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_arkenium_trowel"
+        "recipes": "aether_ii:uncraft_arkenium_trowel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

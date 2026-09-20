@@ -6,9 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
@@ -18,7 +16,7 @@ import java.util.List;
 public class GroundFeatureDecorator extends TreeDecorator {
     public static final MapCodec<GroundFeatureDecorator> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    BlockStateProvider.CODEC.fieldOf("block_provider").forGetter(decorator -> decorator.blockProvider),
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("block_provider").forGetter(decorator -> decorator.blockProvider),
                     Codec.INT.fieldOf("chance").forGetter(decorator -> decorator.chance)
             ).apply(instance, GroundFeatureDecorator::new)
     );

@@ -5,54 +5,48 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 7.0,
-                "min": 3.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 7,
+              "min": 3
             }
-          ],
+          },
           "name": "aether_ii:scatterglass_bolt"
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 3.0,
-        "min": 1.0
+        "max": 3,
+        "min": 1
       }
     },
     {
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 4,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:scatterglass_shard",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 2,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:cloudtwine",
           "weight": 2
         },
@@ -63,33 +57,29 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 5,
+              "min": 2
             }
-          ],
+          },
           "name": "aether_ii:skyroot_stick"
         }
       ],
-      "functions": [
-        {
-          "count": {
-            "type": "minecraft:uniform",
-            "max": 3.0,
-            "min": 2.0
-          },
-          "function": "minecraft:set_count"
+      "modifier": {
+        "type": "minecraft:set_count",
+        "count": {
+          "type": "minecraft:uniform",
+          "max": 3,
+          "min": 2
         }
-      ],
+      },
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 3.0,
-        "min": 2.0
+        "max": 3,
+        "min": 2
       }
     },
     {
@@ -105,8 +95,7 @@
           "weight": 2
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:chests/camp/fletcher"
+  ]
 }

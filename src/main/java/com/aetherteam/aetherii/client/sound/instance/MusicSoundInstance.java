@@ -89,7 +89,7 @@ public class MusicSoundInstance extends AbstractTickableSoundInstance {
     }
 
     @Override
-    public @Nullable WeighedSoundEvents resolve(SoundManager handler) {
+    public @Nullable WeighedSoundEvents getOrResolve(SoundManager handler) {
         if (this.identifier.equals(SoundManager.INTENTIONALLY_EMPTY_SOUND_LOCATION)) {
             this.sound = SoundManager.INTENTIONALLY_EMPTY_SOUND;
             return SoundManager.INTENTIONALLY_EMPTY_SOUND_EVENT;

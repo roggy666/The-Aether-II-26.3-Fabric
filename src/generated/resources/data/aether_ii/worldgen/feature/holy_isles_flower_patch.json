@@ -1,0 +1,16 @@
+{
+  "type": "aether_ii:aether_flower",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:aechor_cutting",
+        "weight": 2
+      },
+      {
+        "data": "aether_ii:carrion_cutting",
+        "weight": 1
+      }
+    ]
+  }
+}

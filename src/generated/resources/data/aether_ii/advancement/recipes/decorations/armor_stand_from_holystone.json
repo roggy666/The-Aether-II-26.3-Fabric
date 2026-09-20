@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:armor_stand_from_holystone"
+        "recipes": "aether_ii:armor_stand_from_holystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

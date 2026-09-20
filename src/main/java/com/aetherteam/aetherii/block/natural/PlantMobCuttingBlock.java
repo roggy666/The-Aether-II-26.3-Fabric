@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.entity.PlantCuttingMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -33,17 +34,17 @@ public class PlantMobCuttingBlock extends AetherFlowerBlock implements Bonemeala
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return random.nextFloat() <= 0.25;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         this.spawnPlantMob(level, pos);
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
     }

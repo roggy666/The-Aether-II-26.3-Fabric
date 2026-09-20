@@ -1,0 +1,14 @@
+{
+  "type": "aether_ii:moss_vines",
+  "blocks": {
+    "id": "aether_ii:ambrelinn_moss_vines",
+    "properties": {
+      "age": "0",
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "up": "false",
+      "west": "false"
+    }
+  }
+}

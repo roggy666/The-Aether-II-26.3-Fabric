@@ -26,7 +26,7 @@ public class SentryGolemLayer extends EyesLayer<SentryGolemRenderState, SentryGo
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int p_434650_, SentryGolemRenderState sentry, float p_433542_, float p_435619_) {
         RenderType renderType = sentry.ranged ? RANGED_GLOW : GLOW;
 
-        submitNodeCollector.order(1).submitModel(this.getParentModel(), sentry, poseStack, renderType, 15728640, OverlayTexture.NO_OVERLAY, -1, (TextureAtlasSprite) null, sentry.outlineColor, (ModelFeatureRenderer.CrumblingOverlay) null);
+        submitNodeCollector.order(1).submitModel(this.getParentModel(), sentry, poseStack, renderType, 15728640, OverlayTexture.NO_OVERLAY, -1, (TextureAtlasSprite) null, sentry.outlineColor);
     }
 
     @Override

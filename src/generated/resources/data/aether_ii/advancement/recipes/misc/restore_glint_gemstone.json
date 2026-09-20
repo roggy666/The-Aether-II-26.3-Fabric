@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:restore_glint_gemstone"
+        "recipes": "aether_ii:restore_glint_gemstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

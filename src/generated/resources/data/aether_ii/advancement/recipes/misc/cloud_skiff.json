@@ -3,13 +3,13 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:cloud_skiff"
+        "recipes": "aether_ii:cloud_skiff"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
     "in_aercloud": {
       "conditions": {
-        "block": "aether_ii:cold_aercloud"
+        "blocks": "aether_ii:cold_aercloud"
       },
       "trigger": "minecraft:enter_block"
     }

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.api;
 
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
 import com.aetherteam.aetherii.item.components.ReinforcementTier;
@@ -16,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -34,7 +34,7 @@ public record ItemReinforcement(Upgrade... upgrades) {
     public static final StreamCodec<RegistryFriendlyByteBuf, ItemReinforcement> DIRECT_STREAM_CODEC = StreamCodec.composite(
             Upgrade.STREAM_CODEC.apply(ByteBufCodecs.list(4)), (u) -> List.of(u.upgrades()),
             ItemReinforcement::new);
-    public static final Codec<Holder<ItemReinforcement>> CODEC = RegistryFileCodec.create(AetherIIRegistries.ITEM_REINFORCEMENT, DIRECT_CODEC);
+    public static final Codec<Holder<ItemReinforcement>> CODEC = RegistryCodecs.holder(AetherIIRegistries.ITEM_REINFORCEMENT, DIRECT_CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<ItemReinforcement>> STREAM_CODEC = ByteBufCodecs.holder(AetherIIRegistries.ITEM_REINFORCEMENT, DIRECT_STREAM_CODEC);
 
     public ItemReinforcement(List<Upgrade> upgrades) {

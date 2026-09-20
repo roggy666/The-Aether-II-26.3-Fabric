@@ -3,106 +3,121 @@
   "criteria": {
     "break_berry_bush": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "aether_ii:blueberry_bush"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "aether_ii:blueberry_bush"
+                }
+              }
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "#aether_ii:tools/trowels"
               }
             }
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "aether_ii:item_break_block"
     },
     "break_brettl_plant": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "aether_ii:brettl_plant"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "aether_ii:brettl_plant"
+                }
+              }
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "#aether_ii:tools/trowels"
               }
             }
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "aether_ii:item_break_block"
     },
     "break_orange_tree": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "aether_ii:orange_tree"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "aether_ii:orange_tree"
+                }
+              }
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "#aether_ii:tools/trowels"
               }
             }
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "aether_ii:item_break_block"
     },
     "break_satival_shoot": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "aether_ii:satival_shoot"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "aether_ii:satival_shoot"
+                }
+              }
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "#aether_ii:tools/trowels"
               }
             }
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "aether_ii:item_break_block"
     },
     "break_valkyrie_sprout": {
       "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "block": {
-                "blocks": "aether_ii:valkyrie_sprout"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "block": {
+                  "blocks": "aether_ii:valkyrie_sprout"
+                }
+              }
+            },
+            {
+              "type": "minecraft:match_tool",
+              "predicate": {
+                "items": "#aether_ii:tools/trowels"
               }
             }
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": "#aether_ii:tools/trowels"
-            }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "aether_ii:item_break_block"
     }

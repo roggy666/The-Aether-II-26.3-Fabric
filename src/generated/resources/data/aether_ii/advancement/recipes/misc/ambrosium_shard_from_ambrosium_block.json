@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:ambrosium_shard_from_ambrosium_block"
+        "recipes": "aether_ii:ambrosium_shard_from_ambrosium_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

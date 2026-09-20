@@ -46,15 +46,10 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class VaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<VaseBlock> CODEC = simpleCodec(VaseBlock::new);
     public static final EnumProperty<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty CRACKED = BlockStateProperties.CRACKED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.column(10.0, 0.0, 11.0);
-
-    public MapCodec<VaseBlock> codec() {
-        return CODEC;
-    }
 
     public VaseBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -170,7 +165,7 @@ public class VaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hitResult, Projectile projectile) {
         BlockPos pos = hitResult.getBlockPos();
         if (level instanceof ServerLevel serverLevel) {
-            if (projectile.mayInteract(serverLevel, pos) && projectile.mayBreak(serverLevel)) {
+            if (projectile.mayInteract(serverLevel, pos) && projectile.mayBreak(serverLevel, pos)) {
                 level.setBlock(pos, state.setValue(CRACKED, true), 260);
                 level.destroyBlock(pos, true, projectile);
             }

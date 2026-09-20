@@ -1,0 +1,32 @@
+{
+  "type": "aether_ii:aether_grass",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:short_aether_grass",
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:medium_aether_grass",
+        "weight": 2
+      },
+      {
+        "data": "aether_ii:tall_aether_grass",
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:aether_fern",
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:shield_fern",
+        "weight": 2
+      },
+      {
+        "data": "aether_ii:blade_poa",
+        "weight": 2
+      }
+    ]
+  }
+}

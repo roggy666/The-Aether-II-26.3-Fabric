@@ -21,7 +21,7 @@ public class ShroudwingGlowLayer extends RenderLayer<ShroudwingRenderState, Shro
         Identifier emissiveTexture = shroudwingRenderState.emissiveTexture;
         if (emissiveTexture != null) {
             RenderType renderType = RenderTypes.eyes(emissiveTexture);
-            submitNodeCollector.order(1).submitModel(this.getParentModel(), shroudwingRenderState, poseStack, renderType, 15728640, OverlayTexture.NO_OVERLAY, -1, null, shroudwingRenderState.outlineColor, null);
+            submitNodeCollector.order(1).submitModel(this.getParentModel(), shroudwingRenderState, poseStack, renderType, 15728640, OverlayTexture.NO_OVERLAY, -1, null, shroudwingRenderState.outlineColor);
         }
     }
 }

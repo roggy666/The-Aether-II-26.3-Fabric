@@ -12,7 +12,7 @@ public record PlayerGrownCondition() implements LootItemCondition {
 
     @Override
     public boolean test(LootContext context) {
-        Entity entity = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);
         if (entity instanceof PlantCuttingMob plantCuttingMob) {
             return plantCuttingMob.isPlayerGrown();
         }

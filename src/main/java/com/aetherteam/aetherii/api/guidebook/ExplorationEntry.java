@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.api.guidebook;
 
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.aetherteam.aetherii.attachment.living.EffectsSystemAttachment;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupInstance;
@@ -10,7 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class ExplorationEntry extends GuidebookEntry {
             RecordCodecBuilder.create(in -> in.group(
                     GuidebookEntry.MAP_CODEC.forGetter(GuidebookEntry::root)
             ).apply(in, ExplorationEntry::new));
-    public static final Codec<Holder<ExplorationEntry>> REFERENCE_CODEC = RegistryFileCodec.create(AetherIIRegistries.EXPLORATION_ENTRY, DIRECT_CODEC);
+    public static final Codec<Holder<ExplorationEntry>> REFERENCE_CODEC = RegistryCodecs.holder(AetherIIRegistries.EXPLORATION_ENTRY, DIRECT_CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<ExplorationEntry>> STREAM_CODEC = ByteBufCodecs.holderRegistry(AetherIIRegistries.EXPLORATION_ENTRY);
 
     public ExplorationEntry(GuidebookEntry root) {

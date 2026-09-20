@@ -8,280 +8,245 @@
           "children": [
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "WHITE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "WHITE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/white"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "ORANGE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "ORANGE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/orange"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "MAGENTA",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "MAGENTA",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/magenta"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "LIGHT_BLUE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "LIGHT_BLUE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/light_blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "YELLOW",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "YELLOW",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/yellow"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "LIME",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "LIME",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/lime"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "PINK",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "PINK",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/pink"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "GRAY",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "GRAY",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "LIGHT_GRAY",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "LIGHT_GRAY",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/light_gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "CYAN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "CYAN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/cyan"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "PURPLE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "PURPLE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/purple"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "BLUE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "BLUE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "BROWN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "BROWN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/brown"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "GREEN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "GREEN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/green"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "RED",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "RED",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/red"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "color": "BLACK",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "color": "BLACK",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/black"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:kirrid": {
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:kirrid": {
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:shearing/kirrid/highfields/undyed"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:shearing/kirrid/highfields"
+  ]
 }

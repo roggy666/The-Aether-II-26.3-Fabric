@@ -10,7 +10,6 @@ import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import net.minecraft.world.item.crafting.RecipeMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,14 +17,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AetherIIClientCaches {
     public static final Map<MuralBlockEntity.MuralData, List<BlockStateModelPart>> CACHED_MURAL_BLOCK_PARTS = new ConcurrentHashMap<>();
     public static final Map<MuralSection, List<BakedQuad>> CACHED_MURAL_ITEM_PARTS = new ConcurrentHashMap<>();
-    public static RecipeMap CLIENT_CACHES = RecipeMap.EMPTY;
+    public static ClientRecipeCache CLIENT_CACHES = ClientRecipeCache.EMPTY;
 
     public static void registerReloadListeners() {
         ResourceLoader.get(PackType.CLIENT_RESOURCES).registerReloadListener(Identifier.fromNamespaceAndPath(AetherII.MODID, "mural_cache"),
                 (ResourceManagerReloadListener) manager -> clearMuralCaches());
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
             clearMuralCaches();
-            CLIENT_CACHES = RecipeMap.EMPTY;
+            CLIENT_CACHES = ClientRecipeCache.EMPTY;
         });
     }
 

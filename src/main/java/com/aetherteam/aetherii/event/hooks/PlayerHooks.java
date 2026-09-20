@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.event.hooks;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -82,7 +83,7 @@ public class PlayerHooks {
                     if (optional.isPresent()) {
                         optional.get().createPortalBlocks(level);
                         player.playSound(SoundEvents.BUCKET_EMPTY, 1.0F, 1.0F);
-                        player.swing(hand);
+                        player.swing(hand, SwingAnimation.DEFAULT, false);
                         if (!player.isCreative()) {
                             if (stack.getCount() > 1) {
                                 stack.shrink(1);
@@ -136,7 +137,7 @@ public class PlayerHooks {
                 if (!player.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 return true;
             }
         }
@@ -176,7 +177,7 @@ public class PlayerHooks {
                 if (!player.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 return true;
             }
         }
@@ -211,7 +212,7 @@ public class PlayerHooks {
                     player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
                 }
                 ItemStack filledBucket = ItemUtils.createFilledResult(heldStack, player, AetherIIItems.SKYROOT_MILK_BUCKET.getDefaultInstance());
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 player.setItemInHand(hand, filledBucket);
             }
         }
@@ -226,7 +227,7 @@ public class PlayerHooks {
                 ItemEntity itemEntity = new ItemEntity(level, target.getX(), target.getY(), target.getZ(), AetherIIItems.GOLDEN_WYNDBERRY.getDefaultInstance());
                 itemEntity.setDefaultPickUpDelay();
                 level.addFreshEntity(itemEntity);
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 target.level().playSound(null, target.blockPosition(), SoundEvents.PLAYER_BURP, SoundSource.HOSTILE, 1.0F, 1.0F);
                 ParticleUtils.spawnParticleOnFace(level, target.blockPosition(), Direction.UP, new DustParticleOptions(0xFFD84D, 0.5F), Vec3.ZERO, 0.5F);
                 if (player instanceof ServerPlayer serverPlayer) {
@@ -241,7 +242,7 @@ public class PlayerHooks {
         if (target instanceof AgeableMob ageableMob) {
             if (itemInHand.getItem() == AetherIIItems.GOLDEN_WYNDBERRY && ageableMob.isBaby() && ageableMob.ageLockParticleTimer == 0 && !target.is(EntityTypeTags.CANNOT_BE_AGE_LOCKED)) {
                 AgeableMob.setAgeLocked(ageableMob, ageableMob::isAgeLocked, player, itemInHand, mob -> ageableMob.setAgeLockedData());
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
             }
         }
     }

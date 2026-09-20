@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:faded_holystone_bricks_from_artisanry"
+        "recipes": "aether_ii:faded_holystone_bricks_from_artisanry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

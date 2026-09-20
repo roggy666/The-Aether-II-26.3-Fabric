@@ -1,15 +1,14 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.joml.Vector3i;
 
 import java.util.ArrayList;
@@ -17,16 +16,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HestveilFeature extends Feature<NoneFeatureConfiguration> {
-    public HestveilFeature(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+public class HestveilFeature implements Feature {
+    public static final MapCodec<HestveilFeature> CODEC = MapCodec.unit(HestveilFeature::new);
+
+    @Override
+    public MapCodec<HestveilFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        BlockPos pos = context.origin();
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
 
         List<BlockPos> positions = new ArrayList<>(List.of(pos));
         Set<BlockPos> visited = new HashSet<>();

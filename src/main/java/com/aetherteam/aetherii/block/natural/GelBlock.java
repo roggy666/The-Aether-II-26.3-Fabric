@@ -30,13 +30,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class GelBlock extends HalfTransparentBlock {
-    public static final MapCodec<GelBlock> CODEC = simpleCodec(GelBlock::new);
     private static final VoxelShape SHAPE = Block.column(14.0, 0.0, 15.0);
-
-    @Override
-    public MapCodec<GelBlock> codec() {
-        return CODEC;
-    }
 
     public GelBlock(BlockBehaviour.Properties properties) {
         super(properties);

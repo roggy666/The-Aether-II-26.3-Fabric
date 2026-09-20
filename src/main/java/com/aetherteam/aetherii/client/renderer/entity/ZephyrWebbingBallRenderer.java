@@ -31,7 +31,7 @@ public class ZephyrWebbingBallRenderer extends EntityRenderer<ZephyrWebbingBall,
     public void submit(EntityRenderState entityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
 
         poseStack.pushPose();
-        poseStack.mulPose(cameraRenderState.orientation);
+        poseStack.rotate(cameraRenderState.orientation);
         submitNodeCollector.submitCustomGeometry(poseStack, RENDER_TYPE, (pose, vertexConsumer) -> {
             vertex(vertexConsumer, pose, entityRenderState.lightCoords, 0.0F, 0, 0, 1);
             vertex(vertexConsumer, pose, entityRenderState.lightCoords, 1.0F, 0, 1, 1);

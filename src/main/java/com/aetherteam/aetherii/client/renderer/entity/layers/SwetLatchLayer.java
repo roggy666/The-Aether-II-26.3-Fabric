@@ -31,16 +31,16 @@ public class SwetLatchLayer<T extends LivingEntityRenderState, M extends EntityM
                 float scale = (float) Math.cos(livingEntity.ageInTicks / 4.0F) / 20.0F;
                 poseStack.scale(0.3F, 0.3F, 0.3F);
                 if (i == 0) {
-                    poseStack.mulPose(Axis.XN.rotationDegrees(90.0F));
-                    poseStack.mulPose(Axis.YP.rotationDegrees(30.0F));
+                    poseStack.rotateDegrees(Axis.XN, 90.0F);
+                    poseStack.rotateDegrees(Axis.YP, 30.0F);
                     poseStack.translate(-0.4F, 0.2F, 1.3F);
                 } else if (i == 1) {
-                    poseStack.mulPose(Axis.XN.rotationDegrees(90.0F));
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(30.0F));
+                    poseStack.rotateDegrees(Axis.XN, 90.0F);
+                    poseStack.rotateDegrees(Axis.ZP, 30.0F);
                     poseStack.translate(-0.3F, 0.3F, 0.7F);
                 } else if (i == 2) {
-                    poseStack.mulPose(Axis.XN.rotationDegrees(-90.0F));
-                    poseStack.mulPose(Axis.YP.rotationDegrees(-160.0F));
+                    poseStack.rotateDegrees(Axis.XN, -90.0F);
+                    poseStack.rotateDegrees(Axis.YP, -160.0F);
                     poseStack.translate(-0.2F, 0.3F, 1.0F);
                 }
                 poseStack.scale(1 + scale, 1 + scale, 1 + scale);

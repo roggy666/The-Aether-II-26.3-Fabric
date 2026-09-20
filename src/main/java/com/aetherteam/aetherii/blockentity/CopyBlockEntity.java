@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import com.aetherteam.aetherii.util.AetherIICodecs;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -62,7 +63,7 @@ public abstract class CopyBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.copyState = input.read("copy_state", BlockState.CODEC).orElse(null);
+        this.copyState = input.read("copy_state", AetherIICodecs.BLOCK_STATE).orElse(null);
         this.syncLight();
         if (this.level != null && this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);

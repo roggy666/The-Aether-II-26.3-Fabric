@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:holystone_slab_from_holystone_stonecutting"
+        "recipes": "aether_ii:holystone_slab_from_holystone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

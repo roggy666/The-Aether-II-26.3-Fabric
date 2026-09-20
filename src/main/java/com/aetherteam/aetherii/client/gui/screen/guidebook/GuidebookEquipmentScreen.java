@@ -12,7 +12,6 @@ import com.aetherteam.aetherii.mixin.mixins.common.accessor.SlotAccessor;
 import com.aetherteam.aetherii.network.packet.serverbound.ClearAccessoriesPacket;
 import com.aetherteam.aetherii.network.packet.serverbound.ClearItemPacket;
 import com.aetherteam.aetherii.network.packet.serverbound.CurrencyAmountPacket;
-import com.aetherteam.aetherii.network.packet.serverbound.HeldCurrencyPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Renderable;
@@ -285,53 +284,16 @@ public class GuidebookEquipmentScreen extends AbstractContainerScreen<GuidebookE
             }
             if (slot != null) {
                 if (slot == this.currencySlot) {
-                    var data = Minecraft.getInstance().player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY);
                     if (type == ContainerInput.PICKUP || type == ContainerInput.QUICK_CRAFT) {
+                        int button = mouseButton;
                         if (type == ContainerInput.QUICK_CRAFT) {
-                            if (mouseButton == 5) {
-                                mouseButton = 1;
-                            } else if (mouseButton == 1) {
-                                mouseButton = 0;
-                            }
+                            button = mouseButton == 5 ? 1 : mouseButton == 1 ? 0 : -1;
                         }
-                        if (this.getMenu().getCarried().isEmpty()) {
-                            if (data.getAmount() > 0) {
-                                ItemStack stack = new ItemStack(AetherIIItems.GLINT_COIN);
-                                int amount = 0;
-                                if (mouseButton == 0) { // pick up stack
-                                    amount = Math.min(64, data.getAmount());
-                                } else if (mouseButton == 1) { // pick up half a stack
-                                    amount = data.getAmount() >= 64 ? 32 : data.getAmount() / 2;
-                                }
-                                if (amount > 0) {
-                                    stack.setCount(amount);
-                                    ClientPlayNetworking.send(new CurrencyAmountPacket(data.getAmount() - amount));
-
-                                    //data.setSynched(Minecraft.getInstance().player.getId(), INBTSynchable.Direction.SERVER, "setAmount", data.getAmount() - amount);
-                                    this.getMenu().setCarried(stack.copy());
-                                    ClientPlayNetworking.send(new HeldCurrencyPacket(stack.copy()));
-                                    return;
-                                }
-                            }
-                        } else if (this.getMenu().getCarried().getItem() instanceof CurrencyItem currencyItem) {
-                            ItemStack stack = this.getMenu().getCarried().copy();
-                            int amount = 0;
-                            if (mouseButton == 0) { // place carried stack
-                                amount = stack.getCount();
-                            } else if (mouseButton == 1) { // place single item
-                                amount = 1;
-                            }
-                            if (amount > 0) {
-                                stack.shrink(amount);
-                                ClientPlayNetworking.send(new CurrencyAmountPacket(data.getAmount() + (amount * currencyItem.getCurrencyAmount())));
-
-                                //data.setSynched(Minecraft.getInstance().player.getId(), INBTSynchable.Direction.SERVER, "setAmount", data.getAmount() + amount);
-                                this.getMenu().setCarried(stack);
-                                ClientPlayNetworking.send(new HeldCurrencyPacket(stack));
-                                return;
-                            }
+                        if (button == 0 || button == 1) {
+                            ClientPlayNetworking.send(new CurrencyAmountPacket(this.getMenu().containerId, button));
                         }
                     }
+                    return;
                 }
             }
             super.slotClicked(slot, slotId, mouseButton, type);

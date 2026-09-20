@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:repair_holystone_crossbow"
+        "recipes": "aether_ii:repair_holystone_crossbow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

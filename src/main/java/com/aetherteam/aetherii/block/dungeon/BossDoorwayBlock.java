@@ -38,14 +38,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class BossDoorwayBlock extends CopyBlock {
-    public static final MapCodec<BossDoorwayBlock> CODEC = simpleCodec(BossDoorwayBlock::new);
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
     public static final VoxelShape INVISIBLE_SHAPE = Block.box(5.0, 5.0, 5.0, 11.0, 11.0, 11.0);
-
-    @Override
-    protected MapCodec<BossDoorwayBlock> codec() {
-        return CODEC;
-    }
 
     public BossDoorwayBlock(Properties properties) {
         super(properties);
@@ -121,9 +115,9 @@ public class BossDoorwayBlock extends CopyBlock {
 
 
     @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
+    public void spawnDestroyParticles(Level level, BlockPos pos, BlockState state) {
         if (!state.getValue(INVISIBLE)) {
-            super.spawnDestroyParticles(level, player, pos, state);
+            super.spawnDestroyParticles(level, pos, state);
         }
     }
 

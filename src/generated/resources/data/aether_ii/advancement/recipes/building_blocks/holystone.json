@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:holystone"
+        "recipes": "aether_ii:holystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:greatroot_planks_from_greatroot_small_shingles_stonecutting"
+        "recipes": "aether_ii:greatroot_planks_from_greatroot_small_shingles_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

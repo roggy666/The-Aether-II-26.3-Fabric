@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.recipe.builder;
 
+import net.minecraft.core.registries.Registries;
 import com.aetherteam.aetherii.recipe.book.AltarBookCategory;
 import com.aetherteam.aetherii.recipe.recipes.item.AltarEnchantingRecipe;
 import net.minecraft.advancements.Advancement;
@@ -66,7 +67,7 @@ public class AltarEnchantingRecipeBuilder implements RecipeBuilder {
     @Override
     public void save(RecipeOutput output, ResourceKey<Recipe<?>> id) {
         this.ensureValid(id);
-        Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
+        Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(output.lookup(Registries.RECIPE).getOrThrow(id))).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(builder::addCriterion);
         AltarEnchantingRecipe recipe = new AltarEnchantingRecipe(RecipeBuilder.createCraftingCommonInfo(true), new AltarEnchantingRecipe.AltarBookInfo(this.bookCategory, Objects.requireNonNullElse(this.group, "")), this.ingredient, this.result, this.experience, this.fuelCount, this.processingTime);
         output.accept(id, recipe, builder.build(id.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));

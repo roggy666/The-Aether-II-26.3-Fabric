@@ -1,5 +1,5 @@
 plugins {
-    id 'net.fabricmc.fabric-loom' version '1.17.20'
+    id 'net.fabricmc.fabric-loom' version '1.18.2'
     id 'maven-publish'
     id 'idea'
 }
@@ -60,13 +60,14 @@ dependencies {
     implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
 
     compileOnly "mezz.jei:jei-${minecraft_version}-fabric:${jei_version}"
-    compileOnly "maven.modrinth:sodium:mc26.2-0.9.2-fabric"
+    compileOnly "maven.modrinth:sodium:mc26.3-0.9.2-fabric"
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 }
 
 fabricApi {
     configureDataGeneration {
         client = true
+        modId = project.mod_id // only run this mod's datagen: Nitrogen/Cumulus entrypoints would purge our generated files as stale
         outputDirectory = file("src/generated/resources")
     }
 }
@@ -115,3 +116,26 @@ idea {
         downloadJavadoc = true
     }
 }
+// Regression coverage for Fabric mutable attachment synchronization, without launching a game.
+sourceSets {
+    regression {
+        compileClasspath += sourceSets.main.output + configurations.testCompileClasspath
+        runtimeClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+    }
+}
+tasks.register('verifyAttachmentSync', JavaExec) {
+    dependsOn tasks.named('regressionClasses')
+    classpath = sourceSets.regression.runtimeClasspath
+    mainClass = 'com.aetherteam.aetherii.attachment.AttachmentSyncRegressionTest'
+}
+tasks.named('check') {
+    dependsOn tasks.named('verifyAttachmentSync')
+}
+
+// Preserve the exact surface palette while removing per-block noise construction.
+tasks.register('verifyWorldgen', JavaExec) {
+    dependsOn tasks.named('regressionClasses')
+    classpath = sourceSets.regression.runtimeClasspath
+    mainClass = 'com.aetherteam.aetherii.world.WorldgenRegressionTest'
+}
+tasks.named('check') { dependsOn tasks.named('verifyWorldgen') }

@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.client.renderer;
 
+import org.joml.Vector4f;
+import net.minecraft.util.ARGB;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
@@ -37,9 +39,13 @@ public class AetherIIDimensionRenderers {
             event.levelState().setData(DATA_THUNDER_KEY, event.level().getThunderLevel(Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false)));
             event.levelState().setData(DATA_TIME_OF_DAY_KEY, timeOfDay(event.level().getDefaultClockTime()));
             float time = timeOfDay(event.level().getDefaultClockTime());
-            event.levelState().skyRenderState.sunriseAndSunsetColor = SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0;
+            event.levelState().skyRenderState.sunriseAndSunsetColor = toRgba(SKY.isSunriseOrSunset(time) ? SKY.getSunriseOrSunsetColor(time) : 0);
             event.levelState().skyRenderState.shouldRenderDarkDisc = false;
         }
+    }
+
+    private static Vector4f toRgba(int argb) {
+        return new Vector4f(ARGB.redFloat(argb), ARGB.greenFloat(argb), ARGB.blueFloat(argb), ARGB.alphaFloat(argb));
     }
 
     public static float timeOfDay(long dayTime) {

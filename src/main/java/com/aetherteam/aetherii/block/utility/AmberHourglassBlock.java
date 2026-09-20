@@ -31,7 +31,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class AmberHourglassBlock extends BaseEntityBlock {
-    public static final MapCodec<AmberHourglassBlock> CODEC = simpleCodec(AmberHourglassBlock::new);
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     protected static final VoxelShape SHAPE_BOTTOM = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
     protected static final VoxelShape SHAPE_CENTER = Block.box(3.0, 2.0, 3.0, 13.0, 14.0, 13.0);
@@ -45,11 +44,6 @@ public class AmberHourglassBlock extends BaseEntityBlock {
     public AmberHourglassBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(OPEN, false));
-    }
-
-    @Override
-    protected MapCodec<AmberHourglassBlock> codec() {
-        return CODEC;
     }
 
     @Override

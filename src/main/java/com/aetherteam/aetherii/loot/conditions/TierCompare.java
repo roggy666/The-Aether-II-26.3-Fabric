@@ -1,12 +1,12 @@
 package com.aetherteam.aetherii.loot.conditions;
 
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemInstance;
@@ -19,7 +19,7 @@ import java.util.Set;
 
 public record TierCompare(HolderSet<Item> items) implements LootItemCondition {
     public static final MapCodec<TierCompare> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            HolderSetCodec.create(Registries.ITEM, Item.CODEC, false).fieldOf("items").forGetter(TierCompare::items)
+            RegistryCodecs.holderSet(Registries.ITEM).fieldOf("items").forGetter(TierCompare::items)
     ).apply(instance, TierCompare::new));
 
     @Override
@@ -29,7 +29,7 @@ public record TierCompare(HolderSet<Item> items) implements LootItemCondition {
 
     @Override
     public boolean test(LootContext context) {
-        ItemInstance stack = context.getOptionalParameter(LootContextParams.TOOL);
+        ItemInstance stack = context.getOptional(LootContextParams.TOOL);
         if (stack != null) {
             return compareStack(stack, this.items());
         }

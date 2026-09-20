@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:arkenium_framed_scatterglass_from_scatterglass_stonecutting"
+        "recipes": "aether_ii:arkenium_framed_scatterglass_from_scatterglass_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

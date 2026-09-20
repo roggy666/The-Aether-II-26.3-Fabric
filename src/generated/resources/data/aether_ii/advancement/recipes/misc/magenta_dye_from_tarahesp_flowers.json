@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:magenta_dye_from_tarahesp_flowers"
+        "recipes": "aether_ii:magenta_dye_from_tarahesp_flowers"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

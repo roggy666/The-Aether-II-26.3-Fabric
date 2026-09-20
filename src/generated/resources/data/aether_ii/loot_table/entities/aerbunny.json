@@ -1,4 +1,3 @@
 {
-  "type": "minecraft:entity",
-  "random_sequence": "aether_ii:entities/aerbunny"
+  "type": "minecraft:entity"
 }

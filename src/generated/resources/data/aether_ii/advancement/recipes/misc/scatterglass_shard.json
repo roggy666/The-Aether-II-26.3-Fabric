@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:scatterglass_shard"
+        "recipes": "aether_ii:scatterglass_shard"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

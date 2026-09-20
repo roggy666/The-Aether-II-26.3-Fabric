@@ -1,0 +1,18 @@
+{
+  "type": "aether_ii:arilum",
+  "depth": 0,
+  "grass_provider": {
+    "id": "aether_ii:arilum",
+    "properties": {
+      "age": "0"
+    }
+  },
+  "height": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 8,
+    "min_inclusive": 1
+  },
+  "plant_provider": {
+    "id": "aether_ii:arilum_plant"
+  }
+}

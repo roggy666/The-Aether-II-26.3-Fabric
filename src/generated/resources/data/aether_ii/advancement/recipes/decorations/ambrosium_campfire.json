@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:ambrosium_campfire"
+        "recipes": "aether_ii:ambrosium_campfire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

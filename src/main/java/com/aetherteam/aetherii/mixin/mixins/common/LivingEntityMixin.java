@@ -12,18 +12,9 @@ import net.minecraft.core.BlockPos;
 import com.aetherteam.aetherii.block.EntityFrictionBlock;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.advancement.trigger.AetherIIAdvancementTriggers;
-import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
-import com.aetherteam.aetherii.data.resources.registries.AetherIIDamageTypes;
-import com.aetherteam.aetherii.effect.AetherIIMobEffects;
-import com.aetherteam.aetherii.event.hooks.BlockHooks;
-import com.aetherteam.aetherii.event.hooks.PlayerHooks;
-import com.aetherteam.aetherii.item.components.AetherIIDataComponents;
-import com.aetherteam.aetherii.mixin.mixins.common.accessor.MobEffectInstanceAccessor;
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,7 +25,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -173,7 +163,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "getVisibilityPercent", at = @At("RETURN"), cancellable = true)
-    private void aether_ii$visibility(Entity lookingEntity, CallbackInfoReturnable<Double> cir) {
+    private void aether_ii$visibility(ServerLevel serverLevel, Entity lookingEntity, CallbackInfoReturnable<Double> cir) {
         cir.setReturnValue(AetherIIEvents.LIVING_VISIBILITY.invoker().modifyVisibility((LivingEntity) (Object) this, lookingEntity, cir.getReturnValue()));
     }
 

@@ -152,6 +152,11 @@ public class AetherIIEventListeners {
         player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY).postTickUpdate(player);
         PlayerHooks.forceSpecialLoadingCrouch(player);
         PlayerHooks.mountAercloudEffects(player);
+        if (!player.level().isClientSide()) {
+            com.aetherteam.aetherii.attachment.SyncedEntityAttachment.flush(player, AetherIIDataAttachments.PLAYER);
+            com.aetherteam.aetherii.attachment.SyncedEntityAttachment.flush(player, AetherIIDataAttachments.ABILITY_BEHAVIOR);
+            com.aetherteam.aetherii.attachment.SyncedEntityAttachment.flush(player, AetherIIDataAttachments.CURRENCY);
+        }
     }
 
     public static InteractionResult onPlayerRightClickBlock(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
@@ -231,6 +236,10 @@ public class AetherIIEventListeners {
             livingEntity.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).postTickUpdate(livingEntity);
             livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).postTickUpdate(livingEntity);
             livingEntity.getAttachedOrCreate(AetherIIDataAttachments.ACCESSORIES).postTickUpdate(livingEntity);
+            if (!livingEntity.level().isClientSide()) {
+                com.aetherteam.aetherii.attachment.SyncedEntityAttachment.flush(livingEntity, AetherIIDataAttachments.DAMAGE_SYSTEM);
+                com.aetherteam.aetherii.attachment.SyncedEntityAttachment.flush(livingEntity, AetherIIDataAttachments.EFFECTS_SYSTEM);
+            }
         }
     }
 

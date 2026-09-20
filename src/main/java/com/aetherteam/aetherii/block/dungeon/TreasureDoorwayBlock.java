@@ -18,12 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class TreasureDoorwayBlock extends CopyBlock {
-    public static final MapCodec<TreasureDoorwayBlock> CODEC = simpleCodec(TreasureDoorwayBlock::new);
-
-    @Override
-    protected MapCodec<TreasureDoorwayBlock> codec() {
-        return CODEC;
-    }
 
     public TreasureDoorwayBlock(Properties properties) {
         super(properties);

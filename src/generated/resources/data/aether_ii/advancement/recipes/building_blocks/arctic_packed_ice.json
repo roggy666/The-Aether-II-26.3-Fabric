@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:arctic_packed_ice"
+        "recipes": "aether_ii:arctic_packed_ice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

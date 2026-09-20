@@ -10,12 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class HangingUndergrowthBlock extends GrowingPlantHeadBlock {
-    public static final MapCodec<HangingUndergrowthBlock> CODEC = simpleCodec(HangingUndergrowthBlock::new);
     protected static final VoxelShape SHAPE = Block.box(4.0, 9.0, 4.0, 12.0, 16.0, 12.0);
-
-    public MapCodec<HangingUndergrowthBlock> codec() {
-        return CODEC;
-    }
 
     public HangingUndergrowthBlock(Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1);

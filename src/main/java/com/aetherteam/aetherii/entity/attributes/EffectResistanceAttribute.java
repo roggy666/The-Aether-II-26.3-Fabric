@@ -8,21 +8,24 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.TooltipFlag;
 
-public class EffectResistanceAttribute extends PercentageAttribute {
-    private final Holder<MobEffect> effect;
+import java.util.function.Supplier;
 
-    public EffectResistanceAttribute(Holder<MobEffect> effect, String pDescriptionId, double pDefaultValue, double pMin, double pMax, double scaleFactor) {
+public class EffectResistanceAttribute extends PercentageAttribute {
+    // Effects also reference attributes during registration; resolve only after both registries initialize.
+    private final Supplier<? extends Holder<MobEffect>> effect;
+
+    public EffectResistanceAttribute(Supplier<? extends Holder<MobEffect>> effect, String pDescriptionId, double pDefaultValue, double pMin, double pMax, double scaleFactor) {
         super(pDescriptionId, pDefaultValue, pMin, pMax, scaleFactor);
         this.effect = effect;
     }
 
-    public EffectResistanceAttribute(Holder<MobEffect> effect, String pDescriptionId, double pDefaultValue, double pMin, double pMax) {
+    public EffectResistanceAttribute(Supplier<? extends Holder<MobEffect>> effect, String pDescriptionId, double pDefaultValue, double pMin, double pMax) {
         super(pDescriptionId, pDefaultValue, pMin, pMax);
         this.effect = effect;
     }
 
     public Holder<MobEffect> getEffect() {
-        return this.effect;
+        return this.effect.get();
     }
 
     /**
@@ -33,7 +36,7 @@ public class EffectResistanceAttribute extends PercentageAttribute {
         double value = modifier.amount();
         String key = value > 0.0 ? "attribute.modifier.plus.0" : "attribute.modifier.take.0";
         ChatFormatting color = this.getStyle(value > 0.0);
-        Component attrDesc = Component.translatable(this.getDescriptionId(), Component.translatable(this.effect.value().getDescriptionId()));
+        Component attrDesc = Component.translatable(this.getDescriptionId(), Component.translatable(this.getEffect().value().getDescriptionId()));
         Component valueComp = this.toValueComponent(modifier.operation(), Math.abs(value), flag);
         MutableComponent comp = Component.translatable(key, valueComp, attrDesc).withStyle(color);
         return comp.append(this.getDebugInfo(modifier, flag));

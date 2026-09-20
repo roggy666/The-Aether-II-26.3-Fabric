@@ -1,0 +1,90 @@
+{
+  "type": "aether_ii:noise_lake",
+  "frozen": true,
+  "height": {
+    "value": 124
+  },
+  "ice_block": {
+    "type": "minecraft:noise",
+    "noise": {
+      "amplitude_modifiers": [
+        1.25,
+        0.5,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "base_amplitude": 1.0825659016184408,
+      "base_octave": -3,
+      "octave_count": 5
+    },
+    "scale": 0.75,
+    "seed": 123,
+    "states": [
+      "aether_ii:arctic_ice",
+      "aether_ii:arctic_ice",
+      "aether_ii:arctic_ice",
+      "aether_ii:arctic_ice",
+      "aether_ii:fragile_arctic_ice",
+      "aether_ii:fragile_arctic_ice"
+    ]
+  },
+  "lake_barrier_noise": "aether_ii:holy_isles/lakes/lake_barrier",
+  "lake_floor_noise": "aether_ii:holy_isles/lakes/lake_floor",
+  "lake_noise": "aether_ii:holy_isles/lakes/noise",
+  "lake_waterfall_noise": "aether_ii:holy_isles/lakes/lakes_waterfalls",
+  "noise_start_value": 0.3,
+  "shore_block": {
+    "type": "minecraft:dual_noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": -2
+    },
+    "scale": 2.0,
+    "seed": 2345,
+    "slow_noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": -6
+    },
+    "slow_scale": 2.0,
+    "states": [
+      "aether_ii:arctic_packed_ice",
+      "aether_ii:arctic_packed_ice",
+      "aether_ii:arctic_packed_ice",
+      "aether_ii:coarse_aether_dirt",
+      "aether_ii:shimmering_silt",
+      "aether_ii:shimmering_silt"
+    ],
+    "variety": [
+      1,
+      4
+    ]
+  },
+  "shore_noise": "aether_ii:holy_isles/lakes/lake_shore",
+  "shore_start_value": 0.31,
+  "underwater_block": {
+    "type": "minecraft:dual_noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": -2
+    },
+    "scale": 1.0,
+    "seed": 2345,
+    "slow_noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": -6
+    },
+    "slow_scale": 1.0,
+    "states": [
+      "aether_ii:shimmering_silt",
+      "aether_ii:coarse_aether_dirt",
+      "aether_ii:holystone",
+      "aether_ii:aether_dirt",
+      "aether_ii:shimmering_silt"
+    ],
+    "variety": [
+      1,
+      4
+    ]
+  }
+}

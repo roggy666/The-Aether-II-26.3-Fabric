@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:antivenom_vial"
+        "recipes": "aether_ii:antivenom_vial"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

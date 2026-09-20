@@ -21,7 +21,7 @@ public class GlitterwingGlowLayer extends RenderLayer<GlitterwingRenderState, Gl
         Identifier emissiveTexture = glitterwingRenderState.emissiveTexture;
         if (emissiveTexture != null) {
             RenderType renderType = RenderTypes.eyes(emissiveTexture);
-            submitNodeCollector.submitModel(this.getParentModel(), glitterwingRenderState, poseStack, renderType, i, OverlayTexture.NO_OVERLAY, glitterwingRenderState.outlineColor, null);
+            submitNodeCollector.submitModel(this.getParentModel(), glitterwingRenderState, poseStack, renderType, i, OverlayTexture.NO_OVERLAY, glitterwingRenderState.outlineColor);
         }
     }
 }

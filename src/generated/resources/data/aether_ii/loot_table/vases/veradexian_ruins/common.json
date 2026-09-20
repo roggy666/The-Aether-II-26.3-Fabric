@@ -5,76 +5,66 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 3,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:ambrosium_shard",
           "weight": 20
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 3,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:scatterglass_shard",
           "weight": 16
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 2,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:icestone",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "components": {
-                "minecraft:item_name": {
-                  "translate": "item.aether_ii.aether_quartz"
-                }
-              },
-              "function": "minecraft:set_components"
+          "modifier": {
+            "type": "minecraft:set_components",
+            "components": {
+              "minecraft:item_name": {
+                "translate": "item.aether_ii.aether_quartz"
+              }
             }
-          ],
+          },
           "name": "minecraft:quartz",
           "weight": 15
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 2,
+              "min": 1
             }
-          ],
+          },
           "name": "aether_ii:golden_amber",
           "weight": 12
         },
@@ -90,16 +80,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "damage": {
-                "type": "minecraft:uniform",
-                "max": 0.05,
-                "min": 0.01
-              },
-              "function": "minecraft:set_damage"
+          "modifier": {
+            "type": "minecraft:set_damage",
+            "damage": {
+              "type": "minecraft:uniform",
+              "max": 0.05,
+              "min": 0.01
             }
-          ],
+          },
           "name": "aether_ii:shifting_glass",
           "weight": 11
         },
@@ -150,21 +138,18 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "damage": {
-                "type": "minecraft:uniform",
-                "max": 0.1,
-                "min": 0.02
-              },
-              "function": "minecraft:set_damage"
+          "modifier": {
+            "type": "minecraft:set_damage",
+            "damage": {
+              "type": "minecraft:uniform",
+              "max": 0.1,
+              "min": 0.02
             }
-          ],
+          },
           "name": "aether_ii:shifting_glass"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:vases/veradexian_ruins/common"
+  ]
 }

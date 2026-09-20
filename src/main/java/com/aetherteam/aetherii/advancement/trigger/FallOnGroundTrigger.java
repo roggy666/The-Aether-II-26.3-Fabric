@@ -1,9 +1,10 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.core.Holder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.triggers.Criterion;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
@@ -21,9 +22,9 @@ public class FallOnGroundTrigger extends SimpleCriterionTrigger<FallOnGroundTrig
         this.trigger(player, (instance) -> instance.distance().matches(distance) && instance.remainingHealth().matches(remainingHealth));
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player, MinMaxBounds.Doubles distance, MinMaxBounds.Doubles remainingHealth) implements SimpleInstance {
+    public record Instance(Optional<Holder<LootItemCondition>> player, MinMaxBounds.Doubles distance, MinMaxBounds.Doubles remainingHealth) implements SimpleInstance {
         public static final Codec<FallOnGroundTrigger.Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(FallOnGroundTrigger.Instance::player),
+                LootItemCondition.CODEC.optionalFieldOf("player").forGetter(FallOnGroundTrigger.Instance::player),
                 MinMaxBounds.Doubles.CODEC.optionalFieldOf("distance", MinMaxBounds.Doubles.ANY).forGetter(FallOnGroundTrigger.Instance::distance),
                 MinMaxBounds.Doubles.CODEC.optionalFieldOf("remaining_health", MinMaxBounds.Doubles.ANY).forGetter(FallOnGroundTrigger.Instance::remainingHealth)
         ).apply(instance, FallOnGroundTrigger.Instance::new));

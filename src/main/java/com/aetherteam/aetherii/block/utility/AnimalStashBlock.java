@@ -22,17 +22,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class AnimalStashBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<AnimalStashBlock> CODEC = simpleCodec(AnimalStashBlock::new);
     protected static final VoxelShape SHAPE_BASE = Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
     protected static final VoxelShape SHAPE_MIDDLE = Block.box(1.0, 3.0, 1.0, 1.0, 8.0, 1.0);
     protected static final VoxelShape SHAPE_TOP = Block.box(2.0, 8.0, 2.0, 2.0, 9.0, 2.0);
     protected static final VoxelShape SHAPE = Shapes.or(SHAPE_BASE, SHAPE_MIDDLE, SHAPE_TOP);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
-
-    public MapCodec<AnimalStashBlock> codec() {
-        return CODEC;
-    }
 
     public AnimalStashBlock(BlockBehaviour.Properties properties) {
         super(properties);

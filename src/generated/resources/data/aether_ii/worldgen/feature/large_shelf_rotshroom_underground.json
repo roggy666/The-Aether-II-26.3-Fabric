@@ -1,0 +1,9 @@
+{
+  "type": "aether_ii:large_shelf_mushroom",
+  "additional_radius": 2,
+  "base_radius": 1.0,
+  "block": {
+    "id": "aether_ii:shelf_rotshroom_slab"
+  },
+  "min_y": 0
+}

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -27,16 +28,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<BrettlPlantTipBlock> CODEC = simpleCodec(BrettlPlantTipBlock::new);
     public static final BooleanProperty GROWN = AetherIIBlockStateProperties.BRETTL_GROWN;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final VoxelShape SHAPE = Block.box(4.0, 0.0, 4.0, 12.0, 15.0, 12.0);
     public static final VoxelShape SHAPE_FLOWER = Block.box(4.0, 0.0, 4.0, 12.0, 10.0, 12.0);
-
-    @Override
-    public MapCodec<BrettlPlantTipBlock> codec() {
-        return CODEC;
-    }
 
     public BrettlPlantTipBlock(Properties properties) {
         super(properties, Direction.UP, SHAPE, false, 0.1);
@@ -117,7 +112,7 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
         boolean flag = false;
         int height = state.getValue(BrettlPlantTipBlock.AGE);
         for (int i = 1; i <= height; i++) {
@@ -126,18 +121,18 @@ public class BrettlPlantTipBlock extends GrowingPlantHeadBlock implements Simple
             flag = flag || !bodyState.getValue(GROWN);
         }
         if (!state.getValue(GROWN)) {
-            flag = flag || super.isValidBonemealTarget(level, pos, state);
+            flag = flag || super.isValidBonemealTarget(level, pos, state, source);
         }
         return flag;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return random.nextFloat() <= 0.5F;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         if (state.getValue(AGE) < 2) {
             BlockPos blockpos = pos.relative(this.growthDirection);
             int i = Math.min(state.getValue(AGE) + 1, 2);

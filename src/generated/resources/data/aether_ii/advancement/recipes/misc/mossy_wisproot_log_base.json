@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:mossy_wisproot_log_base"
+        "recipes": "aether_ii:mossy_wisproot_log_base"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -36,9 +36,9 @@ public class ArkeniumForgeRenderer implements BlockEntityRenderer<ArkeniumForgeB
                 case EAST -> rotation = 45.0F;
                 default -> rotation = -135.0F;
             }
-            poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+            poseStack.rotateDegrees(Axis.XP, 90.0F);
             poseStack.translate(0.5F, 0.5F, -1.01725F);
-            poseStack.mulPose(Axis.ZN.rotationDegrees(rotation));
+            poseStack.rotateDegrees(Axis.ZN, rotation);
 
         if (!arkeniumForgeRenderState.item.isEmpty()) {
                 poseStack.scale(0.5F, 0.5F, 0.5F);

@@ -75,7 +75,9 @@ public class GuidebookEntry {
     }
 
     public Map<String, Info> getValues() {
-        return ImmutableMap.copyOf(this.values);
+        ImmutableMap.Builder<String, Info> copy = ImmutableMap.builder();
+        this.values.forEach((key, info) -> copy.put(key, new Info(info.isVisible(), info.isViewed())));
+        return copy.build();
     }
 
     protected <T> T info(DataTemplate<T> data, T value) {

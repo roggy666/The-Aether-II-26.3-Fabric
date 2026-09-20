@@ -72,11 +72,11 @@ public class AerbunnyRenderer extends MobRenderer<Aerbunny, AerbunnyRenderState,
         super.setupRotations(aerbunny, poseStack, rotationYaw, scale);
         if (!aerbunny.onGround) {
             if (aerbunny.deltaMovement.y() > 0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(aerbunny.partialTick, 0.0F, 15.0F)));
+                poseStack.rotateDegrees(Axis.XN, Mth.rotLerp(aerbunny.partialTick, 0.0F, 15.0F));
             } else if (aerbunny.deltaMovement.y() < -0.5) {
-                poseStack.mulPose(Axis.XN.rotationDegrees(Mth.rotLerp(aerbunny.partialTick, 0.0F, -15.0F)));
+                poseStack.rotateDegrees(Axis.XN, Mth.rotLerp(aerbunny.partialTick, 0.0F, -15.0F));
             } else {
-                poseStack.mulPose(Axis.XN.rotationDegrees((float) (aerbunny.deltaMovement.y() * 30.0)));
+                poseStack.rotateDegrees(Axis.XN, (float) (aerbunny.deltaMovement.y() * 30.0));
             }
         }
     }

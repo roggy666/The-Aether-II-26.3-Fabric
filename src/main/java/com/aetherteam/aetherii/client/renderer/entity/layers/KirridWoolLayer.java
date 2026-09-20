@@ -31,7 +31,7 @@ public class KirridWoolLayer extends RenderLayer<KirridRenderState, EntityModel<
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int packedLight, KirridRenderState kirrid, float v, float v1) {
         if (kirrid.isInvisible) {
             if (kirrid.appearsGlowing()) {
-                submitNodeCollector.submitModel(this.getParentModel(), kirrid, poseStack, RenderTypes.outline(this.getTexture(kirrid)), packedLight, LivingEntityRenderer.getOverlayCoords(kirrid, 0.0F), -16777216, null);
+                submitNodeCollector.submitModel(this.getParentModel(), kirrid, poseStack, RenderTypes.outline(this.getTexture(kirrid)), packedLight, LivingEntityRenderer.getOverlayCoords(kirrid, 0.0F), -16777216);
             }
         } else {
             kirrid.woolColor.ifPresent((woolColor) -> {

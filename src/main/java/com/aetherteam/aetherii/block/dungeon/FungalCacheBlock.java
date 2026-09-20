@@ -34,14 +34,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class FungalCacheBlock extends AbstractChestBlock<FungalCacheBlockEntity> implements SimpleWaterloggedBlock {
-    public static final MapCodec<FungalCacheBlock> CODEC = simpleCodec(FungalCacheBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.column(10.0, 0.0, 12.0);
-
-    @Override
-    public MapCodec<FungalCacheBlock> codec() {
-        return CODEC;
-    }
 
     public FungalCacheBlock(Properties properties) {
         super(properties, () -> AetherIIBlockEntityTypes.FUNGAL_CACHE);

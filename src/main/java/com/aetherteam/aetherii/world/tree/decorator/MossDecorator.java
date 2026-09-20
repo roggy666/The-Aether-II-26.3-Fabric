@@ -24,9 +24,9 @@ public class MossDecorator extends TreeDecorator {
     public static final MapCodec<MossDecorator> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     AetherIIBlockStateProperties.Mossy.CODEC.fieldOf("moss_property").forGetter(decorator -> decorator.mossProperty),
-                    BlockStateProvider.CODEC.fieldOf("carpet_provider").forGetter(decorator -> decorator.carpetProvider),
-                    BlockStateProvider.CODEC.fieldOf("vines_provider").forGetter(decorator -> decorator.vinesProvider),
-                    BlockStateProvider.CODEC.optionalFieldOf("flower_provider").forGetter(decorator -> decorator.flowerProvider)
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("carpet_provider").forGetter(decorator -> decorator.carpetProvider),
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("vines_provider").forGetter(decorator -> decorator.vinesProvider),
+                    BlockStateProvider.DIRECT_CODEC.optionalFieldOf("flower_provider").forGetter(decorator -> decorator.flowerProvider)
             ).apply(instance, MossDecorator::new));
 
     protected final AetherIIBlockStateProperties.Mossy mossProperty;

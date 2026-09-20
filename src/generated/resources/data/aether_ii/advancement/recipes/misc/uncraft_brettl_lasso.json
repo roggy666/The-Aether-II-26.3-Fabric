@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_brettl_lasso"
+        "recipes": "aether_ii:uncraft_brettl_lasso"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

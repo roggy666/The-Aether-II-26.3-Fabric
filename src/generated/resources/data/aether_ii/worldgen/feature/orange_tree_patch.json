@@ -1,0 +1,10 @@
+{
+  "type": "aether_ii:orange_tree",
+  "to_place": {
+    "id": "aether_ii:orange_tree",
+    "properties": {
+      "age": "4",
+      "half": "lower"
+    }
+  }
+}

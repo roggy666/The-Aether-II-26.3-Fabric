@@ -2,15 +2,13 @@
   "criteria": {
     "feed_arctic_burrukai": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:arctic_burrukai"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:arctic_burrukai"
           }
-        ],
+        },
         "item": {
           "items": "#aether_ii:burrukai_food"
         }
@@ -19,33 +17,29 @@
     },
     "kill_arctic_burrukai": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:arctic_burrukai"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:arctic_burrukai"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_arctic_burrukai": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "looking_at": {
-                  "minecraft:entity_type": "aether_ii:arctic_burrukai"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:arctic_burrukai"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:rustic_arkenium_lantern_from_arkenium_lantern_stonecutting"
+        "recipes": "aether_ii:rustic_arkenium_lantern_from_arkenium_lantern_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
+import net.minecraft.world.level.block.FallingParticlesLeavesBlock;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -43,12 +45,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 
-public class AetherLeavesBlock extends LeavesBlock {
-    public static final MapCodec<AetherLeavesBlock> CODEC = RecordCodecBuilder.mapCodec((p_399854_) -> p_399854_.group(
-            propertiesCodec(),
-            ParticleTypes.CODEC.fieldOf("leaf_particle").forGetter((p_399817_) -> p_399817_.leavesParticle),
-            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("leaves_pile").forGetter(aetherLeavesBlock -> aetherLeavesBlock.leavesPile.get())
-    ).apply(p_399854_, (properties, particle, pile) -> new AetherLeavesBlock(properties, particle, () -> pile)));
+public class AetherLeavesBlock extends FallingParticlesLeavesBlock {
 
     public static final BooleanProperty SNOWY = BlockStateProperties.SNOWY;
     public static final EnumProperty<AetherIIBlockStateProperties.Mossy> MOSSY = AetherIIBlockStateProperties.MOSSY;
@@ -56,15 +53,10 @@ public class AetherLeavesBlock extends LeavesBlock {
     private final java.util.function.Supplier<Block> leavesPile;
 
     public AetherLeavesBlock(Properties properties, ParticleOptions leavesParticle, java.util.function.Supplier<Block> leavesPile) {
-        super(0.0F, properties);
+        super(0.005F, AmbientLeavesBlockSoundPlayer.noAmbientSound(), properties);
         this.leavesParticle = leavesParticle;
         this.leavesPile = leavesPile;
         this.registerDefaultState(this.stateDefinition.any().setValue(DISTANCE, 7).setValue(PERSISTENT, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE).setValue(SNOWY, Boolean.FALSE).setValue(MOSSY, AetherIIBlockStateProperties.Mossy.NONE));
-    }
-
-    @Override
-    public MapCodec<? extends LeavesBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -127,12 +119,12 @@ public class AetherLeavesBlock extends LeavesBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        this.leafParticleChance = level.isRaining()? 0.01f : 0.005f;
+        float leafParticleChance = level.isRaining() ? 0.01f : 0.005f;
         if (level.getBiome(pos).is(AetherIITags.Biomes.THE_AETHER)) {
             BlockPos belowPos = pos.below();
             BlockState belowState = level.getBlockState(belowPos);
             makeAetherDrippingWaterParticles(level, pos, random, belowState, belowPos);
-            this.makeFallingLeavesParticles(level, pos, random, belowState, belowPos);
+            this.makeFallingLeavesParticles(level, pos, random, belowState, belowPos, leafParticleChance);
         } else {
             super.animateTick(state, level, pos, random);
         }
@@ -153,8 +145,8 @@ public class AetherLeavesBlock extends LeavesBlock {
         }
    }
 
-    private void makeFallingLeavesParticles(Level level, BlockPos pos, RandomSource random, BlockState blockBelow, BlockPos belowPos) {
-        if (!(random.nextFloat() >= this.leafParticleChance) && !isFaceFull(blockBelow.getCollisionShape(level, belowPos), Direction.UP)) {
+    private void makeFallingLeavesParticles(Level level, BlockPos pos, RandomSource random, BlockState blockBelow, BlockPos belowPos, float leafParticleChance) {
+        if (!(random.nextFloat() >= leafParticleChance) && !isFaceFull(blockBelow.getCollisionShape(level, belowPos), Direction.UP)) {
             this.spawnFallingLeavesParticle(level, pos, random);
         }
     }

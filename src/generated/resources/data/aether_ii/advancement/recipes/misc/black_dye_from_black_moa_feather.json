@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:black_dye_from_black_moa_feather"
+        "recipes": "aether_ii:black_dye_from_black_moa_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -99,17 +100,17 @@ public class MossFlowersBlock extends AetherBushBlock implements BonemealableBlo
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader p_272968_, BlockPos p_273762_, BlockState p_273662_) {
+    public boolean isValidBonemealTarget(LevelReader p_272968_, BlockPos p_273762_, BlockState p_273662_, BonemealSource source) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level p_272604_, RandomSource p_273609_, BlockPos p_272988_, BlockState p_273231_) {
+    public boolean isBonemealSuccess(Level p_272604_, RandomSource p_273609_, BlockPos p_272988_, BlockState p_273231_, BonemealSource source) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel p_273476_, RandomSource p_273093_, BlockPos p_272601_, BlockState p_272683_) {
+    public void performBonemeal(ServerLevel p_273476_, RandomSource p_273093_, BlockPos p_272601_, BlockState p_272683_, BonemealSource source) {
         int i = p_272683_.getValue(AMOUNT);
         if (i < 4) {
             p_273476_.setBlock(p_272601_, p_272683_.setValue(AMOUNT, Integer.valueOf(i + 1)), 2);

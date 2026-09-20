@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:golden_amber_block"
+        "recipes": "aether_ii:golden_amber_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

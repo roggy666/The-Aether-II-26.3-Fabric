@@ -1,9 +1,10 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.HestveilBlock;
 import com.aetherteam.aetherii.world.feature.configuration.AlkahestPoolConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -14,21 +15,30 @@ import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.function.Consumer;
 
-public class AlkahestPoolFeature extends Feature<AlkahestPoolConfiguration> {
-    public AlkahestPoolFeature(Codec<AlkahestPoolConfiguration> codec) {
-        super(codec);
+public class AlkahestPoolFeature implements Feature {
+    public static final MapCodec<AlkahestPoolFeature> CODEC = AlkahestPoolConfiguration.CODEC.xmap(AlkahestPoolFeature::new, AlkahestPoolFeature::config);
+    private final AlkahestPoolConfiguration config;
+
+    public AlkahestPoolFeature(AlkahestPoolConfiguration config) {
+        this.config = config;
+    }
+
+    public AlkahestPoolConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<AlkahestPoolConfiguration> context) {
-        BlockPos pos = context.origin();
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        AlkahestPoolConfiguration config = context.config();
+    public MapCodec<AlkahestPoolFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        AlkahestPoolConfiguration config = this.config;
 
         int count = config.count().sample(random);
         for (int i = 0; i < count; i++) {

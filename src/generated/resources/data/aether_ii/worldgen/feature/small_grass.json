@@ -1,0 +1,16 @@
+{
+  "type": "aether_ii:aether_grass",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:short_aether_grass",
+        "weight": 2
+      },
+      {
+        "data": "aether_ii:aether_fern",
+        "weight": 1
+      }
+    ]
+  }
+}

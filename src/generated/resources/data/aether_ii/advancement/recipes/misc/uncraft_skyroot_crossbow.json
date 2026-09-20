@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_skyroot_crossbow"
+        "recipes": "aether_ii:uncraft_skyroot_crossbow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

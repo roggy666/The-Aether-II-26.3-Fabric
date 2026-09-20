@@ -2,7 +2,7 @@
   "type": "minecraft:clamp",
   "input": {
     "type": "minecraft:abs",
-    "argument": {
+    "input": {
       "type": "aether_ii:perlin_noise",
       "noise": {
         "amplitudes": [

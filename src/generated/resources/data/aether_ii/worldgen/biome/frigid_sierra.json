@@ -7,12 +7,233 @@
         "sound": "aether_ii:music.aether"
       }
     },
+    "minecraft:gameplay/creature_world_gen_spawn_probability": 0.208,
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {
+          "aether_ii:aerwhale": {
+            "charge": 0.5,
+            "energy_budget": 0.11
+          },
+          "aether_ii:cockatrice": {
+            "charge": 0.6,
+            "energy_budget": 0.12
+          },
+          "aether_ii:tempest": {
+            "charge": 0.65,
+            "energy_budget": 0.13
+          },
+          "aether_ii:zephyr": {
+            "charge": 0.8,
+            "energy_budget": 0.14
+          }
+        },
+        "spawns_by_category": {
+          "aether_ii:aether_aerwhale": [
+            {
+              "type": "aether_ii:aerwhale",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            }
+          ],
+          "aether_ii:aether_ambient": [
+            {
+              "type": "aether_ii:glitterwing",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            },
+            {
+              "type": "aether_ii:shroudwing",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            }
+          ],
+          "aether_ii:aether_blight_monster": [
+            {
+              "type": "aether_ii:cockatrice",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 4
+            },
+            {
+              "type": "aether_ii:tempest",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            }
+          ],
+          "aether_ii:aether_darkness_hazard": [
+            {
+              "type": "aether_ii:blue_swet",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 2
+            },
+            {
+              "type": "aether_ii:golden_swet",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            },
+            {
+              "type": "aether_ii:skephid",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            }
+          ],
+          "aether_ii:aether_darkness_monster": [
+            {
+              "type": "aether_ii:arkenium_taluton",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 3
+            },
+            {
+              "type": "aether_ii:gravitite_taluton",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 4
+            }
+          ],
+          "aether_ii:aether_plant_hazard": [
+            {
+              "type": "aether_ii:aechor_plant",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 5
+            },
+            {
+              "type": "aether_ii:carrion_sprout",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 3
+            }
+          ],
+          "aether_ii:aether_sky_hazard": [
+            {
+              "type": "aether_ii:zephyr",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 1
+            }
+          ],
+          "creature": [
+            {
+              "type": "aether_ii:arctic_taegore",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 14
+            },
+            {
+              "type": "aether_ii:arctic_burrukai",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 14
+            },
+            {
+              "type": "aether_ii:arctic_kirrid",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 14
+            },
+            {
+              "type": "aether_ii:phyg",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 4,
+                "min_inclusive": 2
+              },
+              "weight": 1
+            },
+            {
+              "type": "aether_ii:flying_cow",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 4,
+                "min_inclusive": 2
+              },
+              "weight": 1
+            },
+            {
+              "type": "aether_ii:sheepuff",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 4,
+                "min_inclusive": 2
+              },
+              "weight": 1
+            },
+            {
+              "type": "aether_ii:aerbunny",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 3,
+                "min_inclusive": 1
+              },
+              "weight": 14
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
     "minecraft:visual/fog_color": "#f3f0ff",
     "minecraft:visual/sky_color": "#e7e3fc",
     "minecraft:visual/water_fog_color": "#3e5082"
   },
   "carvers": "aether_ii:holy_isles_cave",
-  "creature_spawn_probability": 0.208,
   "downfall": 0.9,
   "effects": {
     "water_color": "#637aa8"
@@ -87,172 +308,6 @@
     ]
   ],
   "has_precipitation": true,
-  "spawn_costs": {
-    "aether_ii:aerwhale": {
-      "charge": 0.5,
-      "energy_budget": 0.11
-    },
-    "aether_ii:cockatrice": {
-      "charge": 0.6,
-      "energy_budget": 0.12
-    },
-    "aether_ii:tempest": {
-      "charge": 0.65,
-      "energy_budget": 0.13
-    },
-    "aether_ii:zephyr": {
-      "charge": 0.8,
-      "energy_budget": 0.14
-    }
-  },
-  "spawners": {
-    "aether_ii:aether_aerwhale": [
-      {
-        "type": "aether_ii:aerwhale",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
-    "aether_ii:aether_ambient": [
-      {
-        "type": "aether_ii:glitterwing",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 1
-      },
-      {
-        "type": "aether_ii:shroudwing",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
-    "aether_ii:aether_blight_monster": [
-      {
-        "type": "aether_ii:cockatrice",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 4
-      },
-      {
-        "type": "aether_ii:tempest",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
-    "aether_ii:aether_darkness_hazard": [
-      {
-        "type": "aether_ii:blue_swet",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 2
-      },
-      {
-        "type": "aether_ii:golden_swet",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 1
-      },
-      {
-        "type": "aether_ii:skephid",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
-    "aether_ii:aether_darkness_monster": [
-      {
-        "type": "aether_ii:arkenium_taluton",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 3
-      },
-      {
-        "type": "aether_ii:gravitite_taluton",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 4
-      }
-    ],
-    "aether_ii:aether_dungeon_monster": [],
-    "aether_ii:aether_moa": [],
-    "aether_ii:aether_plant_hazard": [
-      {
-        "type": "aether_ii:aechor_plant",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
-      },
-      {
-        "type": "aether_ii:carrion_sprout",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 3
-      }
-    ],
-    "aether_ii:aether_sky_hazard": [
-      {
-        "type": "aether_ii:zephyr",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
-    "aether_ii:aether_water_surface_creature": [],
-    "ambient": [],
-    "axolotls": [],
-    "creature": [
-      {
-        "type": "aether_ii:arctic_taegore",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 14
-      },
-      {
-        "type": "aether_ii:arctic_burrukai",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 14
-      },
-      {
-        "type": "aether_ii:arctic_kirrid",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 14
-      },
-      {
-        "type": "aether_ii:phyg",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 1
-      },
-      {
-        "type": "aether_ii:flying_cow",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 1
-      },
-      {
-        "type": "aether_ii:sheepuff",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 1
-      },
-      {
-        "type": "aether_ii:aerbunny",
-        "maxCount": 3,
-        "minCount": 1,
-        "weight": 14
-      }
-    ],
-    "misc": [],
-    "monster": [],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": -0.5,
   "temperature_modifier": "frozen"
 }

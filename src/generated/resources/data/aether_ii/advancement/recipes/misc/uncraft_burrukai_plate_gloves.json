@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_burrukai_plate_gloves"
+        "recipes": "aether_ii:uncraft_burrukai_plate_gloves"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

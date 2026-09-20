@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.monster.dungeon;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.CooldownEntity;
@@ -125,7 +126,6 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
 
     @Override
     public void aiStep() {
-        this.updateSwingTime();
         super.aiStep();
     }
 
@@ -432,7 +432,7 @@ public class SentryGolem extends PathfinderMob implements RangedAttackMob, Coold
             if (this.attackTime <= 0 && !this.golem.cooldowns.isOnCooldown(this.golem.getMainHandItem()) && distance <= (double) this.maxAttackRange && canSee) {
                 this.golem.performRangedAttack(this.target, 1.0F);
                 this.attackTime = this.maxRangedAttackTime;
-                this.golem.swing(InteractionHand.MAIN_HAND);
+                this.golem.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, false);
             }
         }
     }

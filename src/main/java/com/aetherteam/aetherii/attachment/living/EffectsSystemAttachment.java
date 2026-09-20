@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EffectsSystemAttachment {
+public class EffectsSystemAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
     public static final MapCodec<EffectsSystemAttachment> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.unboundedMap(BuiltInRegistries.MOB_EFFECT.holderByNameCodec(), EffectBuildupInstance.CODEC).fieldOf("active_buildups").forGetter(EffectsSystemAttachment::getActiveBuildups)
     ).apply(instance, EffectsSystemAttachment::new));
@@ -86,7 +86,7 @@ public class EffectsSystemAttachment {
 
         if (this.needSync) {
             this.needSync = false;
-            livingEntity.setAttached(AetherIIDataAttachments.EFFECTS_SYSTEM, livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM));
+            livingEntity.getAttachedOrCreate(AetherIIDataAttachments.EFFECTS_SYSTEM).markDirty();
         }
 
         this.setMotionMultiplier(new Vec3(1, 1, 1));

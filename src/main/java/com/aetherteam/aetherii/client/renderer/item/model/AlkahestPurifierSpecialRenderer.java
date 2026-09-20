@@ -33,9 +33,9 @@ public class AlkahestPurifierSpecialRenderer implements NoDataSpecialModelRender
         RenderType renderType = AlkahestPurifierRenderer.ALKAHEST_PURIFIER_0.renderType(RenderTypes::entitySolid);
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.setupAnim(this.openness);
-        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, this.sprites.get(AlkahestPurifierRenderer.ALKAHEST_PURIFIER_0), i2, null);
+        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, this.sprites.get(AlkahestPurifierRenderer.ALKAHEST_PURIFIER_0), i2);
         poseStack.popPose();
     }
 
@@ -43,7 +43,7 @@ public class AlkahestPurifierSpecialRenderer implements NoDataSpecialModelRender
     public void getExtents(Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.setupAnim(this.openness);
         this.model.root().getExtentsForGui(poseStack, consumer);
     }

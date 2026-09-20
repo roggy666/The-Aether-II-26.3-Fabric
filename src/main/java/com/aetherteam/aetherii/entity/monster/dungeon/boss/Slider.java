@@ -479,7 +479,7 @@ public class Slider extends PathfinderMob implements AetherBossMob<Slider>, Enem
 
     @Override
     public ProjectileDeflection deflection(Projectile projectile) {
-        ProjectileDeflection reverse = (deflected, entity, random) -> {
+        ProjectileDeflection reverse = (deflected, entity, random, power) -> {
             float rotation = 170.0F + random.nextFloat() * 20.0F;
             deflected.setDeltaMovement(deflected.getDeltaMovement().scale(-0.2F));
             deflected.setYRot(deflected.getYRot() + rotation);

@@ -40,7 +40,7 @@ import com.aetherteam.aetherii.attachment.ValueIOSerializable;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 
-public class DamageSystemAttachment implements ValueIOSerializable {
+public class DamageSystemAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment implements ValueIOSerializable {
     private float criticalDamageModifier = 1.0F;
     private double shieldEndurance = 0;
     private int resistantEntity = -1;
@@ -60,7 +60,7 @@ public class DamageSystemAttachment implements ValueIOSerializable {
         double maxEndurance = AetherIIAttributes.getMaxEndurance(player);
         if (attachment.shieldEndurance == 0) {
             attachment.setShieldEndurance(maxEndurance);
-            player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
+            player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).markDirty();
         }
     }
 
@@ -78,7 +78,7 @@ public class DamageSystemAttachment implements ValueIOSerializable {
             double recovery = player.getAttributeValue(AetherIIAttributes.ENDURANCE_RECOVERY);
             if (attachment.getShieldEndurance() < maxEndurance && attachment.getShieldEndurance() > 0 && !player.isBlocking()) {
                 attachment.setShieldEndurance(Math.min(maxEndurance, attachment.getShieldEndurance() + recovery));
-                player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
+                player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).markDirty();
             }
         }
     }
@@ -98,7 +98,7 @@ public class DamageSystemAttachment implements ValueIOSerializable {
 
                 if (!player.level().isClientSide()) {
                     this.setShieldEndurance(Math.max(0, this.getShieldEndurance() - endurance));
-                    player.setAttached(AetherIIDataAttachments.DAMAGE_SYSTEM, player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM));
+                    player.getAttachedOrCreate(AetherIIDataAttachments.DAMAGE_SYSTEM).markDirty();
                 }
                 if (this.getShieldEndurance() <= 0) {
                     player.level().registryAccess().lookupOrThrow(Registries.ITEM).getTagOrEmpty(ConventionalItemTags.SHIELD_TOOLS).forEach((item) -> player.getCooldowns().addCooldown(item.value().getDefaultInstance(), 300));
@@ -107,7 +107,7 @@ public class DamageSystemAttachment implements ValueIOSerializable {
                 if (player.level() instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
                     AccessoryUtil.getFirst(player, AccessoryContainer.SlotType.HANDWEAR).ifPresent((stack) -> {
                         ItemStack copyStack = stack.copy();
-                        stack.hurtAndBreak(1, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+                        stack.hurtAndBreak(1, serverLevel, serverPlayer, broken -> AccessoryUtil.breakAccessory(broken.getItem(), copyStack, serverPlayer));
                     });
                 }
             }

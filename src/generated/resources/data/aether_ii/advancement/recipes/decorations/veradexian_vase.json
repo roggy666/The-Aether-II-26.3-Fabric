@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:veradexian_vase"
+        "recipes": "aether_ii:veradexian_vase"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

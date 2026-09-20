@@ -1211,7 +1211,7 @@ public class AetherIIBlockTagData extends FabricTagsProvider.BlockTagsProvider {
         ).addTags(
                 AetherIITags.Blocks.AETHER_STONES
         );
-        this.tagOf(BlockTags.CONVERTABLE_TO_MUD).add(
+        this.tagOf(BlockTags.CONVERTIBLE_TO_MUD).add(
                 AetherIIBlocks.AETHER_DIRT
         );
         this.tagOf(BlockTags.SNAPS_GOAT_HORN).add(

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.gui.screen.guidebook.discovery;
 
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.client.gui.Hud;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.api.guidebook.BestiaryEntry;
@@ -108,6 +109,21 @@ public class BestiarySection extends DiscoverySection<BestiaryEntry, BestiaryEnt
         this.rotation = 0.0F;
     }
 
+    /** Ids of guidebook preview entities; negative so they never collide with entities that live in the level. */
+    private static final java.util.concurrent.atomic.AtomicInteger PREVIEW_ENTITY_IDS = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * Display-only entities are never added to the level, and since 26.3 an entity only receives its id when it is
+     * added, so the preview gets a private id here (renderers use it as a seed).
+     */
+    private static Entity createPreviewEntity(EntityType<?> type, Level level) {
+        Entity entity = type.create(level, EntitySpawnReason.COMMAND);
+        if (entity != null) {
+            entity.setId(-1 - PREVIEW_ENTITY_IDS.getAndIncrement());
+        }
+        return entity;
+    }
+
     @Override
     public void renderFoward(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int rightPagePos = (this.screen.width / 2);
@@ -115,7 +131,7 @@ public class BestiarySection extends DiscoverySection<BestiaryEntry, BestiaryEnt
         if (this.getSelectedEntry() != null && this.isUnlocked(this.getSelectedEntry(), BestiaryEntry.ENTITY_TYPE.id())) {
             Level level = Minecraft.getInstance().level;
             if (level != null) {
-                Entity entity = this.getSelectedEntry().getEntityType().value().create(level, EntitySpawnReason.COMMAND);
+                Entity entity = createPreviewEntity(this.getSelectedEntry().getEntityType().value(), level);
                 if (entity instanceof LivingEntity livingEntity) {
                     int x = 24;
                     int y = 28;
@@ -235,7 +251,7 @@ public class BestiarySection extends DiscoverySection<BestiaryEntry, BestiaryEnt
             Level level = Minecraft.getInstance().level;
             Font font = Minecraft.getInstance().font;
             if (level != null) {
-                Entity entity = entry.getEntityType().value().create(level, EntitySpawnReason.COMMAND);
+                Entity entity = createPreviewEntity(entry.getEntityType().value(), level);
                 if (entity instanceof LivingEntity livingEntity) {
                     if (this.isUnlocked(entry, BestiaryEntry.NAME.id())) {
                         guiGraphics.centeredText(font, Component.translatable(entry.getName()), 88, 13, 0xffffffff);

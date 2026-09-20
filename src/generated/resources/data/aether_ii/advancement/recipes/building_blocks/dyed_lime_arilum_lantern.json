@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:dyed_lime_arilum_lantern"
+        "recipes": "aether_ii:dyed_lime_arilum_lantern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

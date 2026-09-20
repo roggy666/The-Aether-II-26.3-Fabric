@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_amber_hourglass"
+        "recipes": "aether_ii:uncraft_amber_hourglass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

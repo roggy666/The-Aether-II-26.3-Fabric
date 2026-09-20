@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:smelting_has_fried_prismallard_egg"
+        "recipes": "aether_ii:smelting_has_fried_prismallard_egg"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

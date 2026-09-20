@@ -1,12 +1,13 @@
 package com.aetherteam.aetherii.network.packet.clientbound;
 
+import java.util.HashMap;
+import net.minecraft.network.codec.ByteBufCodecs;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.event.hooks.BiomeHooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -24,19 +25,12 @@ public record GrassTintSyncPacket(Map<ResourceKey<Biome>, Integer> types) implem
 
     public static final Type<GrassTintSyncPacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(AetherII.MODID, "sync_grass_tint"));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, GrassTintSyncPacket> STREAM_CODEC = CustomPacketPayload.codec(
-            GrassTintSyncPacket::write,
-            GrassTintSyncPacket::decode);
-
-    public void write(FriendlyByteBuf buf) {
-        buf.writeMap(types, FriendlyByteBuf::writeResourceKey, FriendlyByteBuf::writeInt);
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, GrassTintSyncPacket> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.map(HashMap::new, ResourceKey.streamCodec(Registries.BIOME), ByteBufCodecs.INT), GrassTintSyncPacket::types,
+            GrassTintSyncPacket::new);
 
 
-    public static GrassTintSyncPacket decode(FriendlyByteBuf buf) {
-        Map<ResourceKey<Biome>, Integer> map = buf.readMap(b1 -> b1.readResourceKey(Registries.BIOME), FriendlyByteBuf::readInt);
-        return new GrassTintSyncPacket(map);
-    }
+
 
     @Environment(EnvType.CLIENT)
     public static void handleClient(GrassTintSyncPacket packet, Player player) {

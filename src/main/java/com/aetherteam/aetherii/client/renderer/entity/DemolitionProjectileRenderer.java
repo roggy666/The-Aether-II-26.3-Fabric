@@ -48,12 +48,12 @@ public class DemolitionProjectileRenderer extends EntityRenderer<DemolitionProje
     @Override
     public void submit(DemolitionProjectileRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(renderState.yRot));
+        poseStack.rotateDegrees(Axis.YP, renderState.yRot);
         poseStack.scale(2.0F, 2.0F, 2.0F);
         poseStack.translate(0.0F, -1.1F, 0.0F);
         this.projectile.setupAnim(renderState);
-        submitNodeCollector.submitModel(this.projectile, renderState, poseStack, DEMOLITION_PROJECTILE, renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
-        submitNodeCollector.submitModel(this.projectile, renderState, poseStack, DEMOLITION_PROJECTILE_EMISSIVE, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
+        submitNodeCollector.submitModel(this.projectile, renderState, poseStack, DEMOLITION_PROJECTILE, renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
+        submitNodeCollector.submitModel(this.projectile, renderState, poseStack, DEMOLITION_PROJECTILE_EMISSIVE, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
         poseStack.popPose();
 
 

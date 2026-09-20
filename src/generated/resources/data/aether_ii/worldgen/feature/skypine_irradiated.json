@@ -1,0 +1,258 @@
+{
+  "type": "minecraft:tree",
+  "below_trunk_provider": {
+    "id": "aether_ii:aether_dirt"
+  },
+  "decorators": [
+    {
+      "type": "aether_ii:irradiation"
+    },
+    {
+      "type": "aether_ii:moss",
+      "carpet_provider": {
+        "id": "aether_ii:ambrelinn_moss_carpet"
+      },
+      "flower_provider": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": "aether_ii:tarahesp_flowers",
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "east",
+                "flower_amount": "1",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "south",
+                "flower_amount": "1",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "west",
+                "flower_amount": "1",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "north",
+                "flower_amount": "2",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "east",
+                "flower_amount": "2",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "south",
+                "flower_amount": "2",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "west",
+                "flower_amount": "2",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "north",
+                "flower_amount": "3",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "east",
+                "flower_amount": "3",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "south",
+                "flower_amount": "3",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "west",
+                "flower_amount": "3",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "north",
+                "flower_amount": "4",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "east",
+                "flower_amount": "4",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "south",
+                "flower_amount": "4",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:tarahesp_flowers",
+              "properties": {
+                "facing": "west",
+                "flower_amount": "4",
+                "snowy": "false"
+              }
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "moss_property": "ambrelinn",
+      "vines_provider": {
+        "id": "aether_ii:ambrelinn_moss_vines",
+        "properties": {
+          "age": "0",
+          "east": "false",
+          "north": "false",
+          "south": "false",
+          "up": "false",
+          "west": "false"
+        }
+      }
+    },
+    {
+      "type": "aether_ii:simple_trunk",
+      "above_placement_chance": 0.2,
+      "placement_chance": 0.2,
+      "side_placement_chance": 0.15,
+      "trunk_block_provider": {
+        "id": "aether_ii:skyroot_trunk",
+        "properties": {
+          "east_connection": "none",
+          "north_connection": "none",
+          "south_connection": "none",
+          "tall": "false",
+          "waterlogged": "false",
+          "west_connection": "none"
+        }
+      }
+    }
+  ],
+  "foliage_placer": {
+    "type": "aether_ii:skypine_foliage_placer",
+    "offset": 2,
+    "radius": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 5,
+      "min_inclusive": 3
+    }
+  },
+  "foliage_provider": {
+    "id": "aether_ii:irradiated_skypine_leaves",
+    "properties": {
+      "distance": "7",
+      "mossy_overlay": "none",
+      "persistent": "false",
+      "shade": "7",
+      "snowy": "false",
+      "waterlogged": "false"
+    }
+  },
+  "ignore_vines": true,
+  "minimum_size": {
+    "type": "minecraft:two_layers_feature_size",
+    "limit": 2,
+    "upper_size": 2
+  },
+  "trunk_placer": {
+    "type": "minecraft:straight_trunk_placer",
+    "base_height": 6,
+    "height_rand_a": 4,
+    "height_rand_b": 1
+  },
+  "trunk_provider": {
+    "id": "aether_ii:skyroot_log",
+    "properties": {
+      "axis": "y"
+    }
+  }
+}

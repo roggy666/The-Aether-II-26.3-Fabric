@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:moa_feed"
+        "recipes": "aether_ii:moa_feed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

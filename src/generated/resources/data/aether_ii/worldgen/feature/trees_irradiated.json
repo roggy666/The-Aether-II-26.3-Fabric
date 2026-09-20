@@ -1,0 +1,197 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether_ii:skyroot_irradiated",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "aether_ii:skyroot_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.4,
+      "feature": {
+        "feature": "aether_ii:large_skyroot_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skyroot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.025,
+      "feature": {
+        "feature": "aether_ii:wisproot_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:wisproot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.05,
+      "feature": {
+        "feature": "aether_ii:skyplane_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skyplane_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.002,
+      "feature": {
+        "feature": "aether_ii:greatoak_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:greatoak_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.075,
+      "feature": {
+        "feature": "aether_ii:skybirch_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skybirch_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.005,
+      "feature": {
+        "feature": "aether_ii:wisptop_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:wisptop_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.0075,
+      "feature": {
+        "feature": "aether_ii:greatroot_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:greatroot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.125,
+      "feature": {
+        "feature": "aether_ii:skypine_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skypine_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.001,
+      "feature": {
+        "feature": "aether_ii:greatboa_irradiated",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:greatboa_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.025,
+      "feature": {
+        "feature": "aether_ii:amberoot",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:amberoot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.025,
+      "feature": {
+        "feature": "aether_ii:singular_amberoot",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:amberoot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.065,
+      "feature": {
+        "feature": "aether_ii:large_amberoot",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:amberoot_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

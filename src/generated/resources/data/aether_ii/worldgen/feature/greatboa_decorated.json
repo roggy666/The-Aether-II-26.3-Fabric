@@ -1,0 +1,137 @@
+{
+  "type": "minecraft:tree",
+  "below_trunk_provider": {
+    "id": "aether_ii:aether_dirt"
+  },
+  "decorators": [
+    {
+      "type": "aether_ii:alter_ground_tag",
+      "provider": {
+        "id": "aether_ii:aether_grass_block",
+        "properties": {
+          "snowy": "false"
+        }
+      },
+      "tag": "aether_ii:grass_snow_replaceable"
+    },
+    {
+      "type": "aether_ii:snow"
+    },
+    {
+      "type": "aether_ii:ground_feature",
+      "block_provider": {
+        "type": "minecraft:weighted",
+        "entries": [
+          {
+            "data": "aether_ii:skyroot_twig",
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "north",
+                "twig_amount": "2"
+              }
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "south",
+                "twig_amount": "1"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "south",
+                "twig_amount": "2"
+              }
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "west",
+                "twig_amount": "1"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "west",
+                "twig_amount": "2"
+              }
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "east",
+                "twig_amount": "1"
+              }
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "id": "aether_ii:skyroot_twig",
+              "properties": {
+                "facing": "east",
+                "twig_amount": "2"
+              }
+            },
+            "weight": 2
+          }
+        ]
+      },
+      "chance": 50
+    }
+  ],
+  "foliage_placer": {
+    "type": "aether_ii:greatboa_foliage_placer",
+    "offset": 0,
+    "radius": 3
+  },
+  "foliage_provider": {
+    "id": "aether_ii:greatboa_leaves",
+    "properties": {
+      "distance": "7",
+      "mossy_overlay": "none",
+      "persistent": "false",
+      "snowy": "false",
+      "waterlogged": "false"
+    }
+  },
+  "ignore_vines": true,
+  "minimum_size": {
+    "type": "minecraft:two_layers_feature_size",
+    "lower_size": 2,
+    "upper_size": 2
+  },
+  "trunk_placer": {
+    "type": "minecraft:giant_trunk_placer",
+    "base_height": 15,
+    "height_rand_a": 3,
+    "height_rand_b": 8
+  },
+  "trunk_provider": {
+    "id": "aether_ii:greatroot_log",
+    "properties": {
+      "axis": "y"
+    }
+  }
+}

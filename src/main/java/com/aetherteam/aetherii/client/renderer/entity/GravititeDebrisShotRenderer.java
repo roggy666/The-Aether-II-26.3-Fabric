@@ -39,11 +39,11 @@ public class GravititeDebrisShotRenderer extends EntityRenderer<GravititeDebrisS
     public void submit(GravititeDebrisShotRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState p_451076_) {
         poseStack.pushPose();
         poseStack.translate(0, 0.25, 0);
-        poseStack.mulPose(Axis.XN.rotationDegrees(renderState.xRot));
-        poseStack.mulPose(Axis.YN.rotationDegrees(renderState.yRot));
+        poseStack.rotateDegrees(Axis.XN, renderState.xRot);
+        poseStack.rotateDegrees(Axis.YN, renderState.yRot);
         this.model.setupAnim(renderState);
 
-        submitNodeCollector.submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURE_LOCATION), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
+        submitNodeCollector.submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURE_LOCATION), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
         poseStack.popPose();
         super.submit(renderState, poseStack, submitNodeCollector, p_451076_);
     }

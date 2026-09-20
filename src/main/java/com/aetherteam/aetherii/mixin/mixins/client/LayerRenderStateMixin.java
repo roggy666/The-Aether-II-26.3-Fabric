@@ -1,11 +1,9 @@
 package com.aetherteam.aetherii.mixin.mixins.client;
 
-import com.aetherteam.aetherii.mixin.mixins.client.accessor.ItemStackRenderStateAccessor;
+import net.minecraft.client.resources.model.geometry.ItemQuads;
 import com.aetherteam.aetherii.mixin.wrappers.client.IrradiatedDataWrapper;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.SubmitNodeStorage;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 import org.spongepowered.asm.mixin.Final;
@@ -23,16 +21,16 @@ public class LayerRenderStateMixin implements IrradiatedDataWrapper {
 
     @Shadow
     @Final
-    private List<BakedQuad> quads;
+    private ItemQuads quads;
     @Shadow
     private ItemStackRenderState.FoilType foilType;
     @Unique
     private boolean aether_ii$isIrradiated;
 
-    @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitItem(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/item/ItemDisplayContext;III[ILjava/util/List;Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;)V"))
+    @Inject(method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;III)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitItem(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/item/ItemDisplayContext;III[ILnet/minecraft/client/resources/model/geometry/ItemQuads;Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;)V"))
     private void render(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, int outlineColor, CallbackInfo ci) {
         if (this.aether_ii$isIrradiated && outlineColor == 0) {
-            List<BakedQuad> snapshot = List.copyOf(this.quads);
+            List<BakedQuad> snapshot = this.quads.all();
             submitNodeCollector.submitCustomGeometry(poseStack, com.aetherteam.aetherii.client.renderer.AetherIIRenderTypes.irradiatedGlint(), (pose, buffer) -> {
                 com.mojang.blaze3d.vertex.QuadInstance instance = new com.mojang.blaze3d.vertex.QuadInstance();
                 instance.setLightCoords(lightCoords);

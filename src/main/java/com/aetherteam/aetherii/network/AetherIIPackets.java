@@ -69,7 +69,6 @@ public class AetherIIPackets {
         PayloadTypeRegistry.serverboundPlay().register(ForgeSlotCharmsPacket.TYPE, ForgeSlotCharmsPacket.STREAM_CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ForgeTriggerSoundPacket.TYPE, ForgeTriggerSoundPacket.STREAM_CODEC);
         PayloadTypeRegistry.serverboundPlay().register(ForgeUpgradePacket.TYPE, ForgeUpgradePacket.STREAM_CODEC);
-        PayloadTypeRegistry.serverboundPlay().register(HeldCurrencyPacket.TYPE, HeldCurrencyPacket.STREAM_CODEC);
         PayloadTypeRegistry.serverboundPlay().register(MoaFlyModeChangePacket.TYPE, MoaFlyModeChangePacket.STREAM_CODEC);
         PayloadTypeRegistry.serverboundPlay().register(MountJumpedPacket.TYPE, MountJumpedPacket.STREAM_CODEC);
         PayloadTypeRegistry.serverboundPlay().register(MovementDataPacket.TYPE, MovementDataPacket.STREAM_CODEC);
@@ -94,7 +93,6 @@ public class AetherIIPackets {
         ServerPlayNetworking.registerGlobalReceiver(ForgeSlotCharmsPacket.TYPE, (payload, context) -> ForgeSlotCharmsPacket.handleServer(payload, context.player()));
         ServerPlayNetworking.registerGlobalReceiver(ForgeTriggerSoundPacket.TYPE, (payload, context) -> ForgeTriggerSoundPacket.handleServer(payload, context.player()));
         ServerPlayNetworking.registerGlobalReceiver(ForgeUpgradePacket.TYPE, (payload, context) -> ForgeUpgradePacket.handleServer(payload, context.player()));
-        ServerPlayNetworking.registerGlobalReceiver(HeldCurrencyPacket.TYPE, (payload, context) -> HeldCurrencyPacket.handleServer(payload, context.player()));
         ServerPlayNetworking.registerGlobalReceiver(MoaFlyModeChangePacket.TYPE, (payload, context) -> MoaFlyModeChangePacket.handleServer(payload, context.player()));
         ServerPlayNetworking.registerGlobalReceiver(MountJumpedPacket.TYPE, (payload, context) -> MountJumpedPacket.handleServer(payload, context.player()));
         ServerPlayNetworking.registerGlobalReceiver(MovementDataPacket.TYPE, (payload, context) -> MovementDataPacket.handleServer(payload, context.player()));

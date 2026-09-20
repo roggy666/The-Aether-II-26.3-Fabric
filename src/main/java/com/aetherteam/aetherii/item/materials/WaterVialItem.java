@@ -40,7 +40,7 @@ public class WaterVialItem extends Item {
         Player player = context.getPlayer();
         ItemStack itemStack = context.getItemInHand();
         BlockState state = level.getBlockState(pos);
-        if (context.getClickedFace() != Direction.DOWN && (state.is(BlockTags.CONVERTABLE_TO_MUD) || state.is(AetherIIBlocks.FERROSITE_SAND))) {
+        if (context.getClickedFace() != Direction.DOWN && (state.is(BlockTags.CONVERTIBLE_TO_MUD) || state.is(AetherIIBlocks.FERROSITE_SAND))) {
             level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
             assert player != null;
             player.setItemInHand(context.getHand(), ItemUtils.createFilledResult(itemStack, player, new ItemStack(AetherIIItems.SCATTERGLASS_VIAL)));

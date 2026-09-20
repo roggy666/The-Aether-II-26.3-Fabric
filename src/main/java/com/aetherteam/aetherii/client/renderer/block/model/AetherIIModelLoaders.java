@@ -95,7 +95,7 @@ public final class AetherIIModelLoaders {
                         Integer emission = sprites.get(quad.materialInfo().sprite());
                         if (emission != null) {
                             var old = quad.materialInfo();
-                            var material = new BakedQuad.MaterialInfo(old.sprite(), old.layer(), old.itemRenderType(), old.tintIndex(), old.shade(), emission);
+                            var material = new BakedQuad.MaterialInfo(old.sprite(), old.layer(), old.itemRenderType(), old.itemGlintRenderType(), old.itemGlintSpecialRenderType(), old.tintIndex(), old.shadeDirectionOverride(), emission);
                             quad = new BakedQuad(quad.position0(), quad.position1(), quad.position2(), quad.position3(), quad.packedUV0(), quad.packedUV1(), quad.packedUV2(), quad.packedUV3(), quad.direction(), material);
                         }
                         if (direction == null) result.addUnculledFace(quad); else result.addCulledFace(direction, quad);

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:rustic_curved_arkenium_bars_from_arkenium_bars_stonecutting"
+        "recipes": "aether_ii:rustic_curved_arkenium_bars_from_arkenium_bars_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

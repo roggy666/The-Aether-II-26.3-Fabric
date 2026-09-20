@@ -62,7 +62,7 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
     @Override
     public void submit(SentrySpawnerRenderState sentrySpawnerRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XN.rotationDegrees(180F));
+        poseStack.rotateDegrees(Axis.XN, 180F);
 
         AetherIIBlockStateProperties.SentrySpawnerState spawnerState = sentrySpawnerRenderState.sentrySpawnerState;
 
@@ -88,8 +88,11 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
                 OverlayTexture.NO_OVERLAY,
                 -1,
                 sprites.get(baseSpriteId),
-                0,
-                sentrySpawnerRenderState.breakProgress);
+                0);
+        if (sentrySpawnerRenderState.breakProgress != null) {
+            submitNodeCollector.order(1).submitCrumblingOverlay(this.sentrySpawnerModel, Unit.INSTANCE, poseStack, renderType, sentrySpawnerRenderState.lightCoords,
+                    OverlayTexture.NO_OVERLAY, -1, sentrySpawnerRenderState.breakProgress);
+        }
 
 
 
@@ -99,8 +102,7 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
         RenderType pistonRenderType = RenderTypes.entityCutout(pistonLocation);
         submitNodeCollector.submitModel(this.sentrySpawnerPistonModel, Unit.INSTANCE, poseStack, pistonRenderType, sentrySpawnerRenderState.lightCoords,
                 OverlayTexture.NO_OVERLAY,
-                0,
-                null);
+                0);
 
 
         if (emissiveLocation != null) {
@@ -108,8 +110,7 @@ public class SentrySpawnerRenderer implements BlockEntityRenderer<SentrySpawnerB
 
             submitNodeCollector.submitModel(this.sentrySpawnerPistonModel, Unit.INSTANCE, poseStack, pistonEmissiveRenderType, sentrySpawnerRenderState.lightCoords,
                     OverlayTexture.NO_OVERLAY,
-                    0,
-                    null);
+                    0);
         }
     }
 

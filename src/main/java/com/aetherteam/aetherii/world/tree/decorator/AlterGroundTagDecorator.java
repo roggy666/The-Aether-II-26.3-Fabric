@@ -15,7 +15,7 @@ import java.util.List;
 public class AlterGroundTagDecorator extends TreeDecorator {
     public static final MapCodec<AlterGroundTagDecorator> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    BlockStateProvider.CODEC.fieldOf("provider").forGetter(decorator -> decorator.provider),
+                    BlockStateProvider.DIRECT_CODEC.fieldOf("provider").forGetter(decorator -> decorator.provider),
                     TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(decorator -> decorator.replaceTag)
             ).apply(instance, AlterGroundTagDecorator::new));
 

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:glint_gemstone_from_glint_block"
+        "recipes": "aether_ii:glint_gemstone_from_glint_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

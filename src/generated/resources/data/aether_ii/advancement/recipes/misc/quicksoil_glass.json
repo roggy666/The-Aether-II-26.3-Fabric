@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:quicksoil_glass"
+        "recipes": "aether_ii:quicksoil_glass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

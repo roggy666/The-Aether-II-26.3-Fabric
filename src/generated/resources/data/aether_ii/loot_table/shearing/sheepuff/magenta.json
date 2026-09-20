@@ -2,18 +2,16 @@
   "type": "minecraft:shearing",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:sheepuff": {
-              "puffed": false,
-              "sheared": false
-            }
+      "condition": {
+        "type": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "aether_ii:sheepuff": {
+            "puffed": false,
+            "sheared": false
           }
         }
-      ],
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -22,23 +20,21 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 3.0,
-        "min": 1.0
+        "max": 3,
+        "min": 1
       }
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {
-            "aether_ii:sheepuff": {
-              "puffed": true,
-              "sheared": false
-            }
+      "condition": {
+        "type": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "aether_ii:sheepuff": {
+            "puffed": true,
+            "sheared": false
           }
         }
-      ],
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -47,10 +43,9 @@
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 4.0,
-        "min": 2.0
+        "max": 4,
+        "min": 2
       }
     }
-  ],
-  "random_sequence": "aether_ii:shearing/sheepuff/magenta"
+  ]
 }

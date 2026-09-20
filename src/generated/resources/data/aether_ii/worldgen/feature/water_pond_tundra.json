@@ -1,0 +1,17 @@
+{
+  "type": "aether_ii:lake",
+  "fluid": {
+    "id": "minecraft:water",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "shrink_scale": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 5,
+    "min_inclusive": 2
+  },
+  "top": {
+    "id": "aether_ii:coarse_aether_dirt"
+  }
+}

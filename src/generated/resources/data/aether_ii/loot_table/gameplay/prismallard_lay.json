@@ -8,8 +8,7 @@
           "name": "aether_ii:prismallard_egg"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:gameplay/prismallard_lay"
+  ]
 }

@@ -87,6 +87,7 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
     @Override
     public void tick() {
         if (this.level() instanceof ServerLevel serverLevel) {
+            if (!(this.getControllingPassenger() instanceof Player)) this.setSteeringState(SteeringState.NONE);
             if (this.animateUnfold()) {
                 serverLevel.broadcastEntityEvent(this, (byte) UNFOLD_EVENT);
                 this.setAnimateUnfold(false);
@@ -112,7 +113,9 @@ public class CloudSkiff extends AbstractBoat implements RiderSitContext {
             } else if (accessor.aether$getInputLeft()) {
                 clientState = SteeringState.LEFT;
             }
-            AetherIIPackets.sendToServer(new SkiffSteeringPacket(this.getId(), clientState));
+            if (this.getControllingPassenger() instanceof Player driver && driver.isLocalPlayer()) {
+                AetherIIPackets.sendToServer(new SkiffSteeringPacket(this.getId(), clientState));
+            }
 
             this.steeringO = this.steering;
             switch (this.getSteeringState()) {

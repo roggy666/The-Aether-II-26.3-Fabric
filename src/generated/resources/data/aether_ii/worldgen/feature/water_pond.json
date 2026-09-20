@@ -1,0 +1,25 @@
+{
+  "type": "aether_ii:lake",
+  "fluid": {
+    "id": "minecraft:water",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "shrink_scale": 2,
+  "top": {
+    "type": "minecraft:noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": 0
+    },
+    "scale": 0.25,
+    "seed": 2345,
+    "states": [
+      "aether_ii:shimmering_silt",
+      "aether_ii:shimmering_silt",
+      "aether_ii:coarse_aether_dirt",
+      "aether_ii:shimmering_silt"
+    ]
+  }
+}

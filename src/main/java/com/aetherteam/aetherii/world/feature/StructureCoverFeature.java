@@ -1,6 +1,10 @@
 package com.aetherteam.aetherii.world.feature;
 
-import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensitySampler;
+import com.aetherteam.aetherii.world.density.DensitySampling;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.StructureCoverConfiguration;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -8,57 +12,64 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-public class StructureCoverFeature extends Feature<StructureCoverConfiguration> {
+public class StructureCoverFeature implements Feature {
 
-    public StructureCoverFeature(Codec<StructureCoverConfiguration> codec) {
-        super(codec);
+    public static final MapCodec<StructureCoverFeature> CODEC = StructureCoverConfiguration.CODEC.xmap(StructureCoverFeature::new, StructureCoverFeature::config);
+    private final StructureCoverConfiguration config;
+
+    public StructureCoverFeature(StructureCoverConfiguration config) {
+        this.config = config;
+    }
+
+    public StructureCoverConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<StructureCoverConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin().below(2);
-        StructureCoverConfiguration config = context.config();
+    public MapCodec<StructureCoverFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin.below(2);
+        StructureCoverConfiguration config = this.config;
         Set<BlockPos> positions = new HashSet<>();
 
-        DensityFunction noise = config.noise();
-        DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(level.getSeed());
-        noise.mapAll(visitor);
+        DensitySampler.Bound noise = DensitySampling.sampler(level, config.noise());
 
         if (config.calculationType() == CalculationType.BOTTOM_TO_TOP) {
             for (int i = 0; i < config.height(); ++i) {
-                placeStructureCover(i, level, pos, context, config, noise, positions);
+                placeStructureCover(i, level, random, pos, config, noise, positions);
             }
         }
         if (config.calculationType() == CalculationType.TOP_TO_BOTTOM) {
             for (int i = 0; i > config.height(); --i) {
-                placeStructureCover(i, level, pos, context, config, noise, positions);
+                placeStructureCover(i, level, random, pos, config, noise, positions);
             }
         }
 
         return true;
     }
 
-    public void placeStructureCover(int i, WorldGenLevel level, BlockPos pos, FeaturePlaceContext<StructureCoverConfiguration> context, StructureCoverConfiguration config, DensityFunction noise, Set<BlockPos> positions) {
+    public void placeStructureCover(int i, WorldGenLevel level, RandomSource random, BlockPos pos, StructureCoverConfiguration config, DensitySampler.Bound noise, Set<BlockPos> positions) {
         this.placeDisk(level, new BlockPos(pos.getX(), pos.getY() + i, pos.getZ()), config.radius(), positions);
 
         for (BlockPos position : positions) {
-            double density = noise.compute(new DensityFunction.SinglePointContext(position.getX(), position.getY(), position.getZ()));
+            double density = noise.sampleValue(position.getX(), position.getY(), position.getZ());
             if (position.getY() == pos.getY() + i) {
                 double densitySmoothed = density - Mth.clamp(position.distToCenterSqr(pos.getX(), pos.getY() + i, pos.getZ()) * config.inclineFactor() - config.radius() * config.scatterFactor(), 0, 10);
                 if (densitySmoothed > 0) {
                     if (position.getY() > config.blockTransitionHeight()) {
-                        level.setBlock(position, config.block().getState(level, context.random(), position), 2);
+                        level.setBlock(position, config.block().getState(level, random, position), 2);
                     } else {
-                        level.setBlock(position, config.secondaryBlock().getState(level, context.random(), position), 2);
+                        level.setBlock(position, config.secondaryBlock().getState(level, random, position), 2);
                     }
                 }
             }

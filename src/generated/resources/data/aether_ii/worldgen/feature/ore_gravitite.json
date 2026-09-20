@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:ore",
+  "discard_chance_on_air_exposure": 0.0,
+  "size": 5,
+  "targets": [
+    {
+      "state": "aether_ii:gravitite_ore",
+      "target": {
+        "predicate_type": "minecraft:tag_match",
+        "tag": "aether_ii:holystone"
+      }
+    },
+    {
+      "state": "aether_ii:undershale_gravitite_ore",
+      "target": {
+        "block": "aether_ii:undershale",
+        "predicate_type": "minecraft:block_match"
+      }
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.network.packet.clientbound;
 
+import com.aetherteam.aetherii.client.ClientRecipeCache;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.client.AetherIIClientCaches;
 import net.fabricmc.api.EnvType;
@@ -11,7 +12,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeMap;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public record RecipeSyncPacket(List<RecipeHolder<?>> recipes) implements CustomP
 
     @Environment(EnvType.CLIENT)
     public static void handleClient(RecipeSyncPacket packet, Player player) {
-        AetherIIClientCaches.CLIENT_CACHES = RecipeMap.create(packet.recipes);
+        AetherIIClientCaches.CLIENT_CACHES = ClientRecipeCache.of(packet.recipes);
     }
 
     @Override

@@ -60,6 +60,7 @@ public class GuidebookPageItem extends Item {
                     icon = attachment.getIconForEntry(entry);
                 }
                 if (icon != null) {
+                    attachment.syncTo(serverPlayer);
                     ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
                     if (!player.getAbilities().instabuild) {
                         stack.shrink(1);
@@ -88,6 +89,7 @@ public class GuidebookPageItem extends Item {
                     }
                 }
                 if (icon != null) {
+                    attachment.syncTo(serverPlayer);
                     ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
                     if (!serverPlayer.getAbilities().instabuild) {
                         stack.shrink(1);

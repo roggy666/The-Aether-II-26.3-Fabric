@@ -25,15 +25,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class HolystoneSmokerBlock extends AbstractFurnaceBlock {
-    public static final MapCodec<HolystoneSmokerBlock> CODEC = simpleCodec(HolystoneSmokerBlock::new);
 
     public HolystoneSmokerBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends AbstractFurnaceBlock> codec() {
-        return CODEC;
     }
 
     @Nullable

@@ -1,19 +1,19 @@
 package com.aetherteam.aetherii.world.feature.configuration;
 
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.util.valueproviders.FloatProviders;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import java.util.Optional;
 
-public record BoulderConfiguration(BlockStateProvider block, float radius, FloatProvider variation, Optional<Holder<PlacedFeature>> vegetationFeature, float vegetationChance) implements FeatureConfiguration {
-    public static final Codec<BoulderConfiguration> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            BlockStateProvider.CODEC.fieldOf("block").forGetter(BoulderConfiguration::block),
+public record BoulderConfiguration(BlockStateProvider block, float radius, FloatProvider variation, Optional<Holder<PlacedFeature>> vegetationFeature, float vegetationChance) {
+    public static final MapCodec<BoulderConfiguration> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+            BlockStateProvider.DIRECT_CODEC.fieldOf("block").forGetter(BoulderConfiguration::block),
             Codec.FLOAT.fieldOf("radius").forGetter(BoulderConfiguration::radius),
             FloatProviders.CODEC.fieldOf("variation").forGetter(BoulderConfiguration::variation),
             PlacedFeature.CODEC.optionalFieldOf("vegetation_feature").forGetter(BoulderConfiguration::vegetationFeature),

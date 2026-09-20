@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:alkahest_purifier"
+        "recipes": "aether_ii:alkahest_purifier"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

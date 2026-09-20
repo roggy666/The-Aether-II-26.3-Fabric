@@ -31,7 +31,7 @@ public class SentryCrateSpecialRenderer implements NoDataSpecialModelRenderer {
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
-        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, this.spriteId.renderType(RenderTypes::entitySolid), i, i1, -1, this.sprites.get(spriteId), i2, null);
+        submitNodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, this.spriteId.renderType(RenderTypes::entitySolid), i, i1, -1, this.sprites.get(spriteId), i2);
     }
 
     @Override

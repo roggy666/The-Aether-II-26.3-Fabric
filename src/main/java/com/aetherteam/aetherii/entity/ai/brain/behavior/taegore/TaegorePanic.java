@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.entity.ai.brain.behavior.taegore;
 
+import com.aetherteam.aetherii.util.AetherIIBlockPosUtil;
+import java.util.stream.Stream;
 import com.aetherteam.aetherii.entity.passive.Taegore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -53,11 +55,11 @@ public class TaegorePanic extends AnimalPanic<Taegore> {
         } else {
             Predicate<BlockPos> predicate;
             if (Mth.ceil(entity.getBbWidth()) == 2) {
-                predicate = (pos1) -> BlockPos.squareOutSouthEast(pos1).allMatch((pos2) -> level.getFluidState(pos2).is(FluidTags.WATER));
+                predicate = (pos1) -> Stream.of(pos1, pos1.south(), pos1.east(), pos1.south().east()).allMatch((pos2) -> level.getFluidState(pos2).is(FluidTags.WATER));
             } else {
                 predicate = (pos1) -> level.getFluidState(pos1).is(FluidTags.WATER);
             }
-            return BlockPos.findClosestMatch(blockPos, 32, 6, predicate);
+            return AetherIIBlockPosUtil.findClosestMatch(blockPos, 32, 6, predicate);
         }
     }
 }

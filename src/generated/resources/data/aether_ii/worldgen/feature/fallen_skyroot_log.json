@@ -1,0 +1,16 @@
+{
+  "type": "aether_ii:fallen_log",
+  "block": {
+    "id": "aether_ii:skyroot_log",
+    "properties": {
+      "axis": "y"
+    }
+  },
+  "valid_blocks": "aether_ii:supports_fallen_log",
+  "vegetation_chance": 0.0,
+  "y_range": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 4,
+    "min_inclusive": 2
+  }
+}

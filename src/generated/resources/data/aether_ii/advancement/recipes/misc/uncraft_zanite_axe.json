@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_zanite_axe"
+        "recipes": "aether_ii:uncraft_zanite_axe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

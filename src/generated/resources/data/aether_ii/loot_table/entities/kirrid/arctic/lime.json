@@ -8,8 +8,7 @@
           "name": "aether_ii:lime_cloudwool"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:entities/kirrid/arctic/lime"
+  ]
 }

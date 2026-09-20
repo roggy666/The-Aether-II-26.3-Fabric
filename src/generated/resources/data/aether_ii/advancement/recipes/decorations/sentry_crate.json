@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:sentry_crate"
+        "recipes": "aether_ii:sentry_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

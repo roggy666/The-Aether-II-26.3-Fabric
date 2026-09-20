@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:splint"
+        "recipes": "aether_ii:splint"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.inventory.menu;
 
+import net.minecraft.util.Prediction;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
@@ -323,7 +324,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
 
                 slot.onTake(player, itemstack1);
                 if (index == 0) {
-                    player.drop(itemstack1, false);
+                    player.drop(itemstack1, false, Prediction.PREDICTED);
                 }
             }
 
@@ -393,7 +394,7 @@ public class GuidebookEquipmentMenu extends AbstractContainerMenu {
 
                 slot.onTake(player, itemstack1);
                 if (index == 0) {
-                    player.drop(itemstack1, false);
+                    player.drop(itemstack1, false, Prediction.PREDICTED);
                 }
             }
 

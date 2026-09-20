@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:sentry_pillar_from_undershale_pillar_stonecutting"
+        "recipes": "aether_ii:sentry_pillar_from_undershale_pillar_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

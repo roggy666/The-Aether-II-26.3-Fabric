@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.recipe.recipes.item;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.recipe.book.AetherIIRecipeBookCategories;
@@ -99,7 +100,7 @@ public class AltarEnchantingRecipe extends SingleItemRecipe {
             ItemStackTemplate input = new ItemStackTemplate(this.result().item(), this.result().count(), DataComponentPatch.builder().set(DataComponents.DAMAGE, this.result().create().getMaxDamage()).build());
             return List.of(new AltarRecipeDisplay(
                     new SlotDisplay.ItemStackSlotDisplay(input),
-                    new SlotDisplay.TagSlotDisplay(AetherIITags.Items.ALTAR_FUEL),
+                    new SlotDisplay.TagSlotDisplay(BuiltInRegistries.ITEM.getOrThrow(AetherIITags.Items.ALTAR_FUEL)),
                     new SlotDisplay.ItemStackSlotDisplay(this.result()),
                     new SlotDisplay.ItemSlotDisplay(AetherIIBlocks.ALTAR.asItem()),
                     this.fuelCount,
@@ -109,7 +110,7 @@ public class AltarEnchantingRecipe extends SingleItemRecipe {
         } else {
             return List.of(new AltarRecipeDisplay(
                     this.input().display(),
-                    new SlotDisplay.TagSlotDisplay(AetherIITags.Items.ALTAR_FUEL),
+                    new SlotDisplay.TagSlotDisplay(BuiltInRegistries.ITEM.getOrThrow(AetherIITags.Items.ALTAR_FUEL)),
                     new SlotDisplay.ItemStackSlotDisplay(this.result()),
                     new SlotDisplay.ItemSlotDisplay(AetherIIBlocks.ALTAR.asItem()),
                     this.fuelCount,

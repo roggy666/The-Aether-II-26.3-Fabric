@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:wisproot_hanging_sign"
+        "recipes": "aether_ii:wisproot_hanging_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

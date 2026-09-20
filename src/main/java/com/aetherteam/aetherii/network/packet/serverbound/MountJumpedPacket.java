@@ -26,7 +26,8 @@ public record MountJumpedPacket(int entityID) implements CustomPacketPayload {
 
     public static void handleServer(MountJumpedPacket payload, ServerPlayer player) {
         ServerPlayer sender = player;
-        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof MountableAetherAnimal mountableAetherAnimal) {
+        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof MountableAetherAnimal mountableAetherAnimal
+                && mountableAetherAnimal.getControllingPassenger() == sender) {
             mountableAetherAnimal.setMountJumping(true);
             mountableAetherAnimal.setEntityOnGround(false);
         }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:ore",
+  "discard_chance_on_air_exposure": 0.25,
+  "size": 6,
+  "targets": [
+    {
+      "state": "aether_ii:arkenium_ore",
+      "target": {
+        "predicate_type": "minecraft:tag_match",
+        "tag": "aether_ii:holystone"
+      }
+    },
+    {
+      "state": "aether_ii:undershale_arkenium_ore",
+      "target": {
+        "block": "aether_ii:undershale",
+        "predicate_type": "minecraft:block_match"
+      }
+    }
+  ]
+}

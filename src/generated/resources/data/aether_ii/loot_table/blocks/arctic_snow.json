@@ -2,13 +2,11 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:entity_properties",
-          "entity": "this",
-          "predicate": {}
-        }
-      ],
+      "condition": {
+        "type": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {}
+      },
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -18,312 +16,236 @@
               "children": [
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "1"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "1"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 1.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 1
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "2"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "2"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 2.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 2
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "3"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "3"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 3.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 3
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "4"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "4"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 4.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 4
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "5"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "5"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 5.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 5
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "6"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "6"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 6.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 6
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "7"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "7"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 7.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 7
+                  },
                   "name": "aether_ii:arctic_snowball"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "8"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "8"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 8.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 8
+                  },
                   "name": "aether_ii:arctic_snowball"
                 }
               ],
-              "conditions": [
-                {
-                  "condition": "minecraft:inverted",
-                  "term": {
-                    "condition": "minecraft:match_tool",
-                    "predicate": {
-                      "predicates": {
-                        "minecraft:enchantments": [
-                          {
-                            "enchantments": "minecraft:silk_touch",
-                            "levels": {
-                              "min": 1
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              ]
+              "condition": {
+                "type": "minecraft:inverted",
+                "term": "minecraft:tool/can_silk_touch"
+              }
             },
             {
               "type": "minecraft:alternatives",
               "children": [
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "1"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "1"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 1.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 1
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "2"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "2"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 2.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 2
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "3"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "3"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 3.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 3
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "4"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "4"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 4.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 4
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "5"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "5"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 5.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 5
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "6"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "6"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 6.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 6
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
                   "type": "minecraft:item",
-                  "conditions": [
-                    {
-                      "block": "aether_ii:arctic_snow",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "layers": "7"
-                      }
+                  "condition": {
+                    "type": "minecraft:match_block",
+                    "blocks": "aether_ii:arctic_snow",
+                    "state": {
+                      "layers": "7"
                     }
-                  ],
-                  "functions": [
-                    {
-                      "count": 7.0,
-                      "function": "minecraft:set_count"
-                    }
-                  ],
+                  },
+                  "modifier": {
+                    "type": "minecraft:set_count",
+                    "count": 7
+                  },
                   "name": "aether_ii:arctic_snow"
                 },
                 {
@@ -335,8 +257,7 @@
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:blocks/arctic_snow"
+  ]
 }

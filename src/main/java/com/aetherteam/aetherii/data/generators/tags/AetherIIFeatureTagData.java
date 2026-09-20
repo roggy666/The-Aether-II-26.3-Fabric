@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.generators.tags;
 
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.tags.TagKey;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.data.tags.TagAppender;
@@ -10,16 +11,15 @@ import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesConf
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.FeatureTags;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 import java.util.concurrent.CompletableFuture;
 
-public class AetherIIFeatureTagData extends FabricTagsProvider<ConfiguredFeature<?, ?>> {
+public class AetherIIFeatureTagData extends FabricTagsProvider<Feature> {
     public AetherIIFeatureTagData(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, Registries.CONFIGURED_FEATURE, registries);
+        super(output, Registries.FEATURE, registries);
     }
 
-    protected KeyAppender<ConfiguredFeature<?, ?>> tagOf(TagKey<ConfiguredFeature<?, ?>> key) {
+    protected KeyAppender<Feature> tagOf(TagKey<Feature> key) {
         return new KeyAppender<>(this.builder(key));
     }
 

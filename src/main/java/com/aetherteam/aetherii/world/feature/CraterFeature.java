@@ -1,41 +1,43 @@
 package com.aetherteam.aetherii.world.feature;
 
-import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.CraterConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class CraterFeature extends Feature<CraterConfiguration> {
-    public CraterFeature(Codec<CraterConfiguration> codec) {
-        super(codec);
+public class CraterFeature implements Feature {
+    public static final MapCodec<CraterFeature> CODEC = CraterConfiguration.CODEC.xmap(CraterFeature::new, CraterFeature::config);
+    private final CraterConfiguration config;
+
+    public CraterFeature(CraterConfiguration config) {
+        this.config = config;
+    }
+
+    public CraterConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<CraterConfiguration> context) {
-        BlockPos pos = context.origin();
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        CraterConfiguration config = context.config();
+    public MapCodec<CraterFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        CraterConfiguration config = this.config;
 
         int radius = config.radius().sample(random);
+        int radiusSquared = (radius - 1) * (radius - 1);
+        int radiusOutlineSquared = radius * radius;
         for (int x = -radius; x < radius; x++) {
             for (int z = -radius; z < radius; z++) {
                 for (int y = -radius; y < radius; y++) {
                     int volume = x * x + y * y + z * z;
-                    int radiusSquared = (radius - 1) * (radius - 1);
-                    int radiusOutlineSquared = radius * radius;
-
-                    DensityFunction noise = config.noise();
-                    DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(context.level().getSeed());
-                    noise.mapAll(visitor);
-
-                    int density = (int) noise.compute(new DensityFunction.SinglePointContext(x, y, z));
 
                     if (volume <= radiusOutlineSquared) {
                         BlockPos offsetPos = pos.offset(x, y, z);

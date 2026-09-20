@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:wisproot_shelf"
+        "recipes": "aether_ii:wisproot_shelf"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

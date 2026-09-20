@@ -2,15 +2,13 @@
   "criteria": {
     "feed_magnetic_kirrid": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:magnetic_kirrid"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:magnetic_kirrid"
           }
-        ],
+        },
         "item": {
           "items": "#aether_ii:kirrid_food"
         }
@@ -19,33 +17,29 @@
     },
     "kill_magnetic_kirrid": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:magnetic_kirrid"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:magnetic_kirrid"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_magnetic_kirrid": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "looking_at": {
-                  "minecraft:entity_type": "aether_ii:magnetic_kirrid"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:magnetic_kirrid"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

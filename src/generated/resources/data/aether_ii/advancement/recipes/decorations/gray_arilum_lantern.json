@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:gray_arilum_lantern"
+        "recipes": "aether_ii:gray_arilum_lantern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

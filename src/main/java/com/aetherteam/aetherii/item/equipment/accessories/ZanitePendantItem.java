@@ -49,7 +49,7 @@ public class ZanitePendantItem extends AccessoryItem {
                     if (stack.is(AetherIIItems.ZANITE_PENDANT)) {
                         if (state.getDestroySpeed(level, pos) > 0 && player.getRandom().nextInt(6) == 0) {
                             ItemStack copyStack = stack.copy();
-                            stack.hurtAndBreak(1, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+                            stack.hurtAndBreak(1, serverLevel, serverPlayer, broken -> AccessoryUtil.breakAccessory(broken.getItem(), copyStack, serverPlayer));
                         }
                     }
                 });

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:skyroot_leaf_pile_irradiation_crafting"
+        "recipes": "aether_ii:skyroot_leaf_pile_irradiation_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

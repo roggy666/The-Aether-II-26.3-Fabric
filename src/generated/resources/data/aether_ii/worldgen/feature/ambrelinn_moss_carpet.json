@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "id": "aether_ii:ambrelinn_moss_carpet"
+  }
+}

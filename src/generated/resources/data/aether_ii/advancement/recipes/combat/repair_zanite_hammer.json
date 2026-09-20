@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:repair_zanite_hammer"
+        "recipes": "aether_ii:repair_zanite_hammer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

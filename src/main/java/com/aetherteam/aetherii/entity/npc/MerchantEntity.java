@@ -159,7 +159,7 @@ public abstract class MerchantEntity extends NpcEntity implements Merchant {
                 return false;
             } else if (!this.mob.onGround()) {
                 return false;
-            } else if (this.mob.hurtMarked) {
+            } else if (this.mob.needsSync) {
                 return false;
             } else {
                 Player player = this.mob.getTradingPlayer();

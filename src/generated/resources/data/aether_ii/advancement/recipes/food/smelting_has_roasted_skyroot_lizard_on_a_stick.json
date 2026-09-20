@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:smelting_has_roasted_skyroot_lizard_on_a_stick"
+        "recipes": "aether_ii:smelting_has_roasted_skyroot_lizard_on_a_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

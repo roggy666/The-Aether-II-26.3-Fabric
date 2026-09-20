@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         },
         {
           "input_predicate": {
@@ -25,9 +23,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether_ii:unstable_undershale"
-          }
+          "output_state": "aether_ii:unstable_undershale"
         },
         {
           "input_predicate": {
@@ -38,9 +34,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether_ii:undershale"
-          }
+          "output_state": "aether_ii:undershale"
         },
         {
           "input_predicate": {
@@ -51,9 +45,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether_ii:undershale"
-          }
+          "output_state": "aether_ii:undershale"
         },
         {
           "input_predicate": {
@@ -64,9 +56,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether_ii:undershale"
-          }
+          "output_state": "aether_ii:undershale"
         }
       ]
     }

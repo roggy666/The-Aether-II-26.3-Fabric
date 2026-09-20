@@ -25,8 +25,8 @@ public abstract class ItemStackMixin<E> {
      * Unbreakable loot items turn into a broken item instead of vanishing (vanilla 26.2 passes the owning
      * {@link ServerPlayer}; NeoForge passed the {@link LivingEntity}).
      */
-    @Inject(method = "applyDamage(ILnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getItem()Lnet/minecraft/world/item/Item;"))
-    private void applyDamage(int damage, @Nullable ServerPlayer player, Consumer<Item> itemConsumer, CallbackInfo ci) {
+    @Inject(method = "applyDamage(ILnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;copy()Lnet/minecraft/world/item/ItemStack;"))
+    private void applyDamage(int damage, @Nullable ServerPlayer player, Consumer<ItemStack> onBreak, CallbackInfo ci) {
         if (player != null) {
             MixinHooks.breakLootItem((ItemStack) (Object) this, player);
         }

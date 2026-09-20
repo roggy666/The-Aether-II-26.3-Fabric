@@ -1,7 +1,11 @@
 package com.aetherteam.aetherii.world.feature;
 
+import java.util.List;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
+import net.minecraft.world.level.levelgen.feature.AbstractOreFeature;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
@@ -13,27 +17,30 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 
 import java.util.BitSet;
 import java.util.function.Function;
 
-public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo config
-    public CorroboniteOreFeature(Codec<OreConfiguration> codec) {
-        super(codec);
+public class CorroboniteOreFeature extends AbstractOreFeature {
+    public static final MapCodec<CorroboniteOreFeature> CODEC = makeCodec(CorroboniteOreFeature::new);
+
+    public CorroboniteOreFeature(List<BlockReplacement> targetStates, int size, float discardChanceOnAirExposure) {
+        super(targetStates, size, discardChanceOnAirExposure);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<OreConfiguration> context) {
-        RandomSource randomsource = context.random();
-        BlockPos blockpos = context.origin();
-        WorldGenLevel worldgenlevel = context.level();
-        OreConfiguration oreconfiguration = context.config();
+    public MapCodec<CorroboniteOreFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        RandomSource randomsource = random;
+        BlockPos blockpos = origin;
+        WorldGenLevel worldgenlevel = level;
         float f = randomsource.nextFloat() * (float) Math.PI;
-        float f1 = (float)oreconfiguration.size / 8.0F;
-        int i = Mth.ceil(((float)oreconfiguration.size / 16.0F * 2.0F + 1.0F) / 2.0F);
+        float f1 = (float) this.size / 8.0F;
+        int i = Mth.ceil(((float) this.size / 16.0F * 2.0F + 1.0F) / 2.0F);
         double d0 = (double)blockpos.getX() + Math.sin(f) * (double)f1;
         double d1 = (double)blockpos.getX() - Math.sin(f) * (double)f1;
         double d2 = (double)blockpos.getZ() + Math.cos(f) * (double)f1;
@@ -50,7 +57,7 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
         for (int l1 = k; l1 <= k + j1; l1++) {
             for (int i2 = i1; i2 <= i1 + j1; i2++) {
                 if (l <= worldgenlevel.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, l1, i2)) {
-                    return this.doPlace(worldgenlevel, randomsource, oreconfiguration, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
+                    return this.doPlace(worldgenlevel, randomsource, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1);
                 }
             }
         }
@@ -61,7 +68,6 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
     protected boolean doPlace(
             WorldGenLevel level,
             RandomSource random,
-            OreConfiguration config,
             double minX,
             double maxX,
             double minZ,
@@ -77,7 +83,7 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
         int i = 0;
         BitSet bitset = new BitSet(width * height * width);
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-        int j = config.size;
+        int j = this.size;
         double[] adouble = new double[j * 4];
 
         for (int k = 0; k < j; k++) {
@@ -148,12 +154,12 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
                                                         int k3 = SectionPos.sectionRelative(k2);
                                                         BlockState blockstate = levelchunksection.getBlockState(i3, j3, k3);
 
-                                                        for (OreConfiguration.TargetBlockState oreconfiguration$targetblockstate : config.targetStates) {
-                                                            if (canPlaceOre(
+                                                        for (BlockReplacement oreconfiguration$targetblockstate : this.targetStates) {
+                                                            if (canPlaceCorroboniteOre(
                                                                     blockstate,
                                                                     bulksectionaccess::getBlockState,
                                                                     random,
-                                                                    config,
+                                                                    this.discardChanceOnAirExposure,
                                                                     oreconfiguration$targetblockstate,
                                                                     blockpos$mutableblockpos
                                                             )) {
@@ -178,9 +184,9 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
         return i > 0;
     }
 
-    public void placeOreBlock(BulkSectionAccess bulksectionaccess, LevelChunkSection levelchunksection, Function<BlockPos, BlockState> adjacentStateAccessor, BlockPos.MutableBlockPos mutablePos, int x, int y, int z, OreConfiguration.TargetBlockState oreconfiguration$targetblockstate) {
+    public void placeOreBlock(BulkSectionAccess bulksectionaccess, LevelChunkSection levelchunksection, Function<BlockPos, BlockState> adjacentStateAccessor, BlockPos.MutableBlockPos mutablePos, int x, int y, int z, BlockReplacement oreconfiguration$targetblockstate) {
         BlockPos blockPos = new BlockPos(x, y, z);
-        levelchunksection.setBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ(), oreconfiguration$targetblockstate.state, false);
+        levelchunksection.setBlockState(blockPos.getX(), blockPos.getY(), blockPos.getZ(), oreconfiguration$targetblockstate.state(), false);
 
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
@@ -206,18 +212,18 @@ public class CorroboniteOreFeature extends Feature<OreConfiguration> { //todo co
         }
     }
 
-    public static boolean canPlaceOre(
+    public static boolean canPlaceCorroboniteOre(
             BlockState state,
             Function<BlockPos, BlockState> adjacentStateAccessor,
             RandomSource random,
-            OreConfiguration config,
-            OreConfiguration.TargetBlockState targetState,
+            float discardChanceOnAirExposure,
+            BlockReplacement targetState,
             BlockPos.MutableBlockPos mutablePos
     ) {
-        if (!targetState.target.test(state, random)) {
+        if (!targetState.target().test(state, mutablePos, random)) {
             return false;
         } else {
-            return shouldSkipAirCheck(random, config.discardChanceOnAirExposure) || !isAdjacentToAir(adjacentStateAccessor, mutablePos);
+            return shouldSkipAirCheck(random, discardChanceOnAirExposure) || !isAdjacentToAir(adjacentStateAccessor, mutablePos);
         }
     }
 

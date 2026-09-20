@@ -3,17 +3,15 @@
   "criteria": {
     "neptune_armor": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "aether_ii:armor_set": {
-                "armor": "aether_ii:armor/neptune"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "aether_ii:armor_set": {
+              "armor": "aether_ii:armor/neptune"
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:tick"
     }

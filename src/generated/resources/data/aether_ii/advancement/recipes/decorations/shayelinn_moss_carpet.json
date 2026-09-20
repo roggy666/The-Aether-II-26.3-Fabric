@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:shayelinn_moss_carpet"
+        "recipes": "aether_ii:shayelinn_moss_carpet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

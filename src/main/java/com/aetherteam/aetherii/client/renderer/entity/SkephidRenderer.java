@@ -53,9 +53,9 @@ public class SkephidRenderer<T extends Skephid> extends MobRenderer<T, SkephidRe
                 float realPitch = prevPitch * (1 - entity.attachChangeProgress) - pitch * entity.attachChangeProgress;
                 poseStack.translate(0.0F, trans, 0.0F);
 
-                poseStack.mulPose(Axis.YP.rotationDegrees(realYaw));
-                poseStack.mulPose(Axis.XP.rotationDegrees(-90 + realPitch));
-                //poseStack.mulPose(Axis.YP.rotationDegrees(realDiff * realYaw));
+                poseStack.rotateDegrees(Axis.YP, realYaw);
+                poseStack.rotateDegrees(Axis.XP, -90 + realPitch);
+                //poseStack.rotateDegrees(Axis.YP, realDiff * realYaw);
 
                 poseStack.translate(0.0F, -trans, 0.0F);
                 super.setupRotations(entity, poseStack, 0.0F, p_320045_);

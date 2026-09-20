@@ -1,7 +1,7 @@
 {
   "type": "minecraft:range_choice",
   "input": "aether_ii:holy_isles/temperature",
-  "max_exclusive": 0.6499999761581421,
+  "max_exclusive": 0.65,
   "min_inclusive": -1.5,
   "when_in_range": {
     "type": "minecraft:range_choice",
@@ -11,8 +11,8 @@
     "when_in_range": "aether_ii:holy_isles/terrain/base/base_terrain_shaper",
     "when_out_of_range": {
       "type": "minecraft:mul",
-      "argument1": "aether_ii:holy_isles/terrain/base/base_terrain_shaper",
-      "argument2": "aether_ii:holy_isles/lakes/factor"
+      "left": "aether_ii:holy_isles/terrain/base/base_terrain_shaper",
+      "right": "aether_ii:holy_isles/lakes/factor"
     }
   },
   "when_out_of_range": "aether_ii:holy_isles/terrain/base/base_terrain_shaper"

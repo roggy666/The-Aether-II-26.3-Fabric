@@ -1,0 +1,107 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether_ii:short_skyroot_with_ferns",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "aether_ii:skyroot_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.1,
+      "feature": {
+        "feature": "aether_ii:skyroot_with_ferns",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skyroot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.3,
+      "feature": {
+        "feature": "aether_ii:large_skyroot_with_ferns",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skyroot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.01,
+      "feature": {
+        "feature": "aether_ii:short_skyplane_with_ferns",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:skyplane_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.2,
+      "feature": {
+        "feature": "aether_ii:wisproot_with_ferns",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:wisproot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.005,
+      "feature": {
+        "feature": "aether_ii:short_greatoak_with_ferns",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:greatoak_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.1,
+      "feature": {
+        "feature": "aether_ii:trees_amberoot_fields",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:amberoot_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

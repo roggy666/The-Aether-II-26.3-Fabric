@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:undershale_bricks_from_undershale_stonecutting"
+        "recipes": "aether_ii:undershale_bricks_from_undershale_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

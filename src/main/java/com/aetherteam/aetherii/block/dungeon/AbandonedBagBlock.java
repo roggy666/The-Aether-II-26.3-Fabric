@@ -37,18 +37,12 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public class AbandonedBagBlock extends AbstractChestBlock<AbandonedBagBlockEntity> implements SimpleWaterloggedBlock {
-    public static final MapCodec<AbandonedBagBlock> CODEC = simpleCodec(AbandonedBagBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(Shapes.or(
             Block.box(4.0F, 0.0F, 8.0F, 12.0F, 8.0F, 14.0F),
             Block.box(1.0F, 0.0F, 10.0F, 4.0F, 4.0F, 13.0F)
     ));
-
-    @Override
-    public MapCodec<AbandonedBagBlock> codec() {
-        return CODEC;
-    }
 
     public AbandonedBagBlock(BlockBehaviour.Properties properties) {
         super(properties, () -> AetherIIBlockEntityTypes.ABANDONED_BAG);

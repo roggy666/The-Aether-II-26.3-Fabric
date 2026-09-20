@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.api;
 
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +21,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item.TooltipContext;
@@ -46,7 +46,7 @@ public record Mural(int width, int height, Identifier assetId, Optional<Componen
         ComponentSerialization.TRUSTED_OPTIONAL_STREAM_CODEC, Mural::title,
         Mural::new
     );
-    public static final Codec<Holder<Mural>> CODEC = RegistryFixedCodec.create(AetherIIRegistries.MURAL);
+    public static final Codec<Holder<Mural>> CODEC = RegistryCodecs.holder(AetherIIRegistries.MURAL);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Mural>> STREAM_CODEC = ByteBufCodecs.holder(AetherIIRegistries.MURAL, DIRECT_STREAM_CODEC);
 
     public Mural {

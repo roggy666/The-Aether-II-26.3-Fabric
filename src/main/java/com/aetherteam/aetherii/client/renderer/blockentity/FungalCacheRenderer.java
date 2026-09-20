@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.client.renderer.blockentity;
 
+import net.minecraft.client.renderer.rendertype.RenderType;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.blockentity.FungalCacheBlockEntity;
 import com.aetherteam.aetherii.client.renderer.AetherIIModelLayers;
@@ -44,11 +45,13 @@ public class FungalCacheRenderer implements BlockEntityRenderer<FungalCacheBlock
     public void render(PoseStack poseStack, SubmitNodeCollector collector, FungalCacheRenderState state, int packedLight, float openness) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.setupAnim(openness);
-        collector.submitModel(
-                this.model, openness, poseStack, RenderTypes.entityCutout(FUNGAL_CACHE_LOCATION), packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0, state.breakProgress
-        );
+        RenderType renderType = RenderTypes.entityCutout(FUNGAL_CACHE_LOCATION);
+        collector.submitModel(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, null, 0);
+        if (state.breakProgress != null) {
+            collector.order(1).submitCrumblingOverlay(this.model, openness, poseStack, renderType, packedLight, OverlayTexture.NO_OVERLAY, -1, state.breakProgress);
+        }
 
         poseStack.popPose();
     }

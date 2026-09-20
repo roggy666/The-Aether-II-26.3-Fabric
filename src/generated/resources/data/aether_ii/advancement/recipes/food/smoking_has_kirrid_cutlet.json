@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:smoking_has_kirrid_cutlet"
+        "recipes": "aether_ii:smoking_has_kirrid_cutlet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

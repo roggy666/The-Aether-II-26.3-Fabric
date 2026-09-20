@@ -2,15 +2,13 @@
   "criteria": {
     "feed_highfields_burrukai": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:highfields_burrukai"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:highfields_burrukai"
           }
-        ],
+        },
         "item": {
           "items": "#aether_ii:burrukai_food"
         }
@@ -19,33 +17,29 @@
     },
     "kill_highfields_burrukai": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:highfields_burrukai"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:highfields_burrukai"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_highfields_burrukai": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "looking_at": {
-                  "minecraft:entity_type": "aether_ii:highfields_burrukai"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:highfields_burrukai"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

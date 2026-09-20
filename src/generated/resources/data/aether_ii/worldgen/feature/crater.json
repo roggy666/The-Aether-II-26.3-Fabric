@@ -1,0 +1,30 @@
+{
+  "type": "aether_ii:crater",
+  "crater_block": {
+    "id": "aether_ii:irradiated_dust_block"
+  },
+  "exterior_block": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:irradiated_holystone",
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:coarse_aether_dirt",
+        "weight": 5
+      }
+    ]
+  },
+  "interior_block": {
+    "id": "minecraft:water",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "noise": "aether_ii:holy_isles/environmental/crater",
+  "radius": {
+    "max_inclusive": 5,
+    "min_inclusive": 4
+  }
+}

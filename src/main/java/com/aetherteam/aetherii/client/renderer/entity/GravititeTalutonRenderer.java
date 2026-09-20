@@ -49,10 +49,10 @@ public class GravititeTalutonRenderer extends MobRenderer<GravititeTaluton, Grav
                 f = 1.0F;
             }
             poseStack.translate(0.0, f * 0.3, 0.0);
-            poseStack.mulPose(Axis.ZP.rotationDegrees(f * this.getFlipDegrees()));
+            poseStack.rotateDegrees(Axis.ZP, f * this.getFlipDegrees());
         } else if (renderState.isUpsideDown) {
             poseStack.translate(0.0F, (renderState.boundingBoxHeight + 0.1F) / scale, 0.0F);
-            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+            poseStack.rotateDegrees(Axis.ZP, 180.0F);
         }
     }
 

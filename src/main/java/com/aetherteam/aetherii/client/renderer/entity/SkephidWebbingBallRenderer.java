@@ -30,7 +30,7 @@ public class SkephidWebbingBallRenderer extends EntityRenderer<SkephidWebbingBal
     @Override
     public void submit(EntityRenderState entityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
-        poseStack.mulPose(cameraRenderState.orientation);
+        poseStack.rotate(cameraRenderState.orientation);
 
         submitNodeCollector.submitCustomGeometry(poseStack, RENDER_TYPE, (pose, vertexConsumer) -> {
 

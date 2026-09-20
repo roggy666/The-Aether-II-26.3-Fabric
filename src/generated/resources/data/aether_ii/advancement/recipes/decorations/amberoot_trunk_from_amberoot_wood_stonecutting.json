@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:amberoot_trunk_from_amberoot_wood_stonecutting"
+        "recipes": "aether_ii:amberoot_trunk_from_amberoot_wood_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

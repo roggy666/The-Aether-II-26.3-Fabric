@@ -2,15 +2,13 @@
   "criteria": {
     "feed_prismallard": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:prismallard"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:prismallard"
           }
-        ],
+        },
         "item": {
           "items": "#aether_ii:prismallard_food"
         }
@@ -19,33 +17,29 @@
     },
     "kill_prismallard": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:prismallard"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:prismallard"
           }
-        ]
+        }
       },
       "trigger": "minecraft:player_killed_entity"
     },
     "observe_prismallard": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "looking_at": {
-                  "minecraft:entity_type": "aether_ii:prismallard"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "looking_at": {
+                "minecraft:entity_type": "aether_ii:prismallard"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

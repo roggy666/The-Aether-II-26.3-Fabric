@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:enchanted_orange"
+        "recipes": "aether_ii:enchanted_orange"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

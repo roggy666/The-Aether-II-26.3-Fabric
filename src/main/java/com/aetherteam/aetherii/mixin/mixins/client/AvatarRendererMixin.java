@@ -93,12 +93,12 @@ public abstract class AvatarRendererMixin extends LivingEntityRenderer<AbstractC
         if (armPose != null) {
             cir.setReturnValue(armPose);
         } else {
-            if (player.getVehicle() instanceof CloudSkiff && !player.swinging && !(player.getUsedItemHand() == hand && player.getUseItemRemainingTicks() > 0)) {
+            if (player.getVehicle() instanceof CloudSkiff && !player.isSwinging() && !(player.getUsedItemHand() == hand && player.getUseItemRemainingTicks() > 0)) {
                 cir.setReturnValue(AetherIIArmPoses.SKIFF_SAILING);
             }
             if (!stack.isEmpty()) {
                 if (player.getUsedItemHand() != hand || player.getUseItemRemainingTicks() <= 0) {
-                    if (!player.swinging && stack.getItem() instanceof TieredCrossbowItem && TieredCrossbowItem.isCharged(stack)) {
+                    if (!player.isSwinging() && stack.getItem() instanceof TieredCrossbowItem && TieredCrossbowItem.isCharged(stack)) {
                         cir.setReturnValue(HumanoidModel.ArmPose.CROSSBOW_HOLD);
                     }
                 }

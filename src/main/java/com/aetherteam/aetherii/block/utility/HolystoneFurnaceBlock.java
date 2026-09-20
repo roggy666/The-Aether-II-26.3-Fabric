@@ -20,15 +20,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class HolystoneFurnaceBlock extends AbstractFurnaceBlock {
-    public static final MapCodec<HolystoneFurnaceBlock> CODEC = simpleCodec(HolystoneFurnaceBlock::new);
 
     public HolystoneFurnaceBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends AbstractFurnaceBlock> codec() {
-        return CODEC;
     }
 
     @Nullable

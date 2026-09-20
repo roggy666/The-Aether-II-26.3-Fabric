@@ -57,9 +57,9 @@ public class DetonationSentryEmissivesLayer extends EyesLayer<DetonationSentryRe
             rune = RUNE_RED;
         }
 
-        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, eye, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor, null);
-        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, rune, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor, null);
-        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, timer, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor, null);
+        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, eye, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor);
+        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, rune, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor);
+        collector.order(1).submitModel(this.getParentModel(), renderState, poseStack, timer, light, OverlayTexture.NO_OVERLAY, -1, null, renderState.outlineColor);
     }
 
     @Override

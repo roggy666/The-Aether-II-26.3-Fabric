@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:uncraft_moa_saddlebag"
+        "recipes": "aether_ii:uncraft_moa_saddlebag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

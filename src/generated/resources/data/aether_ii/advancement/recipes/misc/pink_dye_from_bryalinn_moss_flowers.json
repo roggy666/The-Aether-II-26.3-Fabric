@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:pink_dye_from_bryalinn_moss_flowers"
+        "recipes": "aether_ii:pink_dye_from_bryalinn_moss_flowers"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

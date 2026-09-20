@@ -72,7 +72,7 @@ public class CopyBlockModel extends WrapperBlockStateModel {
                             oldQuad.packedUV2(),
                             oldQuad.packedUV3(),
                             oldQuad.direction(),
-                            new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), blockRenderType, Sheets.cutoutBlockItemSheet(), 0, oldQuad.materialInfo().shade(), oldQuad.materialInfo().lightEmission())
+                            new BakedQuad.MaterialInfo(oldQuad.materialInfo().sprite(), blockRenderType, Sheets.cutoutBlockItemSheet(), Sheets.cutoutBlockItemGlintSheet(), Sheets.cutoutBlockItemGlintSpecialSheet(), 0, oldQuad.materialInfo().shadeDirectionOverride(), oldQuad.materialInfo().lightEmission())
                     );
                     if (side == null) {
                         builder.addUnculledFace(newQuad);

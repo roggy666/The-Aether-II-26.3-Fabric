@@ -27,7 +27,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class ArtisansBenchBlock extends Block {
-    public static final MapCodec<ArtisansBenchBlock> CODEC = simpleCodec(ArtisansBenchBlock::new);
     private static final Component CONTAINER_TITLE = Component.translatable("menu.aether_ii.artisans_bench");
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE_BASE = Block.box(0.0, 0.0, 0.0, 16.0, 13.0, 16.0);
@@ -51,11 +50,6 @@ public class ArtisansBenchBlock extends Block {
             Block.box(0.0, 13.0, 0.0, 14.0, 16.0, 2.0),
             Block.box(0.0, 13.0, 14.0, 14.0, 16.0, 16.0),
             SHAPE_BASE);
-
-    @Override
-    public MapCodec<ArtisansBenchBlock> codec() {
-        return CODEC;
-    }
 
     public ArtisansBenchBlock(Properties properties) {
         super(properties);

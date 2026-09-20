@@ -1,0 +1,23 @@
+{
+  "type": "aether_ii:boulder",
+  "block": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:icestone",
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:holystone",
+        "weight": 3
+      }
+    ]
+  },
+  "radius": 0.5,
+  "variation": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 1.0,
+    "min_inclusive": 0.0
+  },
+  "vegetation_chance": 0.0
+}

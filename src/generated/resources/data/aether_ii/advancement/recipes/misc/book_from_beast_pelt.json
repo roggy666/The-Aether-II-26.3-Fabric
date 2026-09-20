@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:book_from_beast_pelt"
+        "recipes": "aether_ii:book_from_beast_pelt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:gravitite_pike"
+        "recipes": "aether_ii:gravitite_pike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

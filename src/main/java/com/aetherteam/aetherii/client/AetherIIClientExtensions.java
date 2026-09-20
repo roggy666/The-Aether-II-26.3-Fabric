@@ -68,9 +68,9 @@ public class AetherIIClientExtensions {
                 int k = flag3 ? 1 : -1;
 
                 poseStack.translate((float)k * -0.2385682F, 0.28344387F, 0.15731531F);
-//                poseStack.mulPose(Axis.XP.rotationDegrees(-13.935F));
-                poseStack.mulPose(Axis.YP.rotationDegrees((float)k * 35.3F));
-                poseStack.mulPose(Axis.ZP.rotationDegrees((float)k * -9.785F));
+//                poseStack.rotateDegrees(Axis.XP, -13.935F);
+                poseStack.rotateDegrees(Axis.YP, (float)k * 35.3F);
+                poseStack.rotateDegrees(Axis.ZP, (float)k * -9.785F);
                 float f8 = (float)itemInHand.getUseDuration(player) - ((float)player.getUseItemRemainingTicks() - partialTick + 1.0F);
                 float f12 = f8 / 20.0F;
                 f12 = (f12 * f12 + f12 * 2.0F) / 3.0F;
@@ -87,7 +87,7 @@ public class AetherIIClientExtensions {
 
                 poseStack.translate(f12 * 0.0F, f12 * 0.0F, f12 * 0.04F);
 //                poseStack.scale(1.0F, 1.0F, 1.0F + f12 * 0.2F);
-                poseStack.mulPose(Axis.YN.rotationDegrees((float)k * 45.0F));
+                poseStack.rotateDegrees(Axis.YN, (float)k * 45.0F);
                 return true;
             }
             return false;

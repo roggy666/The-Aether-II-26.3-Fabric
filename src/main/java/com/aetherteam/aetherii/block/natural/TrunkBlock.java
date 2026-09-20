@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class TrunkBlock extends Block implements SimpleWaterloggedBlock {
-    public static final MapCodec<TrunkBlock> CODEC = simpleCodec(TrunkBlock::new);
     public static final BooleanProperty TALL = BooleanProperty.create("tall");
     public static final EnumProperty<WallSide> NORTH_CONNECTION = EnumProperty.create("north_connection", WallSide.class);
     public static final EnumProperty<WallSide> EAST_CONNECTION = EnumProperty.create("east_connection", WallSide.class);
@@ -36,10 +35,6 @@ public class TrunkBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final List<EnumProperty<WallSide>> SIDE_CONNECTIONS = List.of(NORTH_CONNECTION, EAST_CONNECTION, SOUTH_CONNECTION, WEST_CONNECTION);
     private static final Map<TrunkProperties, VoxelShape> SHAPE_BY_INDEX = makeShapes();
-
-    public MapCodec<TrunkBlock> codec() {
-        return CODEC;
-    }
 
     public TrunkBlock(BlockBehaviour.Properties properties) {
         super(properties);

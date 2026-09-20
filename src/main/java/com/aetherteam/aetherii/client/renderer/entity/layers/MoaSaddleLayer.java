@@ -36,8 +36,8 @@ public class MoaSaddleLayer extends RenderLayer<MoaRenderState, EntityModel<MoaR
             int baseColor = ARGB.colorFromFloat(opacity, ARGB.redFloat(colorRaw), ARGB.greenFloat(colorRaw), ARGB.blueFloat(colorRaw));
             int overlayColor = ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F);
 
-            submitNodeCollector.submitModel(this.saddle, moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(SADDLE_TEXTURE), moa.lightCoords, OverlayTexture.NO_OVERLAY, baseColor, null, moa.outlineColor, null);
-            submitNodeCollector.submitModel(this.saddle, moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(SADDLE_OVERLAY_TEXTURE), moa.lightCoords, OverlayTexture.NO_OVERLAY, overlayColor, null, moa.outlineColor, null);
+            submitNodeCollector.submitModel(this.saddle, moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(SADDLE_TEXTURE), moa.lightCoords, OverlayTexture.NO_OVERLAY, baseColor, null, moa.outlineColor);
+            submitNodeCollector.submitModel(this.saddle, moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(SADDLE_OVERLAY_TEXTURE), moa.lightCoords, OverlayTexture.NO_OVERLAY, overlayColor, null, moa.outlineColor);
         }
     }
 }

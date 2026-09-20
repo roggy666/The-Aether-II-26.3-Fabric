@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.loot.functions;
 
+import java.util.Optional;
 import com.aetherteam.aetherii.data.resources.registries.AetherIISkyrootLizardVariants;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
 import com.aetherteam.aetherii.entity.passive.SkyrootLizard;
@@ -18,17 +19,15 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
 
 public class SpawnSkyrootLizard extends LootItemConditionalFunction {
-    public static final MapCodec<SpawnSkyrootLizard> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    LootItemCondition.DIRECT_CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter((function) -> function.predicates),
-                    BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("leaf_block").forGetter((function) -> function.leafBlock)
-    ).apply(instance, SpawnSkyrootLizard::new));
+    public static final MapCodec<SpawnSkyrootLizard> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance)
+            .and(BuiltInRegistries.BLOCK.holderByNameCodec().fieldOf("leaf_block").forGetter((function) -> function.leafBlock))
+            .apply(instance, SpawnSkyrootLizard::new));
 
     private final Holder<Block> leafBlock;
 
-    protected SpawnSkyrootLizard(List<LootItemCondition> conditions, Holder<Block> leafBlock) {
+    protected SpawnSkyrootLizard(Optional<Holder<LootItemCondition>> conditions, Holder<Block> leafBlock) {
         super(conditions);
         this.leafBlock = leafBlock;
     }
@@ -43,7 +42,7 @@ public class SpawnSkyrootLizard extends LootItemConditionalFunction {
     @Override
     protected ItemStack run(ItemStack stack, LootContext context) {
         ServerLevel serverLevel = context.getLevel();
-        Vec3 originVec = context.getOptionalParameter(LootContextParams.ORIGIN);
+        Vec3 originVec = context.getOptional(LootContextParams.ORIGIN);
         if (originVec != null) {
             if (serverLevel.getRandom().nextInt(10) == 0) {
                 SkyrootLizard lizard = AetherIIEntityTypes.SKYROOT_LIZARD.create(serverLevel.getLevel(), EntitySpawnReason.TRIGGERED);

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:smelting_has_taegore_steak"
+        "recipes": "aether_ii:smelting_has_taegore_steak"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

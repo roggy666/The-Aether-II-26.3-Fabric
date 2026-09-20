@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:skyroot_twig",
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "north",
+            "twig_amount": "2"
+          }
+        },
+        "weight": 2
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "south",
+            "twig_amount": "1"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "south",
+            "twig_amount": "2"
+          }
+        },
+        "weight": 2
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "west",
+            "twig_amount": "1"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "west",
+            "twig_amount": "2"
+          }
+        },
+        "weight": 2
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "east",
+            "twig_amount": "1"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:skyroot_twig",
+          "properties": {
+            "facing": "east",
+            "twig_amount": "2"
+          }
+        },
+        "weight": 2
+      }
+    ]
+  }
+}

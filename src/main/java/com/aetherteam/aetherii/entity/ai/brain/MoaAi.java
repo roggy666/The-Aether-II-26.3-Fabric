@@ -50,7 +50,6 @@ public class MoaAi {
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.NEAREST_VISIBLE_PLAYER,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
-            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.IS_PANICKING,
             MemoryModuleType.ATTACK_TARGET,
             MemoryModuleType.ATTACK_COOLING_DOWN,

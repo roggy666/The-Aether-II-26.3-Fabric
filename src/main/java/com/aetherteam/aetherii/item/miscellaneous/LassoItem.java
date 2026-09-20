@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.item.miscellaneous;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.client.sound.AetherIISoundEvents;
 import com.aetherteam.aetherii.entity.AetherIIEntityTypes;
@@ -45,7 +46,7 @@ public class LassoItem extends LeadItem {
             level.addFreshEntity(projectile);
         }
         if (level.isClientSide()) {
-            livingEntity.swing(livingEntity.getUsedItemHand());
+            livingEntity.swing(livingEntity.getUsedItemHand(), SwingAnimation.DEFAULT, false);
         }
         if (livingEntity instanceof Player player) {
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));

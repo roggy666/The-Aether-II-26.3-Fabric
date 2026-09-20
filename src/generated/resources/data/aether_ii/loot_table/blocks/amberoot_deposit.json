@@ -5,126 +5,76 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "predicates": {
-                  "minecraft:enchantments": [
-                    {
-                      "enchantments": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ],
+          "condition": "minecraft:tool/can_silk_touch",
           "name": "aether_ii:amberoot_deposit"
         }
       ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      },
+      "rolls": 1
     },
     {
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:match_tool",
-                "predicate": {
-                  "predicates": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          ],
+          "condition": {
+            "type": "minecraft:inverted",
+            "term": "minecraft:tool/can_silk_touch"
+          },
           "name": "aether_ii:amberoot_log"
         }
       ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      },
+      "rolls": 1
     },
     {
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aether_ii:tier_compare",
-              "items": "#aether_ii:golden_amber_harvesters"
-            },
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "items": "#minecraft:axes"
-              }
-            },
-            {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:match_tool",
+          "condition": {
+            "type": "minecraft:all_of",
+            "terms": [
+              {
+                "type": "aether_ii:tier_compare",
+                "items": "#aether_ii:golden_amber_harvesters"
+              },
+              {
+                "type": "minecraft:match_tool",
                 "predicate": {
-                  "predicates": {
-                    "minecraft:enchantments": [
-                      {
-                        "enchantments": "minecraft:silk_touch",
-                        "levels": {
-                          "min": 1
-                        }
-                      }
-                    ]
-                  }
+                  "items": "#minecraft:axes"
                 }
+              },
+              {
+                "type": "minecraft:inverted",
+                "term": "minecraft:tool/can_silk_touch"
               }
-            }
-          ],
-          "functions": [
+            ]
+          },
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+                "max": 2,
+                "min": 1
+              }
             },
             {
+              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops",
-              "function": "minecraft:apply_bonus"
+              "formula": "minecraft:ore_drops"
             }
           ],
           "name": "aether_ii:golden_amber"
         }
       ],
-      "functions": [
-        {
-          "function": "minecraft:explosion_decay"
-        }
-      ],
-      "rolls": 1.0
+      "modifier": {
+        "type": "minecraft:explosion_decay"
+      },
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:blocks/amberoot_deposit"
+  ]
 }

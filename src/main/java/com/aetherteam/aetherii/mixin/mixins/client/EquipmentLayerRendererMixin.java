@@ -47,7 +47,7 @@ public class EquipmentLayerRendererMixin {
             if (style != null && Minecraft.getInstance().level != null) {
                 TextureAtlasSprite sprite = this.armorStyleSpriteLookup.apply(new ArmorStyle.SpriteKey(Minecraft.getInstance().level.registryAccess(), style, layerType.getSerializedName()));
                 RenderType renderType = RenderTypes.armorCutoutNoCull(AetherIIAtlases.ARMOR_STYLES_SHEET);
-                collector.order(layer + 1).submitModel(armorModel, p_435806_, poseStack, renderType, light, OverlayTexture.NO_OVERLAY, -1, sprite, p_435821_, null);
+                collector.order(layer + 1).submitModel(armorModel, p_435806_, poseStack, renderType, light, OverlayTexture.NO_OVERLAY, -1, sprite, p_435821_);
             }
         }
     }

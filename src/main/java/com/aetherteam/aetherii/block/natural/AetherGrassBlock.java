@@ -1,5 +1,7 @@
 package com.aetherteam.aetherii.block.natural;
 
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.block.BonemealSource;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIBlockIds;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.data.resources.registries.holyisles.HolyIslesPlacedFeatures;
@@ -21,7 +23,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
 
@@ -32,21 +33,16 @@ import java.util.Optional;
  * Based on {@link net.minecraft.world.level.block.GrassBlock}.
  */
 public class AetherGrassBlock extends SpreadingSnowyBlock implements BonemealableBlock {
-    public static final MapCodec<AetherGrassBlock> CODEC = simpleCodec(AetherGrassBlock::new);
-
-    public MapCodec<AetherGrassBlock> codec() {
-        return CODEC;
-    }
 
     public AetherGrassBlock(BlockBehaviour.Properties properties) {
         super(properties, AetherIIBlockIds.AETHER_DIRT);
     }
 
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
         return level.getBlockState(pos.above()).isAir() && level.isInsideBuildHeight(pos.above());
     }
 
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return true;
     }
 
@@ -99,7 +95,7 @@ public class AetherGrassBlock extends SpreadingSnowyBlock implements Bonemealabl
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         BlockPos above = pos.above();
         BlockState grass = AetherIIBlocks.SHORT_AETHER_GRASS.defaultBlockState();
         Optional<Holder.Reference<PlacedFeature>> grassFeature = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).get(HolyIslesPlacedFeatures.AETHER_GRASS_BONEMEAL);
@@ -118,16 +114,16 @@ public class AetherGrassBlock extends SpreadingSnowyBlock implements Bonemealabl
             BlockState testState = level.getBlockState(testPos);
             if (testState.is(grass.getBlock()) && random.nextInt(10) == 0) {
                 BonemealableBlock bonemealableBlock = (BonemealableBlock) grass.getBlock();
-                if (bonemealableBlock.isValidBonemealTarget(level, testPos, testState)) {
-                    bonemealableBlock.performBonemeal(level, random, testPos, testState);
+                if (bonemealableBlock.isValidBonemealTarget(level, testPos, testState, BonemealSource.INTERACTION)) {
+                    bonemealableBlock.performBonemeal(level, random, testPos, testState, BonemealSource.INTERACTION);
                 }
             }
 
             if (testState.isAir() && !level.isOutsideBuildHeight(testPos)) {
                 if (random.nextInt(8) == 0) {
-                    List<ConfiguredFeature<?, ?>> features = level.getBiome(testPos).value().getGenerationSettings().getBoneMealFeatures();
+                    List<Feature> features = level.getBiome(testPos).value().getGenerationSettings().getBoneMealFeatures();
                     if (!features.isEmpty()) {
-                        ConfiguredFeature<?, ?> placementFeature = Util.getRandom(features, random);
+                        Feature placementFeature = Util.getRandom(features, random);
                         placementFeature.place(level, level.getChunkSource().getGenerator(), random, testPos);
                     }
                 } else if (grassFeature.isPresent()) {

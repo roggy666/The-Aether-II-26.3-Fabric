@@ -19,7 +19,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CurrencyAttachment {
+public class CurrencyAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
     private int amount;
 
     public static final MapCodec<CurrencyAttachment> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -66,6 +66,7 @@ public class CurrencyAttachment {
     }
 
     public void setAmount(int amount) {
+        if (this.amount != amount) this.markDirty();
         this.amount = amount;
     }
 

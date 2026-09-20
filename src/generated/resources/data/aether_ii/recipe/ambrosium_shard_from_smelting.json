@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
   "experience": 0.1,
   "group": "ambrosium",
   "ingredient": "aether_ii:ambrosium_ore",

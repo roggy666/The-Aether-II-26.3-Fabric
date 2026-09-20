@@ -52,7 +52,7 @@ public class MimicRenderer extends MobRenderer<Mimic, MimicRenderState, MimicMod
             poseStack.pushPose();
             poseStack.scale(0.45F, 0.45F, 0.45F);
             poseStack.translate(0.0F, 2.25F, 0.0F);
-            poseStack.mulPose(cameraRenderState.orientation);
+            poseStack.rotate(cameraRenderState.orientation);
             p_433768_.submitCustomGeometry(poseStack, RenderTypes.entityCutout(TEXTURE_EYE), (pose, vertexConsumer) -> {
 
                 vertex(vertexConsumer, pose, renderState.lightCoords, -0.5F, -0.5F, 0, 1);

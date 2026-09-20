@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AetherFarmlandBlock extends FarmlandBlock {
     public AetherFarmlandBlock(Properties properties) {
-        super(properties);
+        super(AetherIIBlocks.AETHER_DIRT, properties);
     }
 
     /**

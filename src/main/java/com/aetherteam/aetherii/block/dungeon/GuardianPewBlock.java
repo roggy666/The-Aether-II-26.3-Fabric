@@ -28,7 +28,6 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public class GuardianPewBlock extends SittableBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<GuardianPewBlock> CODEC = simpleCodec(GuardianPewBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(Shapes.or(
@@ -39,11 +38,6 @@ public class GuardianPewBlock extends SittableBlock implements SimpleWaterlogged
             Block.box(0.0F, 13.0F, 11.0F, 4.0F, 15.0F, 14.0F),
             Block.box(12.0F, 13.0F, 11.0F, 16.0F, 15.0F, 14.0F)
     ));
-
-    @Override
-    public MapCodec<GuardianPewBlock> codec() {
-        return CODEC;
-    }
 
     public GuardianPewBlock(Properties properties) {
         super(properties);

@@ -25,7 +25,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
-public class AbilityBehaviorAttachment {
+public class AbilityBehaviorAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
     private boolean canRefuelGlide;
     private int glidingTimer = -1;
     private Map<Holder<Item>, Boolean> canRefuelAbilities = new HashMap<>(Map.of(
@@ -95,7 +95,7 @@ public class AbilityBehaviorAttachment {
 
     public void onJoinLevel(Player player) {
         if (player.level().isClientSide() && player.isLocalPlayer()) {
-            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
         }
     }
 
@@ -113,7 +113,7 @@ public class AbilityBehaviorAttachment {
 
     private void syncAfterJoin(Player player) {
         if (this.shouldSyncAfterJoin) {
-            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             this.shouldSyncAfterJoin = false;
         }
     }
@@ -126,7 +126,7 @@ public class AbilityBehaviorAttachment {
                     PlayerList playerList = server.getPlayerList();
                     for (ServerPlayer serverPlayer : playerList.getPlayers()) {
                         if (!serverPlayer.getUUID().equals(player.getUUID())) {
-                            player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+                            player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
                         }
                     }
                 }
@@ -162,7 +162,7 @@ public class AbilityBehaviorAttachment {
         if (this.getShiftingGlassBoostTime() > 0) {
             if (!player.level().isClientSide()) {
                 this.setShiftingGlassBoostTime(this.getShiftingGlassBoostTime() - 1);
-                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             } else {
                 if (player.tickCount % 2 == 0) {
                     Vec3 particleDirection = player.getDeltaMovement().reverse();
@@ -187,7 +187,7 @@ public class AbilityBehaviorAttachment {
             }
             if (!player.level().isClientSide() && player.onGround()) {
                 this.setCanRefreshShiftingGlass(true);
-                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             }
         }
     }
@@ -201,6 +201,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setGlidingTimer(int glidingTimer) {
+        if (this.glidingTimer != glidingTimer) this.markDirty();
         this.glidingTimer = glidingTimer;
     }
 
@@ -213,6 +214,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setCrossbowSpecial(boolean crossbowSpecial) {
+        if (this.crossbowSpecial != crossbowSpecial) this.markDirty();
         this.crossbowSpecial = crossbowSpecial;
     }
 
@@ -221,6 +223,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setCanRefreshShiftingGlass(boolean canRefreshShiftingGlass) {
+        if (this.canRefreshShiftingGlass != canRefreshShiftingGlass) this.markDirty();
         this.canRefreshShiftingGlass = canRefreshShiftingGlass;
     }
 
@@ -237,6 +240,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setGravititeHoldingFloatingBlock(boolean gravititeHoldingFloatingBlock) {
+        if (this.gravititeHoldingFloatingBlock != gravititeHoldingFloatingBlock) this.markDirty();
         this.gravititeHoldingFloatingBlock = gravititeHoldingFloatingBlock;
     }
 
@@ -245,6 +249,7 @@ public class AbilityBehaviorAttachment {
     }
 
     public void setGravititeJumpUsed(boolean gravititeJumpUsed) {
+        if (this.gravititeJumpUsed != gravititeJumpUsed) this.markDirty();
         this.gravititeJumpUsed = gravititeJumpUsed;
     }
 

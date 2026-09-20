@@ -1,5 +1,8 @@
 package com.aetherteam.aetherii.data.providers;
 
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.data.worldgen.BootstrapContext;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.effect.buildup.EffectBuildupPresets;
@@ -55,9 +58,9 @@ import java.util.stream.Collectors;
 public abstract class AetherIIRecipeProvider extends NitrogenRecipeProvider {
     private final HolderGetter<Item> getter;
 
-    public AetherIIRecipeProvider(RecipeOutput output, HolderLookup.Provider provider, String id) {
-        super(provider, output, id);
-        this.getter = provider.lookupOrThrow(Registries.ITEM);
+    public AetherIIRecipeProvider(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements, String id) {
+        super(recipes, advancements, id);
+        this.getter = recipes.lookup(Registries.ITEM);
     }
 
     @Override

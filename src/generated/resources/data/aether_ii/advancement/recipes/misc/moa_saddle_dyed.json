@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:moa_saddle_dyed"
+        "recipes": "aether_ii:moa_saddle_dyed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

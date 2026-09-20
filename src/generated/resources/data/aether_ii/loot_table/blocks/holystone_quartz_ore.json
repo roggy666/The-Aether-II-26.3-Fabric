@@ -8,51 +8,35 @@
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-              ],
+              "condition": "minecraft:tool/can_silk_touch",
               "name": "aether_ii:holystone_quartz_ore"
             },
             {
               "type": "minecraft:item",
-              "functions": [
+              "modifier": [
                 {
+                  "type": "minecraft:set_count",
                   "count": {
                     "type": "minecraft:uniform",
-                    "max": 5.0,
-                    "min": 2.0
-                  },
-                  "function": "minecraft:set_count"
+                    "max": 5,
+                    "min": 2
+                  }
                 },
                 {
+                  "type": "minecraft:apply_bonus",
                   "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
+                  "formula": "minecraft:ore_drops"
                 },
                 {
+                  "type": "minecraft:set_components",
                   "components": {
                     "minecraft:item_name": {
                       "translate": "item.aether_ii.aether_quartz"
                     }
-                  },
-                  "function": "minecraft:set_components"
+                  }
                 },
                 {
-                  "function": "minecraft:explosion_decay"
+                  "type": "minecraft:explosion_decay"
                 }
               ],
               "name": "minecraft:quartz"
@@ -60,8 +44,7 @@
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:blocks/holystone_quartz_ore"
+  ]
 }

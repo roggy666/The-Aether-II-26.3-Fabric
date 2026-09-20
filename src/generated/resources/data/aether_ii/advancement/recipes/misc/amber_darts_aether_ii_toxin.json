@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:amber_darts_aether_ii_toxin"
+        "recipes": "aether_ii:amber_darts_aether_ii_toxin"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

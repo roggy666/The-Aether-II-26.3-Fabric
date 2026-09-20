@@ -80,7 +80,7 @@ public class DimensionClientListener {
      */
     public static int getBaseFogColor(ClientLevel clientLevel, Camera camera, int effectiveRenderDistance, float partialTick) {
         float timeOfDay = timeOfDay(clientLevel.getDefaultClockTime());
-        int i = camera.attributeProbe().getValue(EnvironmentAttributes.FOG_COLOR, partialTick);
+        int i = ARGB.colorFromVector3f(camera.attributeProbe().getValue(EnvironmentAttributes.FOG_COLOR, partialTick));
         float f4;
         if (new HolyIslesSkyboxRenderer().isSunriseOrSunset(timeOfDay)) {
             if (effectiveRenderDistance >= 4) {
@@ -98,7 +98,7 @@ public class DimensionClientListener {
             }
         }
 
-        int skyColor = camera.attributeProbe().getValue(EnvironmentAttributes.SKY_COLOR, partialTick);
+        int skyColor = ARGB.colorFromVector3f(camera.attributeProbe().getValue(EnvironmentAttributes.SKY_COLOR, partialTick));
         skyColor  = applyWeatherDarken(skyColor , clientLevel.getRainLevel(partialTick), clientLevel.getThunderLevel(partialTick));
         f4 = Math.min(camera.attributeProbe().getValue(EnvironmentAttributes.SKY_FOG_END_DISTANCE, partialTick) / 16.0F, (float) effectiveRenderDistance);
         float f5 = Mth.clampedLerp(f4 / 32.0F, 0.25F, 1.0F);

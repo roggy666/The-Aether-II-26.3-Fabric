@@ -5,43 +5,41 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+                "max": 2,
+                "min": 1
+              }
             },
             {
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "minecraft:flags": {
-                      "is_on_fire": true
-                    }
+              "type": "minecraft:furnace_smelt",
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "minecraft:flags": {
+                    "is_on_fire": true
                   }
                 }
-              ],
-              "function": "minecraft:furnace_smelt"
+              }
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 1.0,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             }
           ],
           "name": "aether_ii:kirrid_loin"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
       "entries": [
@@ -50,265 +48,232 @@
           "children": [
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "WHITE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "WHITE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/white"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "ORANGE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "ORANGE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/orange"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "MAGENTA",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "MAGENTA",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/magenta"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "LIGHT_BLUE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "LIGHT_BLUE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/light_blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "YELLOW",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "YELLOW",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/yellow"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "LIME",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "LIME",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/lime"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "PINK",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "PINK",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/pink"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "GRAY",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "GRAY",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "LIGHT_GRAY",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "LIGHT_GRAY",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/light_gray"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "CYAN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "CYAN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/cyan"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "PURPLE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "PURPLE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/purple"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "BLUE",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "BLUE",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/blue"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "BROWN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "BROWN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/brown"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "GREEN",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "GREEN",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/green"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "RED",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "RED",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/red"
             },
             {
               "type": "minecraft:loot_table",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "entity": "this",
-                  "predicate": {
-                    "aether_ii:sheepuff": {
-                      "color": "BLACK",
-                      "sheared": false
-                    }
+              "condition": {
+                "type": "minecraft:entity_properties",
+                "entity": "this",
+                "predicate": {
+                  "aether_ii:sheepuff": {
+                    "color": "BLACK",
+                    "sheared": false
                   }
                 }
-              ],
+              },
               "value": "aether_ii:entities/sheepuff/black"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:entities/sheepuff"
+  ]
 }

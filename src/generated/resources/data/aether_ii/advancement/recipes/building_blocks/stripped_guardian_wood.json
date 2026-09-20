@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:stripped_guardian_wood"
+        "recipes": "aether_ii:stripped_guardian_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

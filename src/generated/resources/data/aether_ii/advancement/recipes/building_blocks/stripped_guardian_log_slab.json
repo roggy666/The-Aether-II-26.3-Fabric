@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:stripped_guardian_log_slab"
+        "recipes": "aether_ii:stripped_guardian_log_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

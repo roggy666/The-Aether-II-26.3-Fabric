@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:guardian_trunk_from_guardian_wood_stonecutting"
+        "recipes": "aether_ii:guardian_trunk_from_guardian_wood_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

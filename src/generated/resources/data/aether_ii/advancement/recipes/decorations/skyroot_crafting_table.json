@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:skyroot_crafting_table"
+        "recipes": "aether_ii:skyroot_crafting_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

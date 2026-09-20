@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:coarse_aether_dirt"
+        "recipes": "aether_ii:coarse_aether_dirt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

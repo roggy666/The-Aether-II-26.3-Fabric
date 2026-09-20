@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.feature.configuration;
 
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
@@ -8,12 +9,11 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-public record InfectedPatchConfiguration(TagKey<Block> replaceable, Holder<PlacedFeature> vegetationFeature, CaveSurface surface, IntProvider depth, float extraBottomBlockChance, int verticalRange, float vegetationChance, IntProvider xzRadius, float extraEdgeColumnChance) implements FeatureConfiguration {
-    public static final Codec<InfectedPatchConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+public record InfectedPatchConfiguration(TagKey<Block> replaceable, Holder<PlacedFeature> vegetationFeature, CaveSurface surface, IntProvider depth, float extraBottomBlockChance, int verticalRange, float vegetationChance, IntProvider xzRadius, float extraEdgeColumnChance) {
+    public static final MapCodec<InfectedPatchConfiguration> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             TagKey.hashedCodec(Registries.BLOCK).fieldOf("replaceable").forGetter(InfectedPatchConfiguration::replaceable),
             PlacedFeature.CODEC.fieldOf("vegetation_feature").forGetter(InfectedPatchConfiguration::vegetationFeature),
             CaveSurface.CODEC.fieldOf("surface").forGetter(InfectedPatchConfiguration::surface),

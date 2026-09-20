@@ -139,29 +139,29 @@ public class AetherIIItems {
 
     // Tools
     public static final Item SKYROOT_PICKAXE = register("skyroot_pickaxe", SkyrootPickaxeItem::new);
-    public static final AxeItem SKYROOT_AXE = register("skyroot_axe", SkyrootAxeItem::new);
-    public static final ShovelItem SKYROOT_SHOVEL = register("skyroot_shovel", SkyrootShovelItem::new);
-    public static final HoeItem SKYROOT_TROWEL = register("skyroot_trowel", SkyrootTrowelItem::new);
+    public static final Item SKYROOT_AXE = register("skyroot_axe", SkyrootAxeItem::new);
+    public static final Item SKYROOT_SHOVEL = register("skyroot_shovel", SkyrootShovelItem::new);
+    public static final Item SKYROOT_TROWEL = register("skyroot_trowel", SkyrootTrowelItem::new);
 
     public static final Item HOLYSTONE_PICKAXE = register("holystone_pickaxe", HolystonePickaxeItem::new);
-    public static final AxeItem HOLYSTONE_AXE = register("holystone_axe", HolystoneAxeItem::new);
-    public static final ShovelItem HOLYSTONE_SHOVEL = register("holystone_shovel", HolystoneShovelItem::new);
-    public static final HoeItem HOLYSTONE_TROWEL = register("holystone_trowel", HolystoneTrowelItem::new);
+    public static final Item HOLYSTONE_AXE = register("holystone_axe", HolystoneAxeItem::new);
+    public static final Item HOLYSTONE_SHOVEL = register("holystone_shovel", HolystoneShovelItem::new);
+    public static final Item HOLYSTONE_TROWEL = register("holystone_trowel", HolystoneTrowelItem::new);
 
     public static final Item ZANITE_PICKAXE = register("zanite_pickaxe", ZanitePickaxeItem::new);
-    public static final AxeItem ZANITE_AXE = register("zanite_axe", ZaniteAxeItem::new);
-    public static final ShovelItem ZANITE_SHOVEL = register("zanite_shovel", ZaniteShovelItem::new);
-    public static final HoeItem ZANITE_TROWEL = register("zanite_trowel", ZaniteTrowelItem::new);
+    public static final Item ZANITE_AXE = register("zanite_axe", ZaniteAxeItem::new);
+    public static final Item ZANITE_SHOVEL = register("zanite_shovel", ZaniteShovelItem::new);
+    public static final Item ZANITE_TROWEL = register("zanite_trowel", ZaniteTrowelItem::new);
 
     public static final Item ARKENIUM_PICKAXE = register("arkenium_pickaxe", ArkeniumPickaxeItem::new);
-    public static final AxeItem ARKENIUM_AXE = register("arkenium_axe", ArkeniumAxeItem::new);
-    public static final ShovelItem ARKENIUM_SHOVEL = register("arkenium_shovel", ArkeniumShovelItem::new);
-    public static final HoeItem ARKENIUM_TROWEL = register("arkenium_trowel", ArkeniumTrowelItem::new);
+    public static final Item ARKENIUM_AXE = register("arkenium_axe", ArkeniumAxeItem::new);
+    public static final Item ARKENIUM_SHOVEL = register("arkenium_shovel", ArkeniumShovelItem::new);
+    public static final Item ARKENIUM_TROWEL = register("arkenium_trowel", ArkeniumTrowelItem::new);
 
     public static final Item GRAVITITE_PICKAXE = register("gravitite_pickaxe", GravititePickaxeItem::new);
-    public static final AxeItem GRAVITITE_AXE = register("gravitite_axe", GravititeAxeItem::new);
-    public static final ShovelItem GRAVITITE_SHOVEL = register("gravitite_shovel", GravititeShovelItem::new);
-    public static final HoeItem GRAVITITE_TROWEL = register("gravitite_trowel", GravititeTrowelItem::new);
+    public static final Item GRAVITITE_AXE = register("gravitite_axe", GravititeAxeItem::new);
+    public static final Item GRAVITITE_SHOVEL = register("gravitite_shovel", GravititeShovelItem::new);
+    public static final Item GRAVITITE_TROWEL = register("gravitite_trowel", GravititeTrowelItem::new);
 
     public static final Item ZANITE_SHEARS = register("zanite_shears", ZaniteShearsItem::new, () -> new Item.Properties().durability(238).component(DataComponents.TOOL, ShearsItem.createToolProperties()));
 

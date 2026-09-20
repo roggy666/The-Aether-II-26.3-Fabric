@@ -48,7 +48,7 @@ public interface FreezingAccessory extends FreezingBehavior<ItemStack> {
         }
 
         ItemStack copyStack = stack.copy();
-        stack.hurtAndBreak(damage / 3, serverLevel, serverPlayer, item -> AccessoryUtil.breakAccessory(item, copyStack, serverPlayer));
+        stack.hurtAndBreak(damage / 3, serverLevel, serverPlayer, broken -> AccessoryUtil.breakAccessory(broken.getItem(), copyStack, serverPlayer));
     }
 
     /**

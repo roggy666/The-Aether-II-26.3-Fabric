@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:skyroot_barrel"
+        "recipes": "aether_ii:skyroot_barrel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

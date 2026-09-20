@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:cloudwool_roofing"
+        "recipes": "aether_ii:cloudwool_roofing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

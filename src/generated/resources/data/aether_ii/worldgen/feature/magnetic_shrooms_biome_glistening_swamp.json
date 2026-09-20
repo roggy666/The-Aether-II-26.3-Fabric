@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether_ii:small_magnetic_shroom",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "aether_ii:tall_aether_grass"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.15,
+      "feature": {
+        "feature": "aether_ii:huge_magnetic_shroom",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:tall_aether_grass"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.35,
+      "feature": {
+        "feature": "aether_ii:medium_magnetic_shroom",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:tall_aether_grass"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -49,7 +49,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class MoaEggBlock extends BaseEntityBlock {
-    public static final MapCodec<MoaEggBlock> CODEC = simpleCodec(MoaEggBlock::new);
 
     public static final EnumProperty<Moa.KeratinColor> KERATIN = EnumProperty.create("keratin", Moa.KeratinColor.class);
     public static final EnumProperty<Moa.EyeColor> EYES = EnumProperty.create("eyes", Moa.EyeColor.class);
@@ -66,11 +65,6 @@ public class MoaEggBlock extends BaseEntityBlock {
     public MoaEggBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HATCH, 0).setValue(KERATIN, Moa.KeratinColor.GRAY).setValue(EYES, Moa.EyeColor.BLUE).setValue(FEATHERS, Moa.FeatherColor.LIGHT_BLUE).setValue(FEATHER_SHAPE, Moa.FeatherShape.CURVED).setValue(WILD, false));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

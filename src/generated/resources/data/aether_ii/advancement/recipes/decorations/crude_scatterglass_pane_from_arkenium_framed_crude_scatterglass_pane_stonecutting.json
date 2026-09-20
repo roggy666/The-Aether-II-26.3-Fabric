@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:crude_scatterglass_pane_from_arkenium_framed_crude_scatterglass_pane_stonecutting"
+        "recipes": "aether_ii:crude_scatterglass_pane_from_arkenium_framed_crude_scatterglass_pane_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

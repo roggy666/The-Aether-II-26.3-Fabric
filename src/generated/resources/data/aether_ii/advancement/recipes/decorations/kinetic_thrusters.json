@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:kinetic_thrusters"
+        "recipes": "aether_ii:kinetic_thrusters"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

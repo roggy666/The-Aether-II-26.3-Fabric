@@ -1,5 +1,9 @@
 package com.aetherteam.aetherii.data.providers;
 
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.resources.model.sprite.Material;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -33,7 +37,6 @@ import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.block.dispatch.multipart.CombinedCondition;
 import net.minecraft.client.renderer.block.dispatch.multipart.Condition;
 import net.minecraft.client.renderer.item.ItemModel;
-import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
@@ -525,7 +528,7 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
         MultiVariant snow = plainVariant(ModelTemplates.CUBE_BOTTOM_TOP.createWithSuffix(AetherIIBlocks.AETHER_GRASS_BLOCK, "_snow", snowMapping, this.modelOutput));
         this.createTintedGrassBlock(AetherIIBlocks.AETHER_GRASS_BLOCK, snow);
 
-        MultiVariant enchantedGrass = plainVariant(TexturedModel.CUBE_TOP_BOTTOM.get(AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK)
+        MultiVariant enchantedGrass = plainVariant(TexturedModel.CUBE_BOTTOM_TOP.get(AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK)
                 .updateTextures((mapping) -> mapping.put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_DIRT))).create(AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK, this.modelOutput));
         this.createGrassLikeBlock(AetherIIBlocks.ENCHANTED_AETHER_GRASS_BLOCK, enchantedGrass, snow);
 
@@ -551,10 +554,11 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
     }
 
     public void createAetherFarmland() {
-        TextureMapping mapping = new TextureMapping().put(TextureSlot.DIRT, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_DIRT)).put(TextureSlot.TOP, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND));
-        TextureMapping mappingMoist = new TextureMapping().put(TextureSlot.DIRT, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_DIRT)).put(TextureSlot.TOP, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND, "_moist"));
-        MultiVariant farmland = plainVariant(ModelTemplates.FARMLAND.create(AetherIIBlocks.AETHER_FARMLAND, mapping, this.modelOutput));
-        MultiVariant farmlandMoist = plainVariant(ModelTemplates.FARMLAND.create(TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND, "_moist").sprite(), mappingMoist, this.modelOutput));
+        Material dirt = TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_DIRT);
+        TextureMapping mapping = new TextureMapping().put(TextureSlot.SIDE, dirt).put(TextureSlot.BOTTOM, dirt).put(TextureSlot.TOP, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND));
+        TextureMapping mappingMoist = new TextureMapping().put(TextureSlot.SIDE, dirt).put(TextureSlot.BOTTOM, dirt).put(TextureSlot.TOP, TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND, "_moist"));
+        MultiVariant farmland = plainVariant(ModelTemplates.CUBE_BOTTOM_TOP_INDENTED.create(AetherIIBlocks.AETHER_FARMLAND, mapping, this.modelOutput));
+        MultiVariant farmlandMoist = plainVariant(ModelTemplates.CUBE_BOTTOM_TOP_INDENTED.create(TextureMapping.getBlockTexture(AetherIIBlocks.AETHER_FARMLAND, "_moist").sprite(), mappingMoist, this.modelOutput));
         this.blockStateOutput.accept(MultiVariantGenerator.dispatch(AetherIIBlocks.AETHER_FARMLAND).with(BlockModelGenerators.createEmptyOrFullDispatch(BlockStateProperties.MOISTURE, 7, farmlandMoist, farmland)));
     }
 
@@ -838,7 +842,7 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
     }
 
     public void createCrossWithDefaultItem(Block block, PlantType type) {
-        this.registerSimpleItemModel(block.asItem(), type.createItemModel(this, block));
+        this.registerSimpleItemModel(block.asItem(), type.createItemModelUsingBlockTexture(this, block));
         this.createCrossBlock(block, type);
     }
 
@@ -978,6 +982,13 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
         MultiVariant normal = plainVariant(ModelTemplates.CROSS.create(block, TextureMapping.cross(block), this.modelOutput));
         MultiVariant grown = plainVariant(ModelTemplates.CROSS.create(ModelLocationUtils.getModelLocation(block, "_grown"), TextureMapping.cross(TextureMapping.getBlockTexture(block, "_grown")), this.modelOutput));
         this.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(BlockModelGenerators.createBooleanModelDispatch(BrettlPlantBlock.GROWN, grown, normal)));
+    }
+
+    /** Removed from {@code BlockModelGenerators} in 26.3. */
+    public Identifier createFlatItemModelWithBlockTextureAndOverlay(Item item, Block block, String overlaySuffix) {
+        Material base = TextureMapping.getBlockTexture(block);
+        Material overlay = TextureMapping.getBlockTexture(block, overlaySuffix);
+        return ModelTemplates.TWO_LAYERED_ITEM.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layered(base, overlay), this.modelOutput);
     }
 
     public void createMagneticShroom(Block standAlone, Block potted) {
@@ -1240,9 +1251,9 @@ public class AetherIIBlockModelSubProvider extends BlockModelGenerators {
 
     public void createBarrel(Block block) {
         Material topOpen = TextureMapping.getBlockTexture(block, "_top_open");
-        MultiVariant barrel = plainVariant(TexturedModel.CUBE_TOP_BOTTOM.create(block, this.modelOutput));
+        MultiVariant barrel = plainVariant(TexturedModel.CUBE_BOTTOM_TOP.create(block, this.modelOutput));
         MultiVariant barrelOpen = plainVariant(
-                TexturedModel.CUBE_TOP_BOTTOM
+                TexturedModel.CUBE_BOTTOM_TOP
                         .get(block)
                         .updateTextures(mapping -> mapping.put(TextureSlot.TOP, topOpen))
                         .createWithSuffix(block, "_open", this.modelOutput)

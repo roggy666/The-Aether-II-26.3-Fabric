@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:yellow_dye_from_yellow_moa_feather"
+        "recipes": "aether_ii:yellow_dye_from_yellow_moa_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

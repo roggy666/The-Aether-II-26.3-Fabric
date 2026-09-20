@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:mossy_holystone_with_vine"
+        "recipes": "aether_ii:mossy_holystone_with_vine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:scatterglass_vial"
+        "recipes": "aether_ii:scatterglass_vial"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

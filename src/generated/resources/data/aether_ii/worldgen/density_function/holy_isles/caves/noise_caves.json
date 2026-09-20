@@ -1,23 +1,22 @@
 {
-  "type": "minecraft:cache_once",
-  "argument": {
+  "type": "minecraft:cache",
+  "input": {
     "type": "minecraft:add",
-    "argument1": {
+    "left": {
       "type": "minecraft:add",
-      "argument1": {
+      "left": {
         "type": "minecraft:add",
-        "argument1": -0.125,
-        "argument2": {
+        "left": {
           "type": "minecraft:add",
-          "argument1": {
+          "left": {
             "type": "minecraft:abs",
-            "argument": {
+            "input": {
               "type": "minecraft:interval_select",
               "functions": [
                 {
                   "type": "minecraft:mul",
-                  "argument1": 0.75,
-                  "argument2": {
+                  "left": 0.75,
+                  "right": {
                     "type": "minecraft:noise",
                     "noise": "aether_ii:cave_thickness",
                     "xz_scale": 1.3333333333333333,
@@ -26,8 +25,8 @@
                 },
                 {
                   "type": "minecraft:mul",
-                  "argument1": 1.0,
-                  "argument2": {
+                  "left": 1.0,
+                  "right": {
                     "type": "minecraft:noise",
                     "noise": "aether_ii:cave_thickness",
                     "xz_scale": 1.0,
@@ -36,8 +35,8 @@
                 },
                 {
                   "type": "minecraft:mul",
-                  "argument1": 1.5,
-                  "argument2": {
+                  "left": 1.5,
+                  "right": {
                     "type": "minecraft:noise",
                     "noise": "aether_ii:cave_thickness",
                     "xz_scale": 0.6666666666666666,
@@ -46,8 +45,8 @@
                 },
                 {
                   "type": "minecraft:mul",
-                  "argument1": 2.0,
-                  "argument2": {
+                  "left": 2.0,
+                  "right": {
                     "type": "minecraft:noise",
                     "noise": "aether_ii:cave_thickness",
                     "xz_scale": 0.5,
@@ -63,24 +62,26 @@
               ]
             }
           },
-          "argument2": {
-            "type": "minecraft:y_clamped_gradient",
+          "right": {
+            "type": "minecraft:gradient",
+            "axis": "y",
+            "from_coordinate": 16,
             "from_value": 0.05,
-            "from_y": 16,
-            "to_value": 0.0,
-            "to_y": 32
+            "to_coordinate": 32,
+            "to_value": 0.0
           }
-        }
+        },
+        "right": -0.125
       },
-      "argument2": {
+      "right": {
         "type": "minecraft:abs",
-        "argument": {
+        "input": {
           "type": "minecraft:interval_select",
           "functions": [
             {
               "type": "minecraft:mul",
-              "argument1": 0.5,
-              "argument2": {
+              "left": 0.5,
+              "right": {
                 "type": "minecraft:noise",
                 "noise": "aether_ii:caves",
                 "xz_scale": 2.0,
@@ -89,8 +90,8 @@
             },
             {
               "type": "minecraft:mul",
-              "argument1": 0.75,
-              "argument2": {
+              "left": 0.75,
+              "right": {
                 "type": "minecraft:noise",
                 "noise": "aether_ii:caves",
                 "xz_scale": 1.3333333333333333,
@@ -99,8 +100,8 @@
             },
             {
               "type": "minecraft:mul",
-              "argument1": 1.0,
-              "argument2": {
+              "left": 1.0,
+              "right": {
                 "type": "minecraft:noise",
                 "noise": "aether_ii:caves",
                 "xz_scale": 1.0,
@@ -109,8 +110,8 @@
             },
             {
               "type": "minecraft:mul",
-              "argument1": 2.0,
-              "argument2": {
+              "left": 2.0,
+              "right": {
                 "type": "minecraft:noise",
                 "noise": "aether_ii:caves",
                 "xz_scale": 0.5,
@@ -119,8 +120,8 @@
             },
             {
               "type": "minecraft:mul",
-              "argument1": 3.0,
-              "argument2": {
+              "left": 3.0,
+              "right": {
                 "type": "minecraft:noise",
                 "noise": "aether_ii:caves",
                 "xz_scale": 0.3333333333333333,
@@ -138,7 +139,7 @@
         }
       }
     },
-    "argument2": {
+    "right": {
       "type": "minecraft:spline",
       "spline": {
         "coordinate": "minecraft:y",

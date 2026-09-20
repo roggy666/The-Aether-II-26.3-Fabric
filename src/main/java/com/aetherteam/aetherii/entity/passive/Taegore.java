@@ -120,7 +120,7 @@ public class Taegore extends AetherAnimal implements DiggingMob {
     }
 
     public boolean isTempted() {
-        return this.getBrain().getMemory(MemoryModuleType.IS_TEMPTED).orElse(false);
+        return this.getBrain().hasMemoryValue(MemoryModuleType.TEMPTING_PLAYER);
     }
 
     public boolean isSearching() {

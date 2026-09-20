@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:music_player"
+        "recipes": "aether_ii:music_player"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,0 +1,40 @@
+{
+  "type": "aether_ii:aercloud",
+  "blocks": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": {
+          "id": "aether_ii:purple_aercloud",
+          "properties": {
+            "facing": "north"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:purple_aercloud",
+          "properties": {
+            "facing": "east"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": "aether_ii:purple_aercloud",
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:purple_aercloud",
+          "properties": {
+            "facing": "west"
+          }
+        },
+        "weight": 1
+      }
+    ]
+  },
+  "bounds": 20
+}

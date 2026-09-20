@@ -2,71 +2,76 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "block": "aether_ii:brettl_plant_tip",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "grown": "false"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:brettl_plant_tip",
+            "state": {
+              "grown": "false"
+            }
+          },
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#aether_ii:tools/trowels"
+            }
           }
-        },
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": "#aether_ii:tools/trowels"
-          }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "count": 1
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
           "name": "aether_ii:brettl_cane"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
-      "conditions": [
-        {
-          "block": "aether_ii:brettl_plant_tip",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "grown": "true"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:brettl_plant_tip",
+            "state": {
+              "grown": "true"
+            }
+          },
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#aether_ii:tools/trowels"
+            }
           }
-        },
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": "#aether_ii:tools/trowels"
-          }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "count": 1
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
           "name": "aether_ii:brettl_flower"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:blocks/brettl_plant_tip"
+  ]
 }

@@ -39,8 +39,11 @@ public class CurrencyItem extends Item {
     public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         CurrencyAttachment attachment = player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY);
+        if (com.aetherteam.aetherii.inventory.CurrencyTransfer.deposit(attachment.getAmount(), 1, this.currencyAmount, 0) == 0) {
+            return InteractionResult.FAIL;
+        }
         attachment.setAmount(attachment.getAmount() + this.currencyAmount);
-        player.setAttached(AetherIIDataAttachments.CURRENCY, player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY));
+        player.getAttachedOrCreate(AetherIIDataAttachments.CURRENCY).markDirty();
         if (player instanceof ServerPlayer serverPlayer) {
             AetherIIAdvancementTriggers.CURRENCY.trigger(serverPlayer, attachment.getAmount());
         }

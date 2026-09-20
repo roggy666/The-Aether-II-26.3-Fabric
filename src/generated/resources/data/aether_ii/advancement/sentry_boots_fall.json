@@ -6,19 +6,17 @@
         "distance": {
           "min": 22.0
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "feet": {
-                  "items": "aether_ii:sentry_boots"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "feet": {
+                "items": "aether_ii:sentry_boots"
               }
             }
           }
-        ],
+        },
         "remaining_health": {
           "max": 20.0,
           "min": 14.0

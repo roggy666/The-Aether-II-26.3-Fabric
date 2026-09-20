@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:smelting_has_burrukai_ribs"
+        "recipes": "aether_ii:smelting_has_burrukai_ribs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

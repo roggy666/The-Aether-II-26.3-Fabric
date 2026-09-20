@@ -22,11 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class FragileIceBlock extends IceBlock {
-    public static final MapCodec<FragileIceBlock> CODEC = simpleCodec(FragileIceBlock::new);
-
-    public MapCodec<? extends IceBlock> codec() {
-        return CODEC;
-    }
 
     public FragileIceBlock(Properties properties) {
         super(properties);
@@ -78,4 +73,4 @@ public class FragileIceBlock extends IceBlock {
     protected boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
         return adjacentBlockState.is(AetherIIBlocks.ARCTIC_ICE) || super.skipRendering(state, adjacentBlockState, side);
     }
-}
+}

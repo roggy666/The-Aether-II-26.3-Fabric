@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:purple_dye_from_holpupea"
+        "recipes": "aether_ii:purple_dye_from_holpupea"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,26 +1,36 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.BlockPlacementUtil;
 import com.aetherteam.aetherii.world.feature.configuration.ArcticIceSpikeConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class ArcticIceSpikeFeature extends Feature<ArcticIceSpikeConfiguration> {
+public class ArcticIceSpikeFeature implements Feature {
 
-    public ArcticIceSpikeFeature(Codec<ArcticIceSpikeConfiguration> codec) {
-        super(codec);
+    public static final MapCodec<ArcticIceSpikeFeature> CODEC = ArcticIceSpikeConfiguration.CODEC.xmap(ArcticIceSpikeFeature::new, ArcticIceSpikeFeature::config);
+    private final ArcticIceSpikeConfiguration config;
+
+    public ArcticIceSpikeFeature(ArcticIceSpikeConfiguration config) {
+        this.config = config;
+    }
+
+    public ArcticIceSpikeConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<ArcticIceSpikeConfiguration> context) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        BlockPos pos = context.origin();
-        ArcticIceSpikeConfiguration config = context.config();
+    public MapCodec<ArcticIceSpikeFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        ArcticIceSpikeConfiguration config = this.config;
 
         float radius = random.nextInt(config.additionalRadius()) + config.baseRadius() * 2;
         float slopeIntensity = random.nextInt(config.additionalSlopeIntensity()) + config.baseSlopeIntensity() / 10;

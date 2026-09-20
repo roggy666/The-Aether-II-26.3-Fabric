@@ -1,0 +1,9 @@
+{
+  "type": "aether_ii:aether_grass",
+  "to_place": {
+    "id": "aether_ii:aether_fern",
+    "properties": {
+      "grass_type": "default"
+    }
+  }
+}

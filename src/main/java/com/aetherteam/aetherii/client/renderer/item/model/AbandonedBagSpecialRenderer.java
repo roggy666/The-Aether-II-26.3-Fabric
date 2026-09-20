@@ -32,9 +32,9 @@ public class AbandonedBagSpecialRenderer implements NoDataSpecialModelRenderer {
         RenderType renderType = RenderTypes.entityCutout(location);
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.setupAnim(this.openness);
-        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, null, i2, null);
+        submitNodeCollector.submitModel(this.model, this.openness, poseStack, renderType, i, i1, -1, null, i2);
         poseStack.popPose();
     }
 
@@ -42,7 +42,7 @@ public class AbandonedBagSpecialRenderer implements NoDataSpecialModelRenderer {
     public void getExtents(Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
         poseStack.translate(0.5F, 1.5F, 0.5F);
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.XP, 180);
         this.model.setupAnim(this.openness);
         this.model.root().getExtentsForGui(poseStack, consumer);
     }

@@ -2,84 +2,89 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "block": "aether_ii:orange_tree",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "age": "4"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:orange_tree",
+            "state": {
+              "age": "4"
+            }
+          },
+          {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:orange_tree",
+            "state": {
+              "half": "lower"
+            }
+          },
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#aether_ii:tools/trowels"
+            }
           }
-        },
-        {
-          "block": "aether_ii:orange_tree",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "half": "lower"
-          }
-        },
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": "#aether_ii:tools/trowels"
-          }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             },
             {
-              "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "count": 1
             },
             {
+              "type": "minecraft:apply_bonus",
               "enchantment": "minecraft:fortune",
-              "formula": "minecraft:ore_drops",
-              "function": "minecraft:apply_bonus"
+              "formula": "minecraft:ore_drops"
             }
           ],
           "name": "aether_ii:orange"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     },
     {
-      "conditions": [
-        {
-          "block": "aether_ii:orange_tree",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "half": "lower"
-          }
-        },
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "block": "aether_ii:orange_tree",
-            "condition": "minecraft:block_state_property",
-            "properties": {
-              "age": "4"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:match_block",
+            "blocks": "aether_ii:orange_tree",
+            "state": {
+              "half": "lower"
+            }
+          },
+          {
+            "type": "minecraft:inverted",
+            "term": {
+              "type": "minecraft:match_block",
+              "blocks": "aether_ii:orange_tree",
+              "state": {
+                "age": "4"
+              }
+            }
+          },
+          {
+            "type": "minecraft:match_tool",
+            "predicate": {
+              "items": "#aether_ii:tools/trowels"
             }
           }
-        },
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "items": "#aether_ii:tools/trowels"
-          }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aether_ii:orange_tree"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:blocks/orange_tree"
+  ]
 }

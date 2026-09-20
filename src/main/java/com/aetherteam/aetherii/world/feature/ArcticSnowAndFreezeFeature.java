@@ -1,9 +1,11 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
 import com.aetherteam.aetherii.block.natural.AetherGrassBlock;
 import com.aetherteam.aetherii.block.natural.Snowable;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
@@ -12,18 +14,18 @@ import net.minecraft.world.level.block.SnowyBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class ArcticSnowAndFreezeFeature extends Feature<NoneFeatureConfiguration> {
-    public ArcticSnowAndFreezeFeature(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+public class ArcticSnowAndFreezeFeature implements Feature {
+    public static final MapCodec<ArcticSnowAndFreezeFeature> CODEC = MapCodec.unit(ArcticSnowAndFreezeFeature::new);
+
+    @Override
+    public MapCodec<ArcticSnowAndFreezeFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
         BlockPos.MutableBlockPos posAbove = new BlockPos.MutableBlockPos();
         BlockPos.MutableBlockPos posBelow = new BlockPos.MutableBlockPos();
 

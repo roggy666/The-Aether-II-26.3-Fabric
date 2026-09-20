@@ -56,8 +56,8 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRe
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.5F, 0.5F);
         Direction direction = renderState.direction;
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - direction.toYRot()));
-        poseStack.mulPose(Axis.XP.rotationDegrees(180));
+        poseStack.rotateDegrees(Axis.YP, 180.0F - direction.toYRot());
+        poseStack.rotateDegrees(Axis.XP, 180);
         if (renderState.wobbleProgress >= 0.0F && renderState.wobbleProgress <= 1.0F) {
             if (renderState.wobbleStyle == VaseBlockEntity.WobbleStyle.POSITIVE) {
                 float f = 0.015625F;
@@ -72,7 +72,10 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity, VaseRe
                 poseStack.rotateAround(Axis.YP.rotation(f4 * f5), 0.0F, 0.0F, 0.0F);
             }
         }
-        nodeCollector.submitModelPart(this.vaseModel, poseStack, RenderTypes.entityCutout(renderState.vaseTexture), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null, -1, renderState.breakProgress, 0);
+        nodeCollector.submitModelPart(this.vaseModel, poseStack, RenderTypes.entityCutout(renderState.vaseTexture), renderState.lightCoords, OverlayTexture.NO_OVERLAY, null, -1, 0);
+        if (renderState.breakProgress != null) {
+            nodeCollector.order(1).submitCrumblingOverlay(this.vaseModel, poseStack, RenderTypes.entityCutout(renderState.vaseTexture), renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, renderState.breakProgress);
+        }
         poseStack.popPose();
     }
 

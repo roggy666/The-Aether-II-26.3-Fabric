@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:dye_white_cloudwool"
+        "recipes": "aether_ii:dye_white_cloudwool"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

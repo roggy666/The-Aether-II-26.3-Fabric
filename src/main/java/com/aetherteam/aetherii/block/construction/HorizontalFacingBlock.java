@@ -9,12 +9,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class HorizontalFacingBlock extends HorizontalDirectionalBlock {
-    public static final MapCodec<HorizontalFacingBlock> CODEC = simpleCodec(HorizontalFacingBlock::new);
-
-    @Override
-    public MapCodec<HorizontalFacingBlock> codec() {
-        return CODEC;
-    }
 
     public HorizontalFacingBlock(BlockBehaviour.Properties properties) {
         super(properties);

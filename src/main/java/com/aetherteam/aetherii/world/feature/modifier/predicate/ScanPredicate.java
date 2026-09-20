@@ -1,11 +1,11 @@
 package com.aetherteam.aetherii.world.feature.modifier.predicate;
 
+import net.minecraft.world.level.LevelAccessor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicateType;
 
@@ -21,7 +21,7 @@ public record ScanPredicate(Direction directionOfSearch, BlockPredicate targetCo
     );
 
     @Override
-    public boolean test(WorldGenLevel worldGenLevel, BlockPos pos) {
+    public boolean test(LevelAccessor worldGenLevel, BlockPos pos) {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable();
         boolean flag = true;
         for (int i = 0; i < this.maxSteps; i++) {

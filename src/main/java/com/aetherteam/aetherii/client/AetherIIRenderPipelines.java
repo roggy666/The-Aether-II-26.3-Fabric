@@ -1,12 +1,12 @@
 package com.aetherteam.aetherii.client;
 
 import net.minecraft.client.renderer.BindGroupLayouts;
-import com.mojang.blaze3d.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.aetherteam.aetherii.AetherII;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.ColorTargetState;
-import com.mojang.blaze3d.pipeline.DepthStencilState;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.DepthStencilState;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -26,6 +26,7 @@ public class AetherIIRenderPipelines {
             .withShaderDefine("ALPHA_CUTOUT", 0.1F)
             .withShaderDefine("PER_FACE_LIGHTING")
             .withBindGroupLayout(BindGroupLayouts.SAMPLER1)
+            .withColorTargetState(ColorTargetState.DEFAULT) // 26.3 pipelines must declare their color target explicitly
             .withCull(false)
             .build();
 

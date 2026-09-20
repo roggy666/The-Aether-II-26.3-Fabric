@@ -32,7 +32,7 @@ public class MoaKeratinLayer extends RenderLayer<MoaRenderState, EntityModel<Moa
             Identifier texture = Identifier.fromNamespaceAndPath(AetherII.MODID, "entity/mobs/moa/" + name + "_" + moa.keratinColor);
             TextureAtlasSprite sprite = this.moaKeratinAtlas.getSprite(texture);
             float opacity = moa.opacity;
-            submitNodeCollector.submitModel(this.getParentModel(), moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(AetherIIAtlases.MOA_KERATIN_SHEET), packedLight, LivingEntityRenderer.getOverlayCoords(moa, 0.0F), ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F), sprite, moa.outlineColor, null);
+            submitNodeCollector.submitModel(this.getParentModel(), moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(AetherIIAtlases.MOA_KERATIN_SHEET), packedLight, LivingEntityRenderer.getOverlayCoords(moa, 0.0F), ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F), sprite, moa.outlineColor);
         }
     }
 }

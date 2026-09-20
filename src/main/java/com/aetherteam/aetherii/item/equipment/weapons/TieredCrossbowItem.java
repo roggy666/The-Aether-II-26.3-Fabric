@@ -43,7 +43,7 @@ public class TieredCrossbowItem extends CrossbowItem implements CustomEnchantmen
         if (chargedProjectiles == null || chargedProjectiles.isEmpty()) {
             if (!player.getProjectile(stack).isEmpty()) {
                 player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCrossbowSpecial(player.isCrouching());
-                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             }
         }
         return super.use(level, player, hand);

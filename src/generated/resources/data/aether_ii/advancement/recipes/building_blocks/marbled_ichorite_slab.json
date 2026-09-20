@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:marbled_ichorite_slab"
+        "recipes": "aether_ii:marbled_ichorite_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

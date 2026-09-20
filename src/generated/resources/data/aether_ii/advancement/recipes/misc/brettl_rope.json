@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:brettl_rope"
+        "recipes": "aether_ii:brettl_rope"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

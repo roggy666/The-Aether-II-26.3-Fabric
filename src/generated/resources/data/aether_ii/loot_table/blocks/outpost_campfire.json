@@ -1,4 +1,3 @@
 {
-  "type": "minecraft:block",
-  "random_sequence": "aether_ii:blocks/outpost_campfire"
+  "type": "minecraft:block"
 }

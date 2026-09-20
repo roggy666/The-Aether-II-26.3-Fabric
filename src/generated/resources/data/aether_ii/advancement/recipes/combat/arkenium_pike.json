@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:arkenium_pike"
+        "recipes": "aether_ii:arkenium_pike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

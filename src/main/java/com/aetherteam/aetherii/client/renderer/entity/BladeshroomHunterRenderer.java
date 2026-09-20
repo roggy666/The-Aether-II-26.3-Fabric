@@ -55,9 +55,9 @@ public class BladeshroomHunterRenderer<T extends BladeshroomHunter> extends MobR
                 float realPitch = pitch;
                 poseStack.translate(0.0F, trans, 0.0F);
 
-                poseStack.mulPose(Axis.YP.rotationDegrees(realYaw));
-                poseStack.mulPose(Axis.XP.rotationDegrees(-90 + realPitch));
-                //poseStack.mulPose(Axis.YP.rotationDegrees(realDiff * realYaw));
+                poseStack.rotateDegrees(Axis.YP, realYaw);
+                poseStack.rotateDegrees(Axis.XP, -90 + realPitch);
+                //poseStack.rotateDegrees(Axis.YP, realDiff * realYaw);
 
                 poseStack.translate(0.0F, -trans - 4 / 16F, 0.0F);
                 super.setupRotations(entity, poseStack, 0.0F, p_320045_);

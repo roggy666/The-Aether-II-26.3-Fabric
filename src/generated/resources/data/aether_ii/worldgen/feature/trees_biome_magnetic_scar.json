@@ -1,0 +1,62 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "aether_ii:skybirch",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "aether_ii:skybirch_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.35,
+      "feature": {
+        "feature": "aether_ii:wisptop",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:wisproot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.01,
+      "feature": {
+        "feature": "aether_ii:greatroot",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:greatroot_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.025,
+      "feature": {
+        "feature": "aether_ii:trees_amberoot_sparse",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "aether_ii:amberoot_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

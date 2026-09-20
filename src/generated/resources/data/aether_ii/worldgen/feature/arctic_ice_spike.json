@@ -1,0 +1,21 @@
+{
+  "type": "aether_ii:arctic_ice_spike",
+  "additional_radius": 2,
+  "additional_slope_intensity": 5,
+  "base_radius": 4.25,
+  "base_slope_intensity": 7.5,
+  "block": {
+    "type": "minecraft:noise",
+    "noise": {
+      "base_amplitude": 0.955388882960065,
+      "base_octave": 0
+    },
+    "scale": 0.1,
+    "seed": 400,
+    "states": [
+      "aether_ii:arctic_packed_ice",
+      "aether_ii:arctic_ice"
+    ]
+  },
+  "valid_blocks": "aether_ii:ferrosite_spike_generates_on"
+}

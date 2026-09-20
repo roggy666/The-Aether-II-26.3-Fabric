@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.entity.passive;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import com.aetherteam.aetherii.AetherIITags;
@@ -209,7 +210,7 @@ public class Sheepuff extends AetherAnimal implements Shearable {
             DyeColor dyeColor = itemStack.get(DataComponents.DYE);
             SheepuffColor sheepuffColor = SheepuffColor.SHEEPUFF_COLOR_BY_DYE.get(dyeColor);
             if (this.getColor() != sheepuffColor) {
-                player.swing(hand);
+                player.swing(hand, SwingAnimation.DEFAULT, false);
                 if (!player.level().isClientSide()) {
                     this.setColor(sheepuffColor);
                     if (!player.getAbilities().instabuild) {

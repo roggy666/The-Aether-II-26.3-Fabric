@@ -50,7 +50,6 @@ public class TaegoreAi {
             MemoryModuleType.TEMPTING_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
-            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.IS_PANICKING,
             AetherIIMemoryModuleTypes.TAEGORE_SEARCH_TARGET,
             AetherIIMemoryModuleTypes.TAEGORE_DIGGING,

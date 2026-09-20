@@ -68,7 +68,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements CustomEncha
             if (shooter.tickCount % FIRE_RATE == 0) {
                 ChargedProjectiles projectiles = weapon.get(DataComponents.CHARGED_PROJECTILES);
                 if (projectiles != null && !projectiles.isEmpty()) {
-                    this.shoot(serverlevel, shooter, hand, weapon, projectiles.itemCopies(), velocity, inaccuracy, false, target);
+                    this.shoot(serverlevel, shooter, hand, weapon, projectiles.itemCopies().toList(), velocity, inaccuracy, false, target);
                     weapon.set(AetherIIDataComponents.DARTS_LOADED, getDartsLoaded(weapon) - 1);
                     if (!isLoaded(weapon)) {
                         weapon.hurtAndBreak(1, shooter, hand);

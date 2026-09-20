@@ -37,8 +37,8 @@ public class AerwhaleRenderer extends MobRenderer<Aerwhale, LivingEntityRenderSt
     }
 
     @Override
-    protected AABB getBoundingBoxForCulling(Aerwhale p_360864_) {
-        return super.getBoundingBoxForCulling(p_360864_).inflate(3.0);
+    protected AABB getBoundingBoxForCulling(Aerwhale p_360864_, float partialTicks) {
+        return super.getBoundingBoxForCulling(p_360864_, partialTicks).inflate(3.0);
     }
 
     @Override
@@ -56,6 +56,6 @@ public class AerwhaleRenderer extends MobRenderer<Aerwhale, LivingEntityRenderSt
     @Override
     protected void setupRotations(LivingEntityRenderState state, PoseStack poseStack, float bodyRot, float scale) {
         super.setupRotations(state, poseStack, bodyRot, scale);
-        poseStack.mulPose(Axis.XN.rotationDegrees(state.xRot));
+        poseStack.rotateDegrees(Axis.XN, state.xRot);
     }
 }

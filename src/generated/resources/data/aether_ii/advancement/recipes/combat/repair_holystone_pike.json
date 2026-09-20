@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:repair_holystone_pike"
+        "recipes": "aether_ii:repair_holystone_pike"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,15 +3,13 @@
   "criteria": {
     "golden_wyndberry": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:carrion_sprout"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:carrion_sprout"
           }
-        ],
+        },
         "item": {
           "items": "aether_ii:golden_amber"
         }

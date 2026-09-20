@@ -15,12 +15,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class PlayerPressurePlateBlock extends BasePressurePlateBlock {
-    public static final MapCodec<PlayerPressurePlateBlock> CODEC = RecordCodecBuilder.mapCodec((p_368433_) -> p_368433_.group(BlockSetType.CODEC.fieldOf("block_set_type").forGetter((p_304917_) -> p_304917_.type), propertiesCodec()).apply(p_368433_, PlayerPressurePlateBlock::new));
     public static final BooleanProperty POWERED;
-
-    public MapCodec<PlayerPressurePlateBlock> codec() {
-        return CODEC;
-    }
 
     public PlayerPressurePlateBlock(BlockSetType type, BlockBehaviour.Properties properties) {
         super(properties, type);

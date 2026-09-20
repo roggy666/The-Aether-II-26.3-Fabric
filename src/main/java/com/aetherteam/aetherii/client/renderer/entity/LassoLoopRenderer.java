@@ -25,7 +25,7 @@ public class LassoLoopRenderer extends EntityRenderer<LassoLoop, EntityRenderSta
     @Override
     public void submit(EntityRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
-        poseStack.mulPose(cameraRenderState.orientation);
+        poseStack.rotate(cameraRenderState.orientation);
         submitNodeCollector.submitCustomGeometry(poseStack, RENDER_TYPE, (pose, vertexConsumer) -> {
             vertex(vertexConsumer, pose, state.lightCoords, 0.0F, 0, 0, 1);
             vertex(vertexConsumer, pose, state.lightCoords, 1.0F, 0, 1, 1);

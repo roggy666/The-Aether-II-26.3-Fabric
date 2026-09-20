@@ -16,8 +16,7 @@
           "value": "aether_ii:chests/camp/fletcher"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ],
-  "random_sequence": "aether_ii:chests/camp/selector"
+  ]
 }

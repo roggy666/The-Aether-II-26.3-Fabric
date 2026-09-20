@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:aerbunny_bell"
+        "recipes": "aether_ii:aerbunny_bell"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

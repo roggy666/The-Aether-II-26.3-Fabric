@@ -69,12 +69,12 @@ public class GuidebookDiscoveryAttachment {
 
     private void setupAfterJoin(Player player) {
         if (this.shouldSetupAfterJoin) {
+            this.shouldSetupAfterJoin = false;
             if (player instanceof ServerPlayer serverPlayer) {
                 ServerPlayNetworking.send(serverPlayer, new FlushGuidebookDataPacket());
                 this.setupEntries(serverPlayer);
-                player.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
+                this.syncTo(serverPlayer);
             }
-            this.shouldSetupAfterJoin = false;
         }
     }
 
@@ -110,7 +110,6 @@ public class GuidebookDiscoveryAttachment {
             this.trackBestiaryEntries(registryAccess, advancement, serverPlayer);
             this.trackEffectsEntries(registryAccess, advancement, serverPlayer);
             this.trackExplorationEntries(registryAccess, advancement, serverPlayer);
-            player.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, player.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
         }
     }
 
@@ -145,13 +144,20 @@ public class GuidebookDiscoveryAttachment {
                         }
                     });
                     icon = this.getIconForEntry(entry);
-                    serverPlayer.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, serverPlayer.getAttachedOrCreate(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY));
                 }
             }
         }
         if (icon != null) {
+            this.syncTo(serverPlayer);
             ServerPlayNetworking.send(serverPlayer, new GuidebookToastPacket(GuidebookToast.Type.DISCOVERY, icon));
         }
+    }
+
+    /** Publish a new attachment identity so Fabric detects changes to the mutable entries. */
+    public void syncTo(ServerPlayer player) {
+        GuidebookDiscoveryAttachment updated = new GuidebookDiscoveryAttachment(this.bestiaryEntries, this.effectsEntries, this.explorationEntries);
+        updated.shouldSetupAfterJoin = this.shouldSetupAfterJoin;
+        player.setAttached(AetherIIDataAttachments.GUIDEBOOK_DISCOVERY, updated);
     }
 
     public void clearEntries() {

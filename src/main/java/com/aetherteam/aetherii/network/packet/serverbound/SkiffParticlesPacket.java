@@ -25,7 +25,8 @@ public record SkiffParticlesPacket(int entityID) implements CustomPacketPayload 
 
     public static void handleServer(SkiffParticlesPacket payload, ServerPlayer player) {
         ServerPlayer sender = player;
-        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof CloudSkiff skiff) {
+        if (sender.level().getServer() != null && sender.level().getEntity(payload.entityID()) instanceof CloudSkiff skiff
+                && skiff.getControllingPassenger() == sender) {
             skiff.level().broadcastEntityEvent(skiff, (byte) CloudSkiff.PARTICLE_EVENT);
         }
     }

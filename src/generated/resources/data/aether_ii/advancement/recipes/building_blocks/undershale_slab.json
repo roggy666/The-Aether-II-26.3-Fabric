@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:undershale_slab"
+        "recipes": "aether_ii:undershale_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

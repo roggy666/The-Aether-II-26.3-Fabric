@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:holystone_hammer"
+        "recipes": "aether_ii:holystone_hammer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

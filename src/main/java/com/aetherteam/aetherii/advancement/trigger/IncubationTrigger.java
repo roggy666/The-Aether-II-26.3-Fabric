@@ -1,9 +1,10 @@
 package com.aetherteam.aetherii.advancement.trigger;
 
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.core.Holder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.triggers.Criterion;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,9 +22,9 @@ public class IncubationTrigger extends SimpleCriterionTrigger<IncubationTrigger.
         this.trigger(player, (instance) -> instance.test(player, entity));
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player, Optional<EntityPredicate> entity) implements SimpleInstance {
+    public record Instance(Optional<Holder<LootItemCondition>> player, Optional<EntityPredicate> entity) implements SimpleInstance {
         public static final Codec<IncubationTrigger.Instance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(IncubationTrigger.Instance::player),
+                        LootItemCondition.CODEC.optionalFieldOf("player").forGetter(IncubationTrigger.Instance::player),
                         EntityPredicate.CODEC.optionalFieldOf("entity").forGetter(IncubationTrigger.Instance::entity))
                 .apply(instance, IncubationTrigger.Instance::new));
 

@@ -1,7 +1,8 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.world.feature.configuration.FallenLogConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -9,19 +10,28 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class FallenLogFeature extends Feature<FallenLogConfiguration> {
-    public FallenLogFeature(Codec<FallenLogConfiguration> codec) {
-        super(codec);
+public class FallenLogFeature implements Feature {
+    public static final MapCodec<FallenLogFeature> CODEC = FallenLogConfiguration.CODEC.xmap(FallenLogFeature::new, FallenLogFeature::config);
+    private final FallenLogConfiguration config;
+
+    public FallenLogFeature(FallenLogConfiguration config) {
+        this.config = config;
+    }
+
+    public FallenLogConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FallenLogConfiguration> context) {
-        WorldGenLevel level = context.level();
-        RandomSource random = context.random();
-        BlockPos pos = context.origin();
-        FallenLogConfiguration config = context.config();
+    public MapCodec<FallenLogFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        FallenLogConfiguration config = this.config;
 
         int length = config.length().sample(random);
         Direction direction = Direction.from2DDataValue(random.nextInt(4));
@@ -34,7 +44,7 @@ public class FallenLogFeature extends Feature<FallenLogConfiguration> {
                     blockState = blockState.setValue(BlockStateProperties.AXIS, direction.getAxis());
                     level.setBlock(placementPos, blockState, 2);
                     if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
-                        config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, context.chunkGenerator(), random, placementPos));
+                        config.vegetationFeature().ifPresent(placedFeatureHolder -> placedFeatureHolder.value().place(level, chunkGenerator, random, placementPos));
                     }
                 }
             }

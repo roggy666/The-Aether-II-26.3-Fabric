@@ -39,6 +39,7 @@ public record CheckBestiaryEntryPacket(EntityType<?> entityType) implements Cust
                     });
                 }
             });
+            attachment.syncTo(serverPlayer);
         }
     }
 }

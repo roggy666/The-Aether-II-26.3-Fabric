@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:skyplane_leaf_pile"
+        "recipes": "aether_ii:skyplane_leaf_pile"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

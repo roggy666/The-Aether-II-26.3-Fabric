@@ -1,10 +1,9 @@
 package com.aetherteam.aetherii.world.feature;
 
-import com.aetherteam.aetherii.block.AetherIIBlockStateProperties;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.data.resources.maps.BlockInfection;
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDataMaps;
 import com.aetherteam.aetherii.world.feature.configuration.InfectedPatchConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,28 +14,37 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class InfectedPatchFeature extends Feature<InfectedPatchConfiguration> { //TODO: clean-up, remove unused parameters
-    public InfectedPatchFeature(Codec<InfectedPatchConfiguration> codec) {
-        super(codec);
+public class InfectedPatchFeature implements Feature {
+    public static final MapCodec<InfectedPatchFeature> CODEC = InfectedPatchConfiguration.CODEC.xmap(InfectedPatchFeature::new, InfectedPatchFeature::config);
+    private final InfectedPatchConfiguration config;
+
+    public InfectedPatchFeature(InfectedPatchConfiguration config) {
+        this.config = config;
+    }
+
+    public InfectedPatchConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<InfectedPatchConfiguration> context) {
-        WorldGenLevel level = context.level();
-        InfectedPatchConfiguration config = context.config();
-        RandomSource random = context.random();
-        BlockPos pos = context.origin();
+    public MapCodec<InfectedPatchFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        InfectedPatchConfiguration config = this.config;
+        BlockPos pos = origin;
         Predicate<BlockState> predicate = state -> state.is(config.replaceable());
         int i = config.xzRadius().sample(random) + 1;
         int j = config.xzRadius().sample(random) + 1;
         Set<BlockPos> set = this.placeGroundPatch(level, config, random, pos, predicate, i, j);
-        this.distributeVegetation(context, level, config, random, set, i, j);
+        this.distributeVegetation(level, chunkGenerator, config, random, set, i, j);
         return !set.isEmpty();
     }
 
@@ -91,10 +99,10 @@ public class InfectedPatchFeature extends Feature<InfectedPatchConfiguration> { 
         return set;
     }
 
-    protected void distributeVegetation(FeaturePlaceContext<InfectedPatchConfiguration> context, WorldGenLevel level, InfectedPatchConfiguration config, RandomSource random, Set<BlockPos> possiblePositions, int xRadius, int zRadius) {
+    protected void distributeVegetation(WorldGenLevel level, ChunkGenerator chunkGenerator, InfectedPatchConfiguration config, RandomSource random, Set<BlockPos> possiblePositions, int xRadius, int zRadius) {
         for (BlockPos blockpos : possiblePositions) {
             if (config.vegetationChance() > 0.0F && random.nextFloat() < config.vegetationChance()) {
-                this.placeVegetation(level, config, context.chunkGenerator(), random, blockpos);
+                this.placeVegetation(level, config, chunkGenerator, random, blockpos);
             }
         }
     }

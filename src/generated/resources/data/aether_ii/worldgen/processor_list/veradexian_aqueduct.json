@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         },
         {
           "input_predicate": {
@@ -25,9 +23,7 @@
             "predicate_type": "minecraft:tag_match",
             "tag": "aether_ii:aether_carver_replaceables"
           },
-          "output_state": {
-            "Name": "aether_ii:holystone"
-          }
+          "output_state": "aether_ii:holystone"
         },
         {
           "input_predicate": {
@@ -38,12 +34,7 @@
             "block": "minecraft:water",
             "predicate_type": "minecraft:block_match"
           },
-          "output_state": {
-            "Name": "minecraft:water",
-            "Properties": {
-              "level": "0"
-            }
-          }
+          "output_state": "minecraft:water"
         },
         {
           "input_predicate": {
@@ -55,9 +46,7 @@
             "block": "minecraft:air",
             "predicate_type": "minecraft:block_match"
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         },
         {
           "input_predicate": {
@@ -69,9 +58,7 @@
             "block": "minecraft:air",
             "predicate_type": "minecraft:block_match"
           },
-          "output_state": {
-            "Name": "minecraft:air"
-          }
+          "output_state": "minecraft:air"
         },
         {
           "input_predicate": {
@@ -83,12 +70,7 @@
             "block": "minecraft:water",
             "predicate_type": "minecraft:block_match"
           },
-          "output_state": {
-            "Name": "minecraft:water",
-            "Properties": {
-              "level": "0"
-            }
-          }
+          "output_state": "minecraft:water"
         },
         {
           "input_predicate": {
@@ -99,9 +81,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "aether_ii:holystone"
-          }
+          "output_state": "aether_ii:holystone"
         }
       ]
     },

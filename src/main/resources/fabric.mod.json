@@ -51,7 +51,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.16.0",
-    "minecraft": "~26.2",
+    "minecraft": "~26.3",
     "fabric-api": "*",
     "nitrogen_internals": "*",
     "cumulus_menus": "*",

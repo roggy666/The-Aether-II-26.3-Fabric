@@ -46,7 +46,6 @@ public class KirridAi {
             MemoryModuleType.TEMPTING_PLAYER,
             MemoryModuleType.NEAREST_VISIBLE_ADULT,
             MemoryModuleType.TEMPTATION_COOLDOWN_TICKS,
-            MemoryModuleType.IS_TEMPTED,
             MemoryModuleType.RAM_COOLDOWN_TICKS,
             AetherIIMemoryModuleTypes.KIRRID_BATTLE_TARGET,
             AetherIIMemoryModuleTypes.EAT_GRASS_COOLDOWN,

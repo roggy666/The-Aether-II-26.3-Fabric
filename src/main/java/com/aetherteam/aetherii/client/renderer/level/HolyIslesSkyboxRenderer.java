@@ -3,14 +3,14 @@ package com.aetherteam.aetherii.client.renderer.level;
 import java.util.OptionalDouble;
 import java.util.Optional;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.systems.RenderPass;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.aetherteam.aetherii.client.AetherIIRenderPipelines;
 import com.aetherteam.aetherii.client.renderer.AetherIIDimensionRenderers;
 import com.aetherteam.aetherii.client.renderer.AetherIIRenderTypes;
@@ -30,29 +30,38 @@ import org.joml.Matrix4fc;
 import java.awt.*;
 
 public class HolyIslesSkyboxRenderer {
-    public void renderCloudCover(LevelRenderState state, RenderTarget target) {
+    /** Vertex buffer of the previous frame; it is released one frame later so the sky pass that reads it has finished. */
+    private GpuBuffer previousCloudCoverBuffer;
+
+    /**
+     * Draws the cloud cover disc into the sky render pass. Since 26.3 render passes cannot be nested, so the disc is
+     * submitted to the pass that is already drawing the sun, moon and stars.
+     */
+    public void renderCloudCover(LevelRenderState state, RenderPass pass) {
         float time = state.getDataOrDefault(AetherIIDimensionRenderers.DATA_TIME_OF_DAY_KEY, 0.0F);
         try (ByteBufferBuilder bytes = new ByteBufferBuilder(4096)) {
             BufferBuilder vertices = new BufferBuilder(bytes, PrimitiveTopology.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-            this.renderCloudCoverDisc(state, new PoseStack(), vertices, time, state.skyRenderState.skyColor, getSunriseOrSunsetColor(time));
-            try (MeshData mesh = vertices.buildOrThrow();
-                 GpuBuffer buffer = RenderSystem.getDevice().createBuffer(() -> "Aether cloud cover", GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer())) {
-                var transform = RenderSystem.getDynamicUniforms().writeTransform(RenderSystem.getModelViewMatrixCopy(), new org.joml.Vector4f(1.0F));
-                try (RenderPass pass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Aether cloud cover", target.getColorTextureView(), Optional.empty(), target.getDepthTextureView(), OptionalDouble.empty())) {
-                    pass.setPipeline(AetherIIRenderPipelines.getCloudCoverShader());
-                    RenderSystem.bindDefaultUniforms(pass);
-                    pass.setUniform("DynamicTransforms", transform);
-                    pass.setVertexBuffer(0, buffer.slice());
-                    pass.draw(mesh.drawState().vertexCount(), 1, 0, 0);
+            this.renderCloudCoverDisc(state, new PoseStack(), vertices, time, ARGB.colorFromVector3f(state.skyRenderState.skyColor), getSunriseOrSunsetColor(time));
+            try (MeshData mesh = vertices.buildOrThrow()) {
+                if (this.previousCloudCoverBuffer != null) {
+                    this.previousCloudCoverBuffer.close();
                 }
+                GpuBuffer buffer = RenderSystem.getDevice().createBuffer(() -> "Aether cloud cover", GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
+                this.previousCloudCoverBuffer = buffer;
+                var transform = RenderSystem.getDynamicUniforms().writeTransform(RenderSystem.getModelViewMatrixCopy(), new org.joml.Vector4f(1.0F));
+                pass.setPipeline(RenderSystem.getCompiledPipeline(AetherIIRenderPipelines.getCloudCoverShader()));
+                RenderSystem.bindDefaultUniforms(pass);
+                pass.setUniform("DynamicTransforms", transform);
+                pass.setVertexBuffer(0, buffer.slice());
+                pass.draw(mesh.drawState().vertexCount(), 1, 0, 0);
             }
         }
     }
 
     public void renderCloudCoverDisc(LevelRenderState levelRenderState, PoseStack poseStack, VertexConsumer cloudCoverBuffer, float timeOfDay, int skyColor, int sunColor) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+        poseStack.rotateDegrees(Axis.XP, 0.0F);
+        poseStack.rotateDegrees(Axis.ZP, 0.0F);
         Matrix4f matrix4f = poseStack.last().pose();
 
 

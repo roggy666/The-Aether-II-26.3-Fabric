@@ -1,0 +1,177 @@
+{
+  "type": "minecraft:simple_block",
+  "to_place": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "aether_ii:bryalinn_moss_flowers",
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "east",
+            "flower_amount": "1",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "south",
+            "flower_amount": "1",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "west",
+            "flower_amount": "1",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "north",
+            "flower_amount": "2",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "east",
+            "flower_amount": "2",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "south",
+            "flower_amount": "2",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "west",
+            "flower_amount": "2",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "north",
+            "flower_amount": "3",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "east",
+            "flower_amount": "3",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "south",
+            "flower_amount": "3",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "west",
+            "flower_amount": "3",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "north",
+            "flower_amount": "4",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "east",
+            "flower_amount": "4",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "south",
+            "flower_amount": "4",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      },
+      {
+        "data": {
+          "id": "aether_ii:bryalinn_moss_flowers",
+          "properties": {
+            "facing": "west",
+            "flower_amount": "4",
+            "snowy": "false"
+          }
+        },
+        "weight": 1
+      }
+    ]
+  }
+}

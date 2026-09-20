@@ -1,0 +1,36 @@
+{
+  "type": "aether_ii:coast",
+  "block": {
+    "type": "minecraft:noise",
+    "noise": {
+      "amplitude_modifiers": [
+        1.0,
+        0.25,
+        0.0,
+        0.0
+      ],
+      "base_amplitude": 1.141124655449345,
+      "base_octave": -3,
+      "octave_count": 4
+    },
+    "scale": 1.0,
+    "seed": 99,
+    "states": [
+      "minecraft:air",
+      "aether_ii:ferrosite_sand",
+      "aether_ii:ferrosite_sand",
+      "minecraft:air",
+      "aether_ii:ferrosite_sand",
+      "aether_ii:ferrosite_sand",
+      "minecraft:air"
+    ]
+  },
+  "distance_noise": "aether_ii:holy_isles/coasts/highfields",
+  "size": 16.35,
+  "valid_blocks": "aether_ii:ferrosite_coast_generates_on",
+  "vegetation_chance": 0.0,
+  "y_range": {
+    "max_inclusive": 156,
+    "min_inclusive": 112
+  }
+}

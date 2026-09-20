@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.api.guidebook;
 
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import com.aetherteam.aetherii.api.registries.AetherIIRegistries;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -10,7 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -49,7 +49,7 @@ public class BestiaryEntry extends GuidebookEntry {
                     Codec.list(BestiaryEntry.LOOT.mapCodec().codec(), 0, 3).fieldOf("loot_slots").forGetter(BestiaryEntry::getLoot),
                     BestiaryEntry.FOOD.mapCodec().forGetter(BestiaryEntry::getFood)
             ).apply(in, BestiaryEntry::new));
-    public static final Codec<Holder<BestiaryEntry>> REFERENCE_CODEC = RegistryFileCodec.create(AetherIIRegistries.BESTIARY_ENTRY, DIRECT_CODEC);
+    public static final Codec<Holder<BestiaryEntry>> REFERENCE_CODEC = RegistryCodecs.holder(AetherIIRegistries.BESTIARY_ENTRY, DIRECT_CODEC);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<BestiaryEntry>> STREAM_CODEC = ByteBufCodecs.holderRegistry(AetherIIRegistries.BESTIARY_ENTRY);
 
     private final Holder<EntityType<?>> entityType;

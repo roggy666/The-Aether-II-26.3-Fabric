@@ -1,5 +1,10 @@
 package com.aetherteam.aetherii.data.generators;
 
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.block.AetherIIBlocks;
@@ -35,13 +40,13 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class AetherIIRecipeData extends AetherIIRecipeProvider {
-    public AetherIIRecipeData(RecipeOutput output, HolderLookup.Provider provider) {
-        super(output, provider, AetherII.MODID);
+    public AetherIIRecipeData(BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+        super(recipes, advancements, AetherII.MODID);
     }
 
     @Override
     public void buildRecipes() {
-        HolderGetter<Item> getter = this.registries.lookupOrThrow(Registries.ITEM);
+        HolderGetter<Item> getter = this.itemLookup;
 
         // Index-paired with the wool/carpet/bed lists below, so the order must match them (not DyeColor order)
         List<Item> dyes = List.of(
@@ -2791,14 +2796,14 @@ public class AetherIIRecipeData extends AetherIIRecipeProvider {
         this.accessoryFreezable(AetherIIBlocks.UNSTABLE_OBSIDIAN, Blocks.LAVA).save(this.output, this.name("accessory_freeze_lava"));
     }
 
-    public static class Runner extends RecipeProvider.Runner {
-        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
+    public static class Runner extends FabricRecipeProvider {
+        public Runner(FabricPackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
             super(packOutput, completableFuture);
         }
 
         @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput output) {
-            return new AetherIIRecipeData(output, provider);
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+            return new AetherIIRecipeData(recipes, advancements);
         }
 
         @Override

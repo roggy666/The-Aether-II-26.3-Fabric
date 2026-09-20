@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:agiosite_slab"
+        "recipes": "aether_ii:agiosite_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

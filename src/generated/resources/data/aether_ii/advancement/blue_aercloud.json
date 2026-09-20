@@ -3,7 +3,7 @@
   "criteria": {
     "blue_aercloud": {
       "conditions": {
-        "block": "aether_ii:blue_aercloud"
+        "blocks": "aether_ii:blue_aercloud"
       },
       "trigger": "minecraft:enter_block"
     }

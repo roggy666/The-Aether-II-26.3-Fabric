@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class AdvancementMixin {
     @WrapOperation(method = "decorateName(Lnet/minecraft/advancements/DisplayInfo;)Lnet/minecraft/network/chat/Component;", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/AdvancementType;getChatColor()Lnet/minecraft/ChatFormatting;"))
     private static ChatFormatting getChatColor(AdvancementType instance, Operation<ChatFormatting> original, @Local(argsOnly = true) DisplayInfo display) {
-        Component name = display.getTitle();
+        Component name = display.title();
         if (name.getContents() instanceof TranslatableContents translatableContents) {
             if (translatableContents.getKey().contains("advancement.aether_ii")) {
                 if (instance != AdvancementType.CHALLENGE) {

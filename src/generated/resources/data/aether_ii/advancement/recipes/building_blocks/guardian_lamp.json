@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:guardian_lamp"
+        "recipes": "aether_ii:guardian_lamp"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

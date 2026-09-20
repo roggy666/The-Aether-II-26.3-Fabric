@@ -17,12 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
 public class LockedBlock extends CopyBlock {
-    public static final MapCodec<LockedBlock> CODEC = simpleCodec(LockedBlock::new);
-
-    @Override
-    protected MapCodec<LockedBlock> codec() {
-        return CODEC;
-    }
 
     public LockedBlock(Properties properties) {
         super(properties);

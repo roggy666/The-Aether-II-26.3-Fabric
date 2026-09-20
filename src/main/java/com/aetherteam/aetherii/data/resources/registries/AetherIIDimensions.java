@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data.resources.registries;
 
+import net.minecraft.util.ARGB;
 import com.aetherteam.aetherii.AetherII;
 import com.aetherteam.aetherii.data.resources.builders.worldgen.holyisles.HolyIslesBiomeSourceBuilders;
 import net.minecraft.core.HolderGetter;
@@ -56,13 +57,14 @@ public class AetherIIDimensions {
                 DimensionType.Skybox.OVERWORLD,
                 CardinalLighting.Type.DEFAULT,
                 EnvironmentAttributeMap.builder()
-                        .set(EnvironmentAttributes.CLOUD_COLOR, -1)
+                        // Fully transparent cloud color disables the vanilla cloud layer; the Aether is a sky dimension with its own cloud sea.
+                        .set(EnvironmentAttributes.CLOUD_COLOR, ARGB.vector4fFromARGB32(0))
                         .set(EnvironmentAttributes.CLOUD_HEIGHT, 320.33F)
                         .set(EnvironmentAttributes.BED_RULE, BedRule.CAN_SLEEP_WHEN_DARK)
                         .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false)
                         .set(EnvironmentAttributes.NETHER_PORTAL_SPAWNS_PIGLINS, true)
-                        .set(EnvironmentAttributes.BLOCK_LIGHT_TINT, 0x9E9C7A)
-                        .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, 0X0A0A0A)
+                        .set(EnvironmentAttributes.BLOCK_LIGHT_TINT, ARGB.vector3fFromRGB24(0x9E9C7A))
+                        .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, ARGB.vector3fFromRGB24(0x0A0A0A))
                         .build(),
                 timelines.getOrThrow(TimelineTags.IN_OVERWORLD),
                 Optional.of(clocks.getOrThrow(WorldClocks.OVERWORLD))));

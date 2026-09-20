@@ -116,10 +116,10 @@ public abstract class CopyBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
+    public void spawnDestroyParticles(Level level, BlockPos pos, BlockState state) {
         if (!state.getValue(EMPTY)) {
             if (level.getBlockEntity(pos) instanceof CopyBlockEntity blockEntity && blockEntity.getCopyState() != null) {
-                super.spawnDestroyParticles(level, player, pos, state);
+                super.spawnDestroyParticles(level, pos, state);
             }
         }
     }

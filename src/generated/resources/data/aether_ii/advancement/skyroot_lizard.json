@@ -3,15 +3,13 @@
   "criteria": {
     "skyroot_lizard": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:skyroot_lizard"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:skyroot_lizard"
           }
-        ],
+        },
         "item": {
           "items": "aether_ii:skyroot_stick"
         }

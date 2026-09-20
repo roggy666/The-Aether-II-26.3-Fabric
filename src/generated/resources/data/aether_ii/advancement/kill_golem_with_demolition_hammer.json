@@ -3,15 +3,13 @@
   "criteria": {
     "killed_sentry_golem": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "aether_ii:sentry_golem"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "aether_ii:sentry_golem"
           }
-        ],
+        },
         "killing_blow": {
           "direct_entity": {
             "minecraft:entity_type": "aether_ii:detonation_projectile"

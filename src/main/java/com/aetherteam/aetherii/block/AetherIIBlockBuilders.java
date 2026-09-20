@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.block;
 
+import net.minecraft.world.phys.AABB;
 import com.aetherteam.aetherii.AetherIITags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -80,7 +81,7 @@ public class AetherIIBlockBuilders {
                 .isViewBlocking(AetherIIBlockBuilders::never)
                 .isRedstoneConductor(AetherIIBlockBuilders::never)
                 .ignitedByLava()
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static Supplier<Block.Properties> leavesProperties(MapColor mapColor) {
@@ -95,7 +96,7 @@ public class AetherIIBlockBuilders {
                 .isViewBlocking(AetherIIBlockBuilders::never)
                 .isRedstoneConductor(AetherIIBlockBuilders::never)
                 .ignitedByLava()
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PushReaction.POPPED);
     }
 
     public static Supplier<Block.Properties> arilumLanternProperties(MapColor mapColor) {
@@ -112,6 +113,14 @@ public class AetherIIBlockBuilders {
     }
 
     public static boolean never(BlockState state, BlockGetter getter, BlockPos pos) {
+        return false;
+    }
+
+    public static boolean always(BlockState state, BlockGetter getter, BlockPos pos, AABB nearPlaneBox) {
+        return true;
+    }
+
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, AABB nearPlaneBox) {
         return false;
     }
 

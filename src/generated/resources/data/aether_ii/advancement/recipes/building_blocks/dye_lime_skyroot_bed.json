@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:dye_lime_skyroot_bed"
+        "recipes": "aether_ii:dye_lime_skyroot_bed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

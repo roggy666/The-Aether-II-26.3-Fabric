@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:rotshroom_slab_from_rotshroom_block_stonecutting"
+        "recipes": "aether_ii:rotshroom_slab_from_rotshroom_block_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:woven_skyroot_sticks"
+        "recipes": "aether_ii:woven_skyroot_sticks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

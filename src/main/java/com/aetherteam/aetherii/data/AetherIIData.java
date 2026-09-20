@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.data;
 
+import com.aetherteam.aetherii.data.generators.loot.*;
 import com.aetherteam.aetherii.data.generators.*;
 import com.aetherteam.aetherii.data.generators.tags.*;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -31,7 +32,12 @@ public class AetherIIData implements DataGeneratorEntrypoint {
         // Server Data
         pack.addProvider(AetherIIRegistrySets::new);
         pack.addProvider(AetherIIRecipeData.Runner::new);
-        pack.addProvider((FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registries) -> AetherIILootTableData.create(output, registries));
+        pack.addProvider(AetherIIBlockLoot::new);
+        pack.addProvider(AetherIIEntityLoot::new);
+        pack.addProvider(AetherIIChestLoot::new);
+        pack.addProvider(AetherIIShearingLoot::new);
+        pack.addProvider(AetherIIGiftLoot::new);
+        pack.addProvider(AetherIIStrippingLoot::new);
         pack.addProvider(AetherIILootModifierData::new);
         pack.addProvider(AetherIIAdvancementData::new);
         pack.addProvider(AetherIIDataMapData::new);
@@ -57,5 +63,10 @@ public class AetherIIData implements DataGeneratorEntrypoint {
     @Override
     public void buildRegistry(RegistrySetBuilder builder) {
         AetherIIRegistrySets.build(builder);
+    }
+
+    @Override
+    public void buildReloadableRegistry(RegistrySetBuilder builder) {
+        AetherIIRegistrySets.buildReloadable(builder);
     }
 }

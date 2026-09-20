@@ -40,7 +40,7 @@ public class ShiftingGlassItem extends Item {
             if (!level.isClientSide()) {
                 player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setShiftingGlassBoostTime(8);
                 player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).setCanRefreshShiftingGlass(false);
-                player.setAttached(AetherIIDataAttachments.ABILITY_BEHAVIOR, player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR));
+                player.getAttachedOrCreate(AetherIIDataAttachments.ABILITY_BEHAVIOR).markDirty();
             }
             if (!player.getAbilities().instabuild) {
                 itemStack.hurtAndBreak(1, player, hand);

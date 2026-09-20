@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:mossy_holystone_slab"
+        "recipes": "aether_ii:mossy_holystone_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

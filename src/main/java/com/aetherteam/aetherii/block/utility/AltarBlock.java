@@ -29,7 +29,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class AltarBlock extends BaseEntityBlock {
-    public static final MapCodec<AltarBlock> CODEC = simpleCodec(AltarBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE_BASE = Block.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
     protected static final VoxelShape SHAPE_COLUMN = Block.box(5.0, 2.0, 5.0, 11.0, 8.0, 11.0);
@@ -39,11 +38,6 @@ public class AltarBlock extends BaseEntityBlock {
     public AltarBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    public MapCodec<AltarBlock> codec() {
-        return CODEC;
     }
 
     @Override

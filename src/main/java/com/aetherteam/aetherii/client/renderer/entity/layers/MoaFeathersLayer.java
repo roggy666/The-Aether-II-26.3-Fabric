@@ -33,7 +33,7 @@ public class MoaFeathersLayer extends RenderLayer<MoaRenderState, EntityModel<Mo
             TextureAtlasSprite sprite = this.moaFeathersAtlas.getSprite(texture);
             float opacity = moa.opacity;
 
-            submitNodeCollector.submitModel(this.getParentModel(), moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(AetherIIAtlases.MOA_FEATHER_SHEET), packedLight, LivingEntityRenderer.getOverlayCoords(moa, 0.0F), ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F), sprite, moa.outlineColor, null);
+            submitNodeCollector.submitModel(this.getParentModel(), moa, poseStack, AetherIIRenderTypes.entityDitherNoCull(AetherIIAtlases.MOA_FEATHER_SHEET), packedLight, LivingEntityRenderer.getOverlayCoords(moa, 0.0F), ARGB.colorFromFloat(opacity, 1.0F, 1.0F, 1.0F), sprite, moa.outlineColor);
         }
     }
 }

@@ -1,5 +1,11 @@
 package com.aetherteam.aetherii.block;
 
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import com.aetherteam.aetherii.block.natural.FullAetherBushBlock;
 import com.aetherteam.aetherii.block.natural.GelBlock;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -31,9 +37,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
-import net.fabricmc.fabric.api.registry.TillableBlockRegistry;
 import net.minecraft.core.Registry;
 
 import net.minecraft.core.registries.Registries;
@@ -68,15 +71,15 @@ import java.util.stream.Collectors;
 public class AetherIIBlocks extends AetherIIBlockBuilders {
 
     // Portal
-    public static final AetherPortalBlock AETHER_PORTAL = registerWithoutItem("aether_portal", AetherPortalBlock::new, () -> Block.Properties.of().noCollision().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(AetherIIBlocks::lightLevel11).pushReaction(PushReaction.BLOCK).forceSolidOn().noLootTable());
+    public static final AetherPortalBlock AETHER_PORTAL = registerWithoutItem("aether_portal", AetherPortalBlock::new, () -> Block.Properties.of().noCollision().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(AetherIIBlocks::lightLevel11).pushReaction(PushReaction.IMMOVEABLE).forceSolidOn().noLootTable());
 
     // Surface
     public static final Block AETHER_GRASS_BLOCK = register("aether_grass_block", AetherGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.WARPED_WART_BLOCK).randomTicks().strength(0.6F).sound(SoundType.GRASS));
     public static final Block ENCHANTED_AETHER_GRASS_BLOCK = register("enchanted_aether_grass_block", EnchantedAetherGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.GOLD).randomTicks().strength(0.6F).sound(SoundType.GRASS));
-    public static final Block AETHER_DIRT_PATH = register("aether_dirt_path", AetherDirtPathBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).strength(0.65F).sound(SoundType.GRASS).isViewBlocking(AetherIIBlocks::always).isSuffocating(AetherIIBlocks::always));
     public static final Block AETHER_DIRT = register("aether_dirt", () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).strength(0.5F).sound(SoundType.GRAVEL));
     public static final Block COARSE_AETHER_DIRT = register("coarse_aether_dirt", () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).strength(0.5F).sound(SoundType.GRAVEL));
     public static final Block MYCELIAL_AETHER_DIRT = register("mycelial_aether_dirt", () -> Block.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(0.5F).sound(SoundType.GRAVEL));
+    public static final Block AETHER_DIRT_PATH = register("aether_dirt_path", AetherDirtPathBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).strength(0.65F).sound(SoundType.GRASS).isViewBlocking(AetherIIBlocks::always).isSuffocating(AetherIIBlocks::always));
     public static final Block AETHER_FARMLAND = register("aether_farmland", AetherFarmlandBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking(AetherIIBlocks::always).isSuffocating(AetherIIBlocks::always));
     public static final Block SHIMMERING_SILT = register("shimmering_silt", (properties) -> new ColoredFallingBlock(new ColorRGBA(8360341), properties), () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).randomTicks().strength(0.5F).instrument(NoteBlockInstrument.SNARE).sound(SoundType.SAND).isViewBlocking(AetherIIBlocks::always).isSuffocating(AetherIIBlocks::always));
 
@@ -88,19 +91,19 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block AGIOSITE = register("agiosite", () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_PURPLE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).requiresCorrectToolForDrops());
     public static final Block ICHORITE = register("ichorite", () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_BROWN).instrument(NoteBlockInstrument.BASEDRUM).strength(4.0F, 6.0F).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops());
     public static final HalfTransparentBlock CRUDE_SCATTERGLASS = register("crude_scatterglass", CrudeScatterglassBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.GLASS).requiresCorrectToolForDrops().noOcclusion().isViewBlocking(AetherIIBlocks::never));
-    public static final Block SKY_ROOTS = register("sky_roots", AetherHangingRootsBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).replaceable().noCollision().instabreak().sound(SoundType.HANGING_ROOTS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY));
-    public static final LiquidBlock ALKAHEST = registerWithoutItem("alkahest", (properties) -> new AlkahestLiquidBlock(AetherIIFluids.ALKAHEST, properties), () -> Block.Properties.of().mapColor(MapColor.FIRE).replaceable().noCollision().randomTicks().strength(100.0F).lightLevel(AetherIIBlocks::lightLevel8).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY));
+    public static final Block SKY_ROOTS = register("sky_roots", AetherHangingRootsBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).replaceable().noCollision().instabreak().sound(SoundType.HANGING_ROOTS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED));
+    public static final LiquidBlock ALKAHEST = registerWithoutItem("alkahest", (properties) -> new AlkahestLiquidBlock(AetherIIFluids.ALKAHEST, properties), () -> Block.Properties.of().mapColor(MapColor.FIRE).replaceable().noCollision().randomTicks().strength(100.0F).lightLevel(AetherIIBlocks::lightLevel8).pushReaction(PushReaction.POPPED).noLootTable().liquid().sound(SoundType.EMPTY));
     public static final Block HESTVEIL = registerWithoutItem("hestveil", HestveilBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_ORANGE).strength(-1.0F, 0.0F).replaceable().noCollision().noOcclusion().noTerrainParticles().isValidSpawn(AetherIIBlockBuilders::never).isRedstoneConductor(AetherIIBlockBuilders::never).isSuffocating(AetherIIBlockBuilders::never).isViewBlocking(AetherIIBlockBuilders::never).noLootTable());
-    public static final AbstractPointedStoneBlock POINTED_HOLYSTONE = register("pointed_holystone", PointedHolystoneBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).noOcclusion().sound(SoundType.POINTED_DRIPSTONE).randomTicks().strength(1.5F, 3.0F).dynamicShape().offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.DESTROY).isRedstoneConductor(AetherIIBlocks::never));
-    public static final AbstractPointedStoneBlock POINTED_ICHORITE = register("pointed_ichorite", PointedIchoriteBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).noOcclusion().sound(SoundType.POINTED_DRIPSTONE).randomTicks().strength(4.0F, 3.0F).dynamicShape().offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.DESTROY).isRedstoneConductor(AetherIIBlocks::never));
+    public static final AbstractPointedStoneBlock POINTED_HOLYSTONE = register("pointed_holystone", PointedHolystoneBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).noOcclusion().sound(SoundType.POINTED_DRIPSTONE).randomTicks().strength(1.5F, 3.0F).dynamicShape().offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.POPPED).isRedstoneConductor(AetherIIBlocks::never));
+    public static final AbstractPointedStoneBlock POINTED_ICHORITE = register("pointed_ichorite", PointedIchoriteBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).forceSolidOn().instrument(NoteBlockInstrument.BASEDRUM).noOcclusion().sound(SoundType.POINTED_DRIPSTONE).randomTicks().strength(4.0F, 3.0F).dynamicShape().offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.POPPED).isRedstoneConductor(AetherIIBlocks::never));
 
     // Highfields
     public static final Block QUICKSOIL = register("quicksoil", QuicksoilBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).instrument(NoteBlockInstrument.SNARE).strength(0.5F).friction(1.1F).sound(SoundType.SAND));
     public static final Block MOSSY_HOLYSTONE = register("mossy_holystone", () -> Block.Properties.ofFullCopy(HOLYSTONE));
-    public static final Block BRYALINN_MOSS_BLOCK = register("bryalinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.BRYALINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY));
-    public static final Block BRYALINN_MOSS_CARPET = register("bryalinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY));
-    public static final Block BRYALINN_MOSS_VINES = register("bryalinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.DESTROY));
-    public static final Block BRYALINN_MOSS_FLOWERS = register("bryalinn_moss_flowers", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY));
+    public static final Block BRYALINN_MOSS_BLOCK = register("bryalinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.BRYALINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.POPPED));
+    public static final Block BRYALINN_MOSS_CARPET = register("bryalinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.POPPED));
+    public static final Block BRYALINN_MOSS_VINES = register("bryalinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_GREEN).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.POPPED));
+    public static final Block BRYALINN_MOSS_FLOWERS = register("bryalinn_moss_flowers", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED));
     public static final Block TANGLED_BRANCHES = register("tangled_branches", TangledBranchBlock::new, () -> Block.Properties.of().noOcclusion().mapColor(MapColor.COLOR_BROWN).instrument(NoteBlockInstrument.SNARE).strength(0.5F).sound(SoundType.WOOD));
 
     // Magnetic
@@ -108,7 +111,7 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block FERROSITE_MUD = register("ferrosite_mud", MudBlock::new, () -> Block.Properties.ofFullCopy(Blocks.MUD).mapColor(MapColor.COLOR_PURPLE));
     public static final Block FERROSITE = register("ferrosite", () -> Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(AetherIISoundTypes.FERROSITE).requiresCorrectToolForDrops());
     public static final Block RUSTED_FERROSITE = register("rusted_ferrosite", () -> Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(AetherIISoundTypes.FERROSITE).requiresCorrectToolForDrops());
-    public static final Block MAGNETIC_SHROOM = register("magnetic_shroom", (properties) -> new MushroomBlock(HolyIslesConfiguredFeatures.HUGE_MAGNETIC_SHROOM_GROWN, properties), () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel(light -> 5).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.DESTROY));
+    public static final Block MAGNETIC_SHROOM = register("magnetic_shroom", (properties) -> new MushroomBlock(HolyIslesConfiguredFeatures.HUGE_MAGNETIC_SHROOM_GROWN, properties), () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel(light -> 5).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.POPPED));
     public static final Block MAGNETIC_SHROOM_BLOCK = register("magnetic_shroom_block", HugeMushroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava());
     public static final Block SPOTTED_MAGNETIC_SHROOM_BLOCK = register("spotted_magnetic_shroom_block", HugeMushroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava().lightLevel((state) -> 6));
     public static final Block MAGNETIC_SHROOM_STEM = register("magnetic_shroom_stem", HugeMushroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_CYAN).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava());
@@ -116,27 +119,27 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     // Arctic
     public static final Block ARCTIC_SNOW_BLOCK = register("arctic_snow_block", () -> Block.Properties.of().mapColor(MapColor.SNOW).requiresCorrectToolForDrops().strength(0.2F).sound(SoundType.SNOW));
     @SuppressWarnings("deprecation")
-    public static final Block ARCTIC_SNOW = register("arctic_snow", SnowLayerBlock::new, () -> Block.Properties.of().mapColor(MapColor.SNOW).replaceable().forceSolidOff().randomTicks().strength(0.1F).sound(SoundType.SNOW).requiresCorrectToolForDrops().isViewBlocking((state, level, pos) -> state.getValue(SnowLayerBlock.LAYERS) >= 8).pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block ARCTIC_SNOW = register("arctic_snow", SnowLayerBlock::new, () -> Block.Properties.of().mapColor(MapColor.SNOW).replaceable().forceSolidOff().randomTicks().strength(0.1F).sound(SoundType.SNOW).requiresCorrectToolForDrops().isViewBlocking((state, level, pos, nearPlaneBox) -> state.getValue(SnowLayerBlock.LAYERS) >= 8).pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
     public static final Block ARCTIC_ICE = register("arctic_ice", IceBlock::new, () -> Block.Properties.of().mapColor(MapColor.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityTypes.SPAWNING_ICE)).isRedstoneConductor(AetherIIBlocks::never));
     public static final Block FRAGILE_ARCTIC_ICE = register("fragile_arctic_ice", FragileIceBlock::new, () -> Block.Properties.ofFullCopy(ARCTIC_ICE));
     public static final Block ARCTIC_PACKED_ICE = register("arctic_packed_ice", () -> Block.Properties.of().mapColor(MapColor.ICE).instrument(NoteBlockInstrument.CHIME).friction(0.98F).strength(0.5F).sound(SoundType.GLASS));
     public static final Block ICESTONE = register("icestone", IcestoneBlock::new, () -> Block.Properties.of().mapColor(MapColor.ICE).instrument(NoteBlockInstrument.CHIME).strength(0.5F).randomTicks().sound(SoundType.GLASS).requiresCorrectToolForDrops());
-    public static final Block LARGE_ARCTIC_ICE_CRYSTAL = register("large_arctic_ice_crystal", (properties) -> new IceCrystalBlock(8.0F, 2.0F, properties), () -> Block.Properties.of().mapColor(MapColor.ICE).forceSolidOn().noOcclusion().sound(SoundType.GLASS).strength(0.5F).pushReaction(PushReaction.DESTROY).randomTicks());
+    public static final Block LARGE_ARCTIC_ICE_CRYSTAL = register("large_arctic_ice_crystal", (properties) -> new IceCrystalBlock(8.0F, 2.0F, properties), () -> Block.Properties.of().mapColor(MapColor.ICE).forceSolidOn().noOcclusion().sound(SoundType.GLASS).strength(0.5F).pushReaction(PushReaction.POPPED).randomTicks());
     @SuppressWarnings("deprecation")
     public static final Block MEDIUM_ARCTIC_ICE_CRYSTAL = register("medium_arctic_ice_crystal", (properties) -> new IceCrystalBlock(8.0F, 2.0F, properties), () -> Block.Properties.ofLegacyCopy(LARGE_ARCTIC_ICE_CRYSTAL));
     @SuppressWarnings("deprecation")
     public static final Block SMALL_ARCTIC_ICE_CRYSTAL = register("small_arctic_ice_crystal", (properties) -> new IceCrystalBlock(8.0F, 2.0F, properties), () -> Block.Properties.ofLegacyCopy(LARGE_ARCTIC_ICE_CRYSTAL));
-    public static final Block SHAYELINN_MOSS_BLOCK = register("shayelinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.SHAYELINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY));
-    public static final Block SHAYELINN_MOSS_CARPET = register("shayelinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY));
-    public static final Block SHAYELINN_MOSS_VINES = register("shayelinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.DESTROY));
+    public static final Block SHAYELINN_MOSS_BLOCK = register("shayelinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.SHAYELINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.POPPED));
+    public static final Block SHAYELINN_MOSS_CARPET = register("shayelinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.POPPED));
+    public static final Block SHAYELINN_MOSS_VINES = register("shayelinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_CYAN).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.POPPED));
 
     // Irradiated
     public static final Block IRRADIATED_HOLYSTONE = register("irradiated_holystone", IrradiatedBlock::new, () -> Block.Properties.ofFullCopy(AetherIIBlocks.HOLYSTONE));
     public static final Block IRRADIATED_DUST_BLOCK = register("irradiated_dust_block", IrradiatedBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_BROWN).instrument(NoteBlockInstrument.BASS).strength(3.0F, 30.0F).lightLevel((state) -> 5).requiresCorrectToolForDrops());
-    public static final Block AMBRELINN_MOSS_BLOCK = register("ambrelinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.AMBRELINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.DESTROY));
-    public static final Block AMBRELINN_MOSS_CARPET = register("ambrelinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.DESTROY));
-    public static final Block AMBRELINN_MOSS_VINES = register("ambrelinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.DESTROY));
-    public static final Block TARAHESP_FLOWERS = register("tarahesp_flowers", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY));
+    public static final Block AMBRELINN_MOSS_BLOCK = register("ambrelinn_moss_block", (properties) -> new AetherMossBlock(HolyIslesConfiguredFeatures.AMBRELINN_MOSS_FLOOR, properties), () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.1F).sound(SoundType.MOSS).pushReaction(PushReaction.POPPED));
+    public static final Block AMBRELINN_MOSS_CARPET = register("ambrelinn_moss_carpet", CarpetBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.1F).sound(SoundType.MOSS_CARPET).pushReaction(PushReaction.POPPED));
+    public static final Block AMBRELINN_MOSS_VINES = register("ambrelinn_moss_vines", BottomedVineBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_YELLOW).replaceable().noCollision().randomTicks().strength(0.1F).sound(SoundType.VINE).ignitedByLava().pushReaction(PushReaction.POPPED));
+    public static final Block TARAHESP_FLOWERS = register("tarahesp_flowers", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED));
 
     // Ores
     public static final Block HOLYSTONE_QUARTZ_ORE = register("holystone_quartz_ore", (properties) -> new DropExperienceBlock(UniformInt.of(2, 5), properties), () -> Block.Properties.of().mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F).requiresCorrectToolForDrops());
@@ -266,11 +269,11 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final FlowerPotBlock POTTED_AMBEROOT_SAPLING = registerWithoutItem("potted_amberoot_sapling", (properties) -> new FlowerPotBlock(AMBEROOT_SAPLING, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
 
     // Grasses
-    public static final Block SHORT_AETHER_GRASS = register("short_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
-    public static final Block MEDIUM_AETHER_GRASS = register("medium_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
-    public static final Block TALL_AETHER_GRASS = register("tall_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
-    public static final Block AETHER_FERN = register("aether_fern", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
-    public static final Block SHIELD_FERN = register("shield_fern", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block SHORT_AETHER_GRASS = register("short_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block MEDIUM_AETHER_GRASS = register("medium_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block TALL_AETHER_GRASS = register("tall_aether_grass", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block AETHER_FERN = register("aether_fern", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
+    public static final Block SHIELD_FERN = register("shield_fern", AetherTallGrassBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).replaceable().noCollision().instabreak().sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.POPPED).postProcess(AetherIIBlocks::postProcessSelf));
 
     // Flowers
     public static final Block HESPEROSE = register("hesperose", (properties) -> new AetherFlowerBlock(properties), () -> Block.Properties.ofFullCopy(Blocks.DANDELION));
@@ -279,10 +282,10 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block LILICHIME = register("lilichime", (properties) -> new AetherFlowerBlock(properties), () -> Block.Properties.ofFullCopy(Blocks.DANDELION));
     public static final Block PLURACIAN = register("pluracian", (properties) -> new FacingFlowerBlock(properties), () -> Block.Properties.ofFullCopy(Blocks.DANDELION));
     public static final Block SATIVAL_SHOOT = register("satival_shoot", (properties) -> new AetherFlowerBlock(properties), () -> Block.Properties.ofFullCopy(Blocks.DANDELION));
-    public static final Block HOLPUPEA = register("holpupea", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY));
+    public static final Block HOLPUPEA = register("holpupea", MossFlowersBlock::new, () -> Block.Properties.of().mapColor(MapColor.PLANT).noCollision().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED));
     public static final Block BLADE_POA = register("blade_poa", (properties) -> new AetherFlowerBlock(properties), () -> Block.Properties.ofFullCopy(Blocks.DANDELION));
-    public static final Block AECHOR_CUTTING = register("aechor_cutting", (properties) -> new PlantMobCuttingBlock(() -> AetherIIEntityTypes.AECHOR_PLANT, properties), () -> Block.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollision().strength(0.65F).sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops());
-    public static final Block CARRION_CUTTING = register("carrion_cutting", (properties) -> new PlantMobCuttingBlock(() -> AetherIIEntityTypes.CARRION_SPROUT, properties), () -> Block.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollision().strength(0.65F).sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops());
+    public static final Block AECHOR_CUTTING = register("aechor_cutting", (properties) -> new PlantMobCuttingBlock(() -> AetherIIEntityTypes.AECHOR_PLANT, properties), () -> Block.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollision().strength(0.65F).sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.POPPED).requiresCorrectToolForDrops());
+    public static final Block CARRION_CUTTING = register("carrion_cutting", (properties) -> new PlantMobCuttingBlock(() -> AetherIIEntityTypes.CARRION_SPROUT, properties), () -> Block.Properties.of().mapColor(MapColor.PLANT).randomTicks().noCollision().strength(0.65F).sound(SoundType.GRASS).offsetType(Block.OffsetType.XZ).pushReaction(PushReaction.POPPED).requiresCorrectToolForDrops());
 
     // Potted Flowers
     public static final FlowerPotBlock POTTED_MAGNETIC_SHROOM = registerWithoutItem("potted_magnetic_shroom", (properties) -> new FlowerPotBlock(MAGNETIC_SHROOM, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
@@ -299,9 +302,9 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final FlowerPotBlock POTTED_CARRION_CUTTING = registerWithoutItem("potted_carrion_cutting", (properties) -> new FlowerPotBlock(CARRION_CUTTING, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
 
     // Bushes
-    public static final Block AETHER_BUSH = register("aether_bush", AetherFullBushBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).strength(0.65F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherIIBlocks::spawnOnLeaves).isRedstoneConductor(AetherIIBlocks::never).isSuffocating(AetherIIBlocks::never).isViewBlocking(AetherIIBlocks::never).requiresCorrectToolForDrops());
-    public static final Block BLUEBERRY_BUSH = register("blueberry_bush", BlueberryBushBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).strength(0.65F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherIIBlocks::spawnOnLeaves).isRedstoneConductor(AetherIIBlocks::never).isSuffocating(AetherIIBlocks::never).isViewBlocking(AetherIIBlocks::never).requiresCorrectToolForDrops());
-    public static final Block BLUEBERRY_BUSH_STEM = register("blueberry_bush_stem", BlueberryBushStemBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).strength(0.65F).sound(SoundType.GRASS).noCollision().requiresCorrectToolForDrops());
+    public static final Block AETHER_BUSH = register("aether_bush", AetherFullBushBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).strength(0.65F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherIIBlocks::spawnOnLeaves).isRedstoneConductor(AetherIIBlocks::never).isSuffocating(AetherIIBlocks::never).isViewBlocking(AetherIIBlocks::never).requiresCorrectToolForDrops());
+    public static final Block BLUEBERRY_BUSH = register("blueberry_bush", BlueberryBushBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).strength(0.65F).sound(SoundType.GRASS).noOcclusion().isValidSpawn(AetherIIBlocks::spawnOnLeaves).isRedstoneConductor(AetherIIBlocks::never).isSuffocating(AetherIIBlocks::never).isViewBlocking(AetherIIBlocks::never).requiresCorrectToolForDrops());
+    public static final Block BLUEBERRY_BUSH_STEM = register("blueberry_bush_stem", BlueberryBushStemBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).strength(0.65F).sound(SoundType.GRASS).noCollision().requiresCorrectToolForDrops());
 
     // Potted Bushes
     public static final FlowerPotBlock POTTED_AETHER_BUSH = registerWithoutItem("potted_aether_bush", (properties) -> new FlowerPotBlock(AETHER_BUSH, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
@@ -309,29 +312,29 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final FlowerPotBlock POTTED_BLUEBERRY_BUSH_STEM = registerWithoutItem("potted_blueberry_bush_stem", (properties) -> new FlowerPotBlock(BLUEBERRY_BUSH_STEM, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
 
     // Orange Tree
-    public static final Block ORANGE_TREE = register("orange_tree", OrangeTreeBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).noCollision().strength(0.65F).sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops());
+    public static final Block ORANGE_TREE = register("orange_tree", OrangeTreeBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).noCollision().strength(0.65F).sound(SoundType.GRASS).pushReaction(PushReaction.POPPED).requiresCorrectToolForDrops());
 
     // Potted Orange Tree
     public static final FlowerPotBlock POTTED_ORANGE_TREE = registerWithoutItem("potted_orange_tree", (properties) -> new FlowerPotBlock(ORANGE_TREE, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
 
     // Valkyrie Sprout
-    public static final Block VALKYRIE_SPROUT = register("valkyrie_sprout", ValkyrieSproutBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).noCollision().strength(0.65F).offsetType(Block.OffsetType.XZ).requiresCorrectToolForDrops());
+    public static final Block VALKYRIE_SPROUT = register("valkyrie_sprout", ValkyrieSproutBlock::new, () -> Block.Properties.of().mapColor(MapColor.GRASS).pushReaction(PushReaction.POPPED).sound(SoundType.GRASS).noCollision().strength(0.65F).offsetType(Block.OffsetType.XZ).requiresCorrectToolForDrops());
 
     // Brettl
-    public static final Block BRETTL_PLANT = registerWithoutItem("brettl_plant", BrettlPlantBlock::new, () -> Block.Properties.of().noCollision().strength(0.65F).randomTicks().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops());
-    public static final Block BRETTL_PLANT_TIP = registerWithoutItem("brettl_plant_tip", BrettlPlantTipBlock::new, () -> Block.Properties.of().noCollision().strength(0.65F).randomTicks().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops());
+    public static final Block BRETTL_PLANT = registerWithoutItem("brettl_plant", BrettlPlantBlock::new, () -> Block.Properties.of().noCollision().strength(0.65F).randomTicks().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED).requiresCorrectToolForDrops());
+    public static final Block BRETTL_PLANT_TIP = registerWithoutItem("brettl_plant_tip", BrettlPlantTipBlock::new, () -> Block.Properties.of().noCollision().strength(0.65F).randomTicks().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED).requiresCorrectToolForDrops());
     public static final Block BRETTL_FLOWER = register("brettl_flower", CactusFlowerBlock::new, () -> Block.Properties.ofFullCopy(Blocks.CACTUS_FLOWER).mapColor(MapColor.DIAMOND));
 
     // Lake
-    public static final Block ARILUM_SHOOT = registerWithoutItem("arilum_shoot", ArilumShootBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY));
-    public static final Block ARILUM = register("arilum", ArilumBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY));
-    public static final Block ARILUM_PLANT = register("arilum_plant", ArilumPlantBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY));
-    public static final Block BLOOMING_ARILUM = register("blooming_arilum", BloomingArilumBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY).lightLevel((block) -> 5));
-    public static final Block BLOOMING_ARILUM_PLANT = register("blooming_arilum_plant", BloomingArilumPlantBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.DESTROY).lightLevel((block) -> 5));
+    public static final Block ARILUM_SHOOT = registerWithoutItem("arilum_shoot", ArilumShootBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.POPPED));
+    public static final Block ARILUM = register("arilum", ArilumBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.POPPED));
+    public static final Block ARILUM_PLANT = register("arilum_plant", ArilumPlantBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.POPPED));
+    public static final Block BLOOMING_ARILUM = register("blooming_arilum", BloomingArilumBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.POPPED).lightLevel((block) -> 5));
+    public static final Block BLOOMING_ARILUM_PLANT = register("blooming_arilum_plant", BloomingArilumPlantBlock::new, () -> Block.Properties.of().mapColor(MapColor.WATER).noCollision().randomTicks().instabreak().sound(SoundType.WET_GRASS).pushReaction(PushReaction.POPPED).lightLevel((block) -> 5));
 
     // Ground Decoration
-    public static final Block SKYROOT_TWIG = register("skyroot_twig", TwigBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_BROWN).noOcclusion().noCollision().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY));
-    public static final Block HOLYSTONE_ROCK = register("holystone_rock", RockBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).noOcclusion().noCollision().instabreak().sound(SoundType.STONE).pushReaction(PushReaction.DESTROY), RockItem::new);
+    public static final Block SKYROOT_TWIG = register("skyroot_twig", TwigBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_BROWN).noOcclusion().noCollision().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.POPPED));
+    public static final Block HOLYSTONE_ROCK = register("holystone_rock", RockBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).noOcclusion().noCollision().instabreak().sound(SoundType.STONE).pushReaction(PushReaction.POPPED), RockItem::new);
 
     // Skyroot Planks
     public static final Block SKYROOT_PLANKS = register("skyroot_planks", () -> Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).mapColor(MapColor.TERRACOTTA_LIGHT_GRAY));
@@ -380,7 +383,7 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final FacingPillarBlock GREATROOT_BASE_BEAM = register("greatroot_base_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(GREATROOT_PLANKS));
     public static final FacingPillarBlock GREATROOT_TOP_BEAM = register("greatroot_top_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(GREATROOT_PLANKS));
     public static final FacingPillarBlock GREATROOT_BEAM = register("greatroot_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(GREATROOT_PLANKS));
-    public static final DoorBlock SECRET_GREATROOT_DOOR = register("secret_greatroot_door", (properties) -> new SecretDoorBlock(AetherIIWoodTypes.GREATROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(GREATROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).ignitedByLava().pushReaction(PushReaction.DESTROY));
+    public static final DoorBlock SECRET_GREATROOT_DOOR = register("secret_greatroot_door", (properties) -> new SecretDoorBlock(AetherIIWoodTypes.GREATROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(GREATROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).ignitedByLava().pushReaction(PushReaction.POPPED));
     public static final TrapDoorBlock SECRET_GREATROOT_TRAPDOOR = register("secret_greatroot_trapdoor", (properties) -> new SecretTrapDoorBlock(AetherIIWoodTypes.GREATROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(GREATROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).isValidSpawn(AetherIIBlocks::never).ignitedByLava());
 
     // Wisproot Planks
@@ -405,7 +408,7 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final FacingPillarBlock WISPROOT_BASE_BEAM = register("wisproot_base_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(WISPROOT_PLANKS));
     public static final FacingPillarBlock WISPROOT_TOP_BEAM = register("wisproot_top_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(WISPROOT_PLANKS));
     public static final FacingPillarBlock WISPROOT_BEAM = register("wisproot_beam", FacingPillarBlock::new, () -> Block.Properties.ofFullCopy(WISPROOT_PLANKS));
-    public static final DoorBlock SECRET_WISPROOT_DOOR = register("secret_wisproot_door", (properties) -> new SecretDoorBlock(AetherIIWoodTypes.WISPROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(WISPROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).ignitedByLava().pushReaction(PushReaction.DESTROY));
+    public static final DoorBlock SECRET_WISPROOT_DOOR = register("secret_wisproot_door", (properties) -> new SecretDoorBlock(AetherIIWoodTypes.WISPROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(WISPROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).ignitedByLava().pushReaction(PushReaction.POPPED));
     public static final TrapDoorBlock SECRET_WISPROOT_TRAPDOOR = register("secret_wisproot_trapdoor", (properties) -> new SecretTrapDoorBlock(AetherIIWoodTypes.WISPROOT_BLOCK_SET, properties), () -> Block.Properties.of().mapColor(WISPROOT_PLANKS.defaultMapColor()).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD).isValidSpawn(AetherIIBlocks::never).ignitedByLava());
 
     // Amberoot Planks
@@ -746,7 +749,7 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block SKYROOT_CHEST = register("skyroot_chest", (properties) -> new SkyrootChestBlock(properties, () -> AetherIIBlockEntityTypes.SKYROOT_CHEST), () -> Block.Properties.ofFullCopy(Blocks.CHEST));
     public static final Block SKYROOT_BARREL = register("skyroot_barrel", BarrelBlock::new, () -> Block.Properties.ofFullCopy(Blocks.BARREL));
     public static final LadderBlock SKYROOT_LADDER = register("skyroot_ladder", LadderBlock::new, () -> Block.Properties.ofFullCopy(Blocks.LADDER).strength(0.4F).sound(SoundType.LADDER).noOcclusion());
-    public static final BedrollBlock CLOUDWOOL_BEDROLL = register("cloudwool_bedroll", BedrollBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).sound(SoundType.WOOL).strength(0.2F).noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY), AetherIIBlocks.bedrollBlockItem());
+    public static final BedrollBlock CLOUDWOOL_BEDROLL = register("cloudwool_bedroll", BedrollBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).sound(SoundType.WOOL).strength(0.2F).noOcclusion().ignitedByLava().pushReaction(PushReaction.POPPED), AetherIIBlocks.bedrollBlockItem());
 
     public static final BedBlock SKYROOT_BED = register("skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> Block.Properties.ofFullCopy(Blocks.BED.white()), AetherIIBlocks.bedBlockItem());
     public static final BedBlock WHITE_SKYROOT_BED = register("white_skyroot_bed", (properties) -> new SkyrootBedBlock(DyeColor.WHITE, properties), () -> Block.Properties.ofFullCopy(Blocks.BED.white()), AetherIIBlocks.bedBlockItem());
@@ -812,9 +815,9 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block SENTRY_SPAWNER = register("sentry_spawner", SentrySpawnerBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F).sound(SoundType.STONE).lightLevel(state -> state.getValue(SentrySpawnerBlock.SENTRY_SPAWNER_STATE) != AetherIIBlockStateProperties.SentrySpawnerState.INACTIVE ? 6 : 0));
     public static final Block SENTRY_TRAP = register("sentry_trap", SentryTrapBlock::new, () -> Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F).sound(SoundType.STONE).lightLevel(state -> state.getValue(GroundTrapBlock.TRAP_STATE) == AetherIIBlockStateProperties.TrapState.SPAWNED ? 6 : 0));
 
-    public static final Block LOCKED_BLOCK = register("locked_block", LockedBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.BLOCK).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
-    public static final Block BOSS_DOORWAY_BLOCK = register("boss_doorway_block", BossDoorwayBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.BLOCK).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
-    public static final Block TREASURE_DOORWAY_BLOCK = register("treasure_doorway_block", TreasureDoorwayBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.BLOCK).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
+    public static final Block LOCKED_BLOCK = register("locked_block", LockedBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.IMMOVEABLE).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
+    public static final Block BOSS_DOORWAY_BLOCK = register("boss_doorway_block", BossDoorwayBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.IMMOVEABLE).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
+    public static final Block TREASURE_DOORWAY_BLOCK = register("treasure_doorway_block", TreasureDoorwayBlock::new, () -> BlockBehaviour.Properties.of().strength(-1.0F, 3600000.8F).noLootTable().isValidSpawn(Blocks::always).pushReaction(PushReaction.IMMOVEABLE).lightLevel(CopyBlock::lightEmission), CopyBlockItem::new);
 
     // Bookshelves
     public static final Block SKYROOT_BOOKSHELF = register("skyroot_bookshelf", BookshelfBlock::new, () -> Block.Properties.ofFullCopy(SKYROOT_PLANKS));
@@ -824,13 +827,13 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block HOLYSTONE_BOOKSHELF = register("holystone_bookshelf", BookshelfBlock::new, () -> Block.Properties.ofFullCopy(HOLYSTONE_BRICKS));
 
     // Furniture
-    public static final OutpostCampfireBlock OUTPOST_CAMPFIRE = register("outpost_campfire", OutpostCampfireBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.STONE).strength(15.0F, 1200.0F).lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).noOcclusion().pushReaction(PushReaction.BLOCK));
+    public static final OutpostCampfireBlock OUTPOST_CAMPFIRE = register("outpost_campfire", OutpostCampfireBlock::new, () -> Block.Properties.of().mapColor(MapColor.WOOL).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.STONE).strength(15.0F, 1200.0F).lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).noOcclusion().pushReaction(PushReaction.IMMOVEABLE));
     public static final Block MURAL = register("mural", MuralBlock::new, () -> Block.Properties.ofFullCopy(Blocks.STONE), (block, properties) -> new BlockItem(block, properties.component(AetherIIDataComponents.MURAL_SECTION, MuralSection.DEFAULT)));
 
     // Melting Blocks
     public static final Block FROSTED_ICE = registerWithoutItem("frosted_ice", AetherFrostedIceBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityTypes.SPAWNING_ICE)).isRedstoneConductor(AetherIIBlockBuilders::never).noLootTable());
     public static final Block FROSTED_ARCTIC_ICE = registerWithoutItem("frosted_arctic_ice", AetherFrostedIceBlock::new, () -> BlockBehaviour.Properties.of().mapColor(MapColor.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion().isValidSpawn((state, level, pos, entityType) -> entityType.builtInRegistryHolder().is(AetherIITags.EntityTypes.SPAWNING_ICE)).isRedstoneConductor(AetherIIBlockBuilders::never).noLootTable());
-    public static final Block UNSTABLE_OBSIDIAN = registerWithoutItem("unstable_obsidian", UnstableObsidianBlock::new, () ->  BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F).noLootTable().pushReaction(PushReaction.NORMAL));
+    public static final Block UNSTABLE_OBSIDIAN = registerWithoutItem("unstable_obsidian", UnstableObsidianBlock::new, () ->  BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).randomTicks().requiresCorrectToolForDrops().strength(50.0F, 1200.0F).noLootTable().pushReaction(PushReaction.PUSH_PULL));
 
     // Infected Guardian Tree
     // Guardian Wood
@@ -868,9 +871,9 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final Block GUARDIAN_LAMP = register("guardian_lamp", Block::new, () -> Block.Properties.ofFullCopy(GUARDIAN_ROOTS).lightLevel((state) -> 10));
 
     // Undergrowth Blocks
-    public static final Block UNDERGROWTH_LEAVES = register("undergrowth_leaves", () -> Block.Properties.of().strength(0.2F).mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).sound(SoundType.AZALEA_LEAVES).noOcclusion().isSuffocating(AetherIIBlockBuilders::never).isViewBlocking(AetherIIBlockBuilders::never).isRedstoneConductor(AetherIIBlockBuilders::never).pushReaction(PushReaction.DESTROY));
+    public static final Block UNDERGROWTH_LEAVES = register("undergrowth_leaves", () -> Block.Properties.of().strength(0.2F).mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).sound(SoundType.AZALEA_LEAVES).noOcclusion().isSuffocating(AetherIIBlockBuilders::never).isViewBlocking(AetherIIBlockBuilders::never).isRedstoneConductor(AetherIIBlockBuilders::never).pushReaction(PushReaction.POPPED));
     public static final Block UNDERGROWTH_VINES = register("undergrowth_vines", BottomedVineBlock::new, () -> Block.Properties.ofFullCopy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_LIGHT_GREEN));
-    public static final Block HANGING_UNDERGROWTH = register("hanging_undergrowth", HangingUndergrowthBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).randomTicks().noCollision().instabreak().sound(SoundType.CAVE_VINES).pushReaction(PushReaction.DESTROY));
+    public static final Block HANGING_UNDERGROWTH = register("hanging_undergrowth", HangingUndergrowthBlock::new, () -> Block.Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN).randomTicks().noCollision().instabreak().sound(SoundType.CAVE_VINES).pushReaction(PushReaction.POPPED));
     public static final Block HANGING_UNDERGROWTH_PLANT = registerWithoutItem("hanging_undergrowth_plant", HangingUndergrowthPlantBlock::new, () -> Block.Properties.ofFullCopy(AetherIIBlocks.HANGING_UNDERGROWTH));
 
     // Rotshroom Blocks
@@ -878,11 +881,11 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     public static final SlabBlock ROTSHROOM_SLAB = register("rotshroom_slab", SlabBlock::new, () -> Block.Properties.ofFullCopy(AetherIIBlocks.ROTSHROOM_BLOCK).mapColor(MapColor.WOOD));
     public static final RotatedPillarBlock ROTSHROOM_STEM = register("rotshroom_stem", RotatedPillarBlock::new, () -> Block.Properties.ofFullCopy(AetherIIBlocks.ROTSHROOM_BLOCK).mapColor(MapColor.WOOL));
     public static final Block SHELF_ROTSHROOM_SLAB = register("shelf_rotshroom_slab", LargeShelfRotshroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS).strength(0.2F).sound(SoundType.WOOD).ignitedByLava());
-    public static final Block ROTSHROOM = register("rotshroom", RotshroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).noCollision().noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.DESTROY));
+    public static final Block ROTSHROOM = register("rotshroom", RotshroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).noCollision().noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.POPPED));
     public static final FlowerPotBlock POTTED_ROTSHROOM = registerWithoutItem("potted_rotshroom", (properties) -> new FlowerPotBlock(ROTSHROOM, properties), () -> Block.Properties.ofFullCopy(Blocks.FLOWER_POT));
-    public static final Block ROTSHROOM_CLUSTER = register("rotshroom_cluster", RotshroomClusterBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.DESTROY));
-    public static final Block ROTSHROOM_TOADSTOOL = register("rotshroom_toadstool", RotshroomToadstoolBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).offsetType(BlockBehaviour.OffsetType.XYZ).dynamicShape().noOcclusion().randomTicks().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.DESTROY));
-    public static final Block SHELF_ROTSHROOM = register("shelf_rotshroom", ShelfRotshroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).noCollision().randomTicks().instabreak().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.DESTROY));
+    public static final Block ROTSHROOM_CLUSTER = register("rotshroom_cluster", RotshroomClusterBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).noOcclusion().randomTicks().instabreak().offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.POPPED));
+    public static final Block ROTSHROOM_TOADSTOOL = register("rotshroom_toadstool", RotshroomToadstoolBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).strength(0.1F).offsetType(BlockBehaviour.OffsetType.XYZ).dynamicShape().noOcclusion().randomTicks().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.POPPED));
+    public static final Block SHELF_ROTSHROOM = register("shelf_rotshroom", ShelfRotshroomBlock::new, () -> Block.Properties.of().mapColor(MapColor.DIRT).noCollision().randomTicks().instabreak().sound(SoundType.FUNGUS).postProcess(AetherIIBlocks::postProcessSelf).pushReaction(PushReaction.POPPED));
     public static final Block ROTGROWTH_VINES = register("rotgrowth_vines", BottomedVineBlock::new, () -> Block.Properties.ofFullCopy(Blocks.VINE).sound(SoundType.HANGING_ROOTS).mapColor(MapColor.DIRT).strength(-1.0F, 3600000.0F).noLootTable());
 
     // Dungeon Furniture
@@ -937,17 +940,17 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
         return (standingBlock, properties) -> new StandingAndWallBlockItem(standingBlock, Objects.requireNonNull(wallBlock.get()), attachmentDirection, properties);
     }
 
-    private static BiFunction<BedrollBlock, Item.Properties, BedItem> bedrollBlockItem() {
-        return (bedrollBlock, properties) -> new BedItem(bedrollBlock, properties.stacksTo(4));
+    private static BiFunction<BedrollBlock, Item.Properties, BlockItem> bedrollBlockItem() {
+        return (bedrollBlock, properties) -> new BlockItem(bedrollBlock, properties.stacksTo(4));
     }
 
-    private static BiFunction<BedBlock, Item.Properties, BedItem> bedBlockItem() {
-        return (bedBlock, properties) -> new BedItem(bedBlock, properties.stacksTo(1));
+    private static BiFunction<BedBlock, Item.Properties, BlockItem> bedBlockItem() {
+        return (bedBlock, properties) -> new BlockItem(bedBlock, properties.stacksTo(1));
     }
 
-    private static BiFunction<StandingSignBlock, Item.Properties, SignItem> signItem(Supplier<? extends WallSignBlock> wallSignBlock) {
+    private static BiFunction<StandingSignBlock, Item.Properties, StandingAndWallBlockItem> signItem(Supplier<? extends WallSignBlock> wallSignBlock) {
         Objects.requireNonNull(wallSignBlock);
-        return (standingSignBlock, properties) -> new SignItem(standingSignBlock, Objects.requireNonNull(wallSignBlock.get()), properties.stacksTo(16));
+        return (standingSignBlock, properties) -> new StandingAndWallBlockItem(standingSignBlock, Objects.requireNonNull(wallSignBlock.get()), Direction.DOWN, properties.stacksTo(16).signText());
     }
 
     private static BiFunction<CeilingHangingSignBlock, Item.Properties, HangingSignItem> hangingSignItem(Supplier<? extends WallHangingSignBlock> wallHangingSignBlock) {
@@ -1108,47 +1111,47 @@ public class AetherIIBlocks extends AetherIIBlockBuilders {
     }
 
     public static void registerStrippables() {
-        StrippableBlockRegistry.register(AetherIIBlocks.SKYROOT_LOG, AetherIIBlocks.STRIPPED_SKYROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.SKYROOT_WOOD, AetherIIBlocks.STRIPPED_SKYROOT_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.SKYROOT_TRUNK, AetherIIBlocks.STRIPPED_SKYROOT_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.GREATROOT_LOG, AetherIIBlocks.STRIPPED_GREATROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.GREATROOT_WOOD, AetherIIBlocks.STRIPPED_GREATROOT_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.GREATROOT_TRUNK, AetherIIBlocks.STRIPPED_GREATROOT_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.WISPROOT_LOG, AetherIIBlocks.STRIPPED_WISPROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.WISPROOT_WOOD, AetherIIBlocks.STRIPPED_WISPROOT_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.WISPROOT_TRUNK, AetherIIBlocks.STRIPPED_WISPROOT_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.MOSSY_WISPROOT_LOG, AetherIIBlocks.WISPROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.MOSSY_WISPROOT_WOOD, AetherIIBlocks.WISPROOT_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.MOSSY_WISPROOT_TRUNK, AetherIIBlocks.WISPROOT_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.MOSSY_WISPROOT_LOG_BASE, AetherIIBlocks.WISPROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.AMBEROOT_LOG, AetherIIBlocks.STRIPPED_AMBEROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.AMBEROOT_DEPOSIT, AetherIIBlocks.STRIPPED_AMBEROOT_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.AMBEROOT_WOOD, AetherIIBlocks.STRIPPED_AMBEROOT_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.AMBEROOT_TRUNK, AetherIIBlocks.STRIPPED_AMBEROOT_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.GUARDIAN_LOG, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.GUARDIAN_LOG_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_LOG_SLAB);
-        StrippableBlockRegistry.register(AetherIIBlocks.GUARDIAN_WOOD, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.GUARDIAN_WOOD_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD_SLAB);
-        StrippableBlockRegistry.register(AetherIIBlocks.GUARDIAN_TRUNK, AetherIIBlocks.STRIPPED_GUARDIAN_TRUNK);
-        StrippableBlockRegistry.register(AetherIIBlocks.INFECTED_LOG, AetherIIBlocks.STRIPPED_INFECTED_LOG);
-        StrippableBlockRegistry.register(AetherIIBlocks.INFECTED_LOG_SLAB, AetherIIBlocks.STRIPPED_INFECTED_LOG_SLAB);
-        StrippableBlockRegistry.register(AetherIIBlocks.INFECTED_WOOD, AetherIIBlocks.STRIPPED_INFECTED_WOOD);
-        StrippableBlockRegistry.register(AetherIIBlocks.INFECTED_WOOD_SLAB, AetherIIBlocks.STRIPPED_INFECTED_WOOD_SLAB);
-        StrippableBlockRegistry.register(AetherIIBlocks.INFECTED_TRUNK, AetherIIBlocks.STRIPPED_INFECTED_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.SKYROOT_LOG, AetherIIBlocks.STRIPPED_SKYROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.SKYROOT_WOOD, AetherIIBlocks.STRIPPED_SKYROOT_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.SKYROOT_TRUNK, AetherIIBlocks.STRIPPED_SKYROOT_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GREATROOT_LOG, AetherIIBlocks.STRIPPED_GREATROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GREATROOT_WOOD, AetherIIBlocks.STRIPPED_GREATROOT_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GREATROOT_TRUNK, AetherIIBlocks.STRIPPED_GREATROOT_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.WISPROOT_LOG, AetherIIBlocks.STRIPPED_WISPROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.WISPROOT_WOOD, AetherIIBlocks.STRIPPED_WISPROOT_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.WISPROOT_TRUNK, AetherIIBlocks.STRIPPED_WISPROOT_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.MOSSY_WISPROOT_LOG, AetherIIBlocks.WISPROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.MOSSY_WISPROOT_WOOD, AetherIIBlocks.WISPROOT_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.MOSSY_WISPROOT_TRUNK, AetherIIBlocks.WISPROOT_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.MOSSY_WISPROOT_LOG_BASE, AetherIIBlocks.WISPROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.AMBEROOT_LOG, AetherIIBlocks.STRIPPED_AMBEROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.AMBEROOT_DEPOSIT, AetherIIBlocks.STRIPPED_AMBEROOT_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.AMBEROOT_WOOD, AetherIIBlocks.STRIPPED_AMBEROOT_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.AMBEROOT_TRUNK, AetherIIBlocks.STRIPPED_AMBEROOT_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GUARDIAN_LOG, AetherIIBlocks.STRIPPED_GUARDIAN_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GUARDIAN_LOG_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_LOG_SLAB);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GUARDIAN_WOOD, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GUARDIAN_WOOD_SLAB, AetherIIBlocks.STRIPPED_GUARDIAN_WOOD_SLAB);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.GUARDIAN_TRUNK, AetherIIBlocks.STRIPPED_GUARDIAN_TRUNK);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.INFECTED_LOG, AetherIIBlocks.STRIPPED_INFECTED_LOG);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.INFECTED_LOG_SLAB, AetherIIBlocks.STRIPPED_INFECTED_LOG_SLAB);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.INFECTED_WOOD, AetherIIBlocks.STRIPPED_INFECTED_WOOD);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.INFECTED_WOOD_SLAB, AetherIIBlocks.STRIPPED_INFECTED_WOOD_SLAB);
+        BlockTransformerHelper.registerStripping(AetherIIBlocks.INFECTED_TRUNK, AetherIIBlocks.STRIPPED_INFECTED_TRUNK);
     }
 
     public static void registerFlattenables() {
-        FlattenableBlockRegistry.register(AetherIIBlocks.AETHER_GRASS_BLOCK, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
-        FlattenableBlockRegistry.register(AetherIIBlocks.AETHER_DIRT, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
-        FlattenableBlockRegistry.register(AetherIIBlocks.COARSE_AETHER_DIRT, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
+        BlockTransformerHelper.registerFlattening(AetherIIBlocks.AETHER_GRASS_BLOCK, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
+        BlockTransformerHelper.registerFlattening(AetherIIBlocks.AETHER_DIRT, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
+        BlockTransformerHelper.registerFlattening(AetherIIBlocks.COARSE_AETHER_DIRT, AetherIIBlocks.AETHER_DIRT_PATH.defaultBlockState());
     }
 
     public static void registerTillables() {
-        TillableBlockRegistry.register(AetherIIBlocks.AETHER_DIRT, HoeItem::onlyIfAirAbove, AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
-        TillableBlockRegistry.register(AetherIIBlocks.AETHER_GRASS_BLOCK, HoeItem::onlyIfAirAbove, AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
-        TillableBlockRegistry.register(AetherIIBlocks.AETHER_DIRT_PATH, HoeItem::onlyIfAirAbove, AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
-        TillableBlockRegistry.register(AetherIIBlocks.COARSE_AETHER_DIRT, HoeItem::onlyIfAirAbove, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
-        TillableBlockRegistry.register(AetherIIBlocks.MYCELIAL_AETHER_DIRT, HoeItem::onlyIfAirAbove, AetherIIBlocks.AETHER_DIRT.defaultBlockState());
+        BlockTransformerHelper.registerTilling(BlockPredicate.allOf(BlockPredicate.matchesBlocks(AetherIIBlocks.AETHER_DIRT), BlockPredicate.matchesTag(Vec3i.ZERO.above(), BlockTags.AIR)), AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
+        BlockTransformerHelper.registerTilling(BlockPredicate.allOf(BlockPredicate.matchesBlocks(AetherIIBlocks.AETHER_GRASS_BLOCK), BlockPredicate.matchesTag(Vec3i.ZERO.above(), BlockTags.AIR)), AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
+        BlockTransformerHelper.registerTilling(BlockPredicate.allOf(BlockPredicate.matchesBlocks(AetherIIBlocks.AETHER_DIRT_PATH), BlockPredicate.matchesTag(Vec3i.ZERO.above(), BlockTags.AIR)), AetherIIBlocks.AETHER_FARMLAND.defaultBlockState());
+        BlockTransformerHelper.registerTilling(BlockPredicate.allOf(BlockPredicate.matchesBlocks(AetherIIBlocks.COARSE_AETHER_DIRT), BlockPredicate.matchesTag(Vec3i.ZERO.above(), BlockTags.AIR)), AetherIIBlocks.AETHER_DIRT.defaultBlockState());
+        BlockTransformerHelper.registerTilling(BlockPredicate.allOf(BlockPredicate.matchesBlocks(AetherIIBlocks.MYCELIAL_AETHER_DIRT), BlockPredicate.matchesTag(Vec3i.ZERO.above(), BlockTags.AIR)), AetherIIBlocks.AETHER_DIRT.defaultBlockState());
     }
 
     public static void init() {

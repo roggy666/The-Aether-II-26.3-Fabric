@@ -1,17 +1,17 @@
 package com.aetherteam.aetherii.item.equipment.tools.gravitite;
 
+import net.minecraft.world.item.Item;
 import com.aetherteam.aetherii.item.equipment.AetherIIToolMaterials;
 import com.aetherteam.aetherii.item.equipment.tools.abilities.GravititeTool;
 import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class GravititeTrowelItem extends HoeItem implements GravititeTool {
+public class GravititeTrowelItem extends Item implements GravititeTool {
     public GravititeTrowelItem(Properties properties) {
-        super(AetherIIToolMaterials.GRAVITITE, 0.5F, -2.5F, properties);
+        super(properties.hoe(AetherIIToolMaterials.GRAVITITE, 0.5F, -2.5F));
     }
 
     @Override

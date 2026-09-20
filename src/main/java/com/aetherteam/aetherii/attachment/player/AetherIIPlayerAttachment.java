@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AetherIIPlayerAttachment {
+public class AetherIIPlayerAttachment extends com.aetherteam.aetherii.attachment.SyncedEntityAttachment {
     private static final FontDescription.Resource LOGOMARKS = new FontDescription.Resource(Identifier.fromNamespaceAndPath(AetherII.MODID, "logomarks"));
     private static final Style INFO = Style.EMPTY.withColor(0x56C1EF).withUnderlined(true).withClickEvent(new ClickEvent.ShowDialog(Holder.direct(getDialog()))).withHoverEvent(new HoverEvent.ShowText(Component.literal("Open Info Screen")));
     private static final Style PATREON = Style.EMPTY.withColor(16728653).withUnderlined(true).withClickEvent(new ClickEvent.OpenUrl(URI.create("https://www.patreon.com/TheAetherTeam"))).withHoverEvent(new HoverEvent.ShowText(Component.literal("https://www.patreon.com/TheAetherTeam")));
@@ -182,7 +182,7 @@ public class AetherIIPlayerAttachment {
                 this.removeStuckProjectileTime--;
                 if (this.removeStuckProjectileTime <= 0) {
                     this.getStuckProjectiles().removeLast();
-                    player.setAttached(AetherIIDataAttachments.PLAYER, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER));
+                    player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).markDirty();
                 }
             }
         }
@@ -273,11 +273,12 @@ public class AetherIIPlayerAttachment {
         EntityType<?> entityType = projectile.getType();
         if (projectile.is(AetherIITags.EntityTypes.STICKABLE_PROJECTILES)) {
             this.stuckProjectiles.addLast(entityType);
-            player.setAttached(AetherIIDataAttachments.PLAYER, player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER));
+            player.getAttachedOrCreate(AetherIIDataAttachments.PLAYER).markDirty();
         }
     }
 
     public void setMovingHorizontally(boolean isMovingHorizontally) {
+        if (this.isMovingHorizontally != isMovingHorizontally) this.markDirty();
         this.isMovingHorizontally = isMovingHorizontally;
     }
 
@@ -289,6 +290,7 @@ public class AetherIIPlayerAttachment {
     }
 
     public void setMovingOverall(boolean isMoving) {
+        if (this.isMovingOverall != isMoving) this.markDirty();
         this.isMovingOverall = isMoving;
     }
 
@@ -300,6 +302,7 @@ public class AetherIIPlayerAttachment {
     }
 
     public void setJumping(boolean isJumping) {
+        if (this.isJumping != isJumping) this.markDirty();
         this.isJumping = isJumping;
     }
 

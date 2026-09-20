@@ -1,8 +1,7 @@
 package com.aetherteam.aetherii.world.structure.processor;
 
-import com.aetherteam.aetherii.block.AetherIIBlocks;
+import com.aetherteam.aetherii.world.density.DensitySampling;
 import com.aetherteam.aetherii.block.dungeon.CopyBlock;
-import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,9 +41,7 @@ public class DensityFunctionProcessor implements StructureProcessor {
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader level, BlockPos targetPosition, BlockPos referencePos, BlockPos templateRelativePos, StructureTemplate.StructureBlockInfo processedBlockInfo, StructurePlaceSettings settings) {
         if (level instanceof WorldGenLevel worldGenLevel) {
-            DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(worldGenLevel.getSeed());
-            density.mapAll(visitor);
-            double noise = this.density.compute(new DensityFunction.SinglePointContext(processedBlockInfo.pos().getX(), processedBlockInfo.pos().getY(), processedBlockInfo.pos().getZ()));
+            double noise = DensitySampling.sampler(worldGenLevel, this.density).sampleValue(processedBlockInfo.pos().getX(), processedBlockInfo.pos().getY(), processedBlockInfo.pos().getZ());
             BlockState state = processedBlockInfo.state();
             if (noise > 0) {
                 if (modifyCopyBlocks) {

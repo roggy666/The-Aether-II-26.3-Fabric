@@ -5,11 +5,10 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 
 public class AetherIISurfaceRules {
     public static final MapCodec<NoisePalette3DPlacementRule> NOISE_PALETTE_3D = Registry.register(
-            BuiltInRegistries.MATERIAL_RULE,
+            BuiltInRegistries.MATERIAL_RULE_TYPE,
             Identifier.fromNamespaceAndPath(AetherII.MODID, "noise_palette_3d"),
             NoisePalette3DPlacementRule.KEY_CODEC
     );

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:zanite_gemstone_from_zanite_block"
+        "recipes": "aether_ii:zanite_gemstone_from_zanite_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

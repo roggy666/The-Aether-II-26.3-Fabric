@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.function.ToIntFunction;
 
 public class PrayerCandleBlock extends AbstractCandleBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<PrayerCandleBlock> CODEC = simpleCodec(PrayerCandleBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -51,11 +50,6 @@ public class PrayerCandleBlock extends AbstractCandleBlock implements SimpleWate
             Block.box(4.0F, 4.0F, 10.0F, 12.0F, 12.0F, 16.0F),
             Block.box(6.0F, 12.0F, 10.0F, 10.0F, 14.0F, 16.0F)
     ));
-
-    @Override
-    public MapCodec<PrayerCandleBlock> codec() {
-        return CODEC;
-    }
 
     public PrayerCandleBlock(BlockBehaviour.Properties properties) {
         super(properties);

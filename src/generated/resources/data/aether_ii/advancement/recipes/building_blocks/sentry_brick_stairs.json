@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:sentry_brick_stairs"
+        "recipes": "aether_ii:sentry_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

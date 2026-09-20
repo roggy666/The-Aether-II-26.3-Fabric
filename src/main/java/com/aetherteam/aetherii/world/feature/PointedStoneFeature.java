@@ -1,34 +1,43 @@
 package com.aetherteam.aetherii.world.feature;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import com.aetherteam.aetherii.AetherIITags;
 import com.aetherteam.aetherii.world.feature.configuration.PointedStoneConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SpeleothemThickness;
 import net.minecraft.world.level.levelgen.feature.SpeleothemUtils;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class PointedStoneFeature extends Feature<PointedStoneConfiguration> {
-    public PointedStoneFeature(Codec<PointedStoneConfiguration> codec) {
-        super(codec);
+public class PointedStoneFeature implements Feature {
+    public static final MapCodec<PointedStoneFeature> CODEC = PointedStoneConfiguration.CODEC.xmap(PointedStoneFeature::new, PointedStoneFeature::config);
+    private final PointedStoneConfiguration config;
+
+    public PointedStoneFeature(PointedStoneConfiguration config) {
+        this.config = config;
+    }
+
+    public PointedStoneConfiguration config() {
+        return this.config;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<PointedStoneConfiguration> context) {
-        WorldGenLevel level = context.level();
-        BlockPos pos = context.origin();
-        RandomSource random = context.random();
-        PointedStoneConfiguration config = context.config();
+    public MapCodec<PointedStoneFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        BlockPos pos = origin;
+        PointedStoneConfiguration config = this.config;
         Optional<Direction> optional = getTipDirection(level, pos, random, config);
         if (optional.isEmpty()) {
             return false;

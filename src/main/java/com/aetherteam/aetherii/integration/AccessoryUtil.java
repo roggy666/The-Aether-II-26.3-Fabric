@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.integration;
 
+import net.minecraft.util.Prediction;
 import com.aetherteam.aetherii.attachment.AetherIIDataAttachments;
 import com.aetherteam.aetherii.inventory.container.AccessoryContainer;
 import com.aetherteam.aetherii.item.AttributeTooltipUtil;
@@ -70,7 +71,7 @@ public class AccessoryUtil {
                 ItemStack insertedStack = stack.consumeAndReturn(1, player);
                 container.setItemWithEquip(player, index, insertedStack);
                 if (!player.getInventory().add(copiedStack)) {
-                    player.drop(copiedStack, false);
+                    player.drop(copiedStack, false, Prediction.PREDICTED);
                 }
                 return InteractionResult.SUCCESS.heldItemTransformedTo(stack);
             }

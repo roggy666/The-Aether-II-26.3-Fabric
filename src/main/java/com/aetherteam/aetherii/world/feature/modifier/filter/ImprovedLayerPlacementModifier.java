@@ -1,5 +1,6 @@
 package com.aetherteam.aetherii.world.feature.modifier.filter;
 
+import java.util.function.Consumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -12,12 +13,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import javax.annotation.Nullable;
-import java.util.stream.Stream;
 
-public class ImprovedLayerPlacementModifier extends PlacementModifier {
+public class ImprovedLayerPlacementModifier implements PlacementModifier {
     public static final MapCodec<ImprovedLayerPlacementModifier> CODEC = RecordCodecBuilder.mapCodec((codec) -> codec.group(
             Heightmap.Types.CODEC.fieldOf("heightmap").forGetter((modifier) -> modifier.heightmap),
             IntProviders.codec(0, 256).fieldOf("count").forGetter((modifier) -> modifier.count),
@@ -38,8 +37,7 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
-        Stream.Builder<BlockPos> builder = Stream.builder();
+    public void modify(PlacementContext context, RandomSource random, BlockPos pos, Consumer<BlockPos> output) {
         int i = 0;
         boolean flag;
         do {
@@ -50,18 +48,17 @@ public class ImprovedLayerPlacementModifier extends PlacementModifier {
                 int height = context.getHeight(this.heightmap, x, z);
                 BlockPos blockPos = this.findOnGroundPosition(context, new BlockPos(x, height, z), i);
                 if (blockPos != null) {
-                    builder.add(blockPos);
+                    output.accept(blockPos);
                     flag = true;
                 }
             }
             ++i;
         } while (flag);
-        return builder.build();
     }
 
     @Override
-    public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.IMPROVED_LAYER_PLACEMENT;
+    public MapCodec<ImprovedLayerPlacementModifier> codec() {
+        return CODEC;
     }
 
     @Nullable

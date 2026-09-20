@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "aether_ii:cyan_dye_from_prismallard_feather"
+        "recipes": "aether_ii:cyan_dye_from_prismallard_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

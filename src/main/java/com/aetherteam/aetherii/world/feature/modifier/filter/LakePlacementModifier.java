@@ -1,77 +1,65 @@
 package com.aetherteam.aetherii.world.feature.modifier.filter;
 
 import com.aetherteam.aetherii.data.resources.registries.AetherIIDensityFunctions;
-import com.aetherteam.aetherii.world.density.PerlinNoiseFunction;
+import com.aetherteam.aetherii.world.density.DensitySampling;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensitySampler;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
-public class LakePlacementModifier extends PlacementModifier {
+public class LakePlacementModifier implements PlacementModifier {
     public static final MapCodec<LakePlacementModifier> CODEC = MapCodec.unit(LakePlacementModifier::new);
+    private static final int HEIGHT = 124;
+    private static final double NOISE_START_VALUE = 0.3;
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext placementContext, RandomSource randomSource, BlockPos blockPos) {
+    public void modify(PlacementContext context, RandomSource random, BlockPos blockPos, Consumer<BlockPos> output) {
+        WorldGenLevel level = context.getLevel();
+        HolderGetter<DensityFunction> function = level.registryAccess().lookupOrThrow(Registries.DENSITY_FUNCTION);
+        Samplers samplers = new Samplers(
+                DensitySampling.sampler(level, AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_NOISE)),
+                DensitySampling.sampler(level, AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_FLOOR)),
+                DensitySampling.sampler(level, AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_BARRIER))
+        );
         Set<BlockPos> positions = new TreeSet<>();
-
         int chunkX = blockPos.getX() - (blockPos.getX() % 16);
         int chunkZ = blockPos.getZ() - (blockPos.getZ() % 16);
-        int height =  ConstantInt.of(124).minInclusive();
-        double noiseStartValue = 0.3;
-
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 int xCoord = chunkX + x;
                 int zCoord = chunkZ + z;
-
-                BlockPos layerPos = new BlockPos(xCoord, height, zCoord);
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(1), noiseStartValue + 0.025, 0.8));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(2), noiseStartValue + 0.04, 0.75));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(3), noiseStartValue + 0.045, 0.7));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(4), noiseStartValue + 0.05, 0.625));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(5), noiseStartValue + 0.055, 0.55));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(6), noiseStartValue + 0.06, 0.475));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(7), noiseStartValue + 0.065, 0.4));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(8), noiseStartValue + 0.07, 0.3));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(9), noiseStartValue + 0.075, 0.2));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(10), noiseStartValue + 0.082, 0.1));
-                positions.addAll(this.gatherLakeLayer(placementContext.getLevel(), layerPos.below(11), noiseStartValue + 0.05, 0.035));
+                BlockPos layerPos = new BlockPos(xCoord, HEIGHT, zCoord);
+                this.gatherLakeLayer(level, samplers, layerPos.below(1), NOISE_START_VALUE + 0.025, 0.8, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(2), NOISE_START_VALUE + 0.04, 0.75, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(3), NOISE_START_VALUE + 0.045, 0.7, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(4), NOISE_START_VALUE + 0.05, 0.625, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(5), NOISE_START_VALUE + 0.055, 0.55, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(6), NOISE_START_VALUE + 0.06, 0.475, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(7), NOISE_START_VALUE + 0.065, 0.4, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(8), NOISE_START_VALUE + 0.07, 0.3, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(9), NOISE_START_VALUE + 0.075, 0.2, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(10), NOISE_START_VALUE + 0.082, 0.1, positions);
+                this.gatherLakeLayer(level, samplers, layerPos.below(11), NOISE_START_VALUE + 0.05, 0.035, positions);
             }
         }
-        return positions.stream();
+        positions.forEach(output);
     }
 
-    public Set<BlockPos> gatherLakeLayer(WorldGenLevel level, BlockPos pos, double noiseValue, double floorNoiseValue) {
-        Set<BlockPos> positions = new TreeSet<>();
-
-        HolderGetter<DensityFunction> function = level.registryAccess().lookupOrThrow(Registries.DENSITY_FUNCTION);
-        DensityFunction lakeNoise = AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_NOISE);
-        DensityFunction lakeFloorNoise = AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_FLOOR);
-        DensityFunction lakeBarrierNoise = AetherIIDensityFunctions.getFunction(function, AetherIIDensityFunctions.LAKES_BARRIER);
-
-        DensityFunction.Visitor visitor = PerlinNoiseFunction.createOrGetVisitor(level.getSeed());
-
-        lakeNoise.mapAll(visitor);
-        lakeFloorNoise.mapAll(visitor);
-        lakeBarrierNoise.mapAll(visitor);
-
-        double density = lakeNoise.compute(new DensityFunction.SinglePointContext(pos.getX(), pos.getY(), pos.getZ()));
-        double floor = lakeFloorNoise.compute(new DensityFunction.SinglePointContext(pos.getX(), pos.getY(), pos.getZ()));
-        double barrier = lakeBarrierNoise.compute(new DensityFunction.SinglePointContext(pos.getX(), pos.getY(), pos.getZ()));
-        int thickness = calculateThickness(barrier, pos.getY(), ConstantInt.of(124).value());
-
-        // Determines the block to place at specific noise values
+    public void gatherLakeLayer(WorldGenLevel level, Samplers samplers, BlockPos pos, double noiseValue, double floorNoiseValue, Set<BlockPos> positions) {
+        double density = samplers.lake().sampleValue(pos.getX(), pos.getY(), pos.getZ());
+        double floor = samplers.floor().sampleValue(pos.getX(), pos.getY(), pos.getZ());
+        double barrier = samplers.barrier().sampleValue(pos.getX(), pos.getY(), pos.getZ());
+        int thickness = calculateThickness(barrier, pos.getY(), HEIGHT);
         if (density > noiseValue && density < 1.5) {
             if (floor < floorNoiseValue) {
                 for (int i = 0; i < barrier; i++) {
@@ -88,7 +76,6 @@ public class LakePlacementModifier extends PlacementModifier {
                 }
             }
         }
-        return positions;
     }
 
     public int calculateThickness(double barrier, int y, int height) {
@@ -96,7 +83,10 @@ public class LakePlacementModifier extends PlacementModifier {
     }
 
     @Override
-    public PlacementModifierType<?> type() {
-        return AetherIIPlacementModifierTypes.LAKE_PLACEMENT;
+    public MapCodec<LakePlacementModifier> codec() {
+        return CODEC;
+    }
+
+    public record Samplers(DensitySampler.Bound lake, DensitySampler.Bound floor, DensitySampler.Bound barrier) {
     }
 }

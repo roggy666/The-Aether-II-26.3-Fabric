@@ -1,15 +1,15 @@
 package com.aetherteam.aetherii.item.equipment.tools.arkenium;
 
+import net.minecraft.world.item.Item;
 import com.aetherteam.aetherii.item.equipment.AetherIIToolMaterials;
 import com.aetherteam.aetherii.item.equipment.tools.abilities.ArkeniumTool;
 import net.minecraft.core.Holder;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class ArkeniumAxeItem extends AxeItem implements ArkeniumTool {
+public class ArkeniumAxeItem extends Item implements ArkeniumTool {
     public ArkeniumAxeItem(Properties properties) {
-        super(AetherIIToolMaterials.ARKENIUM, 1.5F, -3.2F, properties);
+        super(properties.axe(AetherIIToolMaterials.ARKENIUM, 1.5F, -3.2F));
     }
 
     @Override

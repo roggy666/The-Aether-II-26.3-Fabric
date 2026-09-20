@@ -31,7 +31,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class AetherLeafPileBlock extends FallingBlock {
-    public static final MapCodec<AetherLeafPileBlock> CODEC = simpleCodec(AetherLeafPileBlock::new);
     public static final IntegerProperty PILES = AetherIIBlockStateProperties.PILES;
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
     protected static final VoxelShape[] SHAPE_BY_LAYER = new VoxelShape[] {
@@ -53,11 +52,6 @@ public class AetherLeafPileBlock extends FallingBlock {
             Block.box(0.0, 0.0, 0.0, 16.0, 15.0, 16.0),
             Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
     };
-
-    @Override
-    public MapCodec<AetherLeafPileBlock> codec() {
-        return CODEC;
-    }
 
     public AetherLeafPileBlock(BlockBehaviour.Properties properties) {
         super(properties);
